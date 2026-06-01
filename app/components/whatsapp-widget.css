@@ -1,0 +1,425 @@
+/* WhatsApp Widget - Image Based - Fully Responsive */
+.wa-widget {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  z-index: 1000;
+  opacity: 0;
+  transform: scale(0.8) translateY(20px);
+  transition: all 0.5s cubic-bezier(0.34, 1.2, 0.64, 1);
+  cursor: pointer;
+}
+
+.wa-widget.wa-visible {
+  opacity: 1;
+  transform: scale(1) translateY(0);
+}
+
+/* Pulse Rings */
+.wa-pulse-ring {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: rgba(37, 211, 102, 0.4);
+  animation: wa-pulse 2s ease-out infinite;
+  pointer-events: none;
+}
+
+.wa-pulse-ring-delayed {
+  animation-delay: 1s;
+}
+
+@keyframes wa-pulse {
+  0% {
+    width: 100%;
+    height: 100%;
+    opacity: 0.6;
+  }
+  100% {
+    width: 180%;
+    height: 180%;
+    opacity: 0;
+  }
+}
+
+/* Main Button */
+.wa-button {
+  position: relative;
+  width: 72px;
+  height: 72px;
+  background: transparent;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.34, 1.2, 0.64, 1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  margin: 0;
+}
+
+.wa-image-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.wa-icon-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transition: transform 0.3s ease;
+  border-radius: 50%;
+}
+
+.wa-button:hover .wa-icon-img {
+  transform: scale(1.08);
+}
+
+/* Luxury Badge */
+.wa-badge {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background: linear-gradient(135deg, #ffd700, #daa520);
+  border-radius: 12px;
+  padding: 2px 6px;
+  font-size: 9px;
+  font-weight: bold;
+  color: #1a1a2e;
+  font-family: monospace;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  animation: wa-badge-pulse 2s ease-in-out infinite;
+  z-index: 2;
+}
+
+@keyframes wa-badge-pulse {
+  0%,
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(218, 165, 32, 0.5);
+  }
+  50% {
+    transform: scale(1.05);
+    box-shadow: 0 0 0 4px rgba(218, 165, 32, 0.3);
+  }
+}
+
+/* Simple Tooltip */
+.wa-tooltip {
+  position: absolute;
+  bottom: 85px;
+  right: 0;
+  background: rgba(0, 0, 0, 0.9);
+  backdrop-filter: blur(10px);
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-family: var(--font-geist-sans), sans-serif;
+  color: white;
+  white-space: nowrap;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: all 0.3s cubic-bezier(0.34, 1.2, 0.64, 1);
+  pointer-events: none;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(218, 165, 32, 0.3);
+  z-index: 3;
+}
+
+.wa-tooltip::before {
+  content: "";
+  position: absolute;
+  bottom: -6px;
+  right: 28px;
+  width: 12px;
+  height: 12px;
+  background: rgba(0, 0, 0, 0.9);
+  transform: rotate(45deg);
+  border-right: 1px solid rgba(218, 165, 32, 0.3);
+  border-bottom: 1px solid rgba(218, 165, 32, 0.3);
+}
+
+.wa-widget:hover .wa-tooltip {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Floating Animation */
+@keyframes wa-float-widget {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+.wa-widget {
+  animation: wa-float-widget 3s ease-in-out infinite;
+}
+
+/* Glow Effect on Hover */
+.wa-button:hover {
+  animation: wa-glow-pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes wa-glow-pulse {
+  0%,
+  100% {
+    filter: drop-shadow(0 0 0 rgba(37, 211, 102, 0.5));
+  }
+  50% {
+    filter: drop-shadow(0 0 12px rgba(37, 211, 102, 0.5));
+  }
+}
+
+/* ============================================
+   RESPONSIVE DESIGN - ALL SCREENS
+   ============================================ */
+
+/* Large Desktop (1200px and above) */
+@media (min-width: 1200px) {
+  .wa-widget {
+    bottom: 40px;
+    right: 40px;
+  }
+
+  .wa-button {
+    width: 80px;
+    height: 80px;
+  }
+
+  .wa-tooltip {
+    bottom: 95px;
+    font-size: 13px;
+    padding: 10px 18px;
+  }
+
+  .wa-badge {
+    top: -6px;
+    right: -6px;
+    padding: 3px 7px;
+    font-size: 10px;
+  }
+}
+
+/* Desktop (992px to 1199px) */
+@media (min-width: 992px) and (max-width: 1199px) {
+  .wa-widget {
+    bottom: 35px;
+    right: 35px;
+  }
+
+  .wa-button {
+    width: 75px;
+    height: 75px;
+  }
+
+  .wa-tooltip {
+    bottom: 90px;
+    font-size: 12px;
+  }
+
+  .wa-badge {
+    top: -5px;
+    right: -5px;
+    padding: 2px 6px;
+    font-size: 9px;
+  }
+}
+
+/* Tablet (768px to 991px) */
+@media (min-width: 768px) and (max-width: 991px) {
+  .wa-widget {
+    bottom: 25px;
+    right: 25px;
+  }
+
+  .wa-button {
+    width: 65px;
+    height: 65px;
+  }
+
+  .wa-tooltip {
+    bottom: 80px;
+    font-size: 11px;
+    padding: 7px 14px;
+    white-space: nowrap;
+  }
+
+  .wa-tooltip::before {
+    right: 22px;
+    width: 10px;
+    height: 10px;
+    bottom: -5px;
+  }
+
+  .wa-badge {
+    top: -4px;
+    right: -4px;
+    padding: 2px 5px;
+    font-size: 8px;
+  }
+}
+
+/* Mobile Landscape (576px to 767px) */
+@media (min-width: 576px) and (max-width: 767px) {
+  .wa-widget {
+    bottom: 20px;
+    right: 20px;
+  }
+
+  .wa-button {
+    width: 58px;
+    height: 58px;
+  }
+
+  .wa-tooltip {
+    bottom: 72px;
+    font-size: 10px;
+    padding: 6px 12px;
+    white-space: nowrap;
+  }
+
+  .wa-tooltip::before {
+    right: 20px;
+    width: 10px;
+    height: 10px;
+    bottom: -5px;
+  }
+
+  .wa-badge {
+    top: -3px;
+    right: -3px;
+    padding: 2px 5px;
+    font-size: 8px;
+  }
+}
+
+/* Mobile Portrait (480px to 575px) */
+@media (min-width: 480px) and (max-width: 575px) {
+  .wa-widget {
+    bottom: 18px;
+    right: 18px;
+  }
+
+  .wa-button {
+    width: 54px;
+    height: 54px;
+  }
+
+  .wa-tooltip {
+    bottom: 68px;
+    font-size: 10px;
+    padding: 5px 12px;
+    white-space: nowrap;
+    right: -5px;
+  }
+
+  .wa-tooltip::before {
+    right: 20px;
+    width: 9px;
+    height: 9px;
+    bottom: -4.5px;
+  }
+
+  .wa-badge {
+    top: -3px;
+    right: -3px;
+    padding: 2px 4px;
+    font-size: 7px;
+  }
+}
+
+/* Small Mobile (320px to 479px) */
+@media (min-width: 320px) and (max-width: 479px) {
+  .wa-widget {
+    bottom: 15px;
+    right: 15px;
+  }
+
+  .wa-button {
+    width: 50px;
+    height: 50px;
+  }
+
+  .wa-tooltip {
+    bottom: 62px;
+    font-size: 9px;
+    padding: 5px 10px;
+    white-space: nowrap;
+    right: -8px;
+  }
+
+  .wa-tooltip::before {
+    right: 18px;
+    width: 8px;
+    height: 8px;
+    bottom: -4px;
+  }
+
+  .wa-badge {
+    top: -2px;
+    right: -2px;
+    padding: 1px 4px;
+    font-size: 7px;
+  }
+}
+
+/* Very Small Mobile (below 320px) */
+@media (max-width: 319px) {
+  .wa-widget {
+    bottom: 12px;
+    right: 12px;
+  }
+
+  .wa-button {
+    width: 46px;
+    height: 46px;
+  }
+
+  .wa-tooltip {
+    bottom: 58px;
+    font-size: 8px;
+    padding: 4px 8px;
+    white-space: nowrap;
+    right: -10px;
+  }
+
+  .wa-tooltip::before {
+    right: 16px;
+    width: 7px;
+    height: 7px;
+    bottom: -3.5px;
+  }
+
+  .wa-badge {
+    top: -2px;
+    right: -2px;
+    padding: 1px 3px;
+    font-size: 6px;
+  }
+}
+
+/* Hover effect for touch devices */
+@media (hover: hover) {
+  .wa-button:hover {
+    transform: scale(1.05);
+  }
+}
+
+/* Touch devices - no hover scale */
+@media (hover: none) {
+  .wa-button:active {
+    transform: scale(0.95);
+  }
+}

@@ -1,0 +1,521 @@
+/* ============================================================
+   PAGE LOADER - Tech4U Luxury Experience
+   Advanced loader with rotating rings and percentage counter
+   ============================================================ */
+
+.page-loader {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: loaderFadeOut 0.6s ease 0.8s forwards;
+}
+
+/* Backdrop */
+.loader-backdrop {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, #f8f4ed 0%, #fdfaf5 50%, #fffdf9 100%);
+  z-index: 0;
+}
+
+/* Grain Texture */
+.loader-grain {
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.02'/%3E%3C/svg%3E");
+  opacity: 0.3;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Gold Ambient Glow */
+.loader-ambient {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(
+    circle,
+    rgba(212, 175, 55, 0.12) 0%,
+    transparent 70%
+  );
+  border-radius: 50%;
+  filter: blur(40px);
+  z-index: 0;
+  animation: ambientPulse 3s ease-in-out infinite;
+}
+
+@keyframes ambientPulse {
+  0%,
+  100% {
+    opacity: 0.5;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1.05);
+  }
+}
+
+/* Loader Container */
+.loader-container {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  text-align: center;
+}
+
+/* ========== ROTATING RINGS ========== */
+.loader-rings {
+  position: relative;
+  width: 140px;
+  height: 140px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ring {
+  position: absolute;
+  border-radius: 50%;
+  border-style: solid;
+  border-color: #d4af37 transparent transparent transparent;
+}
+
+.ring-1 {
+  width: 140px;
+  height: 140px;
+  border-width: 2px;
+  animation: spin 1.5s linear infinite;
+}
+
+.ring-2 {
+  width: 115px;
+  height: 115px;
+  border-width: 2px;
+  border-color: #f0d884 transparent transparent transparent;
+  animation: spinReverse 1.8s linear infinite;
+}
+
+.ring-3 {
+  width: 90px;
+  height: 90px;
+  border-width: 2px;
+  border-color: #c9a03d transparent transparent transparent;
+  animation: spin 2s linear infinite;
+}
+
+.ring-4 {
+  width: 65px;
+  height: 65px;
+  border-width: 2px;
+  border-color: #b8860b transparent transparent transparent;
+  animation: spinReverse 2.2s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes spinReverse {
+  from {
+    transform: rotate(360deg);
+  }
+  to {
+    transform: rotate(0deg);
+  }
+}
+
+/* ========== LOGO TEXT ========== */
+.loader-logo {
+  display: flex;
+  align-items: baseline;
+  gap: 2px;
+  animation: logoGlow 2s ease-in-out infinite, logoFadeIn 0.5s ease forwards;
+}
+
+.logo-techs {
+  font-family: "Orbitron", monospace;
+  font-size: 2.8rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  background: linear-gradient(135deg, #1a1a1a 0%, #d4af37 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.logo-fours {
+  font-family: "Orbitron", monospace;
+  font-size: 2.8rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  background: linear-gradient(135deg, #d4af37 0%, #f0d884 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.logo-luxury-line {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-left: 8px;
+  position: relative;
+  top: 4px;
+}
+
+.luxury-text {
+  font-family: "Cormorant Garamond", serif;
+  font-size: 0.65rem;
+  font-weight: 400;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: #c9a03d;
+}
+
+.luxury-line {
+  width: 30px;
+  height: 1px;
+  background: linear-gradient(90deg, #d4af37, transparent);
+  margin-top: 3px;
+}
+
+@keyframes logoGlow {
+  0%,
+  100% {
+    text-shadow: 0 0 0px rgba(212, 175, 55, 0);
+  }
+  50% {
+    text-shadow: 0 0 10px rgba(212, 175, 55, 0.3);
+  }
+}
+
+@keyframes logoFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ========== LOADING BAR ========== */
+.loader-bar-wrapper {
+  width: 200px;
+  height: 2px;
+  background: rgba(212, 175, 55, 0.15);
+  border-radius: 2px;
+  overflow: hidden;
+  margin-top: 0.5rem;
+}
+
+.loader-bar {
+  width: 0%;
+  height: 100%;
+  background: linear-gradient(90deg, #d4af37, #f0d884, #d4af37);
+  border-radius: 2px;
+  animation: loadingBar 0.8s ease-out forwards;
+  box-shadow: 0 0 8px rgba(212, 175, 55, 0.5);
+}
+
+@keyframes loadingBar {
+  0% {
+    width: 0%;
+  }
+  20% {
+    width: 35%;
+  }
+  50% {
+    width: 68%;
+  }
+  80% {
+    width: 85%;
+  }
+  100% {
+    width: 100%;
+  }
+}
+
+/* ========== PERCENTAGE COUNTER ========== */
+.loader-percentage {
+  font-family: "Orbitron", monospace;
+  font-size: 2rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  animation: countUp 0.8s ease-out forwards;
+}
+
+.percent-number {
+  background: linear-gradient(135deg, #1a1a1a 0%, #d4af37 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  display: inline-block;
+  animation: countNumber 0.8s ease-out forwards;
+}
+
+.percent-sign {
+  color: #c9a03d;
+  font-size: 1.4rem;
+  margin-left: 2px;
+}
+
+@keyframes countNumber {
+  0% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* ========== LOADING TEXT ========== */
+.loader-text {
+  font-family: "Jost", sans-serif;
+  font-size: 0.7rem;
+  font-weight: 400;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #888888;
+  margin-top: 0.5rem;
+  position: relative;
+  animation: textPulse 1.5s ease-in-out infinite;
+}
+
+@keyframes textPulse {
+  0%,
+  100% {
+    opacity: 0.5;
+    letter-spacing: 0.2em;
+  }
+  50% {
+    opacity: 1;
+    letter-spacing: 0.25em;
+  }
+}
+
+/* ========== DECORATIVE CORNERS ========== */
+.loader-corner {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  z-index: 15;
+  pointer-events: none;
+}
+
+.corner-tl {
+  top: 25px;
+  left: 25px;
+  border-top: 2px solid rgba(212, 175, 55, 0.4);
+  border-left: 2px solid rgba(212, 175, 55, 0.4);
+  animation: cornerPulseTL 2s ease-in-out infinite;
+}
+
+.corner-tr {
+  top: 25px;
+  right: 25px;
+  border-top: 2px solid rgba(212, 175, 55, 0.4);
+  border-right: 2px solid rgba(212, 175, 55, 0.4);
+  animation: cornerPulseTR 2s ease-in-out infinite;
+}
+
+.corner-bl {
+  bottom: 25px;
+  left: 25px;
+  border-bottom: 2px solid rgba(212, 175, 55, 0.4);
+  border-left: 2px solid rgba(212, 175, 55, 0.4);
+  animation: cornerPulseBL 2s ease-in-out infinite;
+}
+
+.corner-br {
+  bottom: 25px;
+  right: 25px;
+  border-bottom: 2px solid rgba(212, 175, 55, 0.4);
+  border-right: 2px solid rgba(212, 175, 55, 0.4);
+  animation: cornerPulseBR 2s ease-in-out infinite;
+}
+
+@keyframes cornerPulseTL {
+  0%,
+  100% {
+    opacity: 0.3;
+    top: 25px;
+    left: 25px;
+  }
+  50% {
+    opacity: 0.8;
+    top: 30px;
+    left: 30px;
+  }
+}
+
+@keyframes cornerPulseTR {
+  0%,
+  100% {
+    opacity: 0.3;
+    top: 25px;
+    right: 25px;
+  }
+  50% {
+    opacity: 0.8;
+    top: 30px;
+    right: 30px;
+  }
+}
+
+@keyframes cornerPulseBL {
+  0%,
+  100% {
+    opacity: 0.3;
+    bottom: 25px;
+    left: 25px;
+  }
+  50% {
+    opacity: 0.8;
+    bottom: 30px;
+    left: 30px;
+  }
+}
+
+@keyframes cornerPulseBR {
+  0%,
+  100% {
+    opacity: 0.3;
+    bottom: 25px;
+    right: 25px;
+  }
+  50% {
+    opacity: 0.8;
+    bottom: 30px;
+    right: 30px;
+  }
+}
+
+/* ========== LOADER FADE OUT ========== */
+@keyframes loaderFadeOut {
+  0% {
+    opacity: 1;
+    visibility: visible;
+  }
+  99% {
+    opacity: 0;
+    visibility: visible;
+  }
+  100% {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+/* ========== RESPONSIVE ========== */
+@media (max-width: 768px) {
+  .logo-techs,
+  .logo-fours {
+    font-size: 2rem;
+  }
+
+  .loader-rings {
+    width: 110px;
+    height: 110px;
+  }
+
+  .ring-1 {
+    width: 110px;
+    height: 110px;
+  }
+
+  .ring-2 {
+    width: 90px;
+    height: 90px;
+  }
+
+  .ring-3 {
+    width: 70px;
+    height: 70px;
+  }
+
+  .ring-4 {
+    width: 50px;
+    height: 50px;
+  }
+
+  .loader-percentage {
+    font-size: 1.5rem;
+  }
+
+  .percent-sign {
+    font-size: 1.1rem;
+  }
+
+  .luxury-text {
+    display: none;
+  }
+
+  .loader-corner {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .logo-techs,
+  .logo-fours {
+    font-size: 1.5rem;
+  }
+
+  .loader-rings {
+    width: 90px;
+    height: 90px;
+  }
+
+  .ring-1 {
+    width: 90px;
+    height: 90px;
+  }
+
+  .ring-2 {
+    width: 70px;
+    height: 70px;
+  }
+
+  .ring-3 {
+    width: 55px;
+    height: 55px;
+  }
+
+  .ring-4 {
+    width: 40px;
+    height: 40px;
+  }
+
+  .loader-percentage {
+    font-size: 1.2rem;
+  }
+
+  .percent-sign {
+    font-size: 0.9rem;
+  }
+
+  .loader-text {
+    font-size: 0.6rem;
+  }
+}

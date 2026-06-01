@@ -1,0 +1,512 @@
+/* ============================================================
+   PANEL NAVBAR  ·  panel-navbar.css
+   Light/Luxury theme matching Featured Products
+   ============================================================ */
+@import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300&family=Josefin+Sans:wght@200;300;400;500;600&display=swap");
+
+:root {
+  --pn-gold: #daa520;
+  --pn-gold-light: #f0c040;
+  --pn-gold-deep: #8b6914;
+  --pn-gold-dim: rgba(218, 165, 32, 0.08);
+  --pn-bg: #f9f5f0;
+  --pn-card-bg: #ffffff;
+  --pn-border: rgba(218, 165, 32, 0.15);
+  --pn-text-primary: #1a1a1a;
+  --pn-text-secondary: #444444;
+  --pn-text-muted: #666666;
+  --pn-serif: "Cormorant Garamond", Georgia, serif;
+  --pn-sans: "Josefin Sans", sans-serif;
+  --pn-ease: 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+  --pn-h: 68px;
+}
+
+/* ── Shell ── */
+.pn-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: var(--pn-h);
+  background: rgba(249, 245, 240, 0.95);
+  backdrop-filter: blur(18px) saturate(1.4);
+  -webkit-backdrop-filter: blur(18px) saturate(1.4);
+  border-bottom: 1px solid var(--pn-border);
+  z-index: 9000;
+  transition:
+    background var(--pn-ease),
+    box-shadow var(--pn-ease);
+}
+
+.pn-nav.scrolled {
+  background: rgba(249, 245, 240, 0.98);
+  box-shadow: 0 1px 40px rgba(218, 165, 32, 0.08);
+}
+
+.pn-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 100%;
+  padding: 0 2rem;
+  gap: 2rem;
+}
+
+/* ── Logo ── */
+.pn-logo {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  text-decoration: none;
+  flex-shrink: 0;
+}
+
+.pn-logo-badge {
+  width: 36px;
+  height: 36px;
+  border: 1px solid #daa520;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(218, 165, 32, 0.08);
+  transition: background var(--pn-ease);
+}
+
+.pn-logo:hover .pn-logo-badge {
+  background: rgba(218, 165, 32, 0.15);
+}
+
+.pn-logo-badge svg {
+  width: 18px;
+  height: 18px;
+  color: #8b6914;
+}
+
+.pn-logo-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.1;
+}
+
+.pn-logo-title {
+  font-family: var(--pn-serif);
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: #1a1a1a;
+  letter-spacing: 0.06em;
+}
+
+.pn-logo-sub {
+  font-family: var(--pn-sans);
+  font-size: 0.48rem;
+  font-weight: 600;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: #8b6914;
+}
+
+/* ── Nav links ── */
+.pn-links {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  flex: 1;
+  justify-content: center;
+}
+
+.pn-link {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.85rem;
+  font-family: var(--pn-sans);
+  font-size: 0.6rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #444444;
+  text-decoration: none;
+  border-radius: 40px;
+  position: relative;
+  transition:
+    color var(--pn-ease),
+    background var(--pn-ease);
+  white-space: nowrap;
+}
+
+.pn-link svg {
+  width: 13px;
+  height: 13px;
+  flex-shrink: 0;
+  transition: transform var(--pn-ease);
+  color: #8b6914;
+}
+
+.pn-link:hover {
+  color: #8b6914;
+  background: rgba(218, 165, 32, 0.08);
+}
+
+.pn-link:hover svg {
+  transform: translateY(-1px);
+}
+
+.pn-link.active {
+  color: #8b6914;
+  background: rgba(218, 165, 32, 0.1);
+}
+
+/* Add product — special */
+.pn-link--add {
+  background: linear-gradient(135deg, #daa520, #f0c040);
+  color: #1a1a1a !important;
+  font-weight: 700;
+  padding: 0.5rem 1.1rem;
+  border: none;
+}
+
+.pn-link--add svg {
+  color: #1a1a1a;
+}
+
+.pn-link--add:hover {
+  background: linear-gradient(135deg, #f0c040, #daa520);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 15px rgba(218, 165, 32, 0.3);
+}
+
+/* ── Right actions ── */
+.pn-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-shrink: 0;
+}
+
+.pn-icon-btn {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 40px;
+  cursor: pointer;
+  color: #444444;
+  transition: all var(--pn-ease);
+  position: relative;
+}
+
+.pn-icon-btn svg {
+  width: 16px;
+  height: 16px;
+}
+
+.pn-icon-btn:hover {
+  color: #8b6914;
+  border-color: rgba(218, 165, 32, 0.3);
+  background: rgba(218, 165, 32, 0.08);
+}
+
+.pn-badge {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 14px;
+  height: 14px;
+  background: #daa520;
+  border-radius: 50%;
+  font-family: var(--pn-sans);
+  font-size: 0.45rem;
+  font-weight: 700;
+  color: #1a1a1a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pn-divider {
+  width: 1px;
+  height: 20px;
+  background: rgba(218, 165, 32, 0.2);
+  margin: 0 0.25rem;
+}
+
+/* Admin badge */
+.pn-admin-badge {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.35rem 0.75rem;
+  border: 1px solid rgba(218, 165, 32, 0.2);
+  border-radius: 40px;
+  background: rgba(218, 165, 32, 0.06);
+  cursor: default;
+}
+
+.pn-admin-dot {
+  width: 6px;
+  height: 6px;
+  background: #22c55e;
+  border-radius: 50%;
+  animation: pn-pulse 2s ease-in-out infinite;
+}
+
+@keyframes pn-pulse {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.5;
+    transform: scale(0.8);
+  }
+}
+
+.pn-admin-label {
+  font-family: var(--pn-sans);
+  font-size: 0.52rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #8b6914;
+}
+
+/* Mobile */
+@media (max-width: 900px) {
+  .pn-links {
+    display: none;
+  }
+}
+
+/* Add these styles to panel-navbar.css at the end */
+
+/* ── Panel Currency Dropdown ── */
+.pn-currency-dropdown {
+  position: relative;
+}
+
+.pn-currency-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(218, 165, 32, 0.05);
+  border: 1px solid var(--pn-border);
+  border-radius: 40px;
+  padding: 6px 12px;
+  font-family: var(--pn-sans);
+  font-size: 0.7rem;
+  font-weight: 500;
+  color: var(--pn-text-secondary);
+  cursor: pointer;
+  transition: all var(--pn-ease);
+}
+
+.pn-currency-btn:hover {
+  border-color: var(--pn-gold);
+  color: var(--pn-gold-deep);
+  background: rgba(218, 165, 32, 0.1);
+  transform: translateY(-1px);
+}
+
+.pn-currency-flag {
+  font-size: 0.9rem;
+}
+
+.pn-currency-symbol {
+  font-weight: 600;
+}
+
+.pn-currency-code {
+  font-size: 0.65rem;
+  opacity: 0.7;
+}
+
+.pn-currency-arrow {
+  width: 10px;
+  height: 10px;
+  transition: transform 0.3s ease;
+}
+
+.pn-currency-arrow.open {
+  transform: rotate(180deg);
+}
+
+.pn-currency-menu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  min-width: 240px;
+  background: #ffffff;
+  border: 1px solid var(--pn-border);
+  border-radius: 16px;
+  margin-top: 12px;
+  overflow: hidden;
+  z-index: 1002;
+  backdrop-filter: blur(20px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  animation: pn-currency-slide-down 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes pn-currency-slide-down {
+  from {
+    opacity: 0;
+    transform: translateY(-15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.pn-currency-option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 10px 16px;
+  background: transparent;
+  border: none;
+  font-family: var(--pn-sans);
+  font-size: 0.75rem;
+  font-weight: 400;
+  color: #666666;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.25s ease;
+}
+
+.pn-currency-option:hover {
+  background: var(--pn-gold-dim);
+  color: var(--pn-gold-deep);
+  padding-left: 22px;
+}
+
+.pn-currency-option.active {
+  color: var(--pn-gold-deep);
+  background: rgba(218, 165, 32, 0.1);
+}
+
+.pn-currency-option-flag {
+  font-size: 1.1rem;
+}
+
+.pn-currency-option-symbol {
+  font-weight: 500;
+  width: 28px;
+}
+
+.pn-currency-option-code {
+  font-weight: 600;
+  width: 45px;
+}
+
+.pn-currency-option-name {
+  font-size: 0.65rem;
+  opacity: 0.6;
+}
+
+/* Responsive adjustments */
+@media (max-width: 900px) {
+  .pn-currency-btn {
+    padding: 5px 10px;
+  }
+  .pn-currency-code {
+    display: none;
+  }
+  .pn-currency-symbol {
+    font-size: 0.75rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .pn-currency-btn {
+    padding: 4px 8px;
+  }
+  .pn-currency-flag {
+    font-size: 0.8rem;
+  }
+  .pn-currency-symbol {
+    font-size: 0.7rem;
+  }
+}
+
+/* ── Menu Button (Mobile) ── */
+.pn-menu-btn {
+  display: none;
+  width: 36px;
+  height: 36px;
+  background: transparent;
+  border: 1px solid var(--pn-border);
+  border-radius: 40px;
+  cursor: pointer;
+  transition: all var(--pn-ease);
+  color: var(--pn-text-secondary);
+  flex-shrink: 0;
+}
+
+.pn-menu-btn svg {
+  width: 18px;
+  height: 18px;
+  margin: 0 auto;
+  display: block;
+}
+
+.pn-menu-btn:hover {
+  border-color: var(--pn-gold);
+  color: var(--pn-gold-deep);
+  background: rgba(218, 165, 32, 0.08);
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .pn-menu-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .pn-links {
+    display: none !important;
+  }
+
+  .pn-inner {
+    gap: 1rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .pn-actions {
+    gap: 0.25rem;
+  }
+
+  .pn-icon-btn {
+    width: 32px;
+    height: 32px;
+  }
+
+  .pn-admin-label {
+    display: none;
+  }
+
+  .pn-admin-badge {
+    padding: 0.35rem 0.5rem;
+  }
+}
+
+@media (max-width: 500px) {
+  .pn-actions .pn-icon-btn:not(.pn-signout-btn) {
+    display: none;
+  }
+
+  .pn-divider {
+    display: none;
+  }
+
+  .pn-inner {
+    padding: 0 1rem;
+  }
+}

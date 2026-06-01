@@ -1,0 +1,698 @@
+/* ============================================================
+   ABOUT PAGE  ·  about.css
+   WHITE BACKGROUND | BLACK TEXT | TOP RED → BOTTOM BLACK GRADIENT
+   Matching Explore Aurexia and Contact Page style
+   ============================================================ */
+
+@import url("https://fonts.googleapis.com/css2?family=Goldman:wght@400;700&display=swap");
+
+:root {
+  --ab-red: #dc2626;
+  --ab-red-dark: #b91c1c;
+  --ab-red-deep: #991b1b;
+  --ab-red-light: #ef4444;
+  --ab-black: #0f172a;
+  --ab-black-soft: #1e293b;
+  --ab-red-soft: rgba(220, 38, 38, 0.08);
+  --ab-bg: #ffffff;
+  --ab-bg-light: #f8fafc;
+  --ab-card-bg: #ffffff;
+  --ab-card-hover: #f8fafc;
+  --ab-border: rgba(220, 38, 38, 0.18);
+  --ab-border-hover: rgba(220, 38, 38, 0.35);
+  --ab-text-dark: #0f172a;
+  --ab-text-muted: #475569;
+  --ab-text-light: #64748b;
+  --ab-text-grey: #64748b;
+  --ab-text-red: #dc2626;
+  --ab-serif: "Goldman", system-ui, sans-serif;
+  --ab-sans: "Goldman", system-ui, sans-serif;
+  --ab-ease: 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* ── Root ── */
+.ab-root {
+  position: relative;
+  min-height: 100vh;
+  width: 100%;
+  background: #ffffff;
+  color: var(--ab-text-dark);
+  overflow-x: hidden;
+  isolation: isolate;
+}
+
+/* Fine grid texture - Red + Black Mixed (like Explore Aurexia) */
+.ab-grain {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(220, 38, 38, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(15, 23, 42, 0.03) 1px, transparent 1px);
+  background-size: 48px 48px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Ambient Glow - Mixed */
+.ab-ambient {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 800px;
+  height: 600px;
+  background: radial-gradient(
+    circle,
+    rgba(220, 38, 38, 0.04) 0%,
+    rgba(15, 23, 42, 0.02) 40%,
+    transparent 80%
+  );
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Top Border Line - TOP RED → BOTTOM BLACK Gradient */
+.ab-root::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(700px, 90%);
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    transparent,
+    rgba(220, 38, 38, 0.5),
+    rgba(15, 23, 42, 0.2),
+    rgba(220, 38, 38, 0.5),
+    transparent
+  );
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Background Lines */
+.ab-lines {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  justify-content: space-between;
+  pointer-events: none;
+  z-index: 0;
+}
+.ab-lines span {
+  width: 1px;
+  height: 100%;
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(220, 38, 38, 0.06) 30%,
+    rgba(15, 23, 42, 0.03) 70%,
+    transparent 100%
+  );
+}
+
+/* Corner marks - RED */
+.ab-corner {
+  position: fixed;
+  width: 28px;
+  height: 28px;
+  z-index: 1;
+  pointer-events: none;
+}
+.ab-corner--tl {
+  top: 1.5rem;
+  left: 1.5rem;
+  border-top: 1px solid rgba(220, 38, 38, 0.4);
+  border-left: 1px solid rgba(220, 38, 38, 0.4);
+}
+.ab-corner--tr {
+  top: 1.5rem;
+  right: 1.5rem;
+  border-top: 1px solid rgba(220, 38, 38, 0.4);
+  border-right: 1px solid rgba(220, 38, 38, 0.4);
+}
+
+/* Shared eyebrow - RED */
+.ab-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-family: var(--ab-sans);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: #dc2626;
+  margin: 0;
+  justify-content: center;
+}
+.ab-ey-line {
+  display: block;
+  width: 27px;
+  height: 3px;
+  background: #dc2626;
+  opacity: 0.7;
+}
+
+/* Shared section header */
+.ab-section-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 3.5rem;
+}
+
+.ab-section-title {
+  font-family: var(--ab-serif);
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 600;
+  color: #0f172a;
+  margin: 0;
+  text-align: center;
+}
+.ab-section-title em {
+  font-style: italic;
+  background: linear-gradient(180deg, #dc2626 0%, #ef4444 50%, #0f172a 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* ── HERO ── */
+.ab-hero {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 8rem 1.5rem 5rem;
+  overflow: hidden;
+}
+
+.ab-hero-inner {
+  max-width: 780px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.ab-hero-title {
+  font-family: var(--ab-serif);
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  font-weight: 600;
+  line-height: 1.08;
+  color: #0f172a;
+  margin: 0;
+}
+.ab-hero-title em {
+  font-style: italic;
+  background: linear-gradient(180deg, #dc2626 0%, #ef4444 50%, #0f172a 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.ab-hero-sub {
+  font-family: var(--ab-sans);
+  font-size: 0.9rem;
+  font-weight: 500;
+  line-height: 1.8;
+  letter-spacing: 0.03em;
+  color: #475569;
+  max-width: 600px;
+  margin: 0;
+}
+
+/* Stats - White cards with RED accents */
+.ab-stats {
+  display: flex;
+  gap: 0;
+  margin-top: 1rem;
+  border: 1px solid rgba(220, 38, 38, 0.2);
+  border-radius: 12px;
+  overflow: hidden;
+  background: #ffffff;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04);
+}
+
+.ab-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1.25rem 2rem;
+  gap: 0.35rem;
+  border-right: 1px solid rgba(220, 38, 38, 0.15);
+  transition: all var(--ab-ease);
+}
+.ab-stat:last-child {
+  border-right: none;
+}
+.ab-stat:hover {
+  background: #f8fafc;
+  transform: translateY(-2px);
+}
+
+.ab-stat-value {
+  font-family: var(--ab-serif);
+  font-size: 1.8rem;
+  font-weight: 600;
+  background: linear-gradient(180deg, #dc2626 0%, #ef4444 50%, #0f172a 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  line-height: 1;
+}
+
+.ab-stat-label {
+  font-family: var(--ab-sans);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: #64748b;
+}
+
+/* Decorative rings - RED (subtle) */
+.ab-hero-ring {
+  position: absolute;
+  bottom: -120px;
+  right: -120px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.ab-ring-1 {
+  width: 320px;
+  height: 320px;
+  border-radius: 50%;
+  border: 1px solid rgba(220, 38, 38, 0.06);
+  animation: ab-spin 35s linear infinite;
+}
+
+.ab-ring-2 {
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  border: 1px solid rgba(220, 38, 38, 0.04);
+  position: absolute;
+  top: 50px;
+  left: 50px;
+  animation: ab-spin 20s linear infinite reverse;
+}
+
+.ab-ring-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #dc2626;
+  opacity: 0.3;
+  position: absolute;
+  top: 157px;
+  left: -3px;
+  box-shadow: 0 0 6px rgba(220, 38, 38, 0.3);
+}
+
+@keyframes ab-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ── STATEMENT ── */
+.ab-statement {
+  position: relative;
+  z-index: 1;
+  background: linear-gradient(
+    180deg,
+    rgba(220, 38, 38, 0.03) 0%,
+    transparent 70%
+  );
+  border-top: 1px solid rgba(220, 38, 38, 0.12);
+  border-bottom: 1px solid rgba(220, 38, 38, 0.12);
+  padding: 5rem 1.5rem;
+  margin: 2rem 0;
+}
+
+.ab-statement-inner {
+  max-width: 680px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.25rem;
+  text-align: center;
+}
+
+.ab-statement-num {
+  font-size: 1.2rem;
+  color: #dc2626;
+  opacity: 0.5;
+  letter-spacing: 0.5em;
+}
+
+.ab-statement-quote {
+  font-family: var(--ab-serif);
+  font-size: clamp(1.2rem, 2.5vw, 1.7rem);
+  font-weight: 600;
+  font-style: italic;
+  color: #0f172a;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* ── VALUES ── */
+.ab-values {
+  position: relative;
+  z-index: 1;
+  padding: 6rem 1.5rem;
+  max-width: 1100px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.ab-values-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+}
+
+.ab-value-card {
+  position: relative;
+  background: #ffffff;
+  border: 1px solid rgba(220, 38, 38, 0.2);
+  border-radius: 16px;
+  padding: 2rem 1.8rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  overflow: hidden;
+  transition: all var(--ab-ease);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04);
+}
+
+.ab-value-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    circle at 0% 100%,
+    rgba(220, 38, 38, 0.04) 0%,
+    transparent 70%
+  );
+  opacity: 0;
+  transition: opacity var(--ab-ease);
+}
+
+.ab-value-card:hover {
+  transform: translateY(-6px);
+  border-color: rgba(220, 38, 38, 0.35);
+  box-shadow: 0 15px 35px rgba(220, 38, 38, 0.08);
+  background: #f8fafc;
+}
+.ab-value-card:hover::before {
+  opacity: 1;
+}
+
+.ab-value-num {
+  font-family: var(--ab-serif);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  color: #dc2626;
+}
+
+.ab-value-title {
+  font-family: var(--ab-serif);
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #0f172a;
+  margin: 0;
+  transition: color var(--ab-ease);
+}
+
+.ab-value-card:hover .ab-value-title {
+  background: linear-gradient(180deg, #dc2626 0%, #ef4444 50%, #0f172a 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.ab-value-desc {
+  font-family: var(--ab-sans);
+  font-size: 0.85rem;
+  font-weight: 500;
+  line-height: 1.7;
+  letter-spacing: 0.02em;
+  color: #475569;
+  margin: 0;
+}
+
+.ab-value-line {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 3px;
+  width: 0;
+  background: linear-gradient(90deg, #dc2626, #ef4444);
+  transition: width 0.6s var(--ab-ease);
+}
+
+.ab-value-card:hover .ab-value-line {
+  width: 100%;
+}
+
+/* ── CTA ── */
+.ab-cta {
+  position: relative;
+  z-index: 1;
+  padding: 7rem 1.5rem;
+  text-align: center;
+  overflow: hidden;
+  border-top: 1px solid rgba(220, 38, 38, 0.12);
+  margin-top: 2rem;
+  background: #f8fafc;
+}
+
+.ab-cta-inner {
+  position: relative;
+  z-index: 1;
+  max-width: 600px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.ab-cta-title {
+  font-family: var(--ab-serif);
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 600;
+  color: #0f172a;
+  margin: 0;
+  line-height: 1.1;
+}
+.ab-cta-title em {
+  font-style: italic;
+  background: linear-gradient(180deg, #dc2626 0%, #ef4444 50%, #0f172a 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.ab-cta-btns {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.ab-cta-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.9rem 2rem;
+  font-family: var(--ab-sans);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border-radius: 40px;
+  transition: all var(--ab-ease);
+  cursor: pointer;
+}
+
+.ab-cta-btn--primary {
+  background: linear-gradient(180deg, #dc2626 0%, #0f172a 100%);
+  border: 1px solid transparent;
+  color: #ffffff;
+}
+.ab-cta-btn--primary:hover {
+  background: transparent;
+  border-color: #dc2626;
+  color: #dc2626;
+  transform: translateY(-3px);
+  box-shadow: 0 10px 25px rgba(220, 38, 38, 0.25);
+  gap: 1rem;
+}
+
+.ab-cta-btn--ghost {
+  background: transparent;
+  border: 1px solid rgba(220, 38, 38, 0.3);
+  color: #64748b;
+}
+.ab-cta-btn--ghost:hover {
+  border-color: #dc2626;
+  color: #dc2626;
+  background: rgba(220, 38, 38, 0.05);
+  transform: translateY(-3px);
+}
+
+/* CTA deco rings - RED (subtle) */
+.ab-cta-ring {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+}
+.ab-cta-ring--1 {
+  width: 500px;
+  height: 500px;
+  border: 1px solid rgba(220, 38, 38, 0.06);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  animation: ab-spin 40s linear infinite;
+}
+.ab-cta-ring--2 {
+  width: 350px;
+  height: 350px;
+  border: 1px solid rgba(220, 38, 38, 0.04);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  animation: ab-spin 28s linear infinite reverse;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 900px) {
+  .ab-values-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  .ab-stats {
+    flex-wrap: wrap;
+    border-radius: 12px;
+  }
+  .ab-stat {
+    flex: 1 1 45%;
+    border-bottom: 1px solid rgba(220, 38, 38, 0.1);
+  }
+  .ab-hero {
+    padding: 6rem 1.25rem 4rem;
+  }
+  .ab-values {
+    padding: 4rem 1.25rem;
+  }
+  .ab-cta {
+    padding: 5rem 1.25rem;
+  }
+  .ab-value-card {
+    padding: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .ab-stat {
+    flex: 1 1 100%;
+  }
+  .ab-hero-title {
+    font-size: 2rem;
+  }
+  .ab-section-title {
+    font-size: 1.8rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ab-ring-1,
+  .ab-ring-2,
+  .ab-cta-ring--1,
+  .ab-cta-ring--2 {
+    animation: none;
+  }
+  .ab-value-card,
+  .ab-stat,
+  .ab-cta-btn {
+    transition: none;
+  }
+}
+
+/* ============================================================
+   RTL SUPPORT FOR ABOUT PAGE
+   ============================================================ */
+[dir="rtl"] .ab-value-card {
+  text-align: right;
+}
+
+[dir="rtl"] .ab-value-line {
+  left: auto;
+  right: 0;
+}
+
+[dir="rtl"] .ab-value-card:hover .ab-value-line {
+  width: 100%;
+}
+
+[dir="rtl"] .ab-stat {
+  text-align: center;
+}
+
+[dir="rtl"] .ab-cta-btn svg {
+  transform: scaleX(-1);
+}
+
+[dir="rtl"] .ab-cta-btn:hover svg {
+  transform: scaleX(-1) translateX(-4px);
+}
+
+[dir="rtl"] .ab-cta-btn--primary {
+  flex-direction: row-reverse;
+}
+
+[dir="rtl"] .ab-eyebrow {
+  flex-direction: row-reverse;
+}
+
+[dir="rtl"] .ab-corner--tl {
+  left: auto;
+  right: 1.5rem;
+  border-left: none;
+  border-right: 1px solid rgba(220, 38, 38, 0.4);
+}
+
+[dir="rtl"] .ab-corner--tr {
+  right: auto;
+  left: 1.5rem;
+  border-right: none;
+  border-left: 1px solid rgba(220, 38, 38, 0.4);
+}
+
+[dir="rtl"] .ab-statement-quote::before,
+[dir="rtl"] .ab-statement-quote::after {
+  display: inline-block;
+}
+
+[dir="rtl"] .ab-hero-ring {
+  right: auto;
+  left: -120px;
+}

@@ -1,0 +1,904 @@
+/* ============================================================
+   PROFILE PAGE  ·  profile.css
+   WHITE BACKGROUND | BLACK TEXT | TOP RED → BOTTOM BLACK GRADIENT
+   Matching Explore Aurexia and Contact Page style
+   ============================================================ */
+
+@import url("https://fonts.googleapis.com/css2?family=Goldman:wght@400;700&display=swap");
+
+:root {
+  --pf-red: #dc2626;
+  --pf-red-dark: #b91c1c;
+  --pf-red-deep: #991b1b;
+  --pf-red-light: #ef4444;
+  --pf-black: #0f172a;
+  --pf-black-soft: #1e293b;
+  --pf-red-soft: rgba(220, 38, 38, 0.08);
+  --pf-bg: #ffffff;
+  --pf-bg-light: #f8fafc;
+  --pf-card-bg: #ffffff;
+  --pf-card-hover: #f8fafc;
+  --pf-border: rgba(220, 38, 38, 0.18);
+  --pf-border-hover: rgba(220, 38, 38, 0.35);
+  --pf-text-dark: #0f172a;
+  --pf-text-muted: #475569;
+  --pf-text-light: #64748b;
+  --pf-text-grey: #64748b;
+  --pf-text-red: #dc2626;
+  --pf-serif: "Goldman", system-ui, sans-serif;
+  --pf-sans: "Goldman", system-ui, sans-serif;
+  --pf-ease: 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+  --pf-error: #ff6b6b;
+  --pf-success: #dc2626;
+}
+
+/* ── Loading ── */
+.pf-loading {
+  min-height: 100vh;
+  background: #ffffff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+}
+.pf-loading-ring {
+  width: 60px;
+  height: 60px;
+  border: 1px solid rgba(220, 38, 38, 0.2);
+  border-top-color: #dc2626;
+  border-radius: 50%;
+  animation: pf-spin 1.2s linear infinite;
+}
+.pf-loading-inner {
+  position: absolute;
+  inset: 8px;
+  border: 1px solid rgba(220, 38, 38, 0.1);
+  border-radius: 50%;
+}
+.pf-loading-text {
+  font-family: var(--pf-sans);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: #64748b;
+  margin: 0;
+}
+
+/* ── Root ── */
+.pf-root {
+  position: relative;
+  min-height: 100vh;
+  width: 100%;
+  background: #ffffff;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 6rem 1.5rem 4rem;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+/* Fine grid texture - Red + Black Mixed (like Explore Aurexia) */
+.pf-grain {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(220, 38, 38, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(15, 23, 42, 0.03) 1px, transparent 1px);
+  background-size: 48px 48px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Ambient Glow - Mixed */
+.pf-ambient {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 800px;
+  height: 600px;
+  background: radial-gradient(
+    circle,
+    rgba(220, 38, 38, 0.04) 0%,
+    rgba(15, 23, 42, 0.02) 40%,
+    transparent 80%
+  );
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Top Border Line - RED + BLACK */
+.pf-root::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(700px, 90%);
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    transparent,
+    rgba(220, 38, 38, 0.5),
+    rgba(15, 23, 42, 0.2),
+    rgba(220, 38, 38, 0.5),
+    transparent
+  );
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Background Lines */
+.pf-bg-lines {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  justify-content: space-between;
+  pointer-events: none;
+  z-index: 0;
+}
+.pf-bg-lines span {
+  width: 1px;
+  height: 100%;
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(220, 38, 38, 0.06) 30%,
+    rgba(15, 23, 42, 0.03) 70%,
+    transparent 100%
+  );
+}
+
+/* Corner accents - RED */
+.pf-corner {
+  position: absolute;
+  width: 32px;
+  height: 32px;
+  z-index: 1;
+  pointer-events: none;
+}
+.pf-corner--tl {
+  top: 1.5rem;
+  left: 1.5rem;
+  border-top: 1px solid rgba(220, 38, 38, 0.4);
+  border-left: 1px solid rgba(220, 38, 38, 0.4);
+}
+.pf-corner--tr {
+  top: 1.5rem;
+  right: 1.5rem;
+  border-top: 1px solid rgba(220, 38, 38, 0.4);
+  border-right: 1px solid rgba(220, 38, 38, 0.4);
+}
+.pf-corner--bl {
+  bottom: 1.5rem;
+  left: 1.5rem;
+  border-bottom: 1px solid rgba(220, 38, 38, 0.4);
+  border-left: 1px solid rgba(220, 38, 38, 0.4);
+}
+.pf-corner--br {
+  bottom: 1.5rem;
+  right: 1.5rem;
+  border-bottom: 1px solid rgba(220, 38, 38, 0.4);
+  border-right: 1px solid rgba(220, 38, 38, 0.4);
+}
+
+/* ── Layout ── */
+.pf-container {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 1000px;
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 0;
+  border: 1px solid rgba(220, 38, 38, 0.2);
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.05);
+  background: #ffffff;
+}
+
+/* ── Aside ── */
+.pf-aside {
+  background: #f8fafc;
+  border-right: 1px solid rgba(220, 38, 38, 0.15);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 3rem 2rem;
+  gap: 1.8rem;
+  position: relative;
+  overflow: hidden;
+}
+.pf-aside::before {
+  content: "";
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(
+    circle,
+    rgba(220, 38, 38, 0.04) 0%,
+    transparent 70%
+  );
+  pointer-events: none;
+}
+
+/* Avatar - RED gradient */
+.pf-avatar-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.pf-avatar-glow {
+  position: absolute;
+  inset: -10px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(220, 38, 38, 0.1) 0%,
+    transparent 70%
+  );
+  animation: pf-pulse 3s ease-in-out infinite;
+  pointer-events: none;
+}
+@keyframes pf-pulse {
+  0%,
+  100% {
+    opacity: 0.4;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(1.05);
+  }
+}
+.pf-avatar-ring {
+  width: 100px;
+  height: 100px;
+  border: 1px solid rgba(220, 38, 38, 0.25);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  background: #ffffff;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+.pf-avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: linear-gradient(180deg, #dc2626 0%, #0f172a 100%);
+  border: 2px solid #dc2626;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.pf-avatar-initials {
+  font-family: var(--pf-serif);
+  font-size: 1.8rem;
+  font-weight: 500;
+  color: #ffffff;
+  letter-spacing: 0.05em;
+}
+
+/* Aside info */
+.pf-aside-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 0.4rem;
+  width: 100%;
+}
+.pf-aside-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: var(--pf-sans);
+  font-size: 0.58rem;
+  font-weight: 700;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: #dc2626;
+  margin: 0;
+}
+.pf-ey-line {
+  display: block;
+  width: 20px;
+  height: 1px;
+  background: #dc2626;
+  opacity: 0.6;
+}
+.pf-aside-name {
+  font-family: var(--pf-serif);
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #0f172a;
+  letter-spacing: 0.06em;
+  margin: 0.2rem 0 0;
+}
+.pf-aside-email {
+  font-family: var(--pf-sans);
+  font-size: 0.65rem;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  color: #64748b;
+  margin: 0;
+  word-break: break-all;
+}
+.pf-aside-divider {
+  width: 40px;
+  height: 1px;
+  background: #dc2626;
+  opacity: 0.6;
+  margin: 0.5rem auto;
+}
+.pf-aside-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  width: 100%;
+  background: #ffffff;
+  border: 1px solid rgba(220, 38, 38, 0.15);
+  border-radius: 12px;
+  padding: 1rem;
+  margin-top: 0.2rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+}
+.pf-meta-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.pf-meta-label {
+  font-family: var(--pf-sans);
+  font-size: 0.6rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #64748b;
+}
+.pf-meta-value {
+  font-family: var(--pf-sans);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  color: #0f172a;
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+.pf-meta-active {
+  color: #dc2626;
+}
+.pf-dot {
+  width: 7px;
+  height: 7px;
+  background: #dc2626;
+  border-radius: 50%;
+  box-shadow: 0 0 6px rgba(220, 38, 38, 0.3);
+  animation: pf-blink 2s ease-in-out infinite;
+}
+@keyframes pf-blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.4;
+  }
+}
+
+/* Sign out button - RED */
+.pf-signout-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.7rem 1.2rem;
+  background: transparent;
+  border: 1px solid rgba(220, 38, 38, 0.3);
+  color: #dc2626;
+  font-family: var(--pf-sans);
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  cursor: pointer;
+  border-radius: 30px;
+  transition: all var(--pf-ease);
+  margin-top: auto;
+  background: #ffffff;
+}
+.pf-signout-btn svg {
+  width: 14px;
+  height: 14px;
+  transition: transform var(--pf-ease);
+}
+.pf-signout-btn:hover {
+  background: rgba(220, 38, 38, 0.08);
+  color: #dc2626;
+  border-color: #dc2626;
+  transform: translateX(3px);
+}
+.pf-signout-btn:hover svg {
+  transform: translateX(3px);
+}
+
+/* ── Main ── */
+.pf-main {
+  background: #ffffff;
+  display: flex;
+  flex-direction: column;
+  padding: 3rem 2.5rem;
+  gap: 0;
+}
+.pf-main-header {
+  margin-bottom: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.pf-main-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  font-family: var(--pf-sans);
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: #dc2626;
+  margin: 0;
+}
+.pf-main-title {
+  font-family: var(--pf-serif);
+  font-size: clamp(1.6rem, 2.5vw, 2.2rem);
+  font-weight: 600;
+  color: #0f172a;
+  line-height: 1.05;
+  margin: 0;
+}
+.pf-main-title em {
+  font-style: italic;
+  background: linear-gradient(180deg, #dc2626 0%, #ef4444 50%, #0f172a 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.pf-main-sub {
+  font-family: var(--pf-sans);
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  color: #64748b;
+  margin: 0;
+}
+
+/* Tabs - RED */
+.pf-tabs {
+  display: flex;
+  gap: 0;
+  border-bottom: 1px solid rgba(220, 38, 38, 0.15);
+  margin-bottom: 2rem;
+}
+.pf-tab {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.8rem 1.5rem;
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid transparent;
+  font-family: var(--pf-sans);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #64748b;
+  cursor: pointer;
+  margin-bottom: -1px;
+  transition: all var(--pf-ease);
+}
+.pf-tab svg {
+  width: 14px;
+  height: 14px;
+  transition: color var(--pf-ease);
+  stroke: #64748b;
+}
+.pf-tab:hover {
+  color: #dc2626;
+}
+.pf-tab:hover svg {
+  stroke: #dc2626;
+}
+.pf-tab--active {
+  color: #dc2626;
+  border-bottom-color: #dc2626;
+}
+.pf-tab--active svg {
+  stroke: #dc2626;
+}
+
+/* Alerts - RED */
+.pf-alert {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  border-radius: 12px;
+  font-family: var(--pf-sans);
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  margin-bottom: 1.5rem;
+}
+.pf-alert--error {
+  background: rgba(255, 107, 107, 0.08);
+  border: 1px solid rgba(255, 107, 107, 0.25);
+  color: #ff6b6b;
+}
+.pf-alert--success {
+  background: rgba(220, 38, 38, 0.08);
+  border: 1px solid rgba(220, 38, 38, 0.25);
+  color: #dc2626;
+}
+.pf-alert--success svg {
+  stroke: #dc2626;
+}
+
+/* Form */
+.pf-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+.pf-form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.6rem 2rem;
+  margin-bottom: 1rem;
+}
+.pf-form-grid--single {
+  grid-template-columns: 1fr;
+}
+
+/* Fields - RED */
+.pf-field {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+.pf-label {
+  font-family: var(--pf-sans);
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: #64748b;
+  transition: color var(--pf-ease);
+  cursor: pointer;
+}
+.pf-field--focused .pf-label,
+.pf-field--filled .pf-label {
+  color: #dc2626;
+}
+.pf-input-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.pf-input-icon {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 16px;
+  height: 16px;
+  color: #94a3b8;
+  transition: color var(--pf-ease);
+  pointer-events: none;
+}
+.pf-input-icon svg {
+  width: 16px;
+  height: 16px;
+  stroke: currentColor;
+}
+.pf-field--focused .pf-input-icon,
+.pf-field--filled .pf-input-icon {
+  color: #dc2626;
+}
+.pf-input {
+  width: 100%;
+  background: transparent;
+  border: none;
+  outline: none;
+  box-shadow: none;
+  -webkit-appearance: none;
+  padding: 0.6rem 2rem 0.6rem 1.8rem;
+  font-family: var(--pf-sans);
+  font-size: 0.85rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: #0f172a;
+  caret-color: #dc2626;
+}
+.pf-input::placeholder {
+  color: #94a3b8;
+  opacity: 0.5;
+}
+.pf-input:read-only {
+  opacity: 0.7;
+}
+.pf-field-line {
+  height: 1px;
+  background: rgba(220, 38, 38, 0.15);
+  position: relative;
+  overflow: hidden;
+}
+.pf-field-line::after {
+  content: "";
+  position: absolute;
+  left: -100%;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: #dc2626;
+  transition: left var(--pf-ease);
+}
+.pf-field--focused .pf-field-line::after {
+  left: 0;
+}
+.pf-eye-btn {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #94a3b8;
+  padding: 0;
+  width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color var(--pf-ease);
+}
+.pf-eye-btn:hover {
+  color: #dc2626;
+}
+.pf-eye-btn svg {
+  width: 16px;
+  height: 16px;
+  stroke: currentColor;
+}
+
+/* Info note - RED */
+.pf-form-info {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: var(--pf-sans);
+  font-size: 0.62rem;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  color: #64748b;
+  margin: 0.5rem 0 1.5rem;
+}
+.pf-form-info svg {
+  stroke: #dc2626;
+  opacity: 0.7;
+}
+
+/* Save button - RED gradient */
+.pf-save-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  align-self: flex-start;
+  padding: 0.9rem 2rem;
+  background: linear-gradient(180deg, #dc2626 0%, #0f172a 100%);
+  border: 1px solid transparent;
+  color: #ffffff;
+  font-family: var(--pf-sans);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  cursor: pointer;
+  border-radius: 40px;
+  transition: all var(--pf-ease);
+  min-height: 48px;
+  min-width: 200px;
+}
+.pf-save-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+.pf-save-btn svg {
+  width: 14px;
+  height: 14px;
+  transition: transform var(--pf-ease);
+  stroke: #ffffff;
+}
+.pf-save-btn:hover:not(:disabled) {
+  background: transparent;
+  border-color: #dc2626;
+  color: #dc2626;
+  box-shadow: 0 8px 25px rgba(220, 38, 38, 0.15);
+  transform: translateY(-2px);
+  gap: 1rem;
+}
+.pf-save-btn:hover:not(:disabled) svg {
+  stroke: #dc2626;
+  transform: translateX(4px);
+}
+
+/* Spinner - RED */
+.pf-spinner {
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-top-color: #ffffff;
+  border-radius: 50%;
+  animation: pf-spin 0.7s linear infinite;
+  flex-shrink: 0;
+}
+.pf-spinner--red {
+  border-color: rgba(220, 38, 38, 0.2);
+  border-top-color: #dc2626;
+  width: 14px;
+  height: 14px;
+}
+@keyframes pf-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Sign out disabled */
+.pf-signout-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .pf-root {
+    padding: 5rem 1rem 3rem;
+  }
+  .pf-container {
+    grid-template-columns: 1fr;
+    border-radius: 16px;
+  }
+  .pf-aside {
+    padding: 2.5rem 2rem;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .pf-form-grid {
+    grid-template-columns: 1fr;
+  }
+  .pf-main {
+    padding: 2rem 1.5rem;
+  }
+  .pf-save-btn {
+    align-self: stretch;
+  }
+}
+@media (max-width: 480px) {
+  .pf-aside {
+    flex-direction: column;
+    padding: 2rem 1.5rem;
+  }
+  .pf-main {
+    padding: 1.5rem 1.25rem;
+  }
+  .pf-tab {
+    padding: 0.6rem 1rem;
+    font-size: 0.6rem;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pf-avatar-glow,
+  .pf-avatar-ring,
+  .pf-dot {
+    animation: none;
+  }
+  .pf-field-line::after,
+  .pf-save-btn,
+  .pf-signout-btn {
+    transition: none;
+  }
+}
+
+/* ============================================================
+   RTL SUPPORT FOR PROFILE PAGE
+   ============================================================ */
+[dir="rtl"] .pf-corner--tl {
+  left: auto;
+  right: 1.5rem;
+  border-left: none;
+  border-right: 1px solid rgba(220, 38, 38, 0.4);
+}
+[dir="rtl"] .pf-corner--tr {
+  right: auto;
+  left: 1.5rem;
+  border-right: none;
+  border-left: 1px solid rgba(220, 38, 38, 0.4);
+}
+[dir="rtl"] .pf-corner--bl {
+  left: auto;
+  right: 1.5rem;
+  border-left: none;
+  border-right: 1px solid rgba(220, 38, 38, 0.4);
+}
+[dir="rtl"] .pf-corner--br {
+  right: auto;
+  left: 1.5rem;
+  border-right: none;
+  border-left: 1px solid rgba(220, 38, 38, 0.4);
+}
+[dir="rtl"] .pf-input-icon {
+  left: auto;
+  right: 0;
+}
+[dir="rtl"] .pf-input {
+  padding: 0.6rem 1.8rem 0.6rem 2rem;
+}
+[dir="rtl"] .pf-eye-btn {
+  right: auto;
+  left: 0;
+}
+[dir="rtl"] .pf-save-btn svg {
+  transform: scaleX(-1);
+}
+[dir="rtl"] .pf-save-btn:hover svg {
+  transform: scaleX(-1) translateX(-4px);
+}
+[dir="rtl"] .pf-signout-btn:hover {
+  transform: translateX(-3px);
+}
+[dir="rtl"] .pf-signout-btn:hover svg {
+  transform: translateX(-3px);
+}
+[dir="rtl"] .pf-aside-eyebrow {
+  flex-direction: row-reverse;
+}
+[dir="rtl"] .pf-main-eyebrow {
+  flex-direction: row-reverse;
+}
+[dir="rtl"] .pf-tab {
+  flex-direction: row-reverse;
+}
+
+/* Remove all browser default focus borders/outlines on inputs */
+.pf-input:focus,
+.pf-input:hover,
+.pf-input:active,
+.pf-input:focus-visible {
+  outline: none !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+/* Remove outline from eye/toggle buttons too */
+.pf-eye-btn:focus,
+.pf-eye-btn:focus-visible {
+  outline: none !important;
+  box-shadow: none !important;
+}

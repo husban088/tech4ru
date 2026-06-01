@@ -1,0 +1,611 @@
+/* ============================================================
+   PANEL DASHBOARD  ·  panel-dashboard.css
+   Product cards exactly matching FeaturedProducts / ProductGrid design
+   ============================================================ */
+
+/* ── Controls Bar ── */
+.pd-controls {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.pd-search-wrap {
+  position: relative;
+  flex: 1;
+  min-width: 240px;
+  max-width: 540px;
+}
+
+.pd-search-icon {
+  position: absolute;
+  left: 1.1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 18px;
+  height: 18px;
+  color: #8b6914;
+  pointer-events: none;
+}
+
+.pd-search-input {
+  width: 100%;
+  padding: 0.85rem 3rem 0.85rem 3rem;
+  background: #ffffff;
+  border: 1px solid rgba(218, 165, 32, 0.2);
+  border-radius: 50px;
+  font-family: "Josefin Sans", sans-serif;
+  font-size: 0.88rem;
+  color: #1a1a1a;
+  outline: none;
+  transition: border-color 0.25s, box-shadow 0.25s;
+}
+
+.pd-search-input:focus {
+  border-color: #daa520;
+  box-shadow: 0 0 0 3px rgba(218, 165, 32, 0.1);
+}
+
+.pd-search-input::placeholder {
+  color: #aaa;
+}
+
+.pd-search-clear {
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #999;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  transition: color 0.2s;
+}
+
+.pd-search-clear:hover {
+  color: #ef4444;
+}
+
+.pd-search-clear svg {
+  width: 16px;
+  height: 16px;
+}
+
+.pd-add-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.85rem 1.8rem;
+  background: #daa520;
+  border: none;
+  border-radius: 50px;
+  font-family: "Josefin Sans", sans-serif;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #1a1a1a;
+  text-decoration: none;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.25s, transform 0.25s, box-shadow 0.25s;
+}
+
+.pd-add-btn:hover {
+  background: #f0c040;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(218, 165, 32, 0.3);
+}
+
+.pd-add-btn svg {
+  width: 16px;
+  height: 16px;
+}
+
+.pd-search-info {
+  font-family: "Josefin Sans", sans-serif;
+  font-size: 0.82rem;
+  color: #8b6914;
+  margin-bottom: 1.5rem;
+  letter-spacing: 0.04em;
+}
+
+.pd-search-info em {
+  font-style: normal;
+  font-weight: 600;
+}
+
+/* ── Loading ── */
+.pd-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 5rem 2rem;
+  color: #8b6914;
+  font-family: "Josefin Sans", sans-serif;
+  font-size: 0.85rem;
+}
+
+.pd-spinner {
+  width: 36px;
+  height: 36px;
+  border: 3px solid rgba(218, 165, 32, 0.2);
+  border-top-color: #daa520;
+  border-radius: 50%;
+  animation: pd-spin 0.8s linear infinite;
+}
+
+/* ── Category Section ── */
+.pd-categories-container {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.pd-category-section {
+  background: #ffffff;
+  border: 1px solid rgba(218, 165, 32, 0.12);
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.pd-category-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.3rem 2rem;
+  background: rgba(218, 165, 32, 0.04);
+  cursor: pointer;
+  user-select: none;
+  transition: background 0.25s;
+}
+
+.pd-category-header:hover {
+  background: rgba(218, 165, 32, 0.08);
+}
+
+.pd-category-header-left {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.pd-category-expand {
+  width: 20px;
+  height: 20px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #8b6914;
+}
+
+.pd-category-expand svg {
+  width: 18px;
+  height: 18px;
+}
+
+.pd-category-title {
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: #1a1a1a;
+  margin: 0;
+}
+
+.pd-category-count {
+  font-family: "Josefin Sans", sans-serif;
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  color: #8b6914;
+  background: rgba(218, 165, 32, 0.1);
+  padding: 0.3rem 0.9rem;
+  border-radius: 25px;
+}
+
+/* ── Subcategory Block ── */
+.pd-subcategories-container {
+  padding: 1.5rem 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+}
+
+.pd-subcategory-block {
+  border-bottom: 1px solid rgba(218, 165, 32, 0.08);
+  padding-bottom: 2rem;
+}
+
+.pd-subcategory-block:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.pd-subcategory-header {
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+  margin-bottom: 1.2rem;
+  padding-bottom: 0.7rem;
+  border-bottom: 1px solid rgba(218, 165, 32, 0.1);
+}
+
+.pd-subcategory-title {
+  font-family: "Josefin Sans", sans-serif;
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #8b6914;
+  margin: 0;
+}
+
+.pd-subcategory-count {
+  font-family: "Josefin Sans", sans-serif;
+  font-size: 0.7rem;
+  font-weight: 400;
+  color: #999;
+}
+
+/* ── Products Grid — matches fp/pg card grid ── */
+.pd-products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1.25rem;
+}
+
+/* ── Product Card — matches FeaturedProducts / ProductGrid design exactly ── */
+.pd-card {
+  display: flex;
+  flex-direction: column;
+  background: #ffffff;
+  border: 1px solid rgba(218, 165, 32, 0.12);
+  border-radius: 16px;
+  overflow: hidden;
+  position: relative;
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.35s,
+    box-shadow 0.35s;
+  /* No cursor: pointer — no click to product page */
+}
+
+.pd-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(218, 165, 32, 0.3);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(218, 165, 32, 0.1);
+}
+
+/* ── Image Area ── */
+.pd-card-img {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4/3;
+  background: rgba(218, 165, 32, 0.04);
+  overflow: hidden;
+}
+
+.pd-card-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+  display: block;
+}
+
+.pd-card:hover .pd-card-img img {
+  transform: scale(1.05);
+}
+
+.pd-card-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(218, 165, 32, 0.06);
+  color: rgba(218, 165, 32, 0.35);
+}
+
+.pd-card-placeholder svg {
+  width: 44px;
+  height: 44px;
+}
+
+/* ── Badges ── */
+.pd-card-badges {
+  position: absolute;
+  top: 0.6rem;
+  left: 0.6rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  z-index: 2;
+  /* Shift down slightly so delete button doesn't overlap */
+  top: 2.8rem;
+}
+
+.pd-badge {
+  font-family: "Josefin Sans", sans-serif;
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.22rem 0.55rem;
+  border-radius: 25px;
+  backdrop-filter: blur(6px);
+  pointer-events: none;
+}
+
+.pd-badge--featured {
+  background: rgba(218, 165, 32, 0.9);
+  color: #1a1a1a;
+}
+
+.pd-badge--discount {
+  background: rgba(239, 68, 68, 0.88);
+  color: #fff;
+}
+
+.pd-badge--inactive {
+  background: rgba(100, 100, 100, 0.8);
+  color: #fff;
+}
+
+/* ── Action Buttons — Delete (top-left), Edit (top-right) ── */
+.pd-action-btn {
+  position: absolute;
+  top: 0.55rem;
+  width: 34px;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  z-index: 10;
+  transition: transform 0.2s ease, opacity 0.2s ease, background 0.2s ease;
+  opacity: 0;
+  text-decoration: none;
+}
+
+.pd-card:hover .pd-action-btn {
+  opacity: 1;
+}
+
+/* Delete — top-left */
+.pd-action-btn--delete {
+  left: 0.55rem;
+  background: rgba(239, 68, 68, 0.92);
+  color: #fff;
+  backdrop-filter: blur(6px);
+}
+
+.pd-action-btn--delete:hover {
+  background: #ef4444;
+  transform: scale(1.1);
+}
+
+/* Edit — top-right */
+.pd-action-btn--edit {
+  right: 0.55rem;
+  background: rgba(218, 165, 32, 0.92);
+  color: #1a1a1a;
+  backdrop-filter: blur(6px);
+}
+
+.pd-action-btn--edit:hover {
+  background: #daa520;
+  transform: scale(1.1);
+}
+
+.pd-action-btn svg {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+}
+
+/* ── Card Body ── */
+.pd-card-body {
+  padding: 0.9rem 1rem 0.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  flex: 1;
+}
+
+.pd-card-brand {
+  font-family: "Josefin Sans", sans-serif;
+  font-size: 0.65rem;
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #8b6914;
+  margin: 0;
+}
+
+.pd-card-name {
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin: 0;
+  line-height: 1.35;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Price Row */
+.pd-card-price-row {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.pd-card-price {
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #daa520;
+}
+
+.pd-card-orig {
+  font-family: "Josefin Sans", sans-serif;
+  font-size: 0.72rem;
+  color: #999;
+  text-decoration: line-through;
+}
+
+.pd-card-discount-text {
+  font-family: "Josefin Sans", sans-serif;
+  font-size: 0.62rem;
+  font-weight: 700;
+  color: #ef4444;
+  background: rgba(239, 68, 68, 0.1);
+  padding: 0.15rem 0.45rem;
+  border-radius: 20px;
+}
+
+/* Tags */
+.pd-card-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: 0.1rem;
+}
+
+.pd-tag {
+  font-family: "Josefin Sans", sans-serif;
+  font-size: 0.6rem;
+  font-weight: 400;
+  letter-spacing: 0.06em;
+  color: #666;
+  background: rgba(218, 165, 32, 0.07);
+  padding: 0.2rem 0.6rem;
+  border-radius: 20px;
+}
+
+.pd-tag--variant {
+  color: #8b6914;
+  background: rgba(218, 165, 32, 0.12);
+}
+
+/* Stock */
+.pd-card-stock {
+  font-family: "Josefin Sans", sans-serif;
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-top: 0.2rem;
+}
+
+.pd-card-stock.in {
+  color: #22c55e;
+}
+
+.pd-card-stock.low {
+  color: #f59e0b;
+}
+
+.pd-card-stock.out {
+  color: #ef4444;
+}
+
+/* Bottom accent line */
+.pd-card-line {
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(218, 165, 32, 0.4) 50%,
+    transparent 100%
+  );
+  transform: scaleX(0);
+  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  transform-origin: center;
+}
+
+.pd-card:hover .pd-card-line {
+  transform: scaleX(1);
+}
+
+/* ── Responsive ── */
+@media (max-width: 1200px) {
+  .pd-products-grid {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  }
+}
+
+@media (max-width: 900px) {
+  .pd-subcategories-container {
+    padding: 1.2rem 1.2rem;
+  }
+
+  .pd-category-header {
+    padding: 1rem 1.2rem;
+  }
+
+  .pd-products-grid {
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 1rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .pd-controls {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .pd-search-wrap {
+    max-width: 100%;
+  }
+
+  .pd-add-btn {
+    justify-content: center;
+  }
+
+  .pd-products-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+  }
+
+  .pd-card-img {
+    aspect-ratio: 1/1;
+  }
+
+  .pd-action-btn {
+    opacity: 1; /* Always visible on mobile */
+    width: 30px;
+    height: 30px;
+  }
+
+  .pd-action-btn svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  .pd-card-name {
+    font-size: 0.88rem;
+  }
+
+  .pd-card-price {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 380px) {
+  .pd-products-grid {
+    grid-template-columns: 1fr;
+  }
+}

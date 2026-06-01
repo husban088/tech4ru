@@ -1,0 +1,413 @@
+/* ShippingSection.css — WHITE BACKGROUND | BLACK TEXT | RED GRADIENTS */
+
+.ss-shipping-section {
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
+  animation: ss-fade-in 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes ss-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.ss-section-title {
+  font-family: "Goldman", system-ui, sans-serif;
+  font-size: clamp(1.2rem, 4vw, 1.4rem);
+  font-weight: 600;
+  color: #0f172a;
+  margin: 0;
+  letter-spacing: -0.01em;
+}
+
+.ss-section-title em {
+  font-style: italic;
+  background: linear-gradient(180deg, #dc2626 0%, #ef4444 50%, #0f172a 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  margin-right: 0.3em;
+  font-weight: 700;
+}
+
+.ss-fields-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+}
+
+@media (max-width: 768px) {
+  .ss-fields-grid {
+    gap: 1.25rem;
+  }
+}
+
+@media (max-width: 580px) {
+  .ss-fields-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+}
+
+.ss-field {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.ss-field--full {
+  grid-column: span 2;
+}
+.ss-field--half {
+  grid-column: span 1;
+}
+
+@media (max-width: 580px) {
+  .ss-field--full,
+  .ss-field--half {
+    grid-column: span 1;
+  }
+}
+
+/* State dropdown */
+.ss-state-field {
+  position: relative;
+  grid-column: span 1;
+}
+
+.ss-label {
+  font-family: "Goldman", system-ui, sans-serif;
+  font-size: 0.58rem;
+  font-weight: 600;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: #64748b;
+  transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.ss-label-star {
+  color: #dc2626;
+  font-size: 0.7rem;
+}
+
+.ss-field--focused .ss-label,
+.ss-field--filled .ss-label {
+  color: #dc2626;
+  transform: translateY(-2px);
+}
+
+.ss-input-wrap {
+  position: relative;
+}
+
+/* Select */
+.ss-select-wrap {
+  position: relative;
+  background: transparent;
+  border-radius: 0;
+  overflow: visible;
+}
+
+.ss-select {
+  padding: 0.6rem 2rem 0.6rem 0;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  transition: all 0.3s ease;
+}
+
+.ss-select option {
+  background: #ffffff;
+  color: #0f172a;
+  padding: 12px;
+  font-family: "Goldman", system-ui, sans-serif;
+  font-size: 0.8rem;
+}
+
+.ss-select option:checked {
+  background: rgba(220, 38, 38, 0.1);
+  color: #dc2626;
+}
+
+/* Dropdown arrow */
+.ss-select-arrow {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  color: #64748b;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  width: 20px;
+  height: 20px;
+  background: rgba(220, 38, 38, 0.05);
+  border-radius: 50%;
+}
+
+.ss-field--focused .ss-select-arrow {
+  color: #dc2626;
+  transform: translateY(-50%) rotate(180deg);
+  background: rgba(220, 38, 38, 0.12);
+}
+
+.ss-select-glow {
+  position: absolute;
+  inset: -2px;
+  border-radius: 4px;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  background: radial-gradient(
+    circle at center,
+    rgba(220, 38, 38, 0.08),
+    transparent
+  );
+}
+
+.ss-field--focused .ss-select-glow {
+  opacity: 1;
+}
+
+/* Input & Select - NO border, NO outline ever */
+.ss-input,
+.ss-select {
+  width: 100%;
+  background: transparent;
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+  padding: 0.6rem 0;
+  font-family: "Goldman", system-ui, sans-serif;
+  font-size: clamp(0.75rem, 3vw, 0.8rem);
+  font-weight: 400;
+  letter-spacing: 0.05em;
+  color: #0f172a;
+  caret-color: #dc2626;
+}
+
+.ss-input:focus,
+.ss-input:active,
+.ss-input:hover,
+.ss-select:focus,
+.ss-select:active,
+.ss-select:hover,
+.ss-input:focus-visible,
+.ss-select:focus-visible {
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.ss-input::placeholder {
+  color: #94a3b8;
+  opacity: 0.6;
+}
+
+/* Field line */
+.ss-field-line {
+  height: 1px;
+  background: rgba(220, 38, 38, 0.15);
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.ss-field-line::after {
+  content: "";
+  position: absolute;
+  left: -100%;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, #dc2626, #ef4444, #dc2626);
+  transition: left 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.ss-field--focused .ss-field-line::after {
+  left: 0;
+}
+
+.ss-field--error .ss-field-line {
+  background: rgba(255, 80, 80, 0.3);
+}
+
+.ss-field--error .ss-field-line::after {
+  background: #ff5050;
+}
+
+.ss-field--error .ss-label {
+  color: #ff8080;
+}
+
+/* Phone prefix */
+.ss-phone-prefix {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(220, 38, 38, 0.08);
+  padding: 4px 10px;
+  border-radius: 8px;
+  font-size: 0.7rem;
+  pointer-events: none;
+  z-index: 1;
+  transition: all 0.3s ease;
+}
+
+.ss-field--focused .ss-phone-prefix {
+  background: rgba(220, 38, 38, 0.14);
+  box-shadow: 0 0 8px rgba(220, 38, 38, 0.08);
+}
+
+@media (max-width: 480px) {
+  .ss-phone-prefix {
+    padding: 3px 8px;
+    gap: 4px;
+    font-size: 0.6rem;
+  }
+}
+
+.ss-phone-flag {
+  font-size: clamp(0.8rem, 3vw, 1rem);
+}
+
+.ss-phone-code {
+  color: #dc2626;
+  font-family: monospace;
+  font-weight: 600;
+}
+
+.ss-input-with-prefix {
+  padding-left: 100px !important;
+}
+
+@media (max-width: 480px) {
+  .ss-input-with-prefix {
+    padding-left: 85px !important;
+  }
+}
+
+/* Error & hint */
+.ss-error-text {
+  font-family: "Goldman", system-ui, sans-serif;
+  font-size: 0.55rem;
+  color: #ff8080;
+  margin-top: 0.25rem;
+  display: block;
+  animation: ss-shake 0.3s ease;
+}
+
+@keyframes ss-shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-3px);
+  }
+  75% {
+    transform: translateX(3px);
+  }
+}
+
+.ss-hint-text {
+  font-family: "Goldman", system-ui, sans-serif;
+  font-size: 0.5rem;
+  color: #64748b;
+  margin-top: 0.25rem;
+  display: block;
+  transition: all 0.3s ease;
+}
+
+.ss-hint-success {
+  color: #dc2626;
+}
+
+/* Hover */
+.ss-field:hover .ss-field-line {
+  background: rgba(220, 38, 38, 0.25);
+}
+
+.ss-select:hover {
+  color: #dc2626;
+}
+
+/* Responsive */
+@media (max-width: 580px) {
+  .ss-field {
+    gap: 0.3rem;
+  }
+  .ss-label {
+    font-size: 0.52rem;
+  }
+  .ss-input,
+  .ss-select {
+    padding: 0.5rem 0;
+    font-size: 0.75rem;
+  }
+  .ss-error-text {
+    font-size: 0.5rem;
+  }
+}
+
+.ss-select:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.ss-select:focus-visible {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.ss-field--filled .ss-select {
+  font-weight: 500;
+  color: #0f172a;
+}
+
+/* Smooth transitions */
+.ss-field,
+.ss-input,
+.ss-select,
+.ss-label,
+.ss-field-line {
+  transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.ss-select-wrap:active .ss-select-arrow {
+  transform: translateY(-50%) scale(0.95);
+}
+
+@keyframes ss-state-pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.15);
+  }
+  70% {
+    box-shadow: 0 0 0 4px rgba(220, 38, 38, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(220, 38, 38, 0);
+  }
+}
+
+.ss-field--filled.ss-state-field {
+  animation: ss-state-pulse 0.6s ease-out;
+}

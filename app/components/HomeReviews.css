@@ -1,0 +1,1047 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+   HOME REVIEWS — TOP RED → BOTTOM BLACK GRADIENTS | YELLOW STARS | BLACK TEXT
+   Fully responsive: Desktop 3 cards | Tablet 2 | Mobile 1
+   (Exactly like QuickHighlights Blue + Black style but with RED + BLACK)
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+@import url("https://fonts.googleapis.com/css2?family=Goldman:wght@400;700&display=swap");
+
+/* ── CSS Variables – White Background with TOP RED → BOTTOM BLACK Mixed Accents ── */
+.hr-section {
+  --hr-red: #dc2626;
+  --hr-red-dark: #b91c1c;
+  --hr-red-deep: #991b1b;
+  --hr-red-light: #ef4444;
+  --hr-black: #0f172a;
+  --hr-black-soft: #1e293b;
+  --hr-red-glow: rgba(220, 38, 38, 0.12);
+  --hr-bg: #ffffff;
+  --hr-card-bg: #ffffff;
+  --hr-card-border: rgba(220, 38, 38, 0.25);
+  --hr-text: #0f172a;
+  --hr-text-muted: #475569;
+  --hr-text-light: #64748b;
+  --hr-star: #fbbf24;
+  --hr-star-dim: rgba(251, 191, 36, 0.35);
+  --hr-radius: 24px;
+  --hr-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --hr-ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --hr-shadow-sm: 0 8px 30px rgba(0, 0, 0, 0.04);
+  --hr-shadow-md: 0 15px 40px rgba(220, 38, 38, 0.08);
+  --hr-shadow-lg: 0 25px 50px rgba(220, 38, 38, 0.12);
+}
+
+/* ── Section Container ─────────────────────────────────────────────────── */
+.hr-section {
+  position: relative;
+  background: #ffffff;
+  padding: 5rem 0 6rem;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+/* Top Border Line - TOP RED → BOTTOM BLACK Mixed */
+.hr-section::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(700px, 90%);
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    transparent,
+    rgba(220, 38, 38, 0.5),
+    rgba(15, 23, 42, 0.2),
+    rgba(220, 38, 38, 0.5),
+    transparent
+  );
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Grain texture matching other sections */
+.hr-section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.015'/%3E%3C/svg%3E");
+  opacity: 0.3;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── Animated Background Orbs – RED (subtle) ──────────────────────────── */
+.hr-bg-orb {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  filter: blur(100px);
+  z-index: 0;
+  animation: hr-orb-float 20s ease-in-out infinite alternate;
+}
+
+.hr-bg-orb--1 {
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(
+    circle,
+    rgba(220, 38, 38, 0.06) 0%,
+    transparent 70%
+  );
+  top: -200px;
+  left: -150px;
+  animation-delay: 0s;
+}
+
+.hr-bg-orb--2 {
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(
+    circle,
+    rgba(220, 38, 38, 0.05) 0%,
+    transparent 70%
+  );
+  bottom: -150px;
+  right: -100px;
+  animation-delay: -5s;
+}
+
+.hr-bg-orb--3 {
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(
+    circle,
+    rgba(220, 38, 38, 0.04) 0%,
+    transparent 70%
+  );
+  top: 40%;
+  left: 30%;
+  animation-delay: -10s;
+}
+
+@keyframes hr-orb-float {
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+  100% {
+    transform: translate(30px, 30px) scale(1.05);
+  }
+}
+
+/* ── Subtle Grid Pattern – RED Tint ─────────────────────────────────── */
+.hr-bg-grid {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background-image:
+    linear-gradient(rgba(220, 38, 38, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(220, 38, 38, 0.03) 1px, transparent 1px);
+  background-size: 50px 50px;
+  pointer-events: none;
+}
+
+/* ── Decorative bg lines ── */
+.hr-bg-lines {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  justify-content: space-between;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.hr-bg-lines span {
+  width: 1px;
+  height: 100%;
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(220, 38, 38, 0.08) 30%,
+    rgba(15, 23, 42, 0.04) 70%,
+    transparent 100%
+  );
+}
+
+/* ── RED Sparkle Decoration ───────────────────────────────────────── */
+.hr-sparkle {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: var(--hr-red);
+  border-radius: 50%;
+  opacity: 0;
+  animation: hr-sparkle-pulse 3s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 1;
+  box-shadow: 0 0 6px rgba(220, 38, 38, 0.5);
+}
+
+.hr-sparkle--1 {
+  top: 15%;
+  left: 10%;
+  animation-delay: 0s;
+}
+.hr-sparkle--2 {
+  top: 25%;
+  right: 15%;
+  animation-delay: 1.5s;
+}
+.hr-sparkle--3 {
+  bottom: 20%;
+  left: 20%;
+  animation-delay: 0.8s;
+}
+.hr-sparkle--4 {
+  bottom: 30%;
+  right: 25%;
+  animation-delay: 2.2s;
+}
+.hr-sparkle--5 {
+  top: 50%;
+  left: 5%;
+  animation-delay: 1s;
+}
+.hr-sparkle--6 {
+  top: 60%;
+  right: 8%;
+  animation-delay: 2.5s;
+}
+
+@keyframes hr-sparkle-pulse {
+  0%,
+  100% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  50% {
+    opacity: 0.5;
+    transform: scale(1);
+  }
+}
+
+/* ── Content Wrapper ──────────────────────────────────────────────────── */
+.hr-content {
+  position: relative;
+  z-index: 2;
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   HEADER SECTION — TOP RED → BOTTOM BLACK Mixed Theme
+   ═══════════════════════════════════════════════════════════════════════ */
+.hr-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.hr-eyebrow-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+  justify-content: center;
+}
+
+.hr-eyebrow {
+  font-family: "Courier New", monospace;
+  font-size: 10px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  background: linear-gradient(180deg, #dc2626 0%, #0f172a 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  white-space: nowrap;
+}
+
+.hr-eyebrow-line {
+  height: 1px;
+  width: 60px;
+  background: linear-gradient(90deg, #dc2626, #0f172a, transparent);
+}
+
+[dir="rtl"] .hr-eyebrow-line {
+  background: linear-gradient(90deg, transparent, #0f172a, #dc2626);
+}
+
+.hr-title {
+  font-family: "Goldman", system-ui, sans-serif;
+  font-size: clamp(2rem, 4.5vw, 3.5rem);
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0 0 1rem;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+
+.hr-title em {
+  font-style: italic;
+  background: linear-gradient(180deg, #dc2626 0%, #0f172a 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  position: relative;
+}
+
+.hr-accent-bar {
+  width: 52px;
+  height: 3px;
+  background: linear-gradient(90deg, #dc2626, #0f172a, #b91c1c);
+  margin: 0 auto 1rem;
+  border-radius: 99px;
+}
+
+.hr-subtitle {
+  font-family: "Goldman", system-ui, sans-serif;
+  font-size: 0.9rem;
+  color: #475569;
+  letter-spacing: 0.05em;
+  margin: 0;
+  max-width: 550px;
+  margin: 0 auto;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   STATS SECTION — Glassmorphism Cards (RED Theme)
+   ═══════════════════════════════════════════════════════════════════════ */
+.hr-stats {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3rem;
+  margin-bottom: 3.5rem;
+  flex-wrap: wrap;
+}
+
+.hr-stat {
+  text-align: center;
+  background: rgba(248, 250, 252, 0.8);
+  backdrop-filter: blur(10px);
+  padding: 1rem 2rem;
+  border-radius: 60px;
+  border: 1px solid rgba(220, 38, 38, 0.25);
+  transition: all 0.4s var(--hr-ease);
+  min-width: 140px;
+}
+
+.hr-stat:hover {
+  transform: translateY(-5px);
+  border-color: #dc2626;
+  box-shadow: var(--hr-shadow-md);
+  background: #ffffff;
+}
+
+.hr-stat-num {
+  display: block;
+  font-family: "Goldman", system-ui, sans-serif;
+  font-size: 2rem;
+  font-weight: 700;
+  background: linear-gradient(180deg, #dc2626 0%, #0f172a 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  line-height: 1;
+  margin-bottom: 0.3rem;
+}
+
+.hr-stat-label {
+  display: block;
+  font-family: "Goldman", system-ui, sans-serif;
+  font-size: 0.55rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #64748b;
+}
+
+.hr-stat-sep {
+  width: 1px;
+  height: 50px;
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    #dc2626,
+    #0f172a,
+    transparent
+  );
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   SLIDER STAGE — Smooth Transitions
+   ═══════════════════════════════════════════════════════════════════════ */
+.hr-stage-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  user-select: none;
+  margin: 0.5rem 0 1.5rem;
+}
+
+/* Cards Grid */
+.hr-cards-grid {
+  display: grid;
+  flex: 1;
+  min-width: 0;
+  gap: 1.5rem;
+  transition: all 0.4s var(--hr-ease);
+}
+
+.hr-cards-grid--3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+.hr-cards-grid--2 {
+  grid-template-columns: repeat(2, 1fr);
+}
+.hr-cards-grid--1 {
+  grid-template-columns: 1fr;
+}
+
+/* Slide Animations */
+.hr-cards-grid--anim-right {
+  animation: hr-slide-left 0.45s var(--hr-ease) both;
+}
+.hr-cards-grid--anim-left {
+  animation: hr-slide-right 0.45s var(--hr-ease) both;
+}
+.hr-cards-grid--anim-idle {
+  animation: none;
+}
+
+@keyframes hr-slide-left {
+  from {
+    transform: translateX(20px);
+    opacity: 0.7;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+@keyframes hr-slide-right {
+  from {
+    transform: translateX(-20px);
+    opacity: 0.7;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   REVIEW CARD — White Card with TOP RED → BOTTOM BLACK Accents | Black Text
+   ═══════════════════════════════════════════════════════════════════════ */
+.hr-card {
+  position: relative;
+  background: #ffffff;
+  backdrop-filter: blur(0px);
+  border: 1px solid rgba(220, 38, 38, 0.25);
+  border-radius: var(--hr-radius);
+  padding: 2rem 1.5rem 1.8rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  transition: all 0.5s var(--hr-ease);
+  cursor: pointer;
+  box-shadow: var(--hr-shadow-sm);
+  overflow: hidden;
+}
+
+/* Card Hover Effects */
+.hr-card:hover {
+  transform: translateY(-12px) scale(1.02);
+  border-color: #dc2626;
+  box-shadow: var(--hr-shadow-lg);
+  background: #f8fafc;
+}
+
+/* Animated Shimmer Border Top - RED */
+.hr-card-shimmer {
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    #dc2626,
+    #ef4444,
+    transparent
+  );
+  transition: left 0.6s var(--hr-ease);
+  pointer-events: none;
+}
+
+.hr-card:hover .hr-card-shimmer {
+  left: 100%;
+}
+
+/* Floating Sparkle on Hover */
+.hr-card::after {
+  content: "✦";
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  font-size: 12px;
+  color: #dc2626;
+  opacity: 0;
+  transform: translate(5px, 5px);
+  transition: all 0.4s var(--hr-ease-bounce);
+  pointer-events: none;
+}
+
+.hr-card:hover::after {
+  opacity: 0.6;
+  transform: translate(0, 0);
+}
+
+/* Decorative Quote Mark - TOP RED → BOTTOM BLACK Gradient */
+.hr-card-quote {
+  position: absolute;
+  top: 0.8rem;
+  right: 1.2rem;
+  font-family: "Goldman", system-ui, sans-serif;
+  font-size: 4.5rem;
+  line-height: 1;
+  background: linear-gradient(180deg, #dc2626 0%, #0f172a 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  pointer-events: none;
+  transition: all 0.4s ease;
+}
+
+.hr-card:hover .hr-card-quote {
+  background: linear-gradient(180deg, #dc2626, #b91c1c);
+  -webkit-background-clip: text;
+  background-clip: text;
+  transform: scale(1.05);
+}
+
+/* ── Avatar — Premium Round with RED Ring ───────────────────────────── */
+.hr-card-avatar-wrap {
+  position: relative;
+  width: 85px;
+  height: 85px;
+  flex-shrink: 0;
+  margin-bottom: 1rem;
+  z-index: 2;
+}
+
+.hr-card-avatar-img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  border: 3px solid rgba(220, 38, 38, 0.3);
+  box-shadow:
+    0 0 0 4px rgba(220, 38, 38, 0.05),
+    0 10px 25px rgba(0, 0, 0, 0.08);
+  transition: all 0.45s var(--hr-ease-bounce);
+}
+
+.hr-card:hover .hr-card-avatar-img {
+  border-color: #dc2626;
+  box-shadow:
+    0 0 0 6px rgba(220, 38, 38, 0.1),
+    0 15px 35px rgba(0, 0, 0, 0.1);
+  transform: scale(1.05);
+}
+
+/* Fallback Initial Avatar - TOP RED → BOTTOM BLACK Gradient */
+.hr-card-avatar-fallback {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: linear-gradient(180deg, #dc2626 0%, #0f172a 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Goldman", system-ui, sans-serif;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #ffffff;
+  border: 3px solid rgba(220, 38, 38, 0.3);
+  transition: all 0.45s var(--hr-ease-bounce);
+}
+
+.hr-card:hover .hr-card-avatar-fallback {
+  border-color: #dc2626;
+  transform: scale(1.05);
+  box-shadow: 0 0 0 6px rgba(220, 38, 38, 0.1);
+}
+
+/* Verified Badge on Avatar - RED */
+.hr-card-badge {
+  position: absolute;
+  bottom: -2px;
+  right: -4px;
+  width: 26px;
+  height: 26px;
+  background: linear-gradient(180deg, #dc2626 0%, #0f172a 100%);
+  border-radius: 50%;
+  border: 2.5px solid #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s var(--hr-ease-bounce);
+}
+
+.hr-card:hover .hr-card-badge {
+  transform: scale(1.15) rotate(5deg);
+  box-shadow: 0 5px 15px rgba(220, 38, 38, 0.3);
+}
+
+.hr-card-badge svg {
+  width: 12px;
+  height: 12px;
+  stroke: #ffffff;
+  stroke-width: 2.5;
+}
+
+/* ── Name - BLACK TEXT with RED hover gradient ── */
+.hr-card-name {
+  font-family: "Goldman", system-ui, sans-serif;
+  font-size: 1.2rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: #0f172a;
+  margin: 0 0 0.5rem;
+  transition: all 0.3s ease;
+}
+
+.hr-card:hover .hr-card-name {
+  background: linear-gradient(180deg, #dc2626 0%, #dc2626 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* ── Stars - YELLOW COLOR (unchanged) ── */
+.hr-stars {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-bottom: 0.9rem;
+}
+
+.hr-star {
+  width: 18px;
+  height: 18px;
+  transition: all 0.25s var(--hr-ease-bounce);
+}
+
+.hr-star polygon {
+  fill: none;
+  stroke: #fbbf24;
+  stroke-width: 1.5;
+  opacity: 0.35;
+}
+
+.hr-star--filled polygon {
+  fill: #fbbf24;
+  opacity: 1;
+}
+
+.hr-card:hover .hr-star--filled {
+  transform: scale(1.2);
+  filter: drop-shadow(0 0 3px rgba(251, 191, 36, 0.4));
+}
+
+/* ── Review Title - BLACK TEXT with RED hover ── */
+.hr-card-title {
+  font-family: "Goldman", system-ui, sans-serif;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #0f172a;
+  margin: 0 0 0.8rem;
+  line-height: 1.4;
+  transition: color 0.3s ease;
+}
+
+.hr-card:hover .hr-card-title {
+  color: #dc2626;
+}
+
+/* ── Review Body (Description) - BLACK TEXT with RED hover ── */
+.hr-card-body {
+  font-family: "Goldman", system-ui, sans-serif;
+  font-size: 0.9rem;
+  line-height: 1.7;
+  color: #475569;
+  margin: 0 0 1.2rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  transition: color 0.3s ease;
+}
+
+.hr-card:hover .hr-card-body {
+  color: #dc2626;
+}
+
+/* ── Product Tag - TOP RED → BOTTOM BLACK Theme ── */
+.hr-card-product {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: "Goldman", system-ui, sans-serif;
+  font-size: 0.55rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #dc2626;
+  background: rgba(220, 38, 38, 0.08);
+  border: 1px solid rgba(220, 38, 38, 0.25);
+  padding: 0.4rem 1rem;
+  border-radius: 50px;
+  transition: all 0.35s var(--hr-ease);
+  margin-top: 0.2rem;
+}
+
+.hr-card:hover .hr-card-product {
+  background: rgba(220, 38, 38, 0.15);
+  border-color: #dc2626;
+  transform: translateX(3px);
+  color: #dc2626;
+}
+
+.hr-card-product svg {
+  width: 11px;
+  height: 11px;
+  stroke: #dc2626;
+}
+
+/* Bottom Animated RED Line */
+.hr-card-bottom-line {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    #dc2626,
+    #ef4444,
+    #dc2626,
+    transparent
+  );
+  transform: scaleX(0);
+  transition: transform 0.5s var(--hr-ease);
+  border-radius: 0 0 20px 20px;
+}
+
+.hr-card:hover .hr-card-bottom-line {
+  transform: scaleX(1);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   NAVIGATION ARROWS — TOP RED → BOTTOM BLACK Theme
+   ═══════════════════════════════════════════════════════════════════════ */
+.hr-arrow {
+  flex-shrink: 0;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(220, 38, 38, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #dc2626;
+  transition: all 0.35s var(--hr-ease-bounce);
+  backdrop-filter: blur(8px);
+  box-shadow: var(--hr-shadow-sm);
+}
+
+.hr-arrow:hover {
+  background: linear-gradient(180deg, #dc2626 0%, #0f172a 100%);
+  border-color: #dc2626;
+  color: #ffffff;
+  box-shadow: 0 8px 25px rgba(220, 38, 38, 0.3);
+  transform: scale(1.12);
+}
+
+.hr-arrow svg {
+  width: 20px;
+  height: 20px;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   DOT INDICATORS — RED Theme
+   ═══════════════════════════════════════════════════════════════════════ */
+.hr-dots {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  margin-top: 2rem;
+}
+
+.hr-dot {
+  width: 32px;
+  height: 3px;
+  border-radius: 3px;
+  background: rgba(220, 38, 38, 0.25);
+  border: none;
+  cursor: pointer;
+  transition: all 0.35s var(--hr-ease);
+  padding: 0;
+}
+
+.hr-dot--active {
+  background: linear-gradient(90deg, #dc2626, #0f172a, #b91c1c);
+  width: 48px;
+  box-shadow: 0 0 8px rgba(220, 38, 38, 0.4);
+}
+
+.hr-dot:hover:not(.hr-dot--active) {
+  background: rgba(220, 38, 38, 0.5);
+  transform: scaleX(1.1);
+  width: 40px;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   SKELETON LOADING — Light Theme Shimmer
+   ═══════════════════════════════════════════════════════════════════════ */
+.hr-skeleton-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.hr-skeleton-card {
+  background: rgba(248, 250, 252, 0.8);
+  backdrop-filter: blur(4px);
+  border: 1px solid rgba(220, 38, 38, 0.15);
+  border-radius: var(--hr-radius);
+  padding: 2rem 1.5rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.hr-skeleton-circle {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: linear-gradient(90deg, #e2e8f0 25%, #cbd5e1 50%, #e2e8f0 75%);
+  background-size: 200% 100%;
+  animation: hr-shimmer 1.5s infinite;
+}
+
+.hr-skeleton-line {
+  height: 10px;
+  width: 100%;
+  border-radius: 5px;
+  background: linear-gradient(90deg, #e2e8f0 25%, #cbd5e1 50%, #e2e8f0 75%);
+  background-size: 200% 100%;
+  animation: hr-shimmer 1.5s infinite;
+}
+
+.hr-skeleton-line--short {
+  width: 60%;
+}
+.hr-skeleton-stars {
+  width: 90px;
+  height: 12px;
+  border-radius: 5px;
+  background: linear-gradient(90deg, #e2e8f0 25%, #cbd5e1 50%, #e2e8f0 75%);
+  background-size: 200% 100%;
+  animation: hr-shimmer 1.5s infinite;
+}
+
+@keyframes hr-shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   RTL SUPPORT
+   ═══════════════════════════════════════════════════════════════════════ */
+[dir="rtl"] .hr-eyebrow-row {
+  flex-direction: row-reverse;
+}
+
+[dir="rtl"] .hr-card {
+  text-align: right;
+}
+
+[dir="rtl"] .hr-card-quote {
+  right: auto;
+  left: 1.2rem;
+}
+
+[dir="rtl"] .hr-card::after {
+  right: auto;
+  left: 20px;
+}
+
+[dir="rtl"] .hr-card-product svg {
+  transform: rotate(180deg);
+}
+
+[dir="rtl"] .hr-arrow--prev svg,
+[dir="rtl"] .hr-arrow--next svg {
+  transform: scaleX(-1);
+}
+
+[dir="rtl"] .hr-card-badge {
+  right: auto;
+  left: -4px;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   FULLY RESPONSIVE
+   ═══════════════════════════════════════════════════════════════════════ */
+@media (max-width: 1023px) {
+  .hr-section {
+    padding: 4rem 0 5rem;
+  }
+  .hr-skeleton-row {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .hr-skeleton-row .hr-skeleton-card:last-child {
+    display: none;
+  }
+  .hr-stats {
+    gap: 1.5rem;
+  }
+  .hr-stat {
+    padding: 0.8rem 1.5rem;
+    min-width: 120px;
+  }
+  .hr-stat-num {
+    font-size: 1.6rem;
+  }
+  .hr-arrow {
+    width: 42px;
+    height: 42px;
+  }
+  .hr-arrow svg {
+    width: 18px;
+    height: 18px;
+  }
+}
+
+@media (max-width: 639px) {
+  .hr-section {
+    padding: 3rem 0 4rem;
+  }
+  .hr-content {
+    padding: 0 1rem;
+  }
+  .hr-title {
+    font-size: 1.8rem;
+  }
+  .hr-subtitle {
+    font-size: 0.8rem;
+  }
+  .hr-stats {
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  .hr-stat {
+    padding: 0.6rem 1rem;
+    min-width: 100px;
+  }
+  .hr-stat-num {
+    font-size: 1.3rem;
+  }
+  .hr-stat-label {
+    font-size: 0.45rem;
+  }
+  .hr-stat-sep {
+    display: none;
+  }
+  .hr-skeleton-row {
+    grid-template-columns: 1fr;
+  }
+  .hr-skeleton-row .hr-skeleton-card:not(:first-child) {
+    display: none;
+  }
+  .hr-arrow {
+    width: 38px;
+    height: 38px;
+  }
+  .hr-arrow svg {
+    width: 16px;
+    height: 16px;
+  }
+  .hr-card {
+    padding: 1.5rem 1.25rem 1.25rem;
+  }
+  .hr-card-avatar-wrap {
+    width: 75px;
+    height: 75px;
+  }
+  .hr-card-name {
+    font-size: 1rem;
+  }
+  .hr-card-title {
+    font-size: 1rem;
+  }
+  .hr-card-body {
+    font-size: 0.85rem;
+    -webkit-line-clamp: 5;
+  }
+  .hr-stage-wrap {
+    gap: 0.5rem;
+  }
+  .hr-dot {
+    width: 28px;
+  }
+  .hr-dot--active {
+    width: 40px;
+  }
+}
+
+@media (max-width: 380px) {
+  .hr-card-avatar-wrap {
+    width: 65px;
+    height: 65px;
+  }
+  .hr-card-name {
+    font-size: 0.9rem;
+  }
+  .hr-star {
+    width: 15px;
+    height: 15px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hr-section *,
+  .hr-card,
+  .hr-arrow,
+  .hr-dot {
+    transition: none !important;
+    animation: none !important;
+  }
+  .hr-card:hover {
+    transform: translateY(-5px);
+  }
+  .hr-card-shimmer {
+    display: none;
+  }
+  .hr-bg-orb {
+    animation: none;
+  }
+}

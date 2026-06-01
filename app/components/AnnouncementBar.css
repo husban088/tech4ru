@@ -1,0 +1,338 @@
+/* app/components/AnnouncementBar.css */
+/* RED + BLACK THEME | TOP RED → BOTTOM BLACK GRADIENTS | WHITE TEXT */
+/* ALWAYS VISIBLE - NEVER HIDES */
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.7;
+    transform: scale(1.05);
+  }
+}
+
+@keyframes fadeInOut {
+  0% {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+  10% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  90% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+}
+
+@keyframes redShimmer {
+  0% {
+    left: -100%;
+  }
+  100% {
+    left: 100%;
+  }
+}
+
+/* ── ANNOUNCEMENT BAR ── TOP RED → BOTTOM BLACK GRADIENTS ─────────────────────────── */
+.announcement-bar {
+  width: 100%;
+  position: relative;
+  z-index: 1;
+  background: #fff;
+  border-bottom: 1px solid rgba(220, 38, 38, 0.3);
+  border-top: 1px solid rgba(220, 38, 38, 0.2);
+  box-shadow:
+    0 2px 10px rgba(0, 0, 0, 0.1),
+    0 0 15px rgba(220, 38, 38, 0.15);
+  overflow: hidden;
+
+  /* ALWAYS VISIBLE - NEVER HIDDEN */
+  max-height: 80px;
+  opacity: 1;
+  display: block;
+}
+
+/* Top Border Line - RED */
+.announcement-bar::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: #fff;
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* RED shimmer line on top - animated */
+.announcement-bar .red-shimmer {
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 2px;
+  background: #fff;
+  animation: redShimmer 3s infinite;
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* Subtle red line at bottom */
+.announcement-bar::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: #fff;
+  pointer-events: none;
+}
+
+/* RED glow effect behind announcement bar */
+.announcement-bar .announcement-glow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #fff;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.announcement-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0.65rem 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 1;
+}
+
+.announcement-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.85rem;
+  animation: fadeInOut 5s ease-in-out infinite;
+  flex-wrap: wrap;
+}
+
+.announcement-icon {
+  font-size: 1.2rem;
+  filter: drop-shadow(0 0 3px rgba(220, 38, 38, 0.4));
+  animation: pulse 2s ease-in-out infinite;
+  flex-shrink: 0;
+}
+
+.announcement-text-wrapper {
+  display: flex;
+  align-items: baseline;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.announcement-text {
+  font-family: "Goldman", system-ui, sans-serif;
+  font-weight: 700;
+  font-size: clamp(0.75rem, 4vw, 0.9rem);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  background: #000;
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: shimmer 3s linear infinite;
+  white-space: nowrap;
+}
+
+.announcement-subtext {
+  font-family: "Goldman", system-ui, sans-serif;
+  font-weight: 600;
+  font-size: clamp(0.6rem, 3vw, 1rem);
+  color: #000;
+  letter-spacing: 0.06em;
+  white-space: nowrap;
+  position: relative;
+}
+
+.announcement-subtext::before {
+  content: "•";
+  margin-right: 0.5rem;
+  font-weight: 600;
+}
+
+/* ── Responsive ───────────────────────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+  .announcement-container {
+    padding: 0.5rem 0.8rem;
+  }
+  .announcement-content {
+    gap: 0.5rem;
+  }
+  .announcement-text-wrapper {
+    gap: 0.3rem;
+  }
+  .announcement-text {
+    white-space: normal;
+    text-align: center;
+    letter-spacing: 0.08em;
+  }
+  .announcement-subtext {
+    white-space: normal;
+    text-align: center;
+  }
+  .announcement-subtext::before {
+    display: none;
+  }
+  .announcement-icon {
+    font-size: 1rem;
+  }
+  .announcement-bar {
+    max-height: 100px;
+  }
+}
+
+@media (max-width: 640px) {
+  .announcement-container {
+    padding: 0.4rem 0.6rem;
+  }
+  .announcement-content {
+    flex-direction: column;
+    gap: 0.2rem;
+    text-align: center;
+  }
+  .announcement-text-wrapper {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.1rem;
+  }
+  .announcement-icon {
+    font-size: 0.9rem;
+  }
+  .announcement-text {
+    font-size: 0.7rem;
+    letter-spacing: 0.06em;
+  }
+  .announcement-subtext {
+    font-size: 0.65rem;
+    letter-spacing: 0.04em;
+  }
+  .announcement-bar {
+    max-height: 110px;
+  }
+}
+
+@media (max-width: 480px) {
+  .announcement-container {
+    padding: 0.35rem 0.5rem;
+  }
+  .announcement-text {
+    font-size: 0.65rem;
+    letter-spacing: 0.05em;
+  }
+  .announcement-subtext {
+    font-size: 0.6rem;
+  }
+  .announcement-icon {
+    font-size: 0.8rem;
+  }
+  .announcement-bar {
+    max-height: 120px;
+  }
+}
+
+@media (min-width: 1400px) {
+  .announcement-container {
+    padding: 0.75rem 2rem;
+  }
+  .announcement-text {
+    font-size: 0.95rem;
+    letter-spacing: 0.15em;
+  }
+  .announcement-subtext {
+    font-size: 0.8rem;
+  }
+  .announcement-icon {
+    font-size: 1.4rem;
+  }
+  .announcement-content {
+    gap: 1rem;
+  }
+  .announcement-text-wrapper {
+    gap: 0.9rem;
+  }
+}
+
+/* RTL Support for AnnouncementBar */
+[dir="rtl"] .announcement-subtext::before {
+  margin-right: 0;
+  margin-left: 0.5rem;
+}
+
+[dir="rtl"] .announcement-text-wrapper {
+  flex-direction: row-reverse;
+}
+
+[dir="rtl"] .red-shimmer {
+  animation: redShimmerRTL 3s infinite;
+}
+
+@keyframes redShimmerRTL {
+  0% {
+    right: -100%;
+    left: auto;
+  }
+  100% {
+    right: 100%;
+    left: auto;
+  }
+}
+
+/* Corner accents - RED */
+.announcement-bar .corner-accent {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.announcement-bar .corner-accent--tl {
+  top: 0;
+  left: 0;
+  border-top: 1px solid rgba(220, 38, 38, 0.4);
+  border-left: 1px solid rgba(220, 38, 38, 0.4);
+}
+
+.announcement-bar .corner-accent--tr {
+  top: 0;
+  right: 0;
+  border-top: 1px solid rgba(220, 38, 38, 0.4);
+  border-right: 1px solid rgba(220, 38, 38, 0.4);
+}

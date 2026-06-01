@@ -1,0 +1,166 @@
+/* ============================================================
+   TRUST BADGES SECTION - WHITE BACKGROUND | BLACK TEXT | RED GRADIENTS
+   Matching Explore Aurexia style
+   ============================================================ */
+
+.pd-trust-section {
+  margin: 1.5rem 0;
+  padding: 1.25rem;
+  background: #ffffff;
+  border-radius: 20px;
+  position: relative;
+  border: 1px solid rgba(220, 38, 38, 0.18);
+  transition: all 0.4s ease;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+}
+
+.pd-trust-section::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse at 30% 40%,
+    rgba(220, 38, 38, 0.03),
+    transparent
+  );
+  pointer-events: none;
+}
+
+.pd-trust-section:hover {
+  border-color: #dc2626;
+  box-shadow: 0 8px 25px rgba(220, 38, 38, 0.08);
+}
+
+.pd-trust-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+}
+
+@media (max-width: 768px) {
+  .pd-trust-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .pd-trust-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.pd-trust-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 1rem 0.6rem;
+  background: #ffffff;
+  border: 1px solid rgba(220, 38, 38, 0.15);
+  border-radius: 16px;
+  transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+  cursor: default;
+  position: relative;
+  overflow: hidden;
+}
+
+.pd-trust-item::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    circle at center,
+    rgba(220, 38, 38, 0.05),
+    transparent
+  );
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.pd-trust-item:hover {
+  transform: translateY(-6px);
+  border-color: #dc2626;
+  box-shadow: 0 15px 30px rgba(220, 38, 38, 0.1);
+}
+
+.pd-trust-item:hover::before {
+  opacity: 1;
+}
+
+.pd-trust-icon {
+  width: 48px;
+  height: 48px;
+  background: linear-gradient(180deg, #dc2626 0%, #0f172a 100%);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0.7rem;
+  transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.pd-trust-item:hover .pd-trust-icon {
+  background: linear-gradient(180deg, #ef4444 0%, #dc2626 100%);
+  transform: scale(1.08) rotate(5deg);
+  box-shadow: 0 6px 12px rgba(220, 38, 38, 0.25);
+}
+
+.pd-trust-icon svg {
+  width: 22px;
+  height: 22px;
+  color: #ffffff;
+  transition: color 0.3s ease;
+}
+
+.pd-trust-item:hover .pd-trust-icon svg {
+  color: #ffffff;
+}
+
+.pd-trust-label {
+  font-family: "Goldman", system-ui, sans-serif;
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #0f172a;
+  margin-bottom: 0.2rem;
+}
+
+.pd-trust-desc {
+  font-family: "Goldman", system-ui, sans-serif;
+  font-size: 0.5rem;
+  font-weight: 400;
+  color: #64748b;
+  line-height: 1.4;
+}
+
+/* Animation for trust items on page load */
+@keyframes pd-trust-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.pd-trust-item {
+  animation: pd-trust-fade-in 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation-delay: calc(var(--item-index, 0) * 0.1s);
+}
+
+.pd-trust-item:nth-child(1) {
+  --item-index: 1;
+}
+.pd-trust-item:nth-child(2) {
+  --item-index: 2;
+}
+.pd-trust-item:nth-child(3) {
+  --item-index: 3;
+}
+.pd-trust-item:nth-child(4) {
+  --item-index: 4;
+}

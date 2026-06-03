@@ -12,11 +12,6 @@ import { getStripe } from "@/lib/stripe";
 import { createClient } from "@supabase/supabase-js";
 import nodemailer from "nodemailer";
 
-// ── CRITICAL: Disable body parsing — Stripe signature verify ke liye raw body chahiye
-export const config = {
-  api: { bodyParser: false },
-};
-
 // ── Supabase ──────────────────────────────────────────────────────────────────
 function getSupabase() {
   return createClient(

@@ -1,17 +1,13 @@
 "use client";
 
 import dynamic from "next/dynamic";
-
-// ✅ PERF: Hero aur ExploreAurexia — above the fold, eager load karo
 import HeroExplore from "./components/HeroExplore";
 import ExploreAurexia from "./components/ExploreAurexia";
 
-// ✅ PERF: Baaki sab below the fold — lazy load karo
-// User jab tak scroll karega, tab tak load honge — First Paint fast hoga
 const TrustBadgesSection = dynamic(
   () => import("./components/TrustBadgesSection"),
   {
-    loading: () => <div style={{ minHeight: "120px" }} />, // placeholder — layout shift nahi hoga
+    loading: () => <div style={{ minHeight: "120px" }} />,
   },
 );
 
@@ -39,12 +35,9 @@ const GlobalFAQSection = dynamic(
 
 export default function Home() {
   return (
-    <main className="flex flex-col flex-1 page-fade-in">
-      {/* ✅ Above fold — immediately rendered */}
+    <main className="flex flex-col flex-1">
       <HeroExplore />
       <ExploreAurexia />
-
-      {/* ✅ Below fold — lazy loaded */}
       <TrustBadgesSection />
       <FeaturedProducts />
       <WhyChooseUs />

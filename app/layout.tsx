@@ -1,5 +1,4 @@
-// app/layout.tsx
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Goldman } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
@@ -8,7 +7,6 @@ import { CurrencyProvider } from "./context/CurrencyContext";
 import { LanguageProvider } from "./context/LanguageContext";
 import { getInitialCurrency } from "@/lib/get-initial-currency";
 
-// ✅ Goldman ONLY — single font
 const goldman = Goldman({
   variable: "--font-goldman",
   subsets: ["latin"],
@@ -22,6 +20,12 @@ export const metadata: Metadata = {
   title: "Tech4U | Luxury in Every Detail",
   description: "Tech4U — Luxury in Every Detail.",
   icons: { icon: "/icon.jpg" },
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
 };
 
 export default async function RootLayout({
@@ -40,7 +44,6 @@ export default async function RootLayout({
       suppressHydrationWarning
     >
       <head>
-        {/* ✅ PERF: DNS prefetch + preconnect for faster resource loading */}
         <link rel="dns-prefetch" href="//connect.facebook.net" />
         <link rel="dns-prefetch" href="//fonts.gstatic.com" />
         <link
@@ -48,14 +51,6 @@ export default async function RootLayout({
           href="https://fonts.gstatic.com"
           crossOrigin="anonymous"
         />
-
-        {/* ✅ PERF: Viewport meta — prevents double-tap zoom lag on mobile */}
-        <meta
-          name="viewport"
-          content="width=device-width, initial-scale=1, viewport-fit=cover"
-        />
-
-        {/* ✅ PERF: Meta Pixel — afterInteractive = page load block nahi karega */}
         <Script
           id="meta-pixel"
           strategy="afterInteractive"
@@ -74,23 +69,7 @@ export default async function RootLayout({
             `,
           }}
         />
-        <noscript>
-          <img
-            height="1"
-            width="1"
-            style={{ display: "none" }}
-            src="https://www.facebook.com/tr?id=1929542124417287&ev=PageView&noscript=1"
-            alt=""
-          />
-        </noscript>
       </head>
-
-      {/*
-        ✅ PERF NOTES:
-        - html  → height: auto, overflow: visible  (single scroll container)
-        - body  → min-h-screen, overflow-y: auto   (body scrolls only)
-        - scrollbar-gutter: stable → no layout shift when scrollbar appears
-      */}
       <body className="flex flex-col" suppressHydrationWarning>
         <LanguageProvider>
           <CurrencyProvider initialCurrencyCode={initialCurrencyCode}>

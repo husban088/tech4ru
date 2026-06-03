@@ -18,9 +18,55 @@ interface HomeReview {
   product_name?: string;
 }
 
-// ── Simple memory cache only ──
+// ── Memory cache with TTL ──
 let cachedReviews: HomeReview[] | null = null;
-let fetchPromise: Promise<void> | null = null;
+let cacheTimestamp: number = 0;
+const CACHE_TTL_MS = 5 * 60 * 1000; // 5 minutes
+
+function isCacheValid(): boolean {
+  return (
+    cachedReviews !== null &&
+    cachedReviews.length > 0 &&
+    Date.now() - cacheTimestamp < CACHE_TTL_MS
+  );
+}
+
+// ── Fetch function — standalone, no mountedRef dependency ──
+async function fetchReviewsFromDB(): Promise<HomeReview[]> {
+  try {
+    const { data: reviewData, error } = await supabase
+      .from("product_reviews")
+      .select("*")
+      .gte("rating", 4)
+      .order("created_at", { ascending: false })
+      .limit(20);
+
+    if (error || !reviewData || reviewData.length === 0) return [];
+
+    const productIds = [...new Set(reviewData.map((r: any) => r.product_id))];
+    const { data: products } = await supabase
+      .from("products")
+      .select("id, name")
+      .in("id", productIds);
+
+    const productMap: Record<string, string> = {};
+    (products || []).forEach((p: { id: string; name: string }) => {
+      productMap[p.id] = p.name;
+    });
+
+    const formatted: HomeReview[] = reviewData.map((r: any) => ({
+      ...r,
+      product_name: productMap[r.product_id] || "Our Product",
+    }));
+
+    // Update cache
+    cachedReviews = formatted;
+    cacheTimestamp = Date.now();
+    return formatted;
+  } catch {
+    return [];
+  }
+}
 
 // ── Stars Component - YELLOW COLOR ─────────────────────────────────────
 function StarDisplay({ rating }: { rating: number }) {
@@ -118,10 +164,10 @@ function SkeletonCard() {
 // ── Main Component ──
 export default function HomeReviews() {
   const { isRTLMode } = useLanguage();
-  const [reviews, setReviews] = useState<HomeReview[]>(
-    () => cachedReviews ?? [],
+  const [reviews, setReviews] = useState<HomeReview[]>(() =>
+    isCacheValid() ? cachedReviews! : [],
   );
-  const [loading, setLoading] = useState(() => cachedReviews === null);
+  const [loading, setLoading] = useState(() => !isCacheValid());
   const [visibleCount, setVisibleCount] = useState(3);
   const [offset, setOffset] = useState(0);
   const [animDir, setAnimDir] = useState<"idle" | "left" | "right">("idle");
@@ -129,6 +175,7 @@ export default function HomeReviews() {
   const touchStart = useRef<number | null>(null);
   const isDragging = useRef(false);
   const autoTimer = useRef<ReturnType<typeof setInterval> | null>(null);
+  // Track if component is still mounted — reset on every mount, NOT in cleanup
   const mountedRef = useRef(true);
 
   // Responsive: update visible count
@@ -143,102 +190,117 @@ export default function HomeReviews() {
     return () => window.removeEventListener("resize", update);
   }, []);
 
-  // Fetch reviews from Supabase
-  useEffect(() => {
-    mountedRef.current = true;
-
-    if (cachedReviews !== null) {
-      setReviews(cachedReviews);
+  // ── Core fetch — always safe, never hangs ──
+  const loadReviews = useCallback(async (forceRefresh = false) => {
+    // If valid cache and not forcing refresh, use it immediately
+    if (isCacheValid() && !forceRefresh) {
+      setReviews(cachedReviews!);
       setLoading(false);
-      return;
-    }
-
-    if (fetchPromise) {
-      fetchPromise.then(() => {
-        if (mountedRef.current && cachedReviews !== null) {
-          setReviews(cachedReviews);
-          setLoading(false);
+      // Background silent refresh
+      fetchReviewsFromDB().then((data) => {
+        if (mountedRef.current && data.length > 0) {
+          setReviews(data);
         }
       });
       return;
     }
 
-    async function fetchAll() {
-      try {
-        const { data: reviewData, error } = await supabase
-          .from("product_reviews")
-          .select("*")
-          .gte("rating", 4)
-          .order("created_at", { ascending: false })
-          .limit(20);
-
-        if (error || !reviewData) {
-          if (mountedRef.current) setLoading(false);
-          return;
-        }
-
-        const productIds = [...new Set(reviewData.map((r) => r.product_id))];
-        const { data: products } = await supabase
-          .from("products")
-          .select("id, name")
-          .in("id", productIds);
-
-        const productMap: Record<string, string> = {};
-        (products || []).forEach((p: { id: string; name: string }) => {
-          productMap[p.id] = p.name;
-        });
-
-        const formatted = reviewData.map((r) => ({
-          ...r,
-          product_name: productMap[r.product_id] || "Our Product",
-        }));
-
-        cachedReviews = formatted;
-        if (mountedRef.current) {
-          setReviews(formatted);
-          setLoading(false);
-        }
-      } catch (err) {
-        console.error("HomeReviews fetch:", err);
-        if (mountedRef.current) setLoading(false);
-      }
+    // If stale cache exists, show it immediately (no blank/skeleton flash)
+    if (cachedReviews && cachedReviews.length > 0) {
+      setReviews(cachedReviews);
+      setLoading(false);
+    } else {
+      setLoading(true);
     }
 
-    fetchPromise = fetchAll();
-    fetchPromise.then(() => {
-      fetchPromise = null;
-    });
-
-    return () => {
-      mountedRef.current = false;
-    };
+    const data = await fetchReviewsFromDB();
+    if (mountedRef.current) {
+      setReviews(data);
+      setLoading(false);
+    }
   }, []);
 
-  // Handle online/offline
+  // ── Initial fetch ──
   useEffect(() => {
-    const handleOnline = () => {
-      if (cachedReviews === null && mountedRef.current) {
-        setLoading(true);
-        fetchPromise = null;
-        const fetchFresh = async () => {
-          const { data: reviewData } = await supabase
-            .from("product_reviews")
-            .select("*")
-            .gte("rating", 4)
-            .order("created_at", { ascending: false })
-            .limit(20);
-          if (reviewData && reviewData.length > 0 && mountedRef.current) {
-            cachedReviews = reviewData as HomeReview[];
-            setReviews(cachedReviews);
+    mountedRef.current = true;
+    loadReviews();
+    return () => {
+      // Do NOT set mountedRef.current = false here
+      // React remounts in dev Strict Mode and on navigation
+      // Setting false in cleanup breaks state updates after remount
+    };
+  }, [loadReviews]);
+
+  // ── Safety net: if still loading after 6s, force clear ──
+  useEffect(() => {
+    if (!loading) return;
+    const timer = setTimeout(() => {
+      // Force a fresh fetch ignoring cache
+      fetchReviewsFromDB()
+        .then((data) => {
+          if (mountedRef.current) {
+            setReviews(data);
             setLoading(false);
           }
-        };
-        fetchFresh();
+        })
+        .catch(() => {
+          if (mountedRef.current) setLoading(false);
+        });
+    }, 6000);
+    return () => clearTimeout(timer);
+  }, [loading]);
+
+  // ── Tab visibility: coming back from another tab/page ──
+  useEffect(() => {
+    const handleVisibility = () => {
+      if (document.visibilityState !== "visible") return;
+      if (isCacheValid()) {
+        // Show cached immediately
+        setReviews(cachedReviews!);
+        setLoading(false);
+        // Silent background refresh
+        fetchReviewsFromDB().then((data) => {
+          if (mountedRef.current && data.length > 0) setReviews(data);
+        });
+      } else {
+        // No valid cache — fetch fresh
+        loadReviews(true);
+      }
+    };
+    document.addEventListener("visibilitychange", handleVisibility);
+    return () =>
+      document.removeEventListener("visibilitychange", handleVisibility);
+  }, [loadReviews]);
+
+  // ── Browser back/forward (bfcache + regular navigation) ──
+  useEffect(() => {
+    const handlePageShow = (e: PageTransitionEvent) => {
+      if (e.persisted) {
+        // Restored from bfcache — force fresh fetch
+        cachedReviews = null;
+        cacheTimestamp = 0;
+        loadReviews(true);
+      } else if (!isCacheValid()) {
+        loadReviews(true);
+      } else {
+        setReviews(cachedReviews!);
+        setLoading(false);
+      }
+    };
+    window.addEventListener("pageshow", handlePageShow);
+    return () => window.removeEventListener("pageshow", handlePageShow);
+  }, [loadReviews]);
+
+  // ── Online recovery ──
+  useEffect(() => {
+    const handleOnline = () => {
+      if (!isCacheValid()) {
+        loadReviews(true);
       }
     };
     window.addEventListener("online", handleOnline);
     return () => window.removeEventListener("online", handleOnline);
-  }, []);
+  }, [loadReviews]);
 
   const totalSlides = reviews.length;
   const canPrev = offset > 0;
@@ -269,8 +331,8 @@ export default function HomeReviews() {
       setTimeout(() => {
         setOffset((prev) =>
           dir === "right"
-            ? Math.min(prev + 1, totalSlides - visibleCount)
-            : Math.max(prev - 1, 0),
+            ? Math.min(prev + visibleCount, totalSlides - visibleCount)
+            : Math.max(prev - visibleCount, 0),
         );
         setAnimDir("idle");
       }, 420);
@@ -349,8 +411,8 @@ export default function HomeReviews() {
       ? (reviews.reduce((s, r) => s + r.rating, 0) / reviews.length).toFixed(1)
       : "0";
 
-  // Loading skeleton
-  if (loading) {
+  // Loading skeleton — only shown on very first load with no cache
+  if (loading && reviews.length === 0) {
     return (
       <section className="hr-section" dir={isRTLMode ? "rtl" : "ltr"}>
         <div className="hr-bg-orb hr-bg-orb--1" />

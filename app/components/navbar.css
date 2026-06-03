@@ -53,7 +53,7 @@
 .navbar {
   position: relative;
   width: 100%;
-  z-index: 1;
+  z-index: 10;
   background: linear-gradient(135deg, #ffffff 0%, #f8fafc 50%, #f1f5f9 100%);
   border-bottom: 1px solid rgba(220, 38, 38, 0.2);
   backdrop-filter: blur(0px);
@@ -117,7 +117,8 @@
   max-width: 1400px;
   margin: 0 auto;
   padding: 0 2rem;
-  height: var(--nav-height);
+  height: 70px;
+  min-height: 70px;
 }
 
 /* ========== LEFT SECTION ========== */
@@ -1024,11 +1025,5 @@ button,
   left: 0;
   right: 0;
   z-index: 100;
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-}
-
-.navbar-announcement-wrapper {
   width: 100%;
 }

@@ -1,46 +1,27 @@
-/* ── Tailwind ── */
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-/* ============================================================
-   CSS VARIABLES — RED + BLACK Theme
-   ============================================================ */
 :root {
   --background: #0a0f1a;
   --foreground: #e6f7ff;
   --font-goldman: "Goldman", system-ui, sans-serif;
   --navbar-height: 70px;
-  /* ✅ PERF: scrollbar colors as variables for reuse */
   --scrollbar-thumb: #dc2626;
   --scrollbar-thumb-hover: #ef4444;
   --scrollbar-track: #0a0f1a;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-}
-
-/* ============================================================
-   BOX SIZING
-   ============================================================ */
 *,
 *::before,
 *::after {
   box-sizing: border-box;
 }
 
-/* ============================================================
-   HTML & BODY BASE
-   ✅ PERF FIX: Single scroll container — html scroll rokho, body scroll kare
-   Double scrollbar + jank ka main reason yahi tha
-   ============================================================ */
 html {
   height: 100%;
-  /* ✅ FIX: overflow-x: hidden html pe NAHI lagao — sticky positioning todta hai
-     aur right-side content clip hota hai. Body pe lagaya hai — woh safe hai. */
-  overflow-x: clip; /* "clip" use karo "hidden" ki jagah — sticky nahi todta */
+  overflow-x: hidden;
   overflow-y: auto;
-  /* Firefox scrollbar */
   scrollbar-width: thin;
   scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
   scroll-behavior: auto;
@@ -50,7 +31,7 @@ body {
   margin: 0;
   padding: 0;
   overflow-x: hidden;
-  overflow-y: visible; /* ✅ FIX: body overflow visible — html scrollbar handle karega, double nahi aayega */
+  overflow-y: visible;
   min-height: 100%;
   background: var(--background);
   color: var(--foreground);
@@ -62,150 +43,25 @@ body {
   -webkit-overflow-scrolling: touch;
 }
 
-/* ============================================================
-   SCROLLBAR — Chrome, Edge, Safari
-   ✅ PERF: Single rule using :where() — zero specificity, no override wars
-   ============================================================ */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
 }
-
-/* ✅ PERF: One rule for ALL component scrollbars instead of 100+ lines */
-:where(
-  .dropdown-menu,
-  .navbar-bottom,
-  .cs-items,
-  .ss-content,
-  .sidebar-nav,
-  .pd-content,
-  .pf-content,
-  .pf-root,
-  .pf-nav,
-  .dm-modal-body,
-  .pd-toast-wrap,
-  .co-toast-wrap,
-  .pg-grid,
-  .fp-swiper,
-  .gfaq-accordion-container,
-  .co-success-items,
-  select
-)::-webkit-scrollbar {
-  width: 4px;
-  height: 4px;
-}
-
-/* Shared track & thumb for ALL scrollbars */
-::-webkit-scrollbar-track,
-:where(
-  .dropdown-menu,
-  .navbar-bottom,
-  .cs-items,
-  .ss-content,
-  .sidebar-nav,
-  .pd-content,
-  .pf-content,
-  .pf-root,
-  .pf-nav,
-  .dm-modal-body,
-  .pd-toast-wrap,
-  .co-toast-wrap,
-  .pg-grid,
-  .fp-swiper,
-  .gfaq-accordion-container,
-  .co-success-items,
-  select
-)::-webkit-scrollbar-track {
+::-webkit-scrollbar-track {
   background: var(--scrollbar-track);
   border-radius: 4px;
 }
-
-::-webkit-scrollbar-thumb,
-:where(
-  .dropdown-menu,
-  .navbar-bottom,
-  .cs-items,
-  .ss-content,
-  .sidebar-nav,
-  .pd-content,
-  .pf-content,
-  .pf-root,
-  .pf-nav,
-  .dm-modal-body,
-  .pd-toast-wrap,
-  .co-toast-wrap,
-  .pg-grid,
-  .fp-swiper,
-  .gfaq-accordion-container,
-  .co-success-items,
-  select
-)::-webkit-scrollbar-thumb {
+::-webkit-scrollbar-thumb {
   background: var(--scrollbar-thumb);
   border-radius: 8px;
 }
-
-::-webkit-scrollbar-thumb:hover,
-:where(
-    .dropdown-menu,
-    .navbar-bottom,
-    .cs-items,
-    .ss-content,
-    .sidebar-nav,
-    .pd-content,
-    .pf-content,
-    .pf-root,
-    .pf-nav,
-    .dm-modal-body,
-    .pd-toast-wrap,
-    .co-toast-wrap,
-    .pg-grid,
-    .fp-swiper,
-    .gfaq-accordion-container,
-    .co-success-items,
-    select
-  )::-webkit-scrollbar-thumb:hover {
+::-webkit-scrollbar-thumb:hover {
   background: var(--scrollbar-thumb-hover);
 }
-
 ::-webkit-scrollbar-corner {
   background: var(--scrollbar-track);
 }
 
-/* ============================================================
-   PAGE TRANSITION
-   ✅ PERF: opacity-only animation — no layout, no paint, only composite
-   ============================================================ */
-@keyframes pageFadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-.page-fade-in {
-  animation: pageFadeIn 0.15s ease-out forwards;
-  /* ✅ PERF: GPU composite layer */
-  will-change: opacity;
-  contain: layout style;
-}
-
-/* Animation done hone ke baad will-change hata do — memory waste nahi hoga */
-.page-fade-in.animation-done {
-  will-change: auto;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .page-fade-in {
-    animation: none;
-    will-change: auto;
-  }
-}
-
-/* ============================================================
-   GOLDMAN FONT
-   ============================================================ */
 *,
 *::before,
 *::after {
@@ -220,7 +76,6 @@ samp,
   font-family: monospace !important;
 }
 
-/* Italic prevention */
 i,
 em,
 cite,
@@ -230,41 +85,19 @@ var,
   font-style: normal !important;
 }
 
-/* ============================================================
-   FONT WEIGHT HELPERS
-   ============================================================ */
-.font-goldman,
-.font-goldman-regular,
-.font-poppins,
-.font-poppins-regular,
-.font-poppins-medium,
-.font-cormorant {
-  font-family: var(--font-goldman) !important;
-  font-weight: 400;
+ul,
+ol {
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
-
-.font-goldman-bold,
-.font-poppins-bold,
-.font-poppins-semibold,
-.font-poppins-extrabold,
-.font-poppins-black {
-  font-family: var(--font-goldman) !important;
-  font-weight: 700;
+a {
+  text-decoration: none;
 }
-
-.font-poppins-thin,
-.font-poppins-light {
-  font-family: var(--font-goldman) !important;
-  font-weight: 400;
+img {
+  max-width: 100%;
+  height: auto;
 }
-
-.font-mono {
-  font-family: monospace !important;
-}
-
-/* ============================================================
-   FOCUS STYLES
-   ============================================================ */
 button {
   outline: none;
 }
@@ -281,172 +114,33 @@ select:focus-visible {
   outline-offset: 1px;
 }
 
-/* ============================================================
-   LISTS & LINKS RESET
-   ============================================================ */
-ul,
-ol {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
-a {
-  text-decoration: none;
-}
-
-/* ============================================================
-   STICKY NAVBAR
-   ✅ PERF: GPU promoted layer — scroll jank zero
-   ============================================================ */
 .navbar-sticky-wrapper {
-  position: sticky;
+  position: fixed;
   top: 0;
-  z-index: 50;
-  /* ✅ PERF: Force GPU compositing */
+  left: 0;
+  right: 0;
+  z-index: 100;
   transform: translateZ(0);
   will-change: transform;
-  /* ✅ FIX: contain: layout HATA diya — yeh sticky positioning todta tha!
-     contain: layout apna containing block banata hai, sticky iske andar hi kaam karta
-     aur page scroll pe react nahi karta. */
 }
 
-/* ============================================================
-   ✅ PERF: SWIPER GLOBAL OPTIMIZATIONS
-   Swiper slides GPU pe render hon — main thread free rahe
-   ============================================================ */
 .swiper {
-  /* ✅ FIX: contain: layout style HATA diya — swiper cards clip hoti thi
-     Swiper internally transform use karta hai, contain: layout us containing block ko
-     restrict karta tha jis wajah se slides hide hoti thi */
-  overflow: hidden; /* Swiper ka default behavior maintain karo */
+  overflow: hidden;
 }
-
 .swiper-wrapper {
-  /* ✅ GPU compositing — janky scroll nahi hoga */
   will-change: transform;
   transform: translateZ(0);
 }
-
 .swiper-slide {
-  /* ✅ Each slide apna composite layer banaye */
   transform: translateZ(0);
-  /* ✅ Hidden slides render mat karo */
-  content-visibility: auto;
-  contain-intrinsic-size: 300px;
 }
 
-/* ✅ Lazy loaded swiper images */
-.swiper-slide img {
-  will-change: auto; /* images pe will-change mat lagao — memory waste */
-}
-
-/* ============================================================
-   ✅ PERF: IMAGE OPTIMIZATION HELPERS
-   ============================================================ */
-img {
-  /* ✅ Prevent layout shift */
-  max-width: 100%;
-  height: auto;
-}
-
-/* ✅ Lazy images — jab tak load na ho placeholder dikhao */
-img[loading="lazy"] {
-  /* Browser lazy loading ke saath kaam karta hai */
-  contain: size layout;
-}
-
-/* ============================================================
-   ✅ PERF: REDUCE LAYOUT THRASHING
-   Heavy sections apna layout contain karen
-   ============================================================ */
-.fp-swiper,
-.pg-grid,
-.sidebar-nav,
-.ss-content,
-.pf-content {
-  contain: layout;
-}
-
-/* ============================================================
-   RTL SUPPORT
-   ============================================================ */
 body.rtl,
 [dir="rtl"] {
   text-align: right;
 }
-
-body.rtl .nav-links,
-[dir="rtl"] .nav-links {
-  flex-direction: row-reverse;
-}
-
-body.rtl .navbar-left,
-[dir="rtl"] .navbar-left {
-  order: 3;
-}
-body.rtl .navbar-center,
-[dir="rtl"] .navbar-center {
-  order: 2;
-}
-body.rtl .navbar-right,
-[dir="rtl"] .navbar-right {
-  order: 1;
-}
-
-body.rtl .dropdown-menu,
 [dir="rtl"] .dropdown-menu {
   right: auto;
   left: 0;
   text-align: right;
-}
-
-body.rtl input,
-body.rtl textarea,
-body.rtl select,
-[dir="rtl"] input,
-[dir="rtl"] textarea,
-[dir="rtl"] select {
-  text-align: right;
-  direction: rtl;
-}
-
-body.rtl .sidebar,
-body.rtl .cart-sidebar,
-[dir="rtl"] .sidebar,
-[dir="rtl"] .cart-sidebar {
-  left: 0;
-  right: auto;
-}
-
-body.rtl .ml-auto,
-[dir="rtl"] .ml-auto {
-  margin-left: unset;
-  margin-right: auto;
-}
-
-body.rtl .mr-auto,
-[dir="rtl"] .mr-auto {
-  margin-right: unset;
-  margin-left: auto;
-}
-
-body.rtl .footer,
-[dir="rtl"] .footer {
-  direction: rtl;
-  text-align: right;
-}
-
-body.rtl .product-card,
-body.rtl .fp-card-name,
-body.rtl .fp-card-price,
-[dir="rtl"] .product-card,
-[dir="rtl"] .fp-card-name,
-[dir="rtl"] .fp-card-price {
-  text-align: right;
-  direction: rtl;
-}
-
-[dir="rtl"] ::-webkit-scrollbar {
-  direction: ltr;
 }

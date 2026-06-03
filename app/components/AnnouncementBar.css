@@ -1,6 +1,4 @@
 /* app/components/AnnouncementBar.css */
-/* RED + BLACK THEME | TOP RED → BOTTOM BLACK GRADIENTS | WHITE TEXT */
-/* ALWAYS VISIBLE - NEVER HIDES */
 
 @keyframes shimmer {
   0% {
@@ -51,52 +49,52 @@
   }
 }
 
-/* ── ANNOUNCEMENT BAR ── TOP RED → BOTTOM BLACK GRADIENTS ─────────────────────────── */
 .announcement-bar {
   width: 100%;
   position: relative;
   z-index: 1;
-  background: #fff;
-  border-bottom: 1px solid rgba(220, 38, 38, 0.3);
-  border-top: 1px solid rgba(220, 38, 38, 0.2);
+  background: linear-gradient(135deg, #1a0000 0%, #2d0000 50%, #1a0000 100%);
+  border-bottom: 1px solid rgba(220, 38, 38, 0.5);
   box-shadow:
-    0 2px 10px rgba(0, 0, 0, 0.1),
-    0 0 15px rgba(220, 38, 38, 0.15);
+    0 2px 10px rgba(0, 0, 0, 0.3),
+    0 0 15px rgba(220, 38, 38, 0.2);
   overflow: hidden;
-
-  /* ALWAYS VISIBLE - NEVER HIDDEN */
   max-height: 80px;
   opacity: 1;
   display: block;
 }
 
-/* Top Border Line - RED */
 .announcement-bar::before {
   content: "";
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
-  height: 1px;
-  background: #fff;
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    #dc2626,
+    #ef4444,
+    #dc2626,
+    transparent
+  );
   pointer-events: none;
   z-index: 2;
 }
 
-/* RED shimmer line on top - animated */
 .announcement-bar .red-shimmer {
   position: absolute;
   top: 0;
   left: -100%;
   width: 100%;
   height: 2px;
-  background: #fff;
+  background: linear-gradient(90deg, transparent, #ef4444, transparent);
   animation: redShimmer 3s infinite;
   pointer-events: none;
   z-index: 2;
 }
 
-/* Subtle red line at bottom */
 .announcement-bar::after {
   content: "";
   position: absolute;
@@ -104,18 +102,26 @@
   left: 0;
   right: 0;
   height: 1px;
-  background: #fff;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(220, 38, 38, 0.4),
+    transparent
+  );
   pointer-events: none;
 }
 
-/* RED glow effect behind announcement bar */
 .announcement-bar .announcement-glow {
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background: #fff;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(220, 38, 38, 0.1) 0%,
+    transparent 70%
+  );
   pointer-events: none;
   z-index: 0;
 }
@@ -142,7 +148,7 @@
 
 .announcement-icon {
   font-size: 1.2rem;
-  filter: drop-shadow(0 0 3px rgba(220, 38, 38, 0.4));
+  filter: drop-shadow(0 0 3px rgba(220, 38, 38, 0.6));
   animation: pulse 2s ease-in-out infinite;
   flex-shrink: 0;
 }
@@ -161,20 +167,15 @@
   font-size: clamp(0.75rem, 4vw, 0.9rem);
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  background: #000;
-  background-size: 200% auto;
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  animation: shimmer 3s linear infinite;
+  color: #ffffff;
   white-space: nowrap;
 }
 
 .announcement-subtext {
   font-family: "Goldman", system-ui, sans-serif;
   font-weight: 600;
-  font-size: clamp(0.6rem, 3vw, 1rem);
-  color: #000;
+  font-size: clamp(0.6rem, 3vw, 0.8rem);
+  color: rgba(255, 255, 255, 0.8);
   letter-spacing: 0.06em;
   white-space: nowrap;
   position: relative;
@@ -183,138 +184,10 @@
 .announcement-subtext::before {
   content: "•";
   margin-right: 0.5rem;
+  color: #dc2626;
   font-weight: 600;
 }
 
-/* ── Responsive ───────────────────────────────────────────────────────────── */
-
-@media (max-width: 768px) {
-  .announcement-container {
-    padding: 0.5rem 0.8rem;
-  }
-  .announcement-content {
-    gap: 0.5rem;
-  }
-  .announcement-text-wrapper {
-    gap: 0.3rem;
-  }
-  .announcement-text {
-    white-space: normal;
-    text-align: center;
-    letter-spacing: 0.08em;
-  }
-  .announcement-subtext {
-    white-space: normal;
-    text-align: center;
-  }
-  .announcement-subtext::before {
-    display: none;
-  }
-  .announcement-icon {
-    font-size: 1rem;
-  }
-  .announcement-bar {
-    max-height: 100px;
-  }
-}
-
-@media (max-width: 640px) {
-  .announcement-container {
-    padding: 0.4rem 0.6rem;
-  }
-  .announcement-content {
-    flex-direction: column;
-    gap: 0.2rem;
-    text-align: center;
-  }
-  .announcement-text-wrapper {
-    flex-direction: column;
-    align-items: center;
-    gap: 0.1rem;
-  }
-  .announcement-icon {
-    font-size: 0.9rem;
-  }
-  .announcement-text {
-    font-size: 0.7rem;
-    letter-spacing: 0.06em;
-  }
-  .announcement-subtext {
-    font-size: 0.65rem;
-    letter-spacing: 0.04em;
-  }
-  .announcement-bar {
-    max-height: 110px;
-  }
-}
-
-@media (max-width: 480px) {
-  .announcement-container {
-    padding: 0.35rem 0.5rem;
-  }
-  .announcement-text {
-    font-size: 0.65rem;
-    letter-spacing: 0.05em;
-  }
-  .announcement-subtext {
-    font-size: 0.6rem;
-  }
-  .announcement-icon {
-    font-size: 0.8rem;
-  }
-  .announcement-bar {
-    max-height: 120px;
-  }
-}
-
-@media (min-width: 1400px) {
-  .announcement-container {
-    padding: 0.75rem 2rem;
-  }
-  .announcement-text {
-    font-size: 0.95rem;
-    letter-spacing: 0.15em;
-  }
-  .announcement-subtext {
-    font-size: 0.8rem;
-  }
-  .announcement-icon {
-    font-size: 1.4rem;
-  }
-  .announcement-content {
-    gap: 1rem;
-  }
-  .announcement-text-wrapper {
-    gap: 0.9rem;
-  }
-}
-
-/* RTL Support for AnnouncementBar */
-[dir="rtl"] .announcement-subtext::before {
-  margin-right: 0;
-  margin-left: 0.5rem;
-}
-
-[dir="rtl"] .announcement-text-wrapper {
-  flex-direction: row-reverse;
-}
-
-[dir="rtl"] .red-shimmer {
-  animation: redShimmerRTL 3s infinite;
-}
-
-@keyframes redShimmerRTL {
-  0% {
-    right: -100%;
-    left: auto;
-  }
-  100% {
-    right: 100%;
-    left: auto;
-  }
-}
-
-/* Corner accents - RED */
 .announcement-bar .corner-accent {
   position: absolute;
   width: 40px;
@@ -326,13 +199,51 @@
 .announcement-bar .corner-accent--tl {
   top: 0;
   left: 0;
-  border-top: 1px solid rgba(220, 38, 38, 0.4);
-  border-left: 1px solid rgba(220, 38, 38, 0.4);
+  border-top: 1px solid rgba(220, 38, 38, 0.6);
+  border-left: 1px solid rgba(220, 38, 38, 0.6);
 }
 
 .announcement-bar .corner-accent--tr {
   top: 0;
   right: 0;
-  border-top: 1px solid rgba(220, 38, 38, 0.4);
-  border-right: 1px solid rgba(220, 38, 38, 0.4);
+  border-top: 1px solid rgba(220, 38, 38, 0.6);
+  border-right: 1px solid rgba(220, 38, 38, 0.6);
+}
+
+@media (max-width: 768px) {
+  .announcement-container {
+    padding: 0.5rem 0.8rem;
+  }
+  .announcement-text {
+    white-space: normal;
+    text-align: center;
+  }
+  .announcement-subtext {
+    white-space: normal;
+    text-align: center;
+  }
+  .announcement-subtext::before {
+    display: none;
+  }
+  .announcement-bar {
+    max-height: 100px;
+  }
+}
+
+@media (max-width: 480px) {
+  .announcement-text {
+    font-size: 0.65rem;
+    letter-spacing: 0.05em;
+  }
+  .announcement-bar {
+    max-height: 120px;
+  }
+}
+
+[dir="rtl"] .announcement-subtext::before {
+  margin-right: 0;
+  margin-left: 0.5rem;
+}
+[dir="rtl"] .announcement-text-wrapper {
+  flex-direction: row-reverse;
 }

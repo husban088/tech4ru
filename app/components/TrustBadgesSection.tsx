@@ -235,7 +235,12 @@ export default function TrustBadgesSection() {
   }, []);
 
   return (
-    <section ref={sectionRef} className="tbs-root" dir={isRTL ? "rtl" : "ltr"}>
+    <section
+      ref={sectionRef}
+      className="tbs-root"
+      dir={isRTL ? "rtl" : "ltr"}
+      suppressHydrationWarning
+    >
       {/* Fine grid texture - Red tint */}
       <div className="tbs-texture" aria-hidden="true" />
 

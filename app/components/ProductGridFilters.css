@@ -1,5 +1,5 @@
 /* ============================================================
-   FILTER SIDEBAR - TOP RED → BOTTOM BLACK GRADIENT THEME
+   FILTER SIDEBAR - SKY BLUE + BLACK GRADIENT THEME
    WHITE BACKGROUND | BLACK TEXT | MATCHING MAIN WEBSITE
    HIGHEST Z-INDEX - ABOVE NAVBAR AND EVERYTHING
    ============================================================ */
@@ -72,7 +72,7 @@
   display: flex;
   flex-direction: column;
   box-shadow: -8px 0 40px rgba(0, 0, 0, 0.15);
-  border-left: 1px solid rgba(220, 38, 38, 0.25);
+  border-left: 1px solid rgba(14, 165, 233, 0.25);
 }
 
 .filter-sidebar.open {
@@ -83,7 +83,7 @@
     visibility 0s linear 0s;
 }
 
-/* Decorative RED shimmer on left edge */
+/* Decorative SKY BLUE shimmer on left edge */
 .filter-sidebar::before {
   content: "";
   position: absolute;
@@ -94,9 +94,9 @@
   background: linear-gradient(
     180deg,
     transparent 0%,
-    rgba(220, 38, 38, 0.6) 25%,
-    #dc2626 50%,
-    rgba(220, 38, 38, 0.6) 75%,
+    rgba(14, 165, 233, 0.6) 25%,
+    #0ea5e9 50%,
+    rgba(14, 165, 233, 0.6) 75%,
     transparent 100%
   );
   opacity: 0;
@@ -107,14 +107,14 @@
   opacity: 1;
 }
 
-/* Header - RED theme on white */
+/* Header - SKY BLUE theme on white */
 .filter-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 1.5rem 1.5rem 1rem;
-  border-bottom: 1px solid rgba(220, 38, 38, 0.12);
-  background: rgba(220, 38, 38, 0.03);
+  border-bottom: 1px solid rgba(14, 165, 233, 0.12);
+  background: rgba(14, 165, 233, 0.03);
   flex-shrink: 0;
 }
 
@@ -132,7 +132,7 @@
   font-family: "Goldman", system-ui, sans-serif;
   font-size: 1.3rem;
   font-weight: 600;
-  background: linear-gradient(180deg, #dc2626 0%, #0f172a 100%);
+  background: linear-gradient(180deg, #0ea5e9 0%, #0f172a 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -140,7 +140,7 @@
 }
 
 .filter-count {
-  background: linear-gradient(180deg, #dc2626 0%, #0f172a 100%);
+  background: linear-gradient(180deg, #0ea5e9 0%, #0f172a 100%);
   color: #ffffff;
   font-family: "Goldman", system-ui, sans-serif;
   font-size: 0.6rem;
@@ -153,8 +153,8 @@
   width: 36px;
   height: 36px;
   border-radius: 50%;
-  background: rgba(220, 38, 38, 0.1);
-  border: 1px solid rgba(220, 38, 38, 0.25);
+  background: rgba(14, 165, 233, 0.1);
+  border: 1px solid rgba(14, 165, 233, 0.25);
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -164,11 +164,11 @@
 }
 
 .filter-close:hover {
-  background: linear-gradient(180deg, #dc2626 0%, #0f172a 100%);
-  border-color: #dc2626;
+  background: linear-gradient(180deg, #0ea5e9 0%, #0f172a 100%);
+  border-color: #0ea5e9;
   color: #ffffff;
   transform: rotate(90deg);
-  box-shadow: 0 0 12px rgba(220, 38, 38, 0.2);
+  box-shadow: 0 0 12px rgba(14, 165, 233, 0.2);
 }
 
 .filter-close svg {
@@ -184,7 +184,7 @@
 }
 
 .filter-section {
-  border-bottom: 1px solid rgba(220, 38, 38, 0.08);
+  border-bottom: 1px solid rgba(14, 165, 233, 0.08);
 }
 
 .filter-section-header {
@@ -207,13 +207,13 @@
 }
 
 .filter-section-header:hover {
-  background: rgba(220, 38, 38, 0.08);
-  color: #dc2626;
+  background: rgba(14, 165, 233, 0.08);
+  color: #0ea5e9;
 }
 
 .filter-section-header.active {
-  background: rgba(220, 38, 38, 0.12);
-  color: #dc2626;
+  background: rgba(14, 165, 233, 0.12);
+  color: #0ea5e9;
 }
 
 .filter-section-icon {
@@ -228,9 +228,9 @@
 .filter-section-active-dot {
   width: 8px;
   height: 8px;
-  background: #dc2626;
+  background: #0ea5e9;
   border-radius: 50%;
-  box-shadow: 0 0 6px rgba(220, 38, 38, 0.5);
+  box-shadow: 0 0 6px rgba(14, 165, 233, 0.5);
   animation: filterPulse 1.5s ease-in-out infinite;
 }
 
@@ -249,7 +249,7 @@
 .filter-section-arrow {
   width: 14px;
   height: 14px;
-  color: #dc2626;
+  color: #0ea5e9;
   transition: transform 0.3s ease;
 }
 
@@ -276,11 +276,11 @@
   }
 }
 
-/* Filter Chips - White background with red border */
+/* Filter Chips - White background with SKY BLUE border */
 .filter-chip {
   padding: 0.5rem 1rem;
   background: #ffffff;
-  border: 1px solid rgba(220, 38, 38, 0.25);
+  border: 1px solid rgba(14, 165, 233, 0.25);
   border-radius: 40px;
   font-family: "Goldman", system-ui, sans-serif;
   font-size: 0.6rem;
@@ -295,15 +295,15 @@
 }
 
 .filter-chip:hover {
-  border-color: #dc2626;
-  color: #dc2626;
+  border-color: #0ea5e9;
+  color: #0ea5e9;
   transform: translateY(-2px);
-  background: rgba(220, 38, 38, 0.05);
-  box-shadow: 0 0 8px rgba(220, 38, 38, 0.15);
+  background: rgba(14, 165, 233, 0.05);
+  box-shadow: 0 0 8px rgba(14, 165, 233, 0.15);
 }
 
 .filter-chip.active {
-  background: linear-gradient(180deg, #dc2626 0%, #0f172a 100%);
+  background: linear-gradient(180deg, #0ea5e9 0%, #0f172a 100%);
   border-color: transparent;
   color: #ffffff;
   font-weight: 600;
@@ -316,13 +316,13 @@
   border: 1px solid rgba(0, 0, 0, 0.1);
 }
 
-/* Footer - RED theme */
+/* Footer - SKY BLUE theme */
 .filter-footer {
   padding: 1rem 1.5rem 1.5rem;
-  border-top: 1px solid rgba(220, 38, 38, 0.12);
+  border-top: 1px solid rgba(14, 165, 233, 0.12);
   display: flex;
   gap: 1rem;
-  background: rgba(220, 38, 38, 0.03);
+  background: rgba(14, 165, 233, 0.03);
   flex-shrink: 0;
 }
 
@@ -330,14 +330,14 @@
   flex: 1;
   padding: 0.8rem;
   background: transparent;
-  border: 1px solid rgba(220, 38, 38, 0.3);
+  border: 1px solid rgba(14, 165, 233, 0.3);
   border-radius: 40px;
   font-family: "Goldman", system-ui, sans-serif;
   font-size: 0.6rem;
   font-weight: 600;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: #dc2626;
+  color: #0ea5e9;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -347,8 +347,8 @@
 }
 
 .filter-clear-btn:hover {
-  border-color: #dc2626;
-  background: rgba(220, 38, 38, 0.1);
+  border-color: #0ea5e9;
+  background: rgba(14, 165, 233, 0.1);
   transform: translateY(-2px);
 }
 
@@ -360,7 +360,7 @@
 .filter-apply-btn {
   flex: 1;
   padding: 0.8rem;
-  background: linear-gradient(180deg, #dc2626 0%, #0f172a 100%);
+  background: linear-gradient(180deg, #0ea5e9 0%, #0f172a 100%);
   border: none;
   border-radius: 40px;
   font-family: "Goldman", system-ui, sans-serif;
@@ -375,7 +375,7 @@
 
 .filter-apply-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(220, 38, 38, 0.4);
+  box-shadow: 0 8px 25px rgba(14, 165, 233, 0.4);
 }
 
 /* Responsive */
@@ -403,7 +403,7 @@
   left: 0;
   transform: translateX(-100%);
   border-left: none;
-  border-right: 1px solid rgba(220, 38, 38, 0.25);
+  border-right: 1px solid rgba(14, 165, 233, 0.25);
   box-shadow: 8px 0 40px rgba(0, 0, 0, 0.15);
 }
 

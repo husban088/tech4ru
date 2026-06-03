@@ -1,6 +1,6 @@
 /* ============================================================
-   TRUST BADGES SECTION - WHITE BACKGROUND | BLACK TEXT | RED GRADIENTS
-   Matching Explore Aurexia style
+   TRUST BADGES SECTION - WHITE BACKGROUND | BLACK + SKY BLUE GRADIENTS
+   Matching Navbar & GlobalFAQSection color scheme exactly
    ============================================================ */
 
 .pd-trust-section {
@@ -9,7 +9,7 @@
   background: #ffffff;
   border-radius: 20px;
   position: relative;
-  border: 1px solid rgba(220, 38, 38, 0.18);
+  border: 1px solid rgba(14, 165, 233, 0.18);
   transition: all 0.4s ease;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
 }
@@ -20,15 +20,16 @@
   inset: 0;
   background: radial-gradient(
     ellipse at 30% 40%,
-    rgba(220, 38, 38, 0.03),
+    rgba(14, 165, 233, 0.04),
     transparent
   );
   pointer-events: none;
+  border-radius: 20px;
 }
 
 .pd-trust-section:hover {
-  border-color: #dc2626;
-  box-shadow: 0 8px 25px rgba(220, 38, 38, 0.08);
+  border-color: rgba(14, 165, 233, 0.4);
+  box-shadow: 0 8px 25px rgba(14, 165, 233, 0.1);
 }
 
 .pd-trust-grid {
@@ -57,12 +58,27 @@
   text-align: center;
   padding: 1rem 0.6rem;
   background: #ffffff;
-  border: 1px solid rgba(220, 38, 38, 0.15);
+  border: 1px solid rgba(14, 165, 233, 0.15);
   border-radius: 16px;
   transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
   cursor: default;
   position: relative;
   overflow: hidden;
+}
+
+/* Left accent bar — same as FAQ section */
+.pd-trust-item::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: linear-gradient(180deg, #0f172a, #0ea5e9, #38bdf8);
+  transform: scaleY(0);
+  transform-origin: bottom;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  border-radius: 16px 0 0 16px;
 }
 
 .pd-trust-item::before {
@@ -71,7 +87,7 @@
   inset: 0;
   background: radial-gradient(
     circle at center,
-    rgba(220, 38, 38, 0.05),
+    rgba(14, 165, 233, 0.05),
     transparent
   );
   opacity: 0;
@@ -80,30 +96,39 @@
 
 .pd-trust-item:hover {
   transform: translateY(-6px);
-  border-color: #dc2626;
-  box-shadow: 0 15px 30px rgba(220, 38, 38, 0.1);
+  border-color: rgba(14, 165, 233, 0.35);
+  box-shadow:
+    0 0 0 1px rgba(14, 165, 233, 0.08),
+    0 15px 30px rgba(14, 165, 233, 0.12);
+  background: rgba(14, 165, 233, 0.02);
 }
 
 .pd-trust-item:hover::before {
   opacity: 1;
 }
 
+.pd-trust-item:hover::after {
+  transform: scaleY(1);
+}
+
+/* Icon circle — navbar gradient: #0f172a → #0ea5e9 → #38bdf8 */
 .pd-trust-icon {
   width: 48px;
   height: 48px;
-  background: linear-gradient(180deg, #dc2626 0%, #0f172a 100%);
+  background: linear-gradient(135deg, #0f172a 0%, #0ea5e9 55%, #38bdf8 100%);
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   margin-bottom: 0.7rem;
   transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+  box-shadow: 0 4px 12px rgba(14, 165, 233, 0.25);
 }
 
 .pd-trust-item:hover .pd-trust-icon {
-  background: linear-gradient(180deg, #ef4444 0%, #dc2626 100%);
+  background: linear-gradient(135deg, #0284c7 0%, #38bdf8 55%, #7dd3fc 100%);
   transform: scale(1.08) rotate(5deg);
-  box-shadow: 0 6px 12px rgba(220, 38, 38, 0.25);
+  box-shadow: 0 8px 20px rgba(14, 165, 233, 0.35);
 }
 
 .pd-trust-icon svg {
@@ -111,10 +136,6 @@
   height: 22px;
   color: #ffffff;
   transition: color 0.3s ease;
-}
-
-.pd-trust-item:hover .pd-trust-icon svg {
-  color: #ffffff;
 }
 
 .pd-trust-label {
@@ -125,6 +146,15 @@
   text-transform: uppercase;
   color: #0f172a;
   margin-bottom: 0.2rem;
+  transition: all 0.3s ease;
+}
+
+/* Label gradient on hover — matches FAQ question text */
+.pd-trust-item:hover .pd-trust-label {
+  background: linear-gradient(90deg, #0f172a 0%, #0ea5e9 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .pd-trust-desc {
@@ -163,4 +193,16 @@
 }
 .pd-trust-item:nth-child(4) {
   --item-index: 4;
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .pd-trust-item,
+  .pd-trust-icon {
+    animation: none;
+    transition: none;
+  }
+  .pd-trust-item:hover {
+    transform: none;
+  }
 }

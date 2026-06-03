@@ -1,10 +1,10 @@
 /* ═══════════════════════════════════════════
    CART SIDEBAR — cartsidebar.css
-   WHITE BACKGROUND | BLACK TEXT | TOP RED → BOTTOM BLACK GRADIENT
-   Matching Explore Aurexia style
+   WHITE BACKGROUND | BLACK TEXT | SKY BLUE + BLACK GRADIENT
+   Matching GlobalFAQSection color scheme
 ═══════════════════════════════════════════ */
 
-/* Overlay - Dark with RED tint */
+/* Overlay - Dark with SKY BLUE tint */
 .cs-overlay {
   position: fixed;
   inset: 0;
@@ -23,7 +23,7 @@
   pointer-events: auto;
 }
 
-/* Sidebar - White with RED Accents */
+/* Sidebar - White with SKY BLUE Accents */
 .cs-sidebar {
   position: fixed;
   top: 0;
@@ -32,7 +32,7 @@
   max-width: 100vw;
   height: 100vh;
   background: #ffffff;
-  border-left: 1px solid rgba(220, 38, 38, 0.25);
+  border-left: 1px solid rgba(14, 165, 233, 0.25);
   z-index: 1200 !important;
   display: flex;
   flex-direction: column;
@@ -47,7 +47,7 @@
   transform: translateX(0);
 }
 
-/* Decorative rings - RED */
+/* Decorative rings - SKY BLUE */
 .cs-deco {
   position: absolute;
   top: -80px;
@@ -61,7 +61,7 @@
   width: 220px;
   height: 220px;
   border-radius: 50%;
-  border: 1px solid rgba(220, 38, 38, 0.08);
+  border: 1px solid rgba(14, 165, 233, 0.08);
   position: absolute;
   top: 0;
   right: 0;
@@ -70,12 +70,12 @@
 .cs-deco-ring--2 {
   width: 340px;
   height: 340px;
-  border-color: rgba(220, 38, 38, 0.05);
+  border-color: rgba(14, 165, 233, 0.05);
   top: -60px;
   right: -60px;
 }
 
-/* Header - RED Theme */
+/* Header - SKY BLUE Theme */
 .cs-header {
   position: relative;
   z-index: 1;
@@ -83,7 +83,7 @@
   align-items: flex-start;
   justify-content: space-between;
   padding: 2rem 2rem 1.25rem;
-  border-bottom: 1px solid rgba(220, 38, 38, 0.12);
+  border-bottom: 1px solid rgba(14, 165, 233, 0.12);
   flex-shrink: 0;
 }
 
@@ -96,7 +96,7 @@
   font-weight: 600;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: #dc2626;
+  color: #0ea5e9;
   margin: 0 0 0.5rem;
 }
 
@@ -104,7 +104,7 @@
   display: block;
   width: 16px;
   height: 1px;
-  background: #dc2626;
+  background: #0ea5e9;
   opacity: 0.7;
 }
 
@@ -119,18 +119,18 @@
 
 .cs-title em {
   font-style: italic;
-  background: linear-gradient(180deg, #dc2626 0%, #ef4444 50%, #0f172a 100%);
+  background: linear-gradient(180deg, #0ea5e9 0%, #38bdf8 50%, #0f172a 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
   margin-right: 0.2em;
 }
 
-/* Close button - RED */
+/* Close button - SKY BLUE */
 .cs-close-btn {
   width: 36px;
   height: 36px;
-  border: 1px solid rgba(220, 38, 38, 0.25);
+  border: 1px solid rgba(14, 165, 233, 0.25);
   border-radius: 50%;
   background: transparent;
   color: #64748b;
@@ -149,28 +149,28 @@
 }
 
 .cs-close-btn:hover {
-  border-color: #dc2626;
-  color: #dc2626;
-  background: rgba(220, 38, 38, 0.08);
+  border-color: #0ea5e9;
+  color: #0ea5e9;
+  background: rgba(14, 165, 233, 0.08);
   transform: rotate(90deg);
-  box-shadow: 0 0 12px rgba(220, 38, 38, 0.1);
+  box-shadow: 0 0 12px rgba(14, 165, 233, 0.1);
 }
 
-/* Shipping Bar - RED */
+/* Shipping Bar - SKY BLUE */
 .cs-shipping-bar {
   padding: 0.75rem 2rem;
-  background: rgba(220, 38, 38, 0.05);
-  border-bottom: 1px solid rgba(220, 38, 38, 0.1);
+  background: rgba(14, 165, 233, 0.05);
+  border-bottom: 1px solid rgba(14, 165, 233, 0.1);
   flex-shrink: 0;
 }
 
 .cs-shipping-bar--achieved {
   background: linear-gradient(
     135deg,
-    rgba(220, 38, 38, 0.08),
-    rgba(220, 38, 38, 0.03)
+    rgba(14, 165, 233, 0.08),
+    rgba(14, 165, 233, 0.03)
   );
-  border-bottom-color: rgba(220, 38, 38, 0.15);
+  border-bottom-color: rgba(14, 165, 233, 0.15);
 }
 
 .cs-shipping-text {
@@ -185,25 +185,25 @@
 }
 
 .cs-shipping-bar--achieved .cs-shipping-text {
-  color: #dc2626;
+  color: #0ea5e9;
   margin-bottom: 0;
 }
 
 .cs-shipping-text strong {
-  color: #dc2626;
+  color: #0ea5e9;
   font-weight: 700;
 }
 
 .cs-shipping-track {
   height: 2px;
-  background: rgba(220, 38, 38, 0.12);
+  background: rgba(14, 165, 233, 0.12);
   border-radius: 2px;
   overflow: hidden;
 }
 
 .cs-shipping-fill {
   height: 100%;
-  background: linear-gradient(90deg, rgba(220, 38, 38, 0.6), #dc2626);
+  background: linear-gradient(90deg, rgba(14, 165, 233, 0.6), #0ea5e9);
   border-radius: 2px;
   transition: width 0.4s ease;
 }
@@ -214,7 +214,7 @@
   overflow-y: auto;
   padding: 1.5rem 2rem;
   scrollbar-width: thin;
-  scrollbar-color: rgba(220, 38, 38, 0.3) transparent;
+  scrollbar-color: rgba(14, 165, 233, 0.3) transparent;
 }
 
 .cs-items::-webkit-scrollbar {
@@ -222,7 +222,7 @@
 }
 
 .cs-items::-webkit-scrollbar-thumb {
-  background: rgba(220, 38, 38, 0.3);
+  background: rgba(14, 165, 233, 0.3);
   border-radius: 2px;
 }
 
@@ -241,7 +241,7 @@
   align-items: flex-start;
   gap: 1rem;
   padding: 1.25rem 0;
-  border-bottom: 1px solid rgba(220, 38, 38, 0.08);
+  border-bottom: 1px solid rgba(14, 165, 233, 0.08);
   position: relative;
   animation: csItemIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
   transition: background 0.2s ease;
@@ -262,13 +262,13 @@
   }
 }
 
-/* Image - RED */
+/* Image - SKY BLUE */
 .cs-item-img-wrap {
   width: 68px;
   height: 68px;
   border-radius: 8px;
   background: #f8fafc;
-  border: 1px solid rgba(220, 38, 38, 0.2);
+  border: 1px solid rgba(14, 165, 233, 0.2);
   flex-shrink: 0;
   overflow: hidden;
   display: flex;
@@ -283,7 +283,7 @@
 }
 
 .cs-item-img-placeholder {
-  color: rgba(220, 38, 38, 0.3);
+  color: rgba(14, 165, 233, 0.3);
 }
 
 .cs-item-img-placeholder svg {
@@ -303,7 +303,7 @@
   font-weight: 600;
   letter-spacing: 0.15em;
   text-transform: uppercase;
-  background: linear-gradient(180deg, #dc2626, #ef4444);
+  background: linear-gradient(180deg, #0ea5e9, #38bdf8);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -345,13 +345,13 @@
   min-width: 0;
 }
 
-/* Qty controls - RED */
+/* Qty controls - SKY BLUE */
 .cs-qty {
   display: flex;
   align-items: center;
   gap: 0;
-  background: rgba(220, 38, 38, 0.05);
-  border: 1.5px solid rgba(220, 38, 38, 0.25);
+  background: rgba(14, 165, 233, 0.05);
+  border: 1.5px solid rgba(14, 165, 233, 0.25);
   border-radius: 24px;
   overflow: visible; /* FIX: hidden se button clip hota tha */
   flex-shrink: 0; /* FIX: shrink na ho — size fixed rahe */
@@ -382,11 +382,11 @@
 }
 
 .cs-qty-btn:hover {
-  color: #dc2626;
-  background: rgba(220, 38, 38, 0.1);
+  color: #0ea5e9;
+  background: rgba(14, 165, 233, 0.1);
 }
 
-/* quantity=1 pe minus → trash icon — red warning state */
+/* quantity=1 pe minus → trash icon — warning state (keep red for delete) */
 .cs-qty-btn--delete {
   color: #dc2626 !important;
 }
@@ -414,21 +414,21 @@
   margin-left: 2px;
 }
 
-/* Item price - RED */
+/* Item price - SKY BLUE */
 .cs-item-price {
   font-family: "Goldman", system-ui, sans-serif;
   font-size: 1rem;
   font-weight: 700;
-  background: linear-gradient(180deg, #dc2626, #ef4444);
+  background: linear-gradient(180deg, #0ea5e9, #38bdf8);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
   margin: 0;
-  flex-shrink: 0; /* price squeeze na ho */
+  flex-shrink: 0;
   white-space: nowrap;
 }
 
-/* Remove btn - RED */
+/* Remove btn - keep red for remove action */
 .cs-item-remove {
   width: 35px;
   height: 35px;
@@ -461,8 +461,8 @@
 .cs-remove-spinner {
   width: 16px;
   height: 16px;
-  border: 2px solid rgba(220, 38, 38, 0.2);
-  border-top-color: #dc2626;
+  border: 2px solid rgba(14, 165, 233, 0.2);
+  border-top-color: #0ea5e9;
   border-radius: 50%;
   animation: cs-spin 0.6s linear infinite;
 }
@@ -473,7 +473,7 @@
   }
 }
 
-/* Empty state - RED */
+/* Empty state - SKY BLUE */
 .cs-empty {
   display: flex;
   flex-direction: column;
@@ -486,7 +486,7 @@
 }
 
 .cs-empty-icon {
-  color: rgba(220, 38, 38, 0.2);
+  color: rgba(14, 165, 233, 0.2);
   margin-bottom: 0.75rem;
 }
 
@@ -518,9 +518,9 @@
   margin-top: 1rem;
   padding: 0.65rem 1.5rem;
   background: transparent;
-  border: 1px solid rgba(220, 38, 38, 0.4);
+  border: 1px solid rgba(14, 165, 233, 0.4);
   border-radius: 2px;
-  color: #dc2626;
+  color: #0ea5e9;
   font-family: "Goldman", system-ui, sans-serif;
   font-size: 0.75rem;
   font-weight: 600;
@@ -531,19 +531,19 @@
 }
 
 .cs-empty-cta:hover {
-  background: rgba(220, 38, 38, 0.08);
-  border-color: #dc2626;
-  color: #dc2626;
+  background: rgba(14, 165, 233, 0.08);
+  border-color: #0ea5e9;
+  color: #0ea5e9;
   transform: translateY(-1px);
   gap: 0.75rem;
 }
 
-/* Footer / Checkout - RED */
+/* Footer / Checkout - SKY BLUE */
 .cs-footer {
   padding: 1.5rem 2rem;
-  border-top: 1px solid rgba(220, 38, 38, 0.12);
+  border-top: 1px solid rgba(14, 165, 233, 0.12);
   flex-shrink: 0;
-  background: rgba(220, 38, 38, 0.02);
+  background: rgba(14, 165, 233, 0.02);
 }
 
 .cs-summary {
@@ -563,7 +563,7 @@
 
 .cs-summary-divider {
   height: 1px;
-  background: rgba(220, 38, 38, 0.1);
+  background: rgba(14, 165, 233, 0.1);
   margin: 0.6rem 0;
 }
 
@@ -576,22 +576,22 @@
 .cs-summary-total span:last-child {
   font-family: "Goldman", system-ui, sans-serif;
   font-size: 1.15rem;
-  background: linear-gradient(180deg, #dc2626, #ef4444);
+  background: linear-gradient(180deg, #0ea5e9, #38bdf8);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
 }
 
 .cs-summary-row--discount {
-  color: #dc2626;
+  color: #0ea5e9;
 }
 
 .cs-discount-value {
-  color: #dc2626;
+  color: #0ea5e9;
   font-weight: 600;
 }
 
-/* Coupon Applied Bar - RED */
+/* Coupon Applied Bar - SKY BLUE */
 .cs-coupon-applied-bar {
   display: flex;
   align-items: center;
@@ -599,8 +599,8 @@
   gap: 0.5rem;
   padding: 0.45rem 0.75rem;
   margin-bottom: 0.6rem;
-  background: rgba(220, 38, 38, 0.08);
-  border: 1px solid rgba(220, 38, 38, 0.25);
+  background: rgba(14, 165, 233, 0.08);
+  border: 1px solid rgba(14, 165, 233, 0.25);
   border-radius: 8px;
 }
 
@@ -608,13 +608,13 @@
   display: flex;
   align-items: center;
   gap: 0.4rem;
-  color: #dc2626;
+  color: #0ea5e9;
   font-size: 0.75rem;
   flex: 1;
 }
 
 .cs-coupon-badge-wrap svg {
-  stroke: #dc2626;
+  stroke: #0ea5e9;
 }
 
 .cs-coupon-remove-btn {
@@ -633,7 +633,7 @@
   background: rgba(255, 107, 107, 0.1);
 }
 
-/* Checkout Button - RED */
+/* Checkout Button - SKY BLUE gradient */
 .cs-checkout-btn {
   display: flex;
   align-items: center;
@@ -641,7 +641,7 @@
   gap: 0.6rem;
   width: 100%;
   padding: 0.95rem 1.5rem;
-  background: linear-gradient(180deg, #dc2626 0%, #0f172a 100%);
+  background: linear-gradient(180deg, #0ea5e9 0%, #0f172a 100%);
   border: none;
   border-radius: 40px;
   color: #ffffff;
@@ -669,7 +669,7 @@
 
 .cs-checkout-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 30px rgba(220, 38, 38, 0.25);
+  box-shadow: 0 8px 30px rgba(14, 165, 233, 0.25);
   gap: 0.9rem;
 }
 
@@ -682,7 +682,7 @@
   height: 14px;
 }
 
-/* View Cart Button - RED */
+/* View Cart Button - SKY BLUE */
 .cs-view-cart-btn {
   display: flex;
   align-items: center;
@@ -691,9 +691,9 @@
   width: 100%;
   padding: 0.72rem 1.5rem;
   background: transparent;
-  border: 1px solid rgba(220, 38, 38, 0.35);
+  border: 1px solid rgba(14, 165, 233, 0.35);
   border-radius: 40px;
-  color: #dc2626;
+  color: #0ea5e9;
   font-family: "Goldman", system-ui, sans-serif;
   font-size: 0.72rem;
   font-weight: 600;
@@ -706,9 +706,9 @@
 }
 
 .cs-view-cart-btn:hover {
-  background: rgba(220, 38, 38, 0.08);
-  border-color: #dc2626;
-  color: #dc2626;
+  background: rgba(14, 165, 233, 0.08);
+  border-color: #0ea5e9;
+  color: #0ea5e9;
   transform: translateY(-1px);
   gap: 0.75rem;
 }
@@ -717,14 +717,14 @@
 .cs-spinner {
   width: 32px;
   height: 32px;
-  border: 2px solid rgba(220, 38, 38, 0.2);
-  border-top-color: #dc2626;
+  border: 2px solid rgba(14, 165, 233, 0.2);
+  border-top-color: #0ea5e9;
   border-radius: 50%;
   animation: cs-spin 0.8s linear infinite;
   margin-bottom: 1rem;
 }
 
-/* Stock Status Badge - RED */
+/* Stock Status Badge - SKY BLUE */
 .cs-item-stock {
   margin: 0.5rem 0 0.75rem;
 }
@@ -742,9 +742,9 @@
 }
 
 .cs-stock-badge.in {
-  background: rgba(220, 38, 38, 0.1);
-  color: #dc2626;
-  border: 1px solid rgba(220, 38, 38, 0.3);
+  background: rgba(14, 165, 233, 0.1);
+  color: #0ea5e9;
+  border: 1px solid rgba(14, 165, 233, 0.3);
 }
 
 .cs-stock-badge.low {
@@ -761,7 +761,7 @@
 
 /* Free shipping text */
 .free-shipping-text {
-  color: #dc2626;
+  color: #0ea5e9;
   font-weight: 500;
 }
 

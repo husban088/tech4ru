@@ -1,13 +1,14 @@
 /* =============================================
    NAVBAR CSS - TECH4U Luxury Store
-   RED + BLACK MIXED GRADIENTS | WHITE BACKGROUND | BLACK TEXT
+   SKY BLUE + BLACK MIXED GRADIENTS | WHITE BACKGROUND | BLACK TEXT
    FULLY RESPONSIVE | FIXED POSITION (NO SCROLL MOVE)
+   MATCHING GlobalFAQSection COLOR SCHEME
    ============================================= */
 
 @import url("https://fonts.googleapis.com/css2?family=Goldman:wght@400;700&display=swap");
 
 :root {
-  /* === LIGHT THEME - BLACK & RED MIXED VARIABLES === */
+  /* === LIGHT THEME - SKY BLUE & BLACK MIXED VARIABLES === */
   --nav-bg-gradient: linear-gradient(
     135deg,
     #ffffff 0%,
@@ -23,11 +24,11 @@
 
   --nav-bg: #ffffff;
   --nav-bg-scroll: rgba(248, 250, 252, 0.98);
-  --nav-border: rgba(220, 38, 38, 0.2);
-  --nav-red: #dc2626;
-  --nav-red-light: #ef4444;
-  --nav-red-dim: rgba(220, 38, 38, 0.08);
-  --nav-red-deep: #b91c1c;
+  --nav-border: rgba(14, 165, 233, 0.2);
+  --nav-sky: #0ea5e9;
+  --nav-sky-light: #38bdf8;
+  --nav-sky-dim: rgba(14, 165, 233, 0.08);
+  --nav-sky-deep: #0284c7;
   --nav-black: #0f172a;
   --nav-muted: #475569;
   --nav-muted-light: #64748b;
@@ -55,14 +56,14 @@
   width: 100%;
   z-index: 10;
   background: linear-gradient(135deg, #ffffff 0%, #f8fafc 50%, #f1f5f9 100%);
-  border-bottom: 1px solid rgba(220, 38, 38, 0.2);
+  border-bottom: 1px solid rgba(14, 165, 233, 0.2);
   backdrop-filter: blur(0px);
   transition:
     background var(--transition),
     box-shadow var(--transition);
 }
 
-/* Top Red Glow Line */
+/* Top Sky Blue Glow Line */
 .navbar::before {
   content: "";
   position: absolute;
@@ -73,9 +74,9 @@
   background: linear-gradient(
     90deg,
     transparent,
-    #dc2626,
-    #ef4444,
-    #dc2626,
+    #0ea5e9,
+    #38bdf8,
+    #0ea5e9,
     transparent
   );
   opacity: 0.5;
@@ -94,7 +95,7 @@
   backdrop-filter: blur(12px);
   box-shadow:
     0 4px 40px rgba(0, 0, 0, 0.05),
-    0 0 20px rgba(220, 38, 38, 0.08);
+    0 0 20px rgba(14, 165, 233, 0.08);
 }
 
 .navbar.scrolled::after {
@@ -104,7 +105,7 @@
   left: 0;
   right: 0;
   height: 2px;
-  background: linear-gradient(90deg, transparent, #dc2626, transparent);
+  background: linear-gradient(90deg, transparent, #0ea5e9, transparent);
   opacity: 0.3;
   pointer-events: none;
 }
@@ -138,7 +139,7 @@
   justify-content: center;
 }
 
-/* ========== TEXT LOGO STYLES - LUXURY DESIGN ========== */
+/* ========== TEXT LOGO STYLES - LUXURY DESIGN (SKY BLUE THEME) ========== */
 .navbar-logo {
   display: flex;
   align-items: baseline;
@@ -154,13 +155,13 @@
   transform: scale(1.02);
 }
 
-/* TECH part of logo - Black with Red gradient */
+/* TECH part of logo - Black with Sky Blue gradient */
 .logo-tech {
   font-family: var(--nav-font-tech);
   font-size: 1.9rem;
   font-weight: 700;
   letter-spacing: -0.02em;
-  background: linear-gradient(135deg, #0f172a 0%, #dc2626 50%, #b91c1c 100%);
+  background: linear-gradient(135deg, #0f172a 0%, #0ea5e9 50%, #0284c7 100%);
   background-size: 200% auto;
   -webkit-background-clip: text;
   background-clip: text;
@@ -174,29 +175,29 @@
   letter-spacing: -0.01em;
 }
 
-/* 4 part of logo - Red pulse */
+/* 4 part of logo - Sky Blue pulse */
 .logo-four {
   font-family: var(--nav-font-tech);
   font-size: 1.9rem;
   font-weight: 700;
   letter-spacing: -0.02em;
-  background: linear-gradient(135deg, #dc2626 0%, #ef4444 50%, #dc2626 100%);
+  background: linear-gradient(135deg, #0ea5e9 0%, #38bdf8 50%, #0ea5e9 100%);
   background-size: 200% auto;
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
   transition: all 0.4s ease;
   position: relative;
-  animation: redPulse 2s ease-in-out infinite;
+  animation: skyPulse 2s ease-in-out infinite;
 }
 
-@keyframes redPulse {
+@keyframes skyPulse {
   0%,
   100% {
-    text-shadow: 0 0 5px rgba(220, 38, 38, 0.3);
+    text-shadow: 0 0 5px rgba(14, 165, 233, 0.3);
   }
   50% {
-    text-shadow: 0 0 15px rgba(220, 38, 38, 0.5);
+    text-shadow: 0 0 15px rgba(14, 165, 233, 0.5);
   }
 }
 
@@ -212,7 +213,7 @@
   font-size: 1.9rem;
   font-weight: 700;
   letter-spacing: -0.02em;
-  background: linear-gradient(135deg, #0f172a 0%, #dc2626 50%, #ef4444 100%);
+  background: linear-gradient(135deg, #0f172a 0%, #0ea5e9 50%, #38bdf8 100%);
   background-size: 200% auto;
   -webkit-background-clip: text;
   background-clip: text;
@@ -231,7 +232,7 @@
   font-weight: 400;
   letter-spacing: 0.35em;
   text-transform: uppercase;
-  background: linear-gradient(135deg, #b91c1c 0%, #dc2626 50%, #ef4444 100%);
+  background: linear-gradient(135deg, #0284c7 0%, #0ea5e9 50%, #38bdf8 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -245,10 +246,10 @@
 .navbar-logo:hover .logo-luxury {
   letter-spacing: 0.45em;
   opacity: 1;
-  text-shadow: 0 0 8px rgba(220, 38, 38, 0.3);
+  text-shadow: 0 0 8px rgba(14, 165, 233, 0.3);
 }
 
-/* Red underline animation on hover */
+/* Sky Blue underline animation on hover */
 .navbar-logo::after {
   content: "";
   position: absolute;
@@ -259,9 +260,9 @@
   background: linear-gradient(
     90deg,
     transparent,
-    #dc2626,
-    #ef4444,
-    #dc2626,
+    #0ea5e9,
+    #38bdf8,
+    #0ea5e9,
     transparent
   );
   transform: scaleX(0);
@@ -283,7 +284,7 @@
   height: 0;
   background: radial-gradient(
     circle,
-    rgba(220, 38, 38, 0.08) 0%,
+    rgba(14, 165, 233, 0.08) 0%,
     transparent 70%
   );
   transition: all 0.5s ease;
@@ -332,10 +333,10 @@
 }
 
 .nav-icon-btn:hover {
-  color: #dc2626;
-  background: rgba(220, 38, 38, 0.1);
+  color: #0ea5e9;
+  background: rgba(14, 165, 233, 0.1);
   transform: scale(1.05);
-  box-shadow: 0 0 12px rgba(220, 38, 38, 0.15);
+  box-shadow: 0 0 12px rgba(14, 165, 233, 0.15);
 }
 
 .nav-icon-btn:hover svg {
@@ -349,7 +350,7 @@
   left: 50%;
   transform: translateX(-50%);
   background: #ffffff;
-  color: #dc2626;
+  color: #0ea5e9;
   font-family: var(--nav-font-body);
   font-size: 0.65rem;
   font-weight: 500;
@@ -363,7 +364,7 @@
   transition: all 0.2s ease;
   pointer-events: none;
   z-index: 150;
-  border: 1px solid rgba(220, 38, 38, 0.3);
+  border: 1px solid rgba(14, 165, 233, 0.3);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
@@ -394,7 +395,7 @@
 }
 
 .menu-btn:hover span {
-  background: #dc2626;
+  background: #0ea5e9;
 }
 
 .menu-btn:hover span:nth-child(1) {
@@ -412,10 +413,10 @@
   right: 4px;
   width: 10px;
   height: 10px;
-  background: #dc2626;
+  background: #0ea5e9;
   border-radius: 50%;
   border: 2px solid #ffffff;
-  box-shadow: 0 0 6px rgba(220, 38, 38, 0.5);
+  box-shadow: 0 0 6px rgba(14, 165, 233, 0.5);
   animation: pulse 2s ease-in-out infinite;
 }
 
@@ -438,7 +439,7 @@
   right: -2px;
   min-width: 18px;
   height: 18px;
-  background: #dc2626;
+  background: #0ea5e9;
   color: #ffffff;
   font-family: var(--nav-font-body);
   font-size: 10px;
@@ -448,7 +449,7 @@
   align-items: center;
   justify-content: center;
   padding: 0 4px;
-  box-shadow: 0 0 8px rgba(220, 38, 38, 0.5);
+  box-shadow: 0 0 8px rgba(14, 165, 233, 0.5);
   animation: cartBounce 0.5s ease;
 }
 
@@ -473,8 +474,8 @@
   display: flex;
   align-items: center;
   gap: 6px;
-  background: rgba(220, 38, 38, 0.05);
-  border: 1px solid rgba(220, 38, 38, 0.25);
+  background: rgba(14, 165, 233, 0.05);
+  border: 1px solid rgba(14, 165, 233, 0.25);
   border-radius: 40px;
   padding: 6px 12px;
   font-family: var(--nav-font-body);
@@ -486,11 +487,11 @@
 }
 
 .currency-btn:hover {
-  border-color: #dc2626;
-  color: #dc2626;
-  background: rgba(220, 38, 38, 0.1);
+  border-color: #0ea5e9;
+  color: #0ea5e9;
+  background: rgba(14, 165, 233, 0.1);
   transform: translateY(-1px);
-  box-shadow: 0 0 10px rgba(220, 38, 38, 0.15);
+  box-shadow: 0 0 10px rgba(14, 165, 233, 0.15);
 }
 
 .currency-flag {
@@ -522,7 +523,7 @@
   left: 0;
   min-width: 220px;
   background: #ffffff;
-  border: 1px solid rgba(220, 38, 38, 0.25);
+  border: 1px solid rgba(14, 165, 233, 0.25);
   border-radius: 16px;
   margin-top: 12px;
   overflow: hidden;
@@ -561,14 +562,14 @@
 }
 
 .currency-option:hover {
-  background: rgba(220, 38, 38, 0.08);
-  color: #dc2626;
+  background: rgba(14, 165, 233, 0.08);
+  color: #0ea5e9;
   padding-left: 22px;
 }
 
 .currency-option.active {
-  color: #dc2626;
-  background: rgba(220, 38, 38, 0.12);
+  color: #0ea5e9;
+  background: rgba(14, 165, 233, 0.12);
 }
 
 .currency-option-flag {
@@ -592,7 +593,7 @@
 
 /* ========== BOTTOM NAVIGATION ========== */
 .navbar-bottom {
-  border-top: 1px solid rgba(220, 38, 38, 0.15);
+  border-top: 1px solid rgba(14, 165, 233, 0.15);
   background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(8px);
 }
@@ -636,7 +637,7 @@
   left: 50%;
   width: 0;
   height: 2px;
-  background: linear-gradient(90deg, #dc2626, #ef4444);
+  background: linear-gradient(90deg, #0ea5e9, #38bdf8);
   transition: all 0.3s ease;
   transform: translateX(-50%);
 }
@@ -646,13 +647,13 @@
 }
 
 .nav-item > a:hover {
-  color: #dc2626;
+  color: #0ea5e9;
   letter-spacing: 0.18em;
-  text-shadow: 0 0 4px rgba(220, 38, 38, 0.2);
+  text-shadow: 0 0 4px rgba(14, 165, 233, 0.2);
 }
 
 .nav-item > a.active {
-  color: #dc2626;
+  color: #0ea5e9;
 }
 
 .nav-item > a.active::before {
@@ -676,13 +677,13 @@
   left: 0;
   min-width: 240px;
   background: #ffffff;
-  border: 1px solid rgba(220, 38, 38, 0.25);
+  border: 1px solid rgba(14, 165, 233, 0.25);
   border-top: none;
   border-radius: 0 0 16px 16px;
   backdrop-filter: blur(20px);
   box-shadow:
     0 20px 40px rgba(0, 0, 0, 0.08),
-    0 0 20px rgba(220, 38, 38, 0.05);
+    0 0 20px rgba(14, 165, 233, 0.05);
   opacity: 0;
   visibility: hidden;
   transform: translateY(-10px);
@@ -716,14 +717,14 @@
   top: 0;
   bottom: 0;
   width: 3px;
-  background: #dc2626;
+  background: #0ea5e9;
   transform: scaleY(0);
   transition: transform 0.2s ease;
 }
 
 .dropdown-item:hover {
-  background: rgba(220, 38, 38, 0.08);
-  color: #dc2626;
+  background: rgba(14, 165, 233, 0.08);
+  color: #0ea5e9;
   padding-left: 2rem;
 }
 
@@ -732,8 +733,8 @@
 }
 
 .dropdown-item.active {
-  color: #dc2626;
-  background: rgba(220, 38, 38, 0.12);
+  color: #0ea5e9;
+  background: rgba(14, 165, 233, 0.12);
 }
 
 /* ========== RESPONSIVE DESIGN ========== */

@@ -1,5 +1,5 @@
 /* ============================================================
-   RELATED PRODUCTS SECTION - TOP RED → BOTTOM BLACK GRADIENT
+   RELATED PRODUCTS SECTION - SKY BLUE → BLACK GRADIENT
    MATCHING FEATURED PRODUCTS STRUCTURE
    ============================================================ */
 
@@ -7,16 +7,16 @@
 
 /* ── Design Tokens ── */
 :root {
-  /* Red Accents + Black mixed - TOP RED → BOTTOM BLACK */
-  --rp-red: #dc2626;
-  --rp-red-dark: #b91c1c;
-  --rp-red-deep: #991b1b;
+  /* Sky Blue Accents + Black mixed - matching Navbar */
+  --rp-sky: #0ea5e9;
+  --rp-sky-dark: #0284c7;
+  --rp-sky-deep: #075985;
   --rp-black: #0f172a;
   --rp-black-soft: #1e293b;
-  --rp-primary-dim: rgba(220, 38, 38, 0.1);
-  --rp-primary-glow: rgba(220, 38, 38, 0.2);
-  --rp-primary-border: rgba(220, 38, 38, 0.25);
-  --rp-primary-border-h: rgba(220, 38, 38, 0.5);
+  --rp-primary-dim: rgba(14, 165, 233, 0.1);
+  --rp-primary-glow: rgba(14, 165, 233, 0.2);
+  --rp-primary-border: rgba(14, 165, 233, 0.25);
+  --rp-primary-border-h: rgba(14, 165, 233, 0.5);
 
   /* Card Colors - White */
   --rp-bg: #ffffff;
@@ -60,7 +60,7 @@
   position: absolute;
   inset: 0;
   background-image:
-    linear-gradient(rgba(220, 38, 38, 0.04) 1px, transparent 1px),
+    linear-gradient(rgba(14, 165, 233, 0.04) 1px, transparent 1px),
     linear-gradient(90deg, rgba(15, 23, 42, 0.03) 1px, transparent 1px);
   background-size: 48px 48px;
   pointer-events: none;
@@ -79,9 +79,9 @@
   background: linear-gradient(
     to right,
     transparent,
-    rgba(220, 38, 38, 0.5),
+    rgba(14, 165, 233, 0.5),
     rgba(15, 23, 42, 0.2),
-    rgba(220, 38, 38, 0.5),
+    rgba(14, 165, 233, 0.5),
     transparent
   );
   pointer-events: none;
@@ -101,7 +101,7 @@
   max-height: 900px;
   background: radial-gradient(
     circle,
-    rgba(220, 38, 38, 0.04) 0%,
+    rgba(14, 165, 233, 0.04) 0%,
     rgba(15, 23, 42, 0.02) 40%,
     transparent 70%
   );
@@ -110,7 +110,7 @@
 }
 
 /* ═══════════════════════════════════════════════════════
-      HEADER - TOP RED → BOTTOM BLACK Mixed Gradients
+      HEADER - SKY BLUE → BLACK Mixed Gradients
    ═══════════════════════════════════════════════════════ */
 .rp-header {
   position: relative;
@@ -138,7 +138,7 @@
   font-size: 10px;
   letter-spacing: 0.25em;
   text-transform: uppercase;
-  background: linear-gradient(180deg, #dc2626 0%, #0f172a 100%);
+  background: linear-gradient(135deg, #0f172a 0%, #0ea5e9 55%, #38bdf8 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -148,11 +148,11 @@
 .rp-eyebrow-line {
   height: 1px;
   width: 80px;
-  background: linear-gradient(90deg, #dc2626, #0f172a, transparent);
+  background: linear-gradient(90deg, #0ea5e9, #0f172a, transparent);
 }
 
 [dir="rtl"] .rp-eyebrow-line {
-  background: linear-gradient(90deg, transparent, #0f172a, #dc2626);
+  background: linear-gradient(90deg, transparent, #0f172a, #0ea5e9);
 }
 
 .rp-title {
@@ -167,7 +167,7 @@
 
 .rp-title em {
   font-style: italic;
-  background: linear-gradient(180deg, #dc2626 0%, #0f172a 100%);
+  background: linear-gradient(135deg, #0f172a 0%, #0ea5e9 55%, #38bdf8 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -200,13 +200,13 @@
 }
 
 /* ═══════════════════════════════════════════════════════
-      PRODUCT CARD - White Background, Red Accents
+      PRODUCT CARD - White Background, Sky Blue Accents
       (Matches Featured Products card structure)
    ═══════════════════════════════════════════════════════ */
 .rp-card {
   position: relative;
   background: var(--rp-card);
-  border: 1px solid rgba(220, 38, 38, 0.2);
+  border: 1px solid rgba(14, 165, 233, 0.2);
   border-radius: 20px;
   overflow: hidden;
   display: flex;
@@ -227,7 +227,7 @@
   inset: 0;
   background: radial-gradient(
     circle at 50% 0%,
-    rgba(220, 38, 38, 0.06),
+    rgba(14, 165, 233, 0.06),
     transparent 70%
   );
   opacity: 0;
@@ -237,7 +237,7 @@
   z-index: 1;
 }
 
-/* Bottom Bar - TOP RED → BOTTOM BLACK mixed gradient */
+/* Bottom Bar - SKY BLUE → BLACK mixed gradient */
 .rp-card::before {
   content: "";
   position: absolute;
@@ -247,11 +247,11 @@
   width: 0;
   background: linear-gradient(
     90deg,
-    #dc2626,
     #0f172a,
-    #b91c1c,
-    #0f172a,
-    #dc2626
+    #0ea5e9,
+    #38bdf8,
+    #0ea5e9,
+    #0f172a
   );
   transition: width 0.65s cubic-bezier(0.22, 1, 0.36, 1);
   pointer-events: none;
@@ -261,9 +261,9 @@
 .rp-card:hover {
   transform: translateY(-8px);
   box-shadow:
-    0 24px 48px rgba(220, 38, 38, 0.12),
+    0 24px 48px rgba(14, 165, 233, 0.12),
     0 8px 20px rgba(0, 0, 0, 0.06);
-  border-color: rgba(220, 38, 38, 0.45);
+  border-color: rgba(14, 165, 233, 0.45);
 }
 
 .rp-card:hover::after {
@@ -326,7 +326,7 @@
 .rp-img-placeholder svg {
   width: 52px;
   height: 52px;
-  color: rgba(220, 38, 38, 0.4);
+  color: rgba(14, 165, 233, 0.4);
 }
 
 /* ── Badges ── */
@@ -355,25 +355,25 @@
 }
 
 .rp-badge--feat {
-  background: linear-gradient(180deg, #dc2626, #0f172a);
+  background: linear-gradient(135deg, #0f172a 0%, #0ea5e9 55%, #38bdf8 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  border: 1px solid rgba(220, 38, 38, 0.3);
+  border: 1px solid rgba(14, 165, 233, 0.3);
 }
 
 .rp-badge--new {
-  background: linear-gradient(180deg, #dc2626, #0f172a);
+  background: linear-gradient(135deg, #0f172a 0%, #0ea5e9 55%, #38bdf8 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  border: 1px solid rgba(220, 38, 38, 0.3);
+  border: 1px solid rgba(14, 165, 233, 0.3);
 }
 
 .rp-badge--sale {
-  background: rgba(220, 38, 38, 0.12);
-  border: 1px solid rgba(220, 38, 38, 0.3);
-  color: #dc2626;
+  background: rgba(14, 165, 233, 0.12);
+  border: 1px solid rgba(14, 165, 233, 0.3);
+  color: #0ea5e9;
 }
 
 .rp-badge--low {
@@ -382,7 +382,7 @@
   color: #d97706;
 }
 
-/* ── Icon Buttons - TOP RED → BOTTOM BLACK Gradient ── */
+/* ── Icon Buttons - SKY BLUE → BLACK Gradient ── */
 .rp-icon-buttons {
   position: absolute;
   bottom: 0.8rem;
@@ -405,7 +405,7 @@
   height: 40px;
   border-radius: 50%;
   background: rgba(255, 255, 255, 0.98);
-  border: 1px solid rgba(220, 38, 38, 0.3);
+  border: 1px solid rgba(14, 165, 233, 0.3);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -419,15 +419,15 @@
 .rp-icon-btn svg {
   width: 17px;
   height: 17px;
-  color: #dc2626;
+  color: #0ea5e9;
   transition: all 0.25s ease;
 }
 
 .rp-icon-btn:hover {
-  background: linear-gradient(180deg, #dc2626 0%, #0f172a 100%);
-  border-color: #dc2626;
+  background: linear-gradient(135deg, #0f172a 0%, #0ea5e9 55%, #38bdf8 100%);
+  border-color: #0ea5e9;
   transform: scale(1.12);
-  box-shadow: 0 6px 18px rgba(220, 38, 38, 0.3);
+  box-shadow: 0 6px 18px rgba(14, 165, 233, 0.3);
 }
 
 .rp-icon-btn:hover svg {
@@ -452,14 +452,14 @@
   gap: 0;
 }
 
-/* ── Brand - TOP RED → BOTTOM BLACK gradient ── */
+/* ── Brand - SKY BLUE → BLACK gradient ── */
 .rp-card-brand {
   font-family: var(--rp-sans);
   font-size: 0.6rem;
   font-weight: 600;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  background: linear-gradient(180deg, #dc2626 0%, #0f172a 100%);
+  background: linear-gradient(135deg, #0f172a 0%, #0ea5e9 55%, #38bdf8 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -490,7 +490,7 @@
 }
 
 .rp-card:hover .rp-card-name {
-  background: linear-gradient(180deg, #dc2626 0%, #0f172a 100%);
+  background: linear-gradient(135deg, #0f172a 0%, #0ea5e9 55%, #38bdf8 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -529,11 +529,11 @@
   font-family: var(--rp-sans);
   font-size: 0.65rem;
   font-weight: 600;
-  background: linear-gradient(180deg, #dc2626 0%, #0f172a 100%);
+  background: linear-gradient(135deg, #0f172a 0%, #0ea5e9 55%, #38bdf8 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  background-color: rgba(220, 38, 38, 0.1);
+  background-color: rgba(14, 165, 233, 0.1);
   padding: 0.1rem 0.5rem;
   border-radius: 20px;
   letter-spacing: 0.04em;
@@ -615,10 +615,10 @@
   background: #f59e0b;
 }
 .rp-card-stock.out {
-  color: #dc2626;
+  color: #0ea5e9;
 }
 .rp-card-stock.out::before {
-  background: #ef4444;
+  background: #38bdf8;
 }
 
 /* ═══════════════════════════════════════════════════════
@@ -639,11 +639,11 @@
   font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  background: linear-gradient(180deg, #dc2626 0%, #0f172a 100%);
+  background: linear-gradient(135deg, #0f172a 0%, #0ea5e9 55%, #38bdf8 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  background-color: rgba(220, 38, 38, 0.08);
+  background-color: rgba(14, 165, 233, 0.08);
   padding: 0.2rem 0.6rem;
   border-radius: 20px;
   white-space: nowrap;
@@ -680,7 +680,7 @@
   height: 48px;
   border-radius: 12px;
   overflow: hidden;
-  border: 2px solid rgba(220, 38, 38, 0.2);
+  border: 2px solid rgba(14, 165, 233, 0.2);
   background: #f8fafc;
   transition: all 0.25s ease;
 }
@@ -698,10 +698,10 @@
   border-radius: 12px;
   background: linear-gradient(
     135deg,
-    rgba(220, 38, 38, 0.08),
+    rgba(14, 165, 233, 0.08),
     rgba(15, 23, 42, 0.04)
   );
-  border: 2px solid rgba(220, 38, 38, 0.2);
+  border: 2px solid rgba(14, 165, 233, 0.2);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -711,7 +711,7 @@
 .rp-variant-thumb-text {
   font-size: 1.1rem;
   font-weight: 600;
-  background: linear-gradient(180deg, #dc2626 0%, #0f172a 100%);
+  background: linear-gradient(135deg, #0f172a 0%, #0ea5e9 55%, #38bdf8 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -732,37 +732,37 @@
 }
 
 .rp-variant-thumb:hover .rp-variant-thumb-img {
-  border-color: #dc2626;
+  border-color: #0ea5e9;
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(220, 38, 38, 0.2);
+  box-shadow: 0 4px 12px rgba(14, 165, 233, 0.2);
 }
 
 .rp-variant-thumb:hover .rp-variant-thumb-placeholder {
-  border-color: #dc2626;
-  background: rgba(220, 38, 38, 0.1);
+  border-color: #0ea5e9;
+  background: rgba(14, 165, 233, 0.1);
   transform: translateY(-2px);
 }
 
 .rp-variant-thumb:hover .rp-variant-thumb-label {
-  background: linear-gradient(180deg, #dc2626 0%, #0f172a 100%);
+  background: linear-gradient(135deg, #0f172a 0%, #0ea5e9 55%, #38bdf8 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
 .rp-variant-thumb.active .rp-variant-thumb-img {
-  border-color: #dc2626;
-  box-shadow: 0 0 0 2px rgba(220, 38, 38, 0.3);
+  border-color: #0ea5e9;
+  box-shadow: 0 0 0 2px rgba(14, 165, 233, 0.3);
 }
 
 .rp-variant-thumb.active .rp-variant-thumb-placeholder {
-  border-color: #dc2626;
-  background: rgba(220, 38, 38, 0.12);
-  box-shadow: 0 0 0 2px rgba(220, 38, 38, 0.2);
+  border-color: #0ea5e9;
+  background: rgba(14, 165, 233, 0.12);
+  box-shadow: 0 0 0 2px rgba(14, 165, 233, 0.2);
 }
 
 .rp-variant-thumb.active .rp-variant-thumb-label {
-  background: linear-gradient(180deg, #dc2626 0%, #0f172a 100%);
+  background: linear-gradient(135deg, #0f172a 0%, #0ea5e9 55%, #38bdf8 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -772,14 +772,14 @@
 .rp-variant-more {
   font-size: 0.65rem;
   font-weight: 600;
-  background: linear-gradient(180deg, #dc2626 0%, #0f172a 100%);
+  background: linear-gradient(135deg, #0f172a 0%, #0ea5e9 55%, #38bdf8 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  background-color: rgba(220, 38, 38, 0.08);
+  background-color: rgba(14, 165, 233, 0.08);
   padding: 0.3rem 0.7rem;
   border-radius: 20px;
-  border: 1px solid rgba(220, 38, 38, 0.2);
+  border: 1px solid rgba(14, 165, 233, 0.2);
   font-family: var(--rp-sans);
   letter-spacing: 0.02em;
   cursor: default;
@@ -798,8 +798,8 @@
   display: inline-block;
   width: 18px;
   height: 18px;
-  border: 2px solid rgba(220, 38, 38, 0.2);
-  border-top-color: #dc2626;
+  border: 2px solid rgba(14, 165, 233, 0.2);
+  border-top-color: #0ea5e9;
   border-radius: 50%;
   animation: rp-spin 0.75s linear infinite;
 }
@@ -807,7 +807,7 @@
 /* Skeleton Loading */
 .rp-skeleton-card {
   background: rgba(241, 245, 249, 0.8);
-  border: 1px solid rgba(220, 38, 38, 0.15);
+  border: 1px solid rgba(14, 165, 233, 0.15);
   border-radius: 20px;
   overflow: hidden;
 }
@@ -1104,7 +1104,7 @@
 }
 
 [dir="rtl"] .rp-eyebrow-line {
-  background: linear-gradient(90deg, transparent, #0f172a, #dc2626);
+  background: linear-gradient(90deg, transparent, #0f172a, #0ea5e9);
 }
 
 [dir="rtl"] .rp-card-badges {

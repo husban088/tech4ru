@@ -1,22 +1,23 @@
 /* ============================================================
    PANEL NAVBAR  ·  panel-navbar.css
-   Light/Luxury theme matching Featured Products
+   Light/Luxury theme matching GlobalFAQSection
+   SKY BLUE + BLACK GRADIENT THEME
    ============================================================ */
-@import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300&family=Josefin+Sans:wght@200;300;400;500;600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Goldman:wght@400;700&display=swap");
 
 :root {
-  --pn-gold: #daa520;
-  --pn-gold-light: #f0c040;
-  --pn-gold-deep: #8b6914;
-  --pn-gold-dim: rgba(218, 165, 32, 0.08);
-  --pn-bg: #f9f5f0;
+  --pn-sky: #0ea5e9;
+  --pn-sky-light: #38bdf8;
+  --pn-sky-deep: #0284c7;
+  --pn-sky-dim: rgba(14, 165, 233, 0.08);
+  --pn-bg: #f8fafc;
   --pn-card-bg: #ffffff;
-  --pn-border: rgba(218, 165, 32, 0.15);
-  --pn-text-primary: #1a1a1a;
-  --pn-text-secondary: #444444;
-  --pn-text-muted: #666666;
-  --pn-serif: "Cormorant Garamond", Georgia, serif;
-  --pn-sans: "Josefin Sans", sans-serif;
+  --pn-border: rgba(14, 165, 233, 0.15);
+  --pn-text-primary: #0f172a;
+  --pn-text-secondary: #475569;
+  --pn-text-muted: #64748b;
+  --pn-serif: "Goldman", system-ui, sans-serif;
+  --pn-sans: "Goldman", system-ui, sans-serif;
   --pn-ease: 0.5s cubic-bezier(0.22, 1, 0.36, 1);
   --pn-h: 68px;
 }
@@ -28,7 +29,7 @@
   left: 0;
   right: 0;
   height: var(--pn-h);
-  background: rgba(249, 245, 240, 0.95);
+  background: rgba(248, 250, 252, 0.95);
   backdrop-filter: blur(18px) saturate(1.4);
   -webkit-backdrop-filter: blur(18px) saturate(1.4);
   border-bottom: 1px solid var(--pn-border);
@@ -39,8 +40,8 @@
 }
 
 .pn-nav.scrolled {
-  background: rgba(249, 245, 240, 0.98);
-  box-shadow: 0 1px 40px rgba(218, 165, 32, 0.08);
+  background: rgba(248, 250, 252, 0.98);
+  box-shadow: 0 1px 40px rgba(14, 165, 233, 0.08);
 }
 
 .pn-inner {
@@ -64,23 +65,23 @@
 .pn-logo-badge {
   width: 36px;
   height: 36px;
-  border: 1px solid #daa520;
+  border: 1px solid #0ea5e9;
   border-radius: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(218, 165, 32, 0.08);
+  background: rgba(14, 165, 233, 0.08);
   transition: background var(--pn-ease);
 }
 
 .pn-logo:hover .pn-logo-badge {
-  background: rgba(218, 165, 32, 0.15);
+  background: rgba(14, 165, 233, 0.15);
 }
 
 .pn-logo-badge svg {
   width: 18px;
   height: 18px;
-  color: #8b6914;
+  color: #0284c7;
 }
 
 .pn-logo-text {
@@ -93,7 +94,7 @@
   font-family: var(--pn-serif);
   font-size: 1.05rem;
   font-weight: 600;
-  color: #1a1a1a;
+  color: #0f172a;
   letter-spacing: 0.06em;
 }
 
@@ -103,7 +104,7 @@
   font-weight: 600;
   letter-spacing: 0.3em;
   text-transform: uppercase;
-  color: #8b6914;
+  color: #0284c7;
 }
 
 /* ── Nav links ── */
@@ -125,7 +126,7 @@
   font-weight: 600;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: #444444;
+  color: #475569;
   text-decoration: none;
   border-radius: 40px;
   position: relative;
@@ -140,12 +141,12 @@
   height: 13px;
   flex-shrink: 0;
   transition: transform var(--pn-ease);
-  color: #8b6914;
+  color: #0284c7;
 }
 
 .pn-link:hover {
-  color: #8b6914;
-  background: rgba(218, 165, 32, 0.08);
+  color: #0284c7;
+  background: rgba(14, 165, 233, 0.08);
 }
 
 .pn-link:hover svg {
@@ -153,27 +154,27 @@
 }
 
 .pn-link.active {
-  color: #8b6914;
-  background: rgba(218, 165, 32, 0.1);
+  color: #0284c7;
+  background: rgba(14, 165, 233, 0.1);
 }
 
 /* Add product — special */
 .pn-link--add {
-  background: linear-gradient(135deg, #daa520, #f0c040);
-  color: #1a1a1a !important;
+  background: linear-gradient(135deg, #0f172a 0%, #0ea5e9 100%);
+  color: #ffffff !important;
   font-weight: 700;
   padding: 0.5rem 1.1rem;
   border: none;
 }
 
 .pn-link--add svg {
-  color: #1a1a1a;
+  color: #ffffff;
 }
 
 .pn-link--add:hover {
-  background: linear-gradient(135deg, #f0c040, #daa520);
+  background: linear-gradient(135deg, #0ea5e9 0%, #38bdf8 100%);
   transform: translateY(-1px);
-  box-shadow: 0 4px 15px rgba(218, 165, 32, 0.3);
+  box-shadow: 0 4px 15px rgba(14, 165, 233, 0.3);
 }
 
 /* ── Right actions ── */
@@ -194,7 +195,7 @@
   border: 1px solid transparent;
   border-radius: 40px;
   cursor: pointer;
-  color: #444444;
+  color: #475569;
   transition: all var(--pn-ease);
   position: relative;
 }
@@ -205,9 +206,9 @@
 }
 
 .pn-icon-btn:hover {
-  color: #8b6914;
-  border-color: rgba(218, 165, 32, 0.3);
-  background: rgba(218, 165, 32, 0.08);
+  color: #0284c7;
+  border-color: rgba(14, 165, 233, 0.3);
+  background: rgba(14, 165, 233, 0.08);
 }
 
 .pn-badge {
@@ -216,12 +217,12 @@
   right: 4px;
   width: 14px;
   height: 14px;
-  background: #daa520;
+  background: #0ea5e9;
   border-radius: 50%;
   font-family: var(--pn-sans);
   font-size: 0.45rem;
   font-weight: 700;
-  color: #1a1a1a;
+  color: #ffffff;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -230,7 +231,7 @@
 .pn-divider {
   width: 1px;
   height: 20px;
-  background: rgba(218, 165, 32, 0.2);
+  background: rgba(14, 165, 233, 0.2);
   margin: 0 0.25rem;
 }
 
@@ -240,9 +241,9 @@
   align-items: center;
   gap: 0.4rem;
   padding: 0.35rem 0.75rem;
-  border: 1px solid rgba(218, 165, 32, 0.2);
+  border: 1px solid rgba(14, 165, 233, 0.2);
   border-radius: 40px;
-  background: rgba(218, 165, 32, 0.06);
+  background: rgba(14, 165, 233, 0.06);
   cursor: default;
 }
 
@@ -272,7 +273,7 @@
   font-weight: 600;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: #8b6914;
+  color: #0284c7;
 }
 
 /* Mobile */
@@ -281,8 +282,6 @@
     display: none;
   }
 }
-
-/* Add these styles to panel-navbar.css at the end */
 
 /* ── Panel Currency Dropdown ── */
 .pn-currency-dropdown {
@@ -293,7 +292,7 @@
   display: flex;
   align-items: center;
   gap: 6px;
-  background: rgba(218, 165, 32, 0.05);
+  background: rgba(14, 165, 233, 0.05);
   border: 1px solid var(--pn-border);
   border-radius: 40px;
   padding: 6px 12px;
@@ -306,9 +305,9 @@
 }
 
 .pn-currency-btn:hover {
-  border-color: var(--pn-gold);
-  color: var(--pn-gold-deep);
-  background: rgba(218, 165, 32, 0.1);
+  border-color: var(--pn-sky);
+  color: var(--pn-sky-deep);
+  background: rgba(14, 165, 233, 0.1);
   transform: translateY(-1px);
 }
 
@@ -373,21 +372,21 @@
   font-family: var(--pn-sans);
   font-size: 0.75rem;
   font-weight: 400;
-  color: #666666;
+  color: #64748b;
   cursor: pointer;
   text-align: left;
   transition: all 0.25s ease;
 }
 
 .pn-currency-option:hover {
-  background: var(--pn-gold-dim);
-  color: var(--pn-gold-deep);
+  background: var(--pn-sky-dim);
+  color: var(--pn-sky-deep);
   padding-left: 22px;
 }
 
 .pn-currency-option.active {
-  color: var(--pn-gold-deep);
-  background: rgba(218, 165, 32, 0.1);
+  color: var(--pn-sky-deep);
+  background: rgba(14, 165, 233, 0.1);
 }
 
 .pn-currency-option-flag {
@@ -456,9 +455,9 @@
 }
 
 .pn-menu-btn:hover {
-  border-color: var(--pn-gold);
-  color: var(--pn-gold-deep);
-  background: rgba(218, 165, 32, 0.08);
+  border-color: var(--pn-sky);
+  color: var(--pn-sky-deep);
+  background: rgba(14, 165, 233, 0.08);
 }
 
 /* Responsive */

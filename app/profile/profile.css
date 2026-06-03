@@ -1,35 +1,35 @@
 /* ============================================================
    PROFILE PAGE  ·  profile.css
-   WHITE BACKGROUND | BLACK TEXT | TOP RED → BOTTOM BLACK GRADIENT
-   Matching Explore Aurexia and Contact Page style
+   WHITE BACKGROUND | BLACK TEXT | SKY BLUE GRADIENT ACCENTS
+   Matching GlobalFAQSection color scheme
    ============================================================ */
 
 @import url("https://fonts.googleapis.com/css2?family=Goldman:wght@400;700&display=swap");
 
 :root {
-  --pf-red: #dc2626;
-  --pf-red-dark: #b91c1c;
-  --pf-red-deep: #991b1b;
-  --pf-red-light: #ef4444;
+  --pf-sky: #0ea5e9;
+  --pf-sky-dark: #0284c7;
+  --pf-sky-deep: #0369a1;
+  --pf-sky-light: #38bdf8;
   --pf-black: #0f172a;
   --pf-black-soft: #1e293b;
-  --pf-red-soft: rgba(220, 38, 38, 0.08);
+  --pf-sky-soft: rgba(14, 165, 233, 0.08);
   --pf-bg: #ffffff;
   --pf-bg-light: #f8fafc;
   --pf-card-bg: #ffffff;
   --pf-card-hover: #f8fafc;
-  --pf-border: rgba(220, 38, 38, 0.18);
-  --pf-border-hover: rgba(220, 38, 38, 0.35);
+  --pf-border: rgba(14, 165, 233, 0.18);
+  --pf-border-hover: rgba(14, 165, 233, 0.35);
   --pf-text-dark: #0f172a;
   --pf-text-muted: #475569;
   --pf-text-light: #64748b;
   --pf-text-grey: #64748b;
-  --pf-text-red: #dc2626;
+  --pf-text-sky: #0ea5e9;
   --pf-serif: "Goldman", system-ui, sans-serif;
   --pf-sans: "Goldman", system-ui, sans-serif;
   --pf-ease: 0.5s cubic-bezier(0.22, 1, 0.36, 1);
   --pf-error: #ff6b6b;
-  --pf-success: #dc2626;
+  --pf-success: #0ea5e9;
 }
 
 /* ── Loading ── */
@@ -45,15 +45,15 @@
 .pf-loading-ring {
   width: 60px;
   height: 60px;
-  border: 1px solid rgba(220, 38, 38, 0.2);
-  border-top-color: #dc2626;
+  border: 1px solid rgba(14, 165, 233, 0.2);
+  border-top-color: #0ea5e9;
   border-radius: 50%;
   animation: pf-spin 1.2s linear infinite;
 }
 .pf-loading-inner {
   position: absolute;
   inset: 8px;
-  border: 1px solid rgba(220, 38, 38, 0.1);
+  border: 1px solid rgba(14, 165, 233, 0.1);
   border-radius: 50%;
 }
 .pf-loading-text {
@@ -80,12 +80,12 @@
   isolation: isolate;
 }
 
-/* Fine grid texture - Red + Black Mixed (like Explore Aurexia) */
+/* Fine grid texture - Sky Blue + Black Mixed */
 .pf-grain {
   position: absolute;
   inset: 0;
   background-image:
-    linear-gradient(rgba(220, 38, 38, 0.04) 1px, transparent 1px),
+    linear-gradient(rgba(14, 165, 233, 0.04) 1px, transparent 1px),
     linear-gradient(90deg, rgba(15, 23, 42, 0.03) 1px, transparent 1px);
   background-size: 48px 48px;
   pointer-events: none;
@@ -102,7 +102,7 @@
   height: 600px;
   background: radial-gradient(
     circle,
-    rgba(220, 38, 38, 0.04) 0%,
+    rgba(14, 165, 233, 0.04) 0%,
     rgba(15, 23, 42, 0.02) 40%,
     transparent 80%
   );
@@ -110,7 +110,7 @@
   z-index: 0;
 }
 
-/* Top Border Line - RED + BLACK */
+/* Top Border Line - SKY BLUE + BLACK */
 .pf-root::before {
   content: "";
   position: absolute;
@@ -122,9 +122,9 @@
   background: linear-gradient(
     to right,
     transparent,
-    rgba(220, 38, 38, 0.5),
+    rgba(14, 165, 233, 0.5),
     rgba(15, 23, 42, 0.2),
-    rgba(220, 38, 38, 0.5),
+    rgba(14, 165, 233, 0.5),
     transparent
   );
   pointer-events: none;
@@ -146,13 +146,13 @@
   background: linear-gradient(
     to bottom,
     transparent 0%,
-    rgba(220, 38, 38, 0.06) 30%,
+    rgba(14, 165, 233, 0.06) 30%,
     rgba(15, 23, 42, 0.03) 70%,
     transparent 100%
   );
 }
 
-/* Corner accents - RED */
+/* Corner accents - SKY BLUE */
 .pf-corner {
   position: absolute;
   width: 32px;
@@ -163,26 +163,26 @@
 .pf-corner--tl {
   top: 1.5rem;
   left: 1.5rem;
-  border-top: 1px solid rgba(220, 38, 38, 0.4);
-  border-left: 1px solid rgba(220, 38, 38, 0.4);
+  border-top: 1px solid rgba(14, 165, 233, 0.4);
+  border-left: 1px solid rgba(14, 165, 233, 0.4);
 }
 .pf-corner--tr {
   top: 1.5rem;
   right: 1.5rem;
-  border-top: 1px solid rgba(220, 38, 38, 0.4);
-  border-right: 1px solid rgba(220, 38, 38, 0.4);
+  border-top: 1px solid rgba(14, 165, 233, 0.4);
+  border-right: 1px solid rgba(14, 165, 233, 0.4);
 }
 .pf-corner--bl {
   bottom: 1.5rem;
   left: 1.5rem;
-  border-bottom: 1px solid rgba(220, 38, 38, 0.4);
-  border-left: 1px solid rgba(220, 38, 38, 0.4);
+  border-bottom: 1px solid rgba(14, 165, 233, 0.4);
+  border-left: 1px solid rgba(14, 165, 233, 0.4);
 }
 .pf-corner--br {
   bottom: 1.5rem;
   right: 1.5rem;
-  border-bottom: 1px solid rgba(220, 38, 38, 0.4);
-  border-right: 1px solid rgba(220, 38, 38, 0.4);
+  border-bottom: 1px solid rgba(14, 165, 233, 0.4);
+  border-right: 1px solid rgba(14, 165, 233, 0.4);
 }
 
 /* ── Layout ── */
@@ -194,7 +194,7 @@
   display: grid;
   grid-template-columns: 280px 1fr;
   gap: 0;
-  border: 1px solid rgba(220, 38, 38, 0.2);
+  border: 1px solid rgba(14, 165, 233, 0.2);
   border-radius: 20px;
   overflow: hidden;
   box-shadow: 0 25px 50px rgba(0, 0, 0, 0.05);
@@ -204,7 +204,7 @@
 /* ── Aside ── */
 .pf-aside {
   background: #f8fafc;
-  border-right: 1px solid rgba(220, 38, 38, 0.15);
+  border-right: 1px solid rgba(14, 165, 233, 0.15);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -223,13 +223,13 @@
   height: 300px;
   background: radial-gradient(
     circle,
-    rgba(220, 38, 38, 0.04) 0%,
+    rgba(14, 165, 233, 0.04) 0%,
     transparent 70%
   );
   pointer-events: none;
 }
 
-/* Avatar - RED gradient */
+/* Avatar - SKY BLUE gradient */
 .pf-avatar-wrap {
   position: relative;
   display: flex;
@@ -242,7 +242,7 @@
   border-radius: 50%;
   background: radial-gradient(
     circle,
-    rgba(220, 38, 38, 0.1) 0%,
+    rgba(14, 165, 233, 0.1) 0%,
     transparent 70%
   );
   animation: pf-pulse 3s ease-in-out infinite;
@@ -262,7 +262,7 @@
 .pf-avatar-ring {
   width: 100px;
   height: 100px;
-  border: 1px solid rgba(220, 38, 38, 0.25);
+  border: 1px solid rgba(14, 165, 233, 0.25);
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -275,8 +275,8 @@
   width: 80px;
   height: 80px;
   border-radius: 50%;
-  background: linear-gradient(180deg, #dc2626 0%, #0f172a 100%);
-  border: 2px solid #dc2626;
+  background: linear-gradient(180deg, #0ea5e9 0%, #0f172a 100%);
+  border: 2px solid #0ea5e9;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -307,14 +307,14 @@
   font-weight: 700;
   letter-spacing: 0.35em;
   text-transform: uppercase;
-  color: #dc2626;
+  color: #0ea5e9;
   margin: 0;
 }
 .pf-ey-line {
   display: block;
   width: 20px;
   height: 1px;
-  background: #dc2626;
+  background: #0ea5e9;
   opacity: 0.6;
 }
 .pf-aside-name {
@@ -337,7 +337,7 @@
 .pf-aside-divider {
   width: 40px;
   height: 1px;
-  background: #dc2626;
+  background: #0ea5e9;
   opacity: 0.6;
   margin: 0.5rem auto;
 }
@@ -347,7 +347,7 @@
   gap: 0.7rem;
   width: 100%;
   background: #ffffff;
-  border: 1px solid rgba(220, 38, 38, 0.15);
+  border: 1px solid rgba(14, 165, 233, 0.15);
   border-radius: 12px;
   padding: 1rem;
   margin-top: 0.2rem;
@@ -377,14 +377,14 @@
   gap: 0.35rem;
 }
 .pf-meta-active {
-  color: #dc2626;
+  color: #0ea5e9;
 }
 .pf-dot {
   width: 7px;
   height: 7px;
-  background: #dc2626;
+  background: #0ea5e9;
   border-radius: 50%;
-  box-shadow: 0 0 6px rgba(220, 38, 38, 0.3);
+  box-shadow: 0 0 6px rgba(14, 165, 233, 0.3);
   animation: pf-blink 2s ease-in-out infinite;
 }
 @keyframes pf-blink {
@@ -397,15 +397,15 @@
   }
 }
 
-/* Sign out button - RED */
+/* Sign out button - SKY BLUE */
 .pf-signout-btn {
   display: flex;
   align-items: center;
   gap: 0.5rem;
   padding: 0.7rem 1.2rem;
   background: transparent;
-  border: 1px solid rgba(220, 38, 38, 0.3);
-  color: #dc2626;
+  border: 1px solid rgba(14, 165, 233, 0.3);
+  color: #0ea5e9;
   font-family: var(--pf-sans);
   font-size: 0.65rem;
   font-weight: 600;
@@ -423,9 +423,9 @@
   transition: transform var(--pf-ease);
 }
 .pf-signout-btn:hover {
-  background: rgba(220, 38, 38, 0.08);
-  color: #dc2626;
-  border-color: #dc2626;
+  background: rgba(14, 165, 233, 0.08);
+  color: #0ea5e9;
+  border-color: #0ea5e9;
   transform: translateX(3px);
 }
 .pf-signout-btn:hover svg {
@@ -455,7 +455,7 @@
   font-weight: 700;
   letter-spacing: 0.35em;
   text-transform: uppercase;
-  color: #dc2626;
+  color: #0ea5e9;
   margin: 0;
 }
 .pf-main-title {
@@ -468,7 +468,7 @@
 }
 .pf-main-title em {
   font-style: italic;
-  background: linear-gradient(180deg, #dc2626 0%, #ef4444 50%, #0f172a 100%);
+  background: linear-gradient(180deg, #0ea5e9 0%, #38bdf8 50%, #0f172a 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -482,11 +482,11 @@
   margin: 0;
 }
 
-/* Tabs - RED */
+/* Tabs - SKY BLUE */
 .pf-tabs {
   display: flex;
   gap: 0;
-  border-bottom: 1px solid rgba(220, 38, 38, 0.15);
+  border-bottom: 1px solid rgba(14, 165, 233, 0.15);
   margin-bottom: 2rem;
 }
 .pf-tab {
@@ -514,20 +514,20 @@
   stroke: #64748b;
 }
 .pf-tab:hover {
-  color: #dc2626;
+  color: #0ea5e9;
 }
 .pf-tab:hover svg {
-  stroke: #dc2626;
+  stroke: #0ea5e9;
 }
 .pf-tab--active {
-  color: #dc2626;
-  border-bottom-color: #dc2626;
+  color: #0ea5e9;
+  border-bottom-color: #0ea5e9;
 }
 .pf-tab--active svg {
-  stroke: #dc2626;
+  stroke: #0ea5e9;
 }
 
-/* Alerts - RED */
+/* Alerts - SKY BLUE */
 .pf-alert {
   display: flex;
   align-items: center;
@@ -546,12 +546,12 @@
   color: #ff6b6b;
 }
 .pf-alert--success {
-  background: rgba(220, 38, 38, 0.08);
-  border: 1px solid rgba(220, 38, 38, 0.25);
-  color: #dc2626;
+  background: rgba(14, 165, 233, 0.08);
+  border: 1px solid rgba(14, 165, 233, 0.25);
+  color: #0ea5e9;
 }
 .pf-alert--success svg {
-  stroke: #dc2626;
+  stroke: #0ea5e9;
 }
 
 /* Form */
@@ -570,7 +570,7 @@
   grid-template-columns: 1fr;
 }
 
-/* Fields - RED */
+/* Fields - SKY BLUE */
 .pf-field {
   position: relative;
   display: flex;
@@ -589,7 +589,7 @@
 }
 .pf-field--focused .pf-label,
 .pf-field--filled .pf-label {
-  color: #dc2626;
+  color: #0ea5e9;
 }
 .pf-input-wrap {
   position: relative;
@@ -614,7 +614,7 @@
 }
 .pf-field--focused .pf-input-icon,
 .pf-field--filled .pf-input-icon {
-  color: #dc2626;
+  color: #0ea5e9;
 }
 .pf-input {
   width: 100%;
@@ -629,7 +629,7 @@
   font-weight: 500;
   letter-spacing: 0.02em;
   color: #0f172a;
-  caret-color: #dc2626;
+  caret-color: #0ea5e9;
 }
 .pf-input::placeholder {
   color: #94a3b8;
@@ -640,7 +640,7 @@
 }
 .pf-field-line {
   height: 1px;
-  background: rgba(220, 38, 38, 0.15);
+  background: rgba(14, 165, 233, 0.15);
   position: relative;
   overflow: hidden;
 }
@@ -651,7 +651,7 @@
   top: 0;
   width: 100%;
   height: 100%;
-  background: #dc2626;
+  background: #0ea5e9;
   transition: left var(--pf-ease);
 }
 .pf-field--focused .pf-field-line::after {
@@ -675,7 +675,7 @@
   transition: color var(--pf-ease);
 }
 .pf-eye-btn:hover {
-  color: #dc2626;
+  color: #0ea5e9;
 }
 .pf-eye-btn svg {
   width: 16px;
@@ -683,7 +683,7 @@
   stroke: currentColor;
 }
 
-/* Info note - RED */
+/* Info note - SKY BLUE */
 .pf-form-info {
   display: flex;
   align-items: center;
@@ -696,11 +696,11 @@
   margin: 0.5rem 0 1.5rem;
 }
 .pf-form-info svg {
-  stroke: #dc2626;
+  stroke: #0ea5e9;
   opacity: 0.7;
 }
 
-/* Save button - RED gradient */
+/* Save button - SKY BLUE gradient */
 .pf-save-btn {
   display: flex;
   align-items: center;
@@ -708,7 +708,7 @@
   gap: 0.6rem;
   align-self: flex-start;
   padding: 0.9rem 2rem;
-  background: linear-gradient(180deg, #dc2626 0%, #0f172a 100%);
+  background: linear-gradient(180deg, #0ea5e9 0%, #0f172a 100%);
   border: 1px solid transparent;
   color: #ffffff;
   font-family: var(--pf-sans);
@@ -734,18 +734,18 @@
 }
 .pf-save-btn:hover:not(:disabled) {
   background: transparent;
-  border-color: #dc2626;
-  color: #dc2626;
-  box-shadow: 0 8px 25px rgba(220, 38, 38, 0.15);
+  border-color: #0ea5e9;
+  color: #0ea5e9;
+  box-shadow: 0 8px 25px rgba(14, 165, 233, 0.15);
   transform: translateY(-2px);
   gap: 1rem;
 }
 .pf-save-btn:hover:not(:disabled) svg {
-  stroke: #dc2626;
+  stroke: #0ea5e9;
   transform: translateX(4px);
 }
 
-/* Spinner - RED */
+/* Spinner - SKY BLUE */
 .pf-spinner {
   display: inline-block;
   width: 18px;
@@ -757,8 +757,8 @@
   flex-shrink: 0;
 }
 .pf-spinner--red {
-  border-color: rgba(220, 38, 38, 0.2);
-  border-top-color: #dc2626;
+  border-color: rgba(14, 165, 233, 0.2);
+  border-top-color: #0ea5e9;
   width: 14px;
   height: 14px;
 }
@@ -833,25 +833,25 @@
   left: auto;
   right: 1.5rem;
   border-left: none;
-  border-right: 1px solid rgba(220, 38, 38, 0.4);
+  border-right: 1px solid rgba(14, 165, 233, 0.4);
 }
 [dir="rtl"] .pf-corner--tr {
   right: auto;
   left: 1.5rem;
   border-right: none;
-  border-left: 1px solid rgba(220, 38, 38, 0.4);
+  border-left: 1px solid rgba(14, 165, 233, 0.4);
 }
 [dir="rtl"] .pf-corner--bl {
   left: auto;
   right: 1.5rem;
   border-left: none;
-  border-right: 1px solid rgba(220, 38, 38, 0.4);
+  border-right: 1px solid rgba(14, 165, 233, 0.4);
 }
 [dir="rtl"] .pf-corner--br {
   right: auto;
   left: 1.5rem;
   border-right: none;
-  border-left: 1px solid rgba(220, 38, 38, 0.4);
+  border-left: 1px solid rgba(14, 165, 233, 0.4);
 }
 [dir="rtl"] .pf-input-icon {
   left: auto;

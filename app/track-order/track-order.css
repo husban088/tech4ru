@@ -1,40 +1,40 @@
 /* app/track-order/track-order.css */
-/* Tech4U — Order Tracking Page - WHITE BACKGROUND | BLACK TEXT | RED + BLACK GRADIENTS */
-/* Matching Explore Aurexia style */
+/* Tech4U — Order Tracking Page - WHITE BACKGROUND | BLACK TEXT | SKY BLUE + BLACK GRADIENTS */
+/* Matching Navbar & GlobalFAQSection color scheme */
 
 @import url("https://fonts.googleapis.com/css2?family=Goldman:wght@400;700&display=swap");
 
 /* ─── Variables ─────────────────────────────────────────────────────────── */
 :root {
-  --trk-red: #dc2626;
-  --trk-red-dark: #b91c1c;
-  --trk-red-deep: #991b1b;
-  --trk-red-light: #ef4444;
+  --trk-sky: #0ea5e9;
+  --trk-sky-dark: #0284c7;
+  --trk-sky-deep: #075985;
+  --trk-sky-light: #38bdf8;
   --trk-black: #0f172a;
   --trk-black-soft: #1e293b;
-  --trk-red-dim: rgba(220, 38, 38, 0.08);
-  --trk-red-glow: rgba(220, 38, 38, 0.12);
+  --trk-sky-dim: rgba(14, 165, 233, 0.08);
+  --trk-sky-glow: rgba(14, 165, 233, 0.12);
   --trk-bg: #ffffff;
   --trk-bg-light: #f8fafc;
   --trk-card-bg: #ffffff;
-  --trk-border: rgba(220, 38, 38, 0.18);
-  --trk-border-hover: rgba(220, 38, 38, 0.35);
+  --trk-border: rgba(14, 165, 233, 0.18);
+  --trk-border-hover: rgba(14, 165, 233, 0.35);
   --trk-text-dark: #0f172a;
   --trk-text-muted: #475569;
   --trk-text-light: #64748b;
-  --trk-text-red: #dc2626;
+  --trk-text-sky: #0ea5e9;
   --trk-serif: "Goldman", system-ui, sans-serif;
   --trk-sans: "Goldman", system-ui, sans-serif;
   --trk-ease: 0.5s cubic-bezier(0.22, 1, 0.36, 1);
-  --trk-success: #dc2626;
+  --trk-success: #0ea5e9;
   --trk-error: #ff6b6b;
   --trk-warning: #f59e0b;
-  --trk-info: #dc2626;
+  --trk-info: #0ea5e9;
   --trk-radius: 20px;
   --trk-radius-sm: 12px;
   --trk-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.1);
   --trk-shadow-sm: 0 4px 20px rgba(0, 0, 0, 0.04);
-  --trk-shadow-red: 0 8px 32px rgba(220, 38, 38, 0.1);
+  --trk-shadow-sky: 0 8px 32px rgba(14, 165, 233, 0.12);
 }
 
 /* ─── Root & Base Styles ───────────────────────────────────────────────── */
@@ -48,19 +48,19 @@
   padding-top: 4rem;
 }
 
-/* Fine grid texture - Red + Black Mixed */
+/* Fine grid texture - Sky Blue + Black Mixed */
 .trk-bg-grain {
   position: fixed;
   inset: 0;
   background-image:
-    linear-gradient(rgba(220, 38, 38, 0.04) 1px, transparent 1px),
+    linear-gradient(rgba(14, 165, 233, 0.04) 1px, transparent 1px),
     linear-gradient(90deg, rgba(15, 23, 42, 0.03) 1px, transparent 1px);
   background-size: 48px 48px;
   pointer-events: none;
   z-index: 0;
 }
 
-/* Top Border Line - RED + BLACK */
+/* Top Border Line - SKY BLUE + BLACK */
 .trk-root::before {
   content: "";
   position: absolute;
@@ -72,16 +72,16 @@
   background: linear-gradient(
     to right,
     transparent,
-    rgba(220, 38, 38, 0.5),
+    rgba(14, 165, 233, 0.5),
     rgba(15, 23, 42, 0.2),
-    rgba(220, 38, 38, 0.5),
+    rgba(14, 165, 233, 0.5),
     transparent
   );
   pointer-events: none;
   z-index: 1;
 }
 
-/* Ambient Glow - RED */
+/* Ambient Glow - SKY BLUE */
 .trk-bg-glow {
   position: fixed;
   top: -20%;
@@ -91,7 +91,7 @@
   height: 600px;
   background: radial-gradient(
     ellipse at center,
-    rgba(220, 38, 38, 0.04) 0%,
+    rgba(14, 165, 233, 0.04) 0%,
     transparent 70%
   );
   pointer-events: none;
@@ -111,7 +111,7 @@
   }
 }
 
-/* ─── Topbar - RED ────────────────────────────────────────────────────────── */
+/* ─── Topbar - SKY BLUE ────────────────────────────────────────────────────────── */
 .trk-topbar {
   position: relative;
   z-index: 10;
@@ -119,7 +119,7 @@
   align-items: center;
   justify-content: space-between;
   padding: 1rem 2.5rem;
-  border-bottom: 1px solid rgba(220, 38, 38, 0.15);
+  border-bottom: 1px solid rgba(14, 165, 233, 0.15);
   background: rgba(255, 255, 255, 0.98);
   backdrop-filter: blur(10px);
 }
@@ -150,8 +150,8 @@
 }
 
 .trk-back-link:hover {
-  color: #dc2626;
-  background: rgba(220, 38, 38, 0.05);
+  color: #0ea5e9;
+  background: rgba(14, 165, 233, 0.05);
   transform: translateX(-4px);
 }
 
@@ -169,7 +169,7 @@
   font-size: 0.85rem;
   font-weight: 700;
   letter-spacing: 0.2em;
-  background: linear-gradient(180deg, #dc2626 0%, #ef4444 50%, #0f172a 100%);
+  background: linear-gradient(135deg, #0f172a 0%, #0ea5e9 55%, #38bdf8 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -184,7 +184,7 @@
   left: 0;
   width: 0;
   height: 2px;
-  background: linear-gradient(90deg, #dc2626, transparent);
+  background: linear-gradient(90deg, #0ea5e9, #38bdf8, transparent);
   transition: width 0.3s ease;
 }
 
@@ -212,7 +212,7 @@
   }
 }
 
-/* ─── Header - RED ────────────────────────────────────────────────────────── */
+/* ─── Header - SKY BLUE ────────────────────────────────────────────────────────── */
 .trk-header {
   text-align: center;
   padding: 3rem 0 2rem;
@@ -228,8 +228,8 @@
 .trk-header-icon {
   width: 80px;
   height: 80px;
-  background: rgba(220, 38, 38, 0.08);
-  border: 2px solid rgba(220, 38, 38, 0.25);
+  background: rgba(14, 165, 233, 0.08);
+  border: 2px solid rgba(14, 165, 233, 0.25);
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -251,14 +251,14 @@
 
 .trk-header-icon:hover {
   transform: scale(1.05);
-  border-color: #dc2626;
-  box-shadow: var(--trk-shadow-red);
+  border-color: #0ea5e9;
+  box-shadow: var(--trk-shadow-sky);
 }
 
 .trk-header-icon svg {
   width: 32px;
   height: 32px;
-  color: #dc2626;
+  color: #0ea5e9;
 }
 
 .trk-title {
@@ -273,7 +273,7 @@
 
 .trk-title em {
   font-style: italic;
-  background: linear-gradient(180deg, #dc2626 0%, #ef4444 50%, #0f172a 100%);
+  background: linear-gradient(135deg, #0f172a 0%, #0ea5e9 55%, #38bdf8 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -293,10 +293,10 @@
   }
 }
 
-/* ─── Search Card - RED ───────────────────────────────────────────────────── */
+/* ─── Search Card - SKY BLUE ───────────────────────────────────────────────────── */
 .trk-search-card {
   background: #ffffff;
-  border: 1px solid rgba(220, 38, 38, 0.2);
+  border: 1px solid rgba(14, 165, 233, 0.2);
   border-radius: var(--trk-radius);
   padding: 2rem;
   margin-bottom: 2rem;
@@ -306,8 +306,8 @@
 
 .trk-search-card:hover {
   transform: translateY(-4px);
-  border-color: rgba(220, 38, 38, 0.35);
-  box-shadow: var(--trk-shadow-red);
+  border-color: rgba(14, 165, 233, 0.35);
+  box-shadow: var(--trk-shadow-sky);
 }
 
 @media (max-width: 768px) {
@@ -351,7 +351,7 @@
 }
 
 .trk-field:hover .trk-label {
-  color: #dc2626;
+  color: #0ea5e9;
 }
 
 .trk-input-wrap {
@@ -371,13 +371,13 @@
 }
 
 .trk-input:focus + .trk-input-icon {
-  color: #dc2626;
+  color: #0ea5e9;
 }
 
 .trk-input {
   width: 100%;
   background: #f8fafc;
-  border: 1px solid rgba(220, 38, 38, 0.2);
+  border: 1px solid rgba(14, 165, 233, 0.2);
   border-radius: var(--trk-radius-sm);
   padding: 0.85rem 1rem 0.85rem 2.75rem;
   font-family: var(--trk-sans);
@@ -390,8 +390,8 @@
 }
 
 .trk-input:focus {
-  border-color: #dc2626;
-  box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1);
+  border-color: #0ea5e9;
+  box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.1);
 }
 
 .trk-input::placeholder {
@@ -399,14 +399,14 @@
   font-weight: 400;
 }
 
-/* ─── Search Button - RED gradient ────────────────────────────────────────── */
+/* ─── Search Button - SKY BLUE gradient ────────────────────────────────────────── */
 .trk-btn {
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 0.75rem;
-  background: linear-gradient(180deg, #dc2626 0%, #0f172a 100%);
+  background: linear-gradient(135deg, #0f172a 0%, #0ea5e9 55%, #38bdf8 100%);
   color: #ffffff;
   border: none;
   border-radius: 40px;
@@ -444,10 +444,10 @@
 
 .trk-btn:hover:not(:disabled) {
   background: transparent;
-  border: 1px solid #dc2626;
-  color: #dc2626;
+  border: 1px solid #0ea5e9;
+  color: #0ea5e9;
   transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(220, 38, 38, 0.2);
+  box-shadow: 0 8px 25px rgba(14, 165, 233, 0.2);
 }
 
 .trk-btn:active:not(:disabled) {
@@ -478,7 +478,7 @@
   }
 }
 
-/* ─── Error Message - RED ─────────────────────────────────────────────────── */
+/* ─── Error Message - SKY BLUE ─────────────────────────────────────────────────── */
 .trk-error {
   display: flex;
   align-items: center;
@@ -513,7 +513,7 @@
   flex-shrink: 0;
 }
 
-/* Tip - RED */
+/* Tip - SKY BLUE */
 .trk-tip {
   margin-top: 1rem;
   font-size: 0.7rem;
@@ -521,11 +521,11 @@
   color: #64748b;
   text-align: center;
   padding: 0.5rem;
-  background: rgba(220, 38, 38, 0.04);
+  background: rgba(14, 165, 233, 0.04);
   border-radius: 8px;
 }
 
-/* ─── Result Section - RED ────────────────────────────────────────────────── */
+/* ─── Result Section - SKY BLUE ────────────────────────────────────────────────── */
 .trk-result {
   display: flex;
   flex-direction: column;
@@ -544,10 +544,10 @@
   }
 }
 
-/* Result Header - RED */
+/* Result Header - SKY BLUE */
 .trk-result-header {
   background: #ffffff;
-  border: 1px solid rgba(220, 38, 38, 0.2);
+  border: 1px solid rgba(14, 165, 233, 0.2);
   border-radius: var(--trk-radius);
   padding: 1.75rem;
   display: flex;
@@ -560,8 +560,8 @@
 
 .trk-result-header:hover {
   transform: translateY(-2px);
-  border-color: rgba(220, 38, 38, 0.35);
-  box-shadow: var(--trk-shadow-red);
+  border-color: rgba(14, 165, 233, 0.35);
+  box-shadow: var(--trk-shadow-sky);
 }
 
 @media (max-width: 700px) {
@@ -585,7 +585,7 @@
 .trk-result-num {
   font-size: 1.6rem;
   font-weight: 700;
-  background: linear-gradient(180deg, #dc2626 0%, #ef4444 50%, #0f172a 100%);
+  background: linear-gradient(135deg, #0f172a 0%, #0ea5e9 55%, #38bdf8 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -619,7 +619,7 @@
   }
 }
 
-/* Status Badge - RED */
+/* Status Badge - SKY BLUE */
 .trk-status-badge {
   display: flex;
   align-items: center;
@@ -641,9 +641,9 @@
 .trk-status-badge.confirmed,
 .trk-status-badge.shipped,
 .trk-status-badge.delivered {
-  background: rgba(220, 38, 38, 0.1);
-  border: 1px solid rgba(220, 38, 38, 0.3);
-  color: #dc2626;
+  background: rgba(14, 165, 233, 0.1);
+  border: 1px solid rgba(14, 165, 233, 0.3);
+  color: #0ea5e9;
 }
 .trk-status-badge.cancelled {
   background: rgba(255, 107, 107, 0.1);
@@ -651,7 +651,7 @@
   color: #ff6b6b;
 }
 
-/* Country Badge - RED */
+/* Country Badge - SKY BLUE */
 .trk-country-badge {
   display: flex;
   align-items: center;
@@ -660,14 +660,14 @@
   font-weight: 500;
   color: #64748b;
   background: #f8fafc;
-  border: 1px solid rgba(220, 38, 38, 0.2);
+  border: 1px solid rgba(14, 165, 233, 0.2);
   border-radius: 40px;
   padding: 0.3rem 0.9rem;
   transition: var(--trk-ease);
 }
 
 .trk-country-badge:hover {
-  border-color: #dc2626;
+  border-color: #0ea5e9;
   transform: translateX(4px);
 }
 
@@ -699,10 +699,10 @@
   }
 }
 
-/* ─── Section Cards - RED ─────────────────────────────────────────────────── */
+/* ─── Section Cards - SKY BLUE ─────────────────────────────────────────────────── */
 .trk-section {
   background: #ffffff;
-  border: 1px solid rgba(220, 38, 38, 0.2);
+  border: 1px solid rgba(14, 165, 233, 0.2);
   border-radius: var(--trk-radius);
   overflow: hidden;
   transition: var(--trk-ease);
@@ -710,9 +710,9 @@
 }
 
 .trk-section:hover {
-  border-color: rgba(220, 38, 38, 0.35);
+  border-color: rgba(14, 165, 233, 0.35);
   transform: translateY(-2px);
-  box-shadow: var(--trk-shadow-red);
+  box-shadow: var(--trk-shadow-sky);
 }
 
 .trk-section-title {
@@ -720,11 +720,11 @@
   padding: 1rem 1.25rem;
   font-size: 0.7rem;
   font-weight: 700;
-  color: #dc2626;
+  color: #0ea5e9;
   text-transform: uppercase;
   letter-spacing: 0.15em;
-  border-bottom: 1px solid rgba(220, 38, 38, 0.15);
-  background: rgba(220, 38, 38, 0.02);
+  border-bottom: 1px solid rgba(14, 165, 233, 0.15);
+  background: rgba(14, 165, 233, 0.02);
 }
 
 .trk-section-body {
@@ -740,14 +740,14 @@
   }
 }
 
-/* ─── Rows - RED ───────────────────────────────────────────────────────── */
+/* ─── Rows - SKY BLUE ───────────────────────────────────────────────────────── */
 .trk-row {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
   gap: 1rem;
   padding: 0.6rem 0;
-  border-bottom: 1px solid rgba(220, 38, 38, 0.12);
+  border-bottom: 1px solid rgba(14, 165, 233, 0.12);
   font-size: 0.85rem;
   font-weight: 500;
 }
@@ -782,7 +782,7 @@
   }
 }
 
-/* Status Text - RED */
+/* Status Text - SKY BLUE */
 .trk-status-text {
   font-weight: 700;
 }
@@ -793,52 +793,52 @@
 .trk-status-text.confirmed,
 .trk-status-text.shipped,
 .trk-status-text.delivered {
-  color: #dc2626;
+  color: #0ea5e9;
 }
 .trk-status-text.cancelled {
   color: #ff6b6b;
 }
 
-/* Tracking Number - RED */
+/* Tracking Number - SKY BLUE */
 .trk-tracking-number {
   font-family: monospace;
   font-weight: 700;
-  color: #dc2626;
-  background: rgba(220, 38, 38, 0.08);
+  color: #0ea5e9;
+  background: rgba(14, 165, 233, 0.08);
   padding: 0.2rem 0.5rem;
   border-radius: 6px;
   font-size: 0.8rem;
 }
 
-/* Courier Link - RED */
+/* Courier Link - SKY BLUE */
 .trk-courier-link {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
   margin-top: 0.75rem;
-  color: #dc2626;
+  color: #0ea5e9;
   text-decoration: none;
   font-size: 0.75rem;
   font-weight: 600;
   transition: var(--trk-ease);
   padding: 0.4rem 1rem;
   border-radius: 40px;
-  background: rgba(220, 38, 38, 0.05);
+  background: rgba(14, 165, 233, 0.05);
 }
 
 .trk-courier-link:hover {
   gap: 0.75rem;
-  background: rgba(220, 38, 38, 0.12);
+  background: rgba(14, 165, 233, 0.12);
   transform: translateX(4px);
-  color: #ef4444;
+  color: #38bdf8;
 }
 
-/* ─── Items Section - RED ─────────────────────────────────────────────────── */
+/* ─── Items Section - SKY BLUE ─────────────────────────────────────────────────── */
 .trk-item {
   display: flex;
   gap: 1rem;
   padding: 0.75rem 0;
-  border-bottom: 1px solid rgba(220, 38, 38, 0.12);
+  border-bottom: 1px solid rgba(14, 165, 233, 0.12);
 }
 
 .trk-item:last-child {
@@ -861,7 +861,7 @@
   height: 64px;
   border-radius: 12px;
   background: #f8fafc;
-  border: 1px solid rgba(220, 38, 38, 0.2);
+  border: 1px solid rgba(14, 165, 233, 0.2);
   overflow: hidden;
   flex-shrink: 0;
 }
@@ -906,18 +906,18 @@
 }
 
 .trk-item-price {
-  background: linear-gradient(180deg, #dc2626, #ef4444);
+  background: linear-gradient(135deg, #0f172a 0%, #0ea5e9 55%, #38bdf8 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
   font-weight: 700;
 }
 
-/* Price Breakdown - RED */
+/* Price Breakdown - SKY BLUE */
 .trk-price-breakdown {
   margin-top: 1rem;
   padding-top: 1rem;
-  border-top: 1px solid rgba(220, 38, 38, 0.12);
+  border-top: 1px solid rgba(14, 165, 233, 0.12);
 }
 
 .trk-price-row {
@@ -937,11 +937,11 @@
   color: #0f172a;
   padding: 0.75rem 0 0;
   margin-top: 0.5rem;
-  border-top: 1px solid rgba(220, 38, 38, 0.25);
+  border-top: 1px solid rgba(14, 165, 233, 0.25);
 }
 
 .trk-price-total span:last-child {
-  background: linear-gradient(180deg, #dc2626, #ef4444);
+  background: linear-gradient(135deg, #0f172a 0%, #0ea5e9 55%, #38bdf8 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -955,7 +955,7 @@
   padding: 1rem 0;
 }
 
-/* ─── Live Tracking - RED ─────────────────────────────────────────────────── */
+/* ─── Live Tracking - SKY BLUE ─────────────────────────────────────────────────── */
 .trk-track-live-btn {
   display: flex;
   align-items: center;
@@ -963,7 +963,7 @@
   gap: 0.5rem;
   margin: 1rem 0;
   padding: 0.7rem 1.25rem;
-  background: linear-gradient(180deg, #dc2626 0%, #0f172a 100%);
+  background: linear-gradient(135deg, #0f172a 0%, #0ea5e9 55%, #38bdf8 100%);
   color: #ffffff;
   border-radius: 40px;
   font-size: 0.75rem;
@@ -974,7 +974,7 @@
 
 .trk-track-live-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(220, 38, 38, 0.25);
+  box-shadow: 0 8px 25px rgba(14, 165, 233, 0.25);
 }
 
 .trk-tracking-loading {
@@ -988,19 +988,19 @@
 .trk-spinner-small {
   width: 20px;
   height: 20px;
-  border: 2px solid rgba(220, 38, 38, 0.2);
-  border-top-color: #dc2626;
+  border: 2px solid rgba(14, 165, 233, 0.2);
+  border-top-color: #0ea5e9;
   border-radius: 50%;
   animation: spin 0.7s linear infinite;
 }
 
-/* Tracking Status - RED */
+/* Tracking Status - SKY BLUE */
 .trk-tracking-status {
   display: flex;
   justify-content: space-between;
   gap: 1rem;
   padding: 1rem;
-  background: rgba(220, 38, 38, 0.03);
+  background: rgba(14, 165, 233, 0.03);
   border-radius: 16px;
   margin-bottom: 1rem;
   flex-wrap: wrap;
@@ -1035,7 +1035,7 @@
 }
 .trk-tracking-status-value.shipped,
 .trk-tracking-status-value.delivered {
-  color: #dc2626;
+  color: #0ea5e9;
 }
 
 .trk-tracking-status-date {
@@ -1044,7 +1044,7 @@
   color: #0f172a;
 }
 
-/* Timeline - RED */
+/* Timeline - SKY BLUE */
 .trk-timeline {
   position: relative;
   padding-left: 1.5rem;
@@ -1066,7 +1066,7 @@
   top: 1rem;
   bottom: -0.5rem;
   width: 2px;
-  background: linear-gradient(180deg, #dc2626, transparent);
+  background: linear-gradient(180deg, #0f172a, #0ea5e9, transparent);
 }
 
 .trk-timeline-dot {
@@ -1077,18 +1077,18 @@
   height: 12px;
   border-radius: 50%;
   background: #ffffff;
-  border: 2px solid #dc2626;
+  border: 2px solid #0ea5e9;
   transition: all 0.3s ease;
 }
 
 .trk-timeline-dot.active {
-  background: #dc2626;
+  background: #0ea5e9;
   transform: scale(1.2);
-  box-shadow: 0 0 0 4px rgba(220, 38, 38, 0.15);
+  box-shadow: 0 0 0 4px rgba(14, 165, 233, 0.15);
 }
 .trk-timeline-dot.delivered {
-  background: #dc2626;
-  border-color: #dc2626;
+  background: #0ea5e9;
+  border-color: #0ea5e9;
 }
 
 .trk-timeline-content {
@@ -1134,20 +1134,27 @@
   }
 }
 
-/* ─── Scrollbar - RED ─────────────────────────────────────────────────────── */
+/* ─── Scrollbar - SKY BLUE ─────────────────────────────────────────────────────── */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
 }
 ::-webkit-scrollbar-track {
   background: #f1f5f9;
+  border-radius: 4px;
+  box-shadow: inset 0 0 3px rgba(14, 165, 233, 0.12);
 }
 ::-webkit-scrollbar-thumb {
-  background: #dc2626;
-  border-radius: 4px;
+  background: linear-gradient(180deg, #0f172a 0%, #0ea5e9 55%, #38bdf8 100%);
+  border-radius: 8px;
+  border: 1.5px solid #f1f5f9;
+  background-clip: padding-box;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #ef4444;
+  background: linear-gradient(180deg, #0284c7 0%, #38bdf8 50%, #7dd3fc 100%);
+  border: 1.5px solid #f1f5f9;
+  background-clip: padding-box;
+  box-shadow: 0 0 10px rgba(14, 165, 233, 0.45);
 }
 
 /* ============================================================

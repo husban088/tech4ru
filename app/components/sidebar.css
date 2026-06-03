@@ -1,11 +1,11 @@
 /* =============================================
    SIDEBAR CSS — TECH4U Luxury Store
-   WHITE BACKGROUND | BLACK TEXT | TOP RED → BOTTOM BLACK GRADIENT
-   Matching CartSidebar & SearchSidebar style
+   WHITE BACKGROUND | BLACK TEXT | SKY BLUE + BLACK GRADIENT
+   Matching GlobalFAQSection color scheme
    Right-Side Slide Panel
    ============================================= */
 
-/* ---------- Overlay (backdrop) - RED Theme ---------- */
+/* ---------- Overlay (backdrop) - SKY BLUE Theme ---------- */
 .sidebar-overlay {
   position: fixed;
   inset: 0;
@@ -24,7 +24,7 @@
   pointer-events: auto;
 }
 
-/* ---------- Sidebar Panel - White Background with RED Accents ---------- */
+/* ---------- Sidebar Panel - White Background with SKY BLUE Accents ---------- */
 .sidebar {
   position: fixed;
   top: 0;
@@ -34,7 +34,7 @@
   width: 320px;
   max-width: 90vw;
   background: #ffffff;
-  border-left: 1px solid rgba(220, 38, 38, 0.25);
+  border-left: 1px solid rgba(14, 165, 233, 0.25);
   display: flex;
   flex-direction: column;
 
@@ -45,9 +45,9 @@
     transform 0.5s cubic-bezier(0.4, 0, 0.15, 1),
     visibility 0s linear 0.5s;
 
-  /* Decorative left RED line */
+  /* Decorative left SKY BLUE line */
   box-shadow:
-    -1px 0 0 0 rgba(220, 38, 38, 0.15),
+    -1px 0 0 0 rgba(14, 165, 233, 0.15),
     -8px 0 40px rgba(0, 0, 0, 0.1);
 }
 
@@ -60,7 +60,7 @@
     visibility 0s linear 0s;
 }
 
-/* Decorative RED shimmer on left edge */
+/* Decorative SKY BLUE shimmer on left edge */
 .sidebar::before {
   content: "";
   position: absolute;
@@ -71,9 +71,9 @@
   background: linear-gradient(
     180deg,
     transparent 0%,
-    rgba(220, 38, 38, 0.6) 25%,
-    #dc2626 50%,
-    rgba(220, 38, 38, 0.6) 75%,
+    rgba(14, 165, 233, 0.6) 25%,
+    #0ea5e9 50%,
+    rgba(14, 165, 233, 0.6) 75%,
     transparent 100%
   );
   opacity: 0;
@@ -84,7 +84,7 @@
   opacity: 1;
 }
 
-/* ---------- Decorative Rings - RED ---------- */
+/* ---------- Decorative Rings - SKY BLUE ---------- */
 .sidebar-deco {
   position: absolute;
   top: -80px;
@@ -98,7 +98,7 @@
   width: 220px;
   height: 220px;
   border-radius: 50%;
-  border: 1px solid rgba(220, 38, 38, 0.08);
+  border: 1px solid rgba(14, 165, 233, 0.08);
   position: absolute;
   top: 0;
   right: 0;
@@ -107,7 +107,7 @@
 .sidebar-deco-ring--2 {
   width: 340px;
   height: 340px;
-  border-color: rgba(220, 38, 38, 0.05);
+  border-color: rgba(14, 165, 233, 0.05);
   top: -60px;
   right: -60px;
 }
@@ -120,11 +120,11 @@
   align-items: center;
   justify-content: space-between;
   padding: 1.5rem 1.5rem 1.25rem;
-  border-bottom: 1px solid rgba(220, 38, 38, 0.12);
+  border-bottom: 1px solid rgba(14, 165, 233, 0.12);
   flex-shrink: 0;
 }
 
-/* Eyebrow - RED */
+/* Eyebrow - SKY BLUE */
 .sidebar-eyebrow {
   display: flex;
   align-items: center;
@@ -134,7 +134,7 @@
   font-weight: 600;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: #dc2626;
+  color: #0ea5e9;
   margin: 0 0 0.5rem;
 }
 
@@ -142,7 +142,7 @@
   display: block;
   width: 16px;
   height: 1px;
-  background: #dc2626;
+  background: #0ea5e9;
   opacity: 0.7;
 }
 
@@ -174,51 +174,51 @@
   transform: scale(1.02);
 }
 
-/* TECH part of logo */
+/* TECH part of logo - Sky Blue gradient */
 .sidebar-logo-tech {
   font-family: "Goldman", system-ui, sans-serif;
   font-size: 1.4rem;
   font-weight: 700;
   letter-spacing: -0.02em;
-  background: linear-gradient(180deg, #dc2626 0%, #0f172a 100%);
+  background: linear-gradient(180deg, #0ea5e9 0%, #0f172a 100%);
   background-size: 200% auto;
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
   transition: all 0.4s ease;
-  text-shadow: 0 0 20px rgba(220, 38, 38, 0.3);
+  text-shadow: 0 0 20px rgba(14, 165, 233, 0.3);
   position: relative;
 }
 
 .sidebar-logo:hover .sidebar-logo-tech {
   background-position: 100% 0;
-  text-shadow: 0 0 30px rgba(220, 38, 38, 0.6);
+  text-shadow: 0 0 30px rgba(14, 165, 233, 0.6);
   letter-spacing: -0.01em;
 }
 
-/* 4 part of logo - RED */
+/* 4 part of logo - SKY BLUE */
 .sidebar-logo-four {
   font-family: "Goldman", system-ui, sans-serif;
   font-size: 1.4rem;
   font-weight: 700;
   letter-spacing: -0.02em;
-  background: linear-gradient(180deg, #dc2626 0%, #ef4444 50%, #0f172a 100%);
+  background: linear-gradient(180deg, #0ea5e9 0%, #38bdf8 50%, #0f172a 100%);
   background-size: 200% auto;
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
   transition: all 0.4s ease;
   position: relative;
-  animation: sidebarRedPulse 2s ease-in-out infinite;
+  animation: sidebarSkyPulse 2s ease-in-out infinite;
 }
 
-@keyframes sidebarRedPulse {
+@keyframes sidebarSkyPulse {
   0%,
   100% {
-    text-shadow: 0 0 8px rgba(220, 38, 38, 0.3);
+    text-shadow: 0 0 8px rgba(14, 165, 233, 0.3);
   }
   50% {
-    text-shadow: 0 0 20px rgba(220, 38, 38, 0.7);
+    text-shadow: 0 0 20px rgba(14, 165, 233, 0.7);
   }
 }
 
@@ -234,7 +234,7 @@
   font-size: 1.4rem;
   font-weight: 700;
   letter-spacing: -0.02em;
-  background: linear-gradient(180deg, #dc2626 0%, #0f172a 100%);
+  background: linear-gradient(180deg, #0ea5e9 0%, #0f172a 100%);
   background-size: 200% auto;
   -webkit-background-clip: text;
   background-clip: text;
@@ -253,7 +253,7 @@
   font-weight: 400;
   letter-spacing: 0.35em;
   text-transform: uppercase;
-  background: linear-gradient(180deg, #dc2626 0%, #0f172a 100%);
+  background: linear-gradient(180deg, #0ea5e9 0%, #0f172a 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -267,10 +267,10 @@
 .sidebar-logo:hover .sidebar-logo-luxury {
   letter-spacing: 0.45em;
   opacity: 1;
-  text-shadow: 0 0 8px rgba(220, 38, 38, 0.5);
+  text-shadow: 0 0 8px rgba(14, 165, 233, 0.5);
 }
 
-/* RED underline animation on hover */
+/* SKY BLUE underline animation on hover */
 .sidebar-logo::after {
   content: "";
   position: absolute;
@@ -281,9 +281,9 @@
   background: linear-gradient(
     90deg,
     transparent,
-    #dc2626,
-    #ef4444,
-    #dc2626,
+    #0ea5e9,
+    #38bdf8,
+    #0ea5e9,
     transparent
   );
   transform: scaleX(0);
@@ -305,7 +305,7 @@
   height: 0;
   background: radial-gradient(
     circle,
-    rgba(220, 38, 38, 0.15) 0%,
+    rgba(14, 165, 233, 0.15) 0%,
     transparent 70%
   );
   transition: all 0.5s ease;
@@ -320,7 +320,7 @@
   height: 180%;
 }
 
-/* Close button - RED */
+/* Close button - SKY BLUE */
 .sidebar-close-btn {
   display: flex;
   align-items: center;
@@ -328,7 +328,7 @@
   width: 38px;
   height: 38px;
   border-radius: 50%;
-  border: 1px solid rgba(220, 38, 38, 0.25);
+  border: 1px solid rgba(14, 165, 233, 0.25);
   background: transparent;
   color: #64748b;
   cursor: pointer;
@@ -349,11 +349,11 @@
 }
 
 .sidebar-close-btn:hover {
-  color: #dc2626;
-  border-color: rgba(220, 38, 38, 0.6);
-  background: rgba(220, 38, 38, 0.1);
+  color: #0ea5e9;
+  border-color: rgba(14, 165, 233, 0.6);
+  background: rgba(14, 165, 233, 0.1);
   transform: rotate(90deg) scale(1.05);
-  box-shadow: 0 0 12px rgba(220, 38, 38, 0.2);
+  box-shadow: 0 0 12px rgba(14, 165, 233, 0.2);
 }
 
 .sidebar-close-btn svg {
@@ -368,7 +368,7 @@
   overflow-y: auto;
   padding: 1.5rem 0;
   scrollbar-width: thin;
-  scrollbar-color: rgba(220, 38, 38, 0.3) transparent;
+  scrollbar-color: rgba(14, 165, 233, 0.3) transparent;
 }
 
 .sidebar-nav::-webkit-scrollbar {
@@ -380,18 +380,18 @@
 }
 
 .sidebar-nav::-webkit-scrollbar-thumb {
-  background: rgba(220, 38, 38, 0.3);
+  background: rgba(14, 165, 233, 0.3);
   border-radius: 2px;
 }
 
-/* Section label - RED */
+/* Section label - SKY BLUE */
 .sidebar-section-label {
   font-family: "Goldman", system-ui, sans-serif;
   font-size: 0.6rem;
   font-weight: 600;
   letter-spacing: 0.35em;
   text-transform: uppercase;
-  background: linear-gradient(180deg, #dc2626 0%, #0f172a 100%);
+  background: linear-gradient(180deg, #0ea5e9 0%, #0f172a 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -476,32 +476,32 @@
   height: 17px;
   stroke-width: 1.5;
   flex-shrink: 0;
-  color: rgba(220, 38, 38, 0.6);
+  color: rgba(14, 165, 233, 0.6);
   transition:
     color 0.3s ease,
     transform 0.3s ease;
 }
 
 .sidebar-nav-link:hover {
-  color: #dc2626;
-  background: rgba(220, 38, 38, 0.08);
-  border-left-color: rgba(220, 38, 38, 0.6);
+  color: #0ea5e9;
+  background: rgba(14, 165, 233, 0.08);
+  border-left-color: rgba(14, 165, 233, 0.6);
   padding-left: 2rem;
 }
 
 .sidebar-nav-link:hover svg {
-  color: #dc2626;
+  color: #0ea5e9;
   transform: scale(1.1);
 }
 
 .sidebar-nav-link.active {
-  color: #dc2626;
-  border-left-color: #dc2626;
-  background: rgba(220, 38, 38, 0.1);
+  color: #0ea5e9;
+  border-left-color: #0ea5e9;
+  background: rgba(14, 165, 233, 0.1);
 }
 
 .sidebar-nav-link.active svg {
-  color: #dc2626;
+  color: #0ea5e9;
 }
 
 /* Link Icon */
@@ -517,14 +517,14 @@
   width: 17px;
   height: 17px;
   stroke-width: 1.5;
-  color: rgba(220, 38, 38, 0.6);
+  color: rgba(14, 165, 233, 0.6);
   transition:
     color 0.3s ease,
     transform 0.3s ease;
 }
 
 .sidebar-nav-link:hover .sidebar-link-icon svg {
-  color: #dc2626;
+  color: #0ea5e9;
   transform: scale(1.1);
 }
 
@@ -533,7 +533,7 @@
   cursor: pointer;
 }
 
-/* Welcome text special styling - RED */
+/* Welcome text special styling - SKY BLUE */
 .sidebar-welcome-text {
   display: flex;
   flex-direction: column;
@@ -549,7 +549,7 @@
 .sidebar-welcome-name {
   font-size: 0.82rem;
   font-weight: 700;
-  background: linear-gradient(180deg, #dc2626 0%, #0f172a 100%);
+  background: linear-gradient(180deg, #0ea5e9 0%, #0f172a 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -558,10 +558,10 @@
 .sidebar-welcome-dot {
   width: 6px;
   height: 6px;
-  background: #dc2626;
+  background: #0ea5e9;
   border-radius: 50%;
   margin-left: auto;
-  box-shadow: 0 0 6px rgba(220, 38, 38, 0.5);
+  box-shadow: 0 0 6px rgba(14, 165, 233, 0.5);
   animation: sidebarPulse 2s ease-in-out infinite;
 }
 
@@ -593,7 +593,7 @@
   cursor: not-allowed;
 }
 
-/* Arrow button - RED */
+/* Arrow button - SKY BLUE */
 .sidebar-arrow-btn {
   display: flex;
   align-items: center;
@@ -610,11 +610,11 @@
 }
 
 .sidebar-arrow-btn:hover {
-  background: rgba(220, 38, 38, 0.12);
+  background: rgba(14, 165, 233, 0.12);
 }
 
 .sidebar-arrow-btn:hover .sidebar-nav-arrow {
-  color: #dc2626;
+  color: #0ea5e9;
 }
 
 .sidebar-nav-arrow {
@@ -628,17 +628,17 @@
 
 .sidebar-nav-arrow.expanded {
   transform: rotate(180deg);
-  color: #dc2626;
+  color: #0ea5e9;
 }
 
-/* ---------- Sidebar Divider - RED ---------- */
+/* ---------- Sidebar Divider - SKY BLUE ---------- */
 .sidebar-hr {
   border: none;
-  border-top: 1px solid rgba(220, 38, 38, 0.12);
+  border-top: 1px solid rgba(14, 165, 233, 0.12);
   margin: 0.25rem 1.5rem;
 }
 
-/* ---------- Subcategory Navigation - RED ---------- */
+/* ---------- Subcategory Navigation - SKY BLUE ---------- */
 .sidebar-nav-item-wrapper {
   position: relative;
 }
@@ -647,8 +647,8 @@
   list-style: none;
   padding: 0.5rem 0 0.75rem 3.5rem;
   margin: 0;
-  background: rgba(220, 38, 38, 0.03);
-  border-left: 1px solid rgba(220, 38, 38, 0.12);
+  background: rgba(14, 165, 233, 0.03);
+  border-left: 1px solid rgba(14, 165, 233, 0.12);
   margin-left: 1.75rem;
 }
 
@@ -685,30 +685,30 @@
 .sidebar-subnav-dot {
   width: 4px;
   height: 4px;
-  background: rgba(220, 38, 38, 0.4);
+  background: rgba(14, 165, 233, 0.4);
   border-radius: 50%;
   transition: all 0.25s ease;
 }
 
 .sidebar-subnav-link:hover {
-  color: #dc2626;
-  background: rgba(220, 38, 38, 0.08);
+  color: #0ea5e9;
+  background: rgba(14, 165, 233, 0.08);
   padding-left: 1rem;
 }
 
 .sidebar-subnav-link:hover .sidebar-subnav-dot {
-  background: #dc2626;
+  background: #0ea5e9;
   transform: scale(1.5);
-  box-shadow: 0 0 4px rgba(220, 38, 38, 0.5);
+  box-shadow: 0 0 4px rgba(14, 165, 233, 0.5);
 }
 
 .sidebar-subnav-link.active {
-  color: #dc2626;
-  background: rgba(220, 38, 38, 0.1);
+  color: #0ea5e9;
+  background: rgba(14, 165, 233, 0.1);
 }
 
 .sidebar-subnav-link.active .sidebar-subnav-dot {
-  background: #dc2626;
+  background: #0ea5e9;
   width: 6px;
   height: 6px;
 }
@@ -716,7 +716,7 @@
 /* ---------- Sidebar Footer ---------- */
 .sidebar-footer {
   padding: 1.25rem 1.75rem 2rem;
-  border-top: 1px solid rgba(220, 38, 38, 0.12);
+  border-top: 1px solid rgba(14, 165, 233, 0.12);
   flex-shrink: 0;
 
   opacity: 0;
@@ -775,9 +775,9 @@
   right: auto;
   transform: translateX(-100%);
   border-left: none;
-  border-right: 1px solid rgba(220, 38, 38, 0.25);
+  border-right: 1px solid rgba(14, 165, 233, 0.25);
   box-shadow:
-    1px 0 0 0 rgba(220, 38, 38, 0.15),
+    1px 0 0 0 rgba(14, 165, 233, 0.15),
     8px 0 40px rgba(0, 0, 0, 0.1);
 }
 
@@ -797,14 +797,14 @@
 
 [dir="rtl"] .sidebar-nav-link:hover {
   border-left: none;
-  border-right-color: rgba(220, 38, 38, 0.6);
+  border-right-color: rgba(14, 165, 233, 0.6);
   padding-left: 1.75rem;
   padding-right: 2rem;
 }
 
 [dir="rtl"] .sidebar-nav-link.active {
   border-left: none;
-  border-right-color: #dc2626;
+  border-right-color: #0ea5e9;
 }
 
 [dir="rtl"] .sidebar-subnav-list {
@@ -813,7 +813,7 @@
   margin-left: 0;
   margin-right: 1.75rem;
   border-left: none;
-  border-right: 1px solid rgba(220, 38, 38, 0.12);
+  border-right: 1px solid rgba(14, 165, 233, 0.12);
 }
 
 [dir="rtl"] .sidebar-subnav-link:hover {

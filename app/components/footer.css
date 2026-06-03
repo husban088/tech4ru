@@ -1,22 +1,22 @@
 /* ============================================================
    FOOTER SECTION · ULTIMATE LUXURY EDITION
-   DARK THEME | #141414 BACKGROUND | WHITE TEXT | RED + BLACK GRADIENTS
+   DARK THEME | #141414 BACKGROUND | WHITE TEXT | SKY BLUE + BLACK GRADIENTS
+   MATCHING GlobalFAQSection COLOR SCHEME
    TECH4U — Next Level Footer Design
    ============================================================ */
 
 @import url("https://fonts.googleapis.com/css2?family=Goldman:wght@400;700&display=swap");
 
 :root {
-  --footer-red: #dc2626;
-  --footer-red-light: #ef4444;
-  --footer-red-deep: #b91c1c;
-  --footer-red-dim: rgba(220, 38, 38, 0.15);
-  --footer-red-glow: rgba(220, 38, 38, 0.3);
-  --footer-red-gradient: linear-gradient(180deg, #dc2626 0%, #0f172a 100%);
-  --footer-red-horizontal: linear-gradient(90deg, #dc2626, #ef4444, #dc2626);
+  --footer-sky: #0ea5e9;
+  --footer-sky-bright: #38bdf8;
+  --footer-sky-glow: #7dd3fc;
+  --footer-sky-dim: rgba(14, 165, 233, 0.15);
+  --footer-sky-gradient: linear-gradient(180deg, #0ea5e9 0%, #0f172a 100%);
+  --footer-sky-horizontal: linear-gradient(90deg, #0ea5e9, #38bdf8, #0ea5e9);
   --footer-bg: #141414;
   --footer-bg-lighter: #1a1a1a;
-  --footer-border: rgba(220, 38, 38, 0.25);
+  --footer-border: rgba(14, 165, 233, 0.25);
   --footer-text: #ffffff;
   --footer-text-muted: rgba(255, 255, 255, 0.7);
   --footer-text-dim: rgba(255, 255, 255, 0.5);
@@ -40,7 +40,7 @@
   z-index: 10;
 }
 
-/* Top Border Line - RED + BLACK Gradient */
+/* Top Border Line - SKY BLUE + BLACK Gradient */
 .footer::before {
   content: "";
   position: absolute;
@@ -52,16 +52,16 @@
   background: linear-gradient(
     to right,
     transparent,
-    rgba(220, 38, 38, 0.5),
+    rgba(14, 165, 233, 0.5),
     rgba(15, 23, 42, 0.3),
-    rgba(220, 38, 38, 0.5),
+    rgba(14, 165, 233, 0.5),
     transparent
   );
   pointer-events: none;
   z-index: 1;
 }
 
-/* Glass Overlay - RED */
+/* Glass Overlay - SKY BLUE */
 .footer-glass-overlay {
   position: absolute;
   top: 0;
@@ -70,13 +70,13 @@
   bottom: 0;
   background: radial-gradient(
     circle at 20% 30%,
-    rgba(220, 38, 38, 0.03) 0%,
+    rgba(14, 165, 233, 0.03) 0%,
     transparent 60%
   );
   pointer-events: none;
 }
 
-/* Floating Particles - RED */
+/* Floating Particles - SKY BLUE */
 .footer-particles {
   position: absolute;
   top: 0;
@@ -92,11 +92,11 @@
   bottom: -20px;
   width: 3px;
   height: 3px;
-  background: var(--footer-red);
+  background: var(--footer-sky);
   border-radius: 50%;
   opacity: 0;
   animation: particleFloat 8s ease-in-out infinite;
-  box-shadow: 0 0 6px rgba(220, 38, 38, 0.4);
+  box-shadow: 0 0 6px rgba(14, 165, 233, 0.4);
 }
 
 @keyframes particleFloat {
@@ -116,7 +116,7 @@
   }
 }
 
-/* RED decorative line top */
+/* SKY BLUE decorative line top */
 .footer-gold-line {
   position: absolute;
   top: 0;
@@ -126,9 +126,9 @@
   background: linear-gradient(
     90deg,
     transparent,
-    var(--footer-red),
-    var(--footer-red-light),
-    var(--footer-red),
+    var(--footer-sky),
+    var(--footer-sky-bright),
+    var(--footer-sky),
     transparent
   );
   overflow: hidden;
@@ -223,12 +223,12 @@
   max-width: 136px;
   object-fit: contain;
   transition: all 0.4s var(--footer-ease-bounce);
-  filter: brightness(1) drop-shadow(0 0 5px rgba(220, 38, 38, 0.2));
+  filter: brightness(1) drop-shadow(0 0 5px rgba(14, 165, 233, 0.2));
 }
 
 .footer-logo-3d:hover .footer-logo-img {
   transform: scale(1.05);
-  filter: brightness(1.05) drop-shadow(0 0 15px rgba(220, 38, 38, 0.4));
+  filter: brightness(1.05) drop-shadow(0 0 15px rgba(14, 165, 233, 0.4));
 }
 
 .footer-logo-gold-ring {
@@ -237,7 +237,7 @@
   top: 50%;
   transform: translateY(-50%);
   font-size: 1.2rem;
-  color: var(--footer-red);
+  color: var(--footer-sky);
   animation: ringRotate 4s linear infinite;
 }
 
@@ -256,7 +256,7 @@
   font-weight: 400;
   letter-spacing: 0.3em;
   text-transform: uppercase;
-  color: var(--footer-red-light);
+  color: var(--footer-sky-bright);
   margin-top: -0.2rem;
   display: flex;
   gap: 0.5rem;
@@ -264,7 +264,7 @@
 
 .tagline-gold {
   animation: taglineFade 2s ease-in-out infinite;
-  color: var(--footer-red);
+  color: var(--footer-sky);
 }
 
 @keyframes taglineFade {
@@ -274,7 +274,7 @@
   }
   50% {
     opacity: 1;
-    text-shadow: 0 0 5px rgba(220, 38, 38, 0.4);
+    text-shadow: 0 0 5px rgba(14, 165, 233, 0.4);
   }
 }
 
@@ -292,7 +292,7 @@
   display: inline-block;
   margin-left: 0.5rem;
   font-size: 0.7rem;
-  color: var(--footer-red-light);
+  color: var(--footer-sky-light);
   opacity: 0.7;
   font-family: var(--footer-tech);
   letter-spacing: 0.1em;
@@ -310,15 +310,15 @@
   backdrop-filter: blur(10px);
   border-radius: 20px;
   padding: 1.5rem;
-  border: 1px solid rgba(220, 38, 38, 0.25);
+  border: 1px solid rgba(14, 165, 233, 0.25);
   transition: all var(--footer-ease);
 }
 
 .footer-newsletter:hover {
-  border-color: rgba(220, 38, 38, 0.5);
+  border-color: rgba(14, 165, 233, 0.5);
   box-shadow:
     0 10px 30px rgba(0, 0, 0, 0.3),
-    0 0 20px rgba(220, 38, 38, 0.08);
+    0 0 20px rgba(14, 165, 233, 0.08);
 }
 
 .footer-newsletter-header {
@@ -338,7 +338,7 @@
   height: 40px;
   background: radial-gradient(
     circle,
-    rgba(220, 38, 38, 0.1) 0%,
+    rgba(14, 165, 233, 0.1) 0%,
     transparent 70%
   );
   pointer-events: none;
@@ -358,7 +358,7 @@
   font-size: 0.55rem;
   font-weight: 600;
   padding: 0.2rem 0.5rem;
-  background: linear-gradient(180deg, #dc2626 0%, #0f172a 100%);
+  background: linear-gradient(180deg, #0ea5e9 0%, #0f172a 100%);
   color: #ffffff;
   border-radius: 20px;
   letter-spacing: 0.05em;
@@ -369,11 +369,11 @@
   0%,
   100% {
     transform: scale(1);
-    box-shadow: 0 0 0px rgba(220, 38, 38, 0);
+    box-shadow: 0 0 0px rgba(14, 165, 233, 0);
   }
   50% {
     transform: scale(1.05);
-    box-shadow: 0 0 10px rgba(220, 38, 38, 0.4);
+    box-shadow: 0 0 10px rgba(14, 165, 233, 0.4);
   }
 }
 
@@ -394,7 +394,7 @@
   position: relative;
   display: flex;
   align-items: center;
-  border: 1px solid rgba(220, 38, 38, 0.3);
+  border: 1px solid rgba(14, 165, 233, 0.3);
   border-radius: 50px;
   overflow: hidden;
   transition: all var(--footer-ease);
@@ -402,10 +402,10 @@
 }
 
 .footer-input-wrapper:focus-within {
-  border-color: var(--footer-red);
+  border-color: var(--footer-sky);
   box-shadow:
-    0 0 0 4px rgba(220, 38, 38, 0.1),
-    0 0 20px rgba(220, 38, 38, 0.05);
+    0 0 0 4px rgba(14, 165, 233, 0.1),
+    0 0 20px rgba(14, 165, 233, 0.05);
   transform: scale(1.01);
 }
 
@@ -431,7 +431,7 @@
   align-items: center;
   gap: 0.5rem;
   padding: 0.9rem 1.8rem;
-  background: linear-gradient(180deg, #dc2626 0%, #0f172a 100%);
+  background: linear-gradient(180deg, #0ea5e9 0%, #0f172a 100%);
   border: none;
   font-family: var(--footer-sans);
   font-size: 0.7rem;
@@ -474,7 +474,7 @@
 .footer-newsletter-btn:hover {
   gap: 0.8rem;
   transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(220, 38, 38, 0.3);
+  box-shadow: 0 5px 15px rgba(14, 165, 233, 0.3);
 }
 
 .footer-newsletter-btn:hover svg {
@@ -489,7 +489,7 @@
   padding: 0.5rem 0;
   font-family: var(--footer-sans);
   font-size: 0.75rem;
-  color: var(--footer-red-light);
+  color: var(--footer-sky-bright);
   animation: slideDown 0.4s ease forwards;
 }
 
@@ -509,7 +509,7 @@
   }
 }
 
-/* ── Social Links Premium - RED Gradient ── */
+/* ── Social Links Premium - SKY BLUE Gradient ── */
 .footer-social {
   display: flex;
   gap: 1rem;
@@ -567,7 +567,7 @@
 .footer-social-link:hover {
   transform: translateY(-5px) scale(1.15);
   filter: brightness(1.1);
-  box-shadow: 0 0 15px rgba(220, 38, 38, 0.4);
+  box-shadow: 0 0 15px rgba(14, 165, 233, 0.4);
 }
 
 .footer-social-icon {
@@ -587,7 +587,7 @@
   left: 50%;
   transform: translateX(-50%);
   background: #1a1a1a;
-  color: var(--footer-red);
+  color: var(--footer-sky);
   font-family: var(--footer-sans);
   font-size: 0.7rem;
   font-weight: 500;
@@ -600,7 +600,7 @@
   pointer-events: none;
   z-index: 10;
   letter-spacing: 0.05em;
-  border: 1px solid rgba(220, 38, 38, 0.3);
+  border: 1px solid rgba(14, 165, 233, 0.3);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
 
@@ -616,13 +616,13 @@
   flex-direction: column;
   gap: 1.25rem;
   transition: all var(--footer-ease);
-  background: rgba(220, 38, 38, 0.02);
+  background: rgba(14, 165, 233, 0.02);
   border-radius: 16px;
   padding: 0.75rem;
 }
 
 .footer-links-column.hovered {
-  background: rgba(220, 38, 38, 0.05);
+  background: rgba(14, 165, 233, 0.05);
   transform: translateY(-5px);
 }
 
@@ -636,7 +636,7 @@
   font-size: 1.2rem;
   transition: transform var(--footer-ease);
   color: #ffffff;
-  background: linear-gradient(180deg, #dc2626 0%, #0f172a 100%);
+  background: linear-gradient(180deg, #0ea5e9 0%, #0f172a 100%);
   width: 32px;
   height: 32px;
   display: flex;
@@ -647,15 +647,15 @@
 
 .footer-links-column:hover .footer-links-icon {
   transform: scale(1.1) rotate(5deg);
-  background: linear-gradient(180deg, #ef4444 0%, #dc2626 100%);
-  box-shadow: 0 0 10px rgba(220, 38, 38, 0.4);
+  background: linear-gradient(180deg, #38bdf8 0%, #0ea5e9 100%);
+  box-shadow: 0 0 10px rgba(14, 165, 233, 0.4);
 }
 
 .footer-links-title {
   font-family: var(--footer-playfair);
   font-size: 1rem;
   font-weight: 600;
-  background: linear-gradient(180deg, #dc2626 0%, #ef4444 50%, #ffffff 100%);
+  background: linear-gradient(180deg, #0ea5e9 0%, #38bdf8 50%, #ffffff 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -671,7 +671,7 @@
   left: 0;
   width: 4px;
   height: 4px;
-  background: var(--footer-red);
+  background: var(--footer-sky);
   border-radius: 50%;
   transition: all var(--footer-ease);
 }
@@ -679,14 +679,14 @@
 .footer-links-column:hover .footer-links-gold-dot {
   width: 20px;
   border-radius: 2px;
-  box-shadow: 0 0 6px rgba(220, 38, 38, 0.4);
+  box-shadow: 0 0 6px rgba(14, 165, 233, 0.4);
 }
 
 .footer-links-mobile-toggle {
   display: none;
   background: none;
   border: none;
-  color: var(--footer-red);
+  color: var(--footer-sky);
   cursor: pointer;
   transition: transform var(--footer-ease);
 }
@@ -741,12 +741,12 @@
   width: 18px;
 }
 
-/* Link hover icons - RED */
+/* Link hover icons - SKY BLUE */
 .footer-link-icon {
   font-size: 0.8rem;
   opacity: 0;
   transition: opacity var(--footer-ease);
-  color: #dc2626;
+  color: #0ea5e9;
 }
 
 .footer-link:hover .footer-link-icon {
@@ -770,7 +770,7 @@
 }
 
 .footer-link:hover {
-  color: var(--footer-red-light);
+  color: var(--footer-sky-bright);
   gap: 0.75rem;
 }
 
@@ -813,8 +813,8 @@
   align-items: center;
   justify-content: center;
   border-radius: 10px;
-  border: 1px solid rgba(220, 38, 38, 0.3);
-  background: linear-gradient(180deg, #dc2626 0%, #0f172a 100%);
+  border: 1px solid rgba(14, 165, 233, 0.3);
+  background: linear-gradient(180deg, #0ea5e9 0%, #0f172a 100%);
   color: #ffffff;
   transition: all 0.3s ease;
 }
@@ -830,9 +830,9 @@
 }
 
 .footer-contact-item:hover .footer-contact-icon {
-  background: linear-gradient(180deg, #ef4444 0%, #dc2626 100%);
-  border-color: var(--footer-red);
-  box-shadow: 0 0 12px rgba(220, 38, 38, 0.3);
+  background: linear-gradient(180deg, #38bdf8 0%, #0ea5e9 100%);
+  border-color: var(--footer-sky);
+  box-shadow: 0 0 12px rgba(14, 165, 233, 0.3);
 }
 
 .footer-contact-text {
@@ -847,7 +847,7 @@
   font-size: 0.56rem;
   letter-spacing: 0.15em;
   text-transform: uppercase;
-  color: var(--footer-red-light);
+  color: var(--footer-sky-bright);
   opacity: 0.8;
 }
 
@@ -863,7 +863,7 @@
 }
 
 a.footer-contact-value:hover {
-  color: var(--footer-red-light);
+  color: var(--footer-sky-bright);
 }
 
 /* ── Bottom Bar Premium ── */
@@ -886,7 +886,7 @@ a.footer-contact-value:hover {
   gap: 1.5rem;
 }
 
-/* Payment Methods Premium - RED Theme */
+/* Payment Methods Premium - SKY BLUE Theme */
 .payment-label {
   font-family: var(--footer-sans);
   font-size: 0.65rem;
@@ -913,7 +913,7 @@ a.footer-contact-value:hover {
   width: 100%;
   height: 100%;
   background: #1a1a1a;
-  border: 1px solid rgba(220, 38, 38, 0.3);
+  border: 1px solid rgba(14, 165, 233, 0.3);
   border-radius: 8px;
   display: flex;
   align-items: center;
@@ -927,9 +927,9 @@ a.footer-contact-value:hover {
 .footer-payment-icon:hover .payment-card-front {
   transform: rotateY(10deg) scale(1.05);
   background: #252525;
-  border-color: #dc2626;
-  box-shadow: 0 0 12px rgba(220, 38, 38, 0.3);
-  color: #ef4444 !important;
+  border-color: #0ea5e9;
+  box-shadow: 0 0 12px rgba(14, 165, 233, 0.3);
+  color: #38bdf8 !important;
 }
 
 /* Payment Icons specific colors removed - all white now */
@@ -963,27 +963,27 @@ a.footer-contact-value:hover {
 .copyright-gold-line {
   width: 30px;
   height: 1px;
-  background: linear-gradient(90deg, var(--footer-red), transparent);
+  background: linear-gradient(90deg, var(--footer-sky), transparent);
 }
 
 .copyright-gold-line.right {
-  background: linear-gradient(90deg, transparent, var(--footer-red));
+  background: linear-gradient(90deg, transparent, var(--footer-sky));
 }
 
 .copyright-separator {
   margin: 0 0.5rem;
   font-size: 0.5rem;
-  color: var(--footer-red);
+  color: var(--footer-sky);
   opacity: 0.5;
 }
 
 .footer-copyright-brand {
-  color: var(--footer-red-light);
+  color: var(--footer-sky-bright);
   font-weight: 600;
   letter-spacing: 0.05em;
 }
 
-/* Back to Top Premium Button - RED */
+/* Back to Top Premium Button - SKY BLUE */
 .footer-back-to-top {
   display: flex;
   align-items: center;
@@ -1023,17 +1023,17 @@ a.footer-contact-value:hover {
   background: linear-gradient(
     90deg,
     transparent,
-    rgba(220, 38, 38, 0.15),
+    rgba(14, 165, 233, 0.15),
     transparent
   );
   transition: left 0.5s ease;
 }
 
 .footer-back-to-top:hover {
-  border-color: var(--footer-red);
-  color: var(--footer-red-light);
+  border-color: var(--footer-sky);
+  color: var(--footer-sky-bright);
   transform: translateY(-3px);
-  box-shadow: 0 5px 20px rgba(220, 38, 38, 0.15);
+  box-shadow: 0 5px 20px rgba(14, 165, 233, 0.15);
 }
 
 .footer-back-to-top:hover .back-to-top-glow {
@@ -1044,7 +1044,7 @@ a.footer-contact-value:hover {
   transform: translateY(-3px);
 }
 
-/* Bottom RED Border with Wave */
+/* Bottom SKY BLUE Border with Wave */
 .footer-bottom-gold {
   position: absolute;
   bottom: 0;
@@ -1060,9 +1060,9 @@ a.footer-contact-value:hover {
   background: linear-gradient(
     90deg,
     transparent,
-    var(--footer-red),
-    var(--footer-red-light),
-    var(--footer-red),
+    var(--footer-sky),
+    var(--footer-sky-bright),
+    var(--footer-sky),
     transparent
   );
   animation: waveMove 3s ease-in-out infinite;
@@ -1077,13 +1077,13 @@ a.footer-contact-value:hover {
   }
 }
 
-/* Floating Orbs - RED */
+/* Floating Orbs - SKY BLUE */
 .footer-orb {
   position: absolute;
   border-radius: 50%;
   background: radial-gradient(
     circle,
-    rgba(220, 38, 38, 0.04) 0%,
+    rgba(14, 165, 233, 0.04) 0%,
     transparent 70%
   );
   pointer-events: none;
@@ -1127,7 +1127,7 @@ a.footer-contact-value:hover {
 }
 
 /* ══════════════════════════════════════════════════════════
-         FEATURES STRIP — 4 Luxury Cards (RED Theme)
+         FEATURES STRIP — 4 Luxury Cards (SKY BLUE Theme)
          ══════════════════════════════════════════════════════════ */
 .footer-features {
   position: relative;
@@ -1135,7 +1135,7 @@ a.footer-contact-value:hover {
   border-bottom: 1px solid var(--footer-border);
   background: linear-gradient(
     180deg,
-    rgba(220, 38, 38, 0.03) 0%,
+    rgba(14, 165, 233, 0.03) 0%,
     transparent 100%
   );
 }
@@ -1170,7 +1170,7 @@ a.footer-contact-value:hover {
   background: linear-gradient(
     135deg,
     transparent 0%,
-    rgba(220, 38, 38, 0.05) 50%,
+    rgba(14, 165, 233, 0.05) 50%,
     transparent 100%
   );
   opacity: 0;
@@ -1190,8 +1190,8 @@ a.footer-contact-value:hover {
   height: 2px;
   background: linear-gradient(
     90deg,
-    var(--footer-red),
-    var(--footer-red-light)
+    var(--footer-sky),
+    var(--footer-sky-bright)
   );
   transform: translateX(-50%);
   transition: width 0.5s cubic-bezier(0.22, 1, 0.36, 1);
@@ -1210,16 +1210,16 @@ a.footer-contact-value:hover {
   align-items: center;
   justify-content: center;
   border-radius: 14px;
-  border: 1px solid rgba(220, 38, 38, 0.3);
-  background: linear-gradient(180deg, #dc2626 0%, #0f172a 100%);
+  border: 1px solid rgba(14, 165, 233, 0.3);
+  background: linear-gradient(180deg, #0ea5e9 0%, #0f172a 100%);
   transition: all 0.4s cubic-bezier(0.34, 1.2, 0.64, 1);
 }
 
 .footer-feature-card:hover .footer-feature-icon-wrap {
-  background: linear-gradient(180deg, #ef4444 0%, #dc2626 100%);
-  border-color: var(--footer-red);
+  background: linear-gradient(180deg, #38bdf8 0%, #0ea5e9 100%);
+  border-color: var(--footer-sky);
   transform: scale(1.1) rotate(-5deg);
-  box-shadow: 0 0 20px rgba(220, 38, 38, 0.3);
+  box-shadow: 0 0 20px rgba(14, 165, 233, 0.3);
 }
 
 .footer-feature-icon-wrap svg {
@@ -1239,7 +1239,7 @@ a.footer-contact-value:hover {
   border-radius: 18px;
   background: radial-gradient(
     circle,
-    rgba(220, 38, 38, 0.2) 0%,
+    rgba(14, 165, 233, 0.2) 0%,
     transparent 70%
   );
   opacity: 0;
@@ -1268,7 +1268,7 @@ a.footer-contact-value:hover {
 }
 
 .footer-feature-card:hover .footer-feature-title {
-  color: var(--footer-red-light);
+  color: var(--footer-sky-bright);
 }
 
 .footer-feature-subtitle {
@@ -1637,11 +1637,11 @@ html {
 }
 
 [dir="rtl"] .copyright-gold-line {
-  background: linear-gradient(90deg, var(--footer-red), transparent);
+  background: linear-gradient(90deg, var(--footer-sky), transparent);
 }
 
 [dir="rtl"] .copyright-gold-line.right {
-  background: linear-gradient(90deg, transparent, var(--footer-red));
+  background: linear-gradient(90deg, transparent, var(--footer-sky));
 }
 
 [dir="rtl"] .footer-feature-card {
@@ -1665,7 +1665,7 @@ html {
 }
 
 /* ═══════════════════════════════════════════════════════════════════════
-   PREMIUM TEXT LOGO STYLES - TECH4U Luxury Edition
+   PREMIUM TEXT LOGO STYLES - TECH4U Luxury Edition (SKY BLUE THEME)
    ═══════════════════════════════════════════════════════════════════════ */
 
 .footer-text-logo {
@@ -1682,40 +1682,40 @@ html {
   font-size: 2.2rem;
   font-weight: 700;
   letter-spacing: -0.02em;
-  background: linear-gradient(135deg, #ffffff 0%, #ef4444 40%, #dc2626 100%);
+  background: linear-gradient(135deg, #ffffff 0%, #38bdf8 40%, #0ea5e9 100%);
   background-size: 200% auto;
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
   transition: all 0.4s ease;
-  text-shadow: 0 0 20px rgba(220, 38, 38, 0.2);
+  text-shadow: 0 0 20px rgba(14, 165, 233, 0.2);
   position: relative;
 }
 
-/* 4 part of logo - RED PULSE */
+/* 4 part of logo - SKY BLUE PULSE */
 .footer-logo-four {
   font-family: "Goldman", system-ui, sans-serif;
   font-size: 2.2rem;
   font-weight: 700;
   letter-spacing: -0.02em;
-  background: linear-gradient(135deg, #dc2626 0%, #ef4444 50%, #ffffff 100%);
+  background: linear-gradient(135deg, #0ea5e9 0%, #38bdf8 50%, #ffffff 100%);
   background-size: 200% auto;
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
   transition: all 0.4s ease;
   position: relative;
-  animation: footerRedPulse 2s ease-in-out infinite;
+  animation: footerSkyPulse 2s ease-in-out infinite;
 }
 
-@keyframes footerRedPulse {
+@keyframes footerSkyPulse {
   0%,
   100% {
-    text-shadow: 0 0 8px rgba(220, 38, 38, 0.3);
+    text-shadow: 0 0 8px rgba(14, 165, 233, 0.3);
     background-position: 0% 0%;
   }
   50% {
-    text-shadow: 0 0 25px rgba(220, 38, 38, 0.8);
+    text-shadow: 0 0 25px rgba(14, 165, 233, 0.8);
     background-position: 100% 0%;
   }
 }
@@ -1726,7 +1726,7 @@ html {
   font-size: 2.2rem;
   font-weight: 700;
   letter-spacing: -0.02em;
-  background: linear-gradient(135deg, #ffffff 0%, #dc2626 50%, #ef4444 100%);
+  background: linear-gradient(135deg, #ffffff 0%, #0ea5e9 50%, #38bdf8 100%);
   background-size: 200% auto;
   -webkit-background-clip: text;
   background-clip: text;
@@ -1747,7 +1747,7 @@ html {
 
 .footer-logo-3d:hover .footer-logo-tech {
   background-position: 100% 0;
-  text-shadow: 0 0 30px rgba(220, 38, 38, 0.5);
+  text-shadow: 0 0 30px rgba(14, 165, 233, 0.5);
 }
 
 .footer-logo-3d:hover .footer-logo-four {
@@ -1767,7 +1767,7 @@ html {
   font-weight: 400;
   letter-spacing: 0.35em;
   text-transform: uppercase;
-  background: linear-gradient(135deg, #dc2626 0%, #ef4444 50%, #dc2626 100%);
+  background: linear-gradient(135deg, #0ea5e9 0%, #38bdf8 50%, #0ea5e9 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -1780,7 +1780,7 @@ html {
 .footer-logo-3d:hover .footer-logo-subtitle {
   letter-spacing: 0.45em;
   opacity: 1;
-  text-shadow: 0 0 8px rgba(220, 38, 38, 0.5);
+  text-shadow: 0 0 8px rgba(14, 165, 233, 0.5);
 }
 
 /* Underline animation on hover */
@@ -1794,9 +1794,9 @@ html {
   background: linear-gradient(
     90deg,
     transparent,
-    #dc2626,
-    #ef4444,
-    #dc2626,
+    #0ea5e9,
+    #38bdf8,
+    #0ea5e9,
     transparent
   );
   transform: scaleX(0);
@@ -1818,7 +1818,7 @@ html {
   height: 0;
   background: radial-gradient(
     circle,
-    rgba(220, 38, 38, 0.15) 0%,
+    rgba(14, 165, 233, 0.15) 0%,
     transparent 70%
   );
   transition: all 0.5s ease;

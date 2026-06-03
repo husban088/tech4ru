@@ -1,9 +1,9 @@
-/* CartSummary.css — WHITE BACKGROUND | BLACK TEXT | RED GRADIENTS */
+/* CartSummary.css — WHITE BACKGROUND | BLACK TEXT | SKY BLUE GRADIENTS */
 
 .cs-summary-card {
   background: #ffffff;
   backdrop-filter: blur(0px);
-  border: 1px solid rgba(220, 38, 38, 0.18);
+  border: 1px solid rgba(14, 165, 233, 0.18);
   border-radius: 16px;
   padding: clamp(1rem, 4vw, 1.75rem);
   display: flex;
@@ -22,7 +22,7 @@
   left: 0;
   right: 0;
   height: 2px;
-  background: linear-gradient(90deg, transparent, #dc2626, transparent);
+  background: linear-gradient(90deg, transparent, #0ea5e9, transparent);
   transform: scaleX(0);
   transform-origin: left;
   transition: transform 0.5s ease;
@@ -43,7 +43,7 @@
   font-weight: 600;
   letter-spacing: 0.35em;
   text-transform: uppercase;
-  color: #dc2626;
+  color: #0ea5e9;
   margin: 0;
 }
 
@@ -57,7 +57,7 @@
   display: block;
   width: 22px;
   height: 1px;
-  background: #dc2626;
+  background: #0ea5e9;
   opacity: 0.6;
 }
 
@@ -86,7 +86,7 @@
 }
 
 .cs-summary-item:hover {
-  background: rgba(220, 38, 38, 0.05);
+  background: rgba(14, 165, 233, 0.05);
   transform: translateX(4px);
 }
 
@@ -101,20 +101,20 @@
   width: clamp(36px, 8vw, 42px);
   height: clamp(36px, 8vw, 42px);
   border-radius: 8px;
-  background: rgba(220, 38, 38, 0.06);
-  border: 1px solid rgba(220, 38, 38, 0.15);
+  background: rgba(14, 165, 233, 0.06);
+  border: 1px solid rgba(14, 165, 233, 0.15);
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  color: rgba(220, 38, 38, 0.3);
+  color: rgba(14, 165, 233, 0.3);
   overflow: hidden;
   transition: all 0.3s ease;
 }
 
 .cs-summary-item:hover .cs-summary-item-img {
   transform: scale(1.05);
-  box-shadow: 0 4px 12px rgba(220, 38, 38, 0.1);
+  box-shadow: 0 4px 12px rgba(14, 165, 233, 0.1);
 }
 
 .cs-summary-item-info {
@@ -147,7 +147,7 @@
   font-family: "Goldman", system-ui, sans-serif;
   font-size: clamp(0.85rem, 3vw, 0.95rem);
   font-weight: 700;
-  color: #dc2626;
+  color: #0ea5e9;
   white-space: nowrap;
 }
 
@@ -159,20 +159,20 @@
   letter-spacing: 0.08em;
   color: #64748b;
   padding: 0.5rem 0;
-  border-top: 1px solid rgba(220, 38, 38, 0.1);
+  border-top: 1px solid rgba(14, 165, 233, 0.1);
   cursor: pointer;
   transition: all 0.3s ease;
 }
 
 .cs-summary-more:hover {
-  color: #dc2626;
+  color: #0ea5e9;
 }
 
 .cs-summary-breakdown {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
-  border-top: 1px solid rgba(220, 38, 38, 0.1);
+  border-top: 1px solid rgba(14, 165, 233, 0.1);
   padding-top: 1rem;
 }
 
@@ -189,7 +189,7 @@
 
 .cs-summary-divider {
   height: 1px;
-  background: rgba(220, 38, 38, 0.12);
+  background: rgba(14, 165, 233, 0.12);
   margin: 0.15rem 0;
 }
 
@@ -201,22 +201,22 @@
 
 .cs-summary-total span:last-child {
   font-size: clamp(1rem, 4vw, 1.15rem);
-  color: #dc2626;
+  color: #0ea5e9;
 }
 
 /* Coupon Section */
 .cs-coupon-section {
   margin: 0.5rem 0;
   padding: clamp(0.75rem, 3vw, 0.85rem);
-  border: 1px solid rgba(220, 38, 38, 0.15);
+  border: 1px solid rgba(14, 165, 233, 0.15);
   border-radius: 12px;
-  background: rgba(220, 38, 38, 0.02);
+  background: rgba(14, 165, 233, 0.02);
   transition: all 0.3s ease;
 }
 
 .cs-coupon-section:hover {
-  border-color: rgba(220, 38, 38, 0.3);
-  background: rgba(220, 38, 38, 0.05);
+  border-color: rgba(14, 165, 233, 0.3);
+  background: rgba(14, 165, 233, 0.05);
 }
 
 .cs-coupon-label {
@@ -247,7 +247,7 @@
 .cs-coupon-input {
   flex: 1;
   background: #f8fafc;
-  border: 1px solid rgba(220, 38, 38, 0.2);
+  border: 1px solid rgba(14, 165, 233, 0.2);
   border-radius: 8px;
   padding: 0.5rem 0.75rem;
   color: #0f172a;
@@ -259,16 +259,16 @@
 }
 
 .cs-coupon-input:focus {
-  border-color: #dc2626;
-  box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.08);
+  border-color: #0ea5e9;
+  box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.08);
 }
 
 .cs-coupon-btn {
   padding: 0.5rem 1rem;
-  background: rgba(220, 38, 38, 0.1);
-  border: 1px solid rgba(220, 38, 38, 0.3);
+  background: rgba(14, 165, 233, 0.1);
+  border: 1px solid rgba(14, 165, 233, 0.3);
   border-radius: 8px;
-  color: #dc2626;
+  color: #0ea5e9;
   font-size: clamp(0.65rem, 2.5vw, 0.72rem);
   font-weight: 600;
   letter-spacing: 0.05em;
@@ -278,10 +278,10 @@
 }
 
 .cs-coupon-btn:hover:not(:disabled) {
-  background: rgba(220, 38, 38, 0.2);
-  border-color: #dc2626;
+  background: rgba(14, 165, 233, 0.2);
+  border-color: #0ea5e9;
   transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(220, 38, 38, 0.1);
+  box-shadow: 0 4px 12px rgba(14, 165, 233, 0.1);
 }
 
 .cs-coupon-btn:disabled {
@@ -302,10 +302,10 @@
   align-items: center;
   gap: 0.4rem;
   padding: 0.4rem 0.75rem;
-  background: rgba(220, 38, 38, 0.08);
-  border: 1px solid rgba(220, 38, 38, 0.25);
+  background: rgba(14, 165, 233, 0.08);
+  border: 1px solid rgba(14, 165, 233, 0.25);
   border-radius: 8px;
-  color: #dc2626;
+  color: #0ea5e9;
   font-size: clamp(0.7rem, 2.5vw, 0.78rem);
   flex: 1;
 }
@@ -329,10 +329,10 @@
 .cs-coupon-success {
   margin: 0.6rem 0 0;
   padding: 0.5rem 0.75rem;
-  background: rgba(220, 38, 38, 0.06);
-  border: 1px solid rgba(220, 38, 38, 0.2);
+  background: rgba(14, 165, 233, 0.06);
+  border: 1px solid rgba(14, 165, 233, 0.2);
   border-radius: 8px;
-  color: #dc2626;
+  color: #0ea5e9;
   font-size: clamp(0.65rem, 2.5vw, 0.72rem);
   animation: slideDown 0.3s ease;
 }
@@ -360,10 +360,10 @@
 }
 
 .cs-summary-row--discount {
-  color: #dc2626;
+  color: #0ea5e9;
 }
 .cs-discount-value {
-  color: #dc2626;
+  color: #0ea5e9;
   font-weight: 600;
 }
 
@@ -372,7 +372,7 @@
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 0.6rem;
-  border-top: 1px solid rgba(220, 38, 38, 0.1);
+  border-top: 1px solid rgba(14, 165, 233, 0.1);
   padding-top: 1rem;
 }
 
@@ -393,13 +393,13 @@
 }
 
 .cs-perk:hover {
-  background: rgba(220, 38, 38, 0.05);
+  background: rgba(14, 165, 233, 0.05);
   transform: translateX(4px);
 }
 
 .cs-perk-icon {
   font-size: clamp(0.7rem, 3vw, 0.75rem);
-  color: #dc2626;
+  color: #0ea5e9;
   opacity: 0.7;
   flex-shrink: 0;
   width: 20px;
@@ -422,15 +422,15 @@
 
 .free-shipping-text {
   font-weight: 600;
-  background: linear-gradient(180deg, #dc2626, #ef4444);
+  background: linear-gradient(180deg, #0ea5e9, #38bdf8);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
 }
 
 .free-shipping-banner {
-  background: rgba(220, 38, 38, 0.06);
-  border: 1px solid rgba(220, 38, 38, 0.2);
+  background: rgba(14, 165, 233, 0.06);
+  border: 1px solid rgba(14, 165, 233, 0.2);
   border-radius: 8px;
   padding: 8px 12px;
   margin: 12px 0;
@@ -440,7 +440,7 @@
   gap: 8px;
   font-size: clamp(0.7rem, 2.5vw, 0.8rem);
   font-weight: 500;
-  color: #dc2626;
+  color: #0ea5e9;
   animation: subtlePulse 2s ease-in-out infinite;
 }
 
@@ -456,7 +456,7 @@
 
 .total-amount {
   font-weight: 700;
-  background: linear-gradient(180deg, #dc2626, #ef4444);
+  background: linear-gradient(180deg, #0ea5e9, #38bdf8);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;

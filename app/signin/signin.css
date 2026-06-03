@@ -1,34 +1,34 @@
 /* ============================================================
    SIGN IN PAGE  ·  signin.css
-   WHITE BACKGROUND | BLACK TEXT | TOP RED → BOTTOM BLACK GRADIENT
-   Matching Explore Aurexia style
+   WHITE BACKGROUND | BLACK TEXT | SKY BLUE + BLACK GRADIENT
+   Matching GlobalFAQSection color scheme
    ============================================================ */
 
 @import url("https://fonts.googleapis.com/css2?family=Goldman:wght@400;700&display=swap");
 
 :root {
-  --si-red: #dc2626;
-  --si-red-dark: #b91c1c;
-  --si-red-deep: #991b1b;
-  --si-red-light: #ef4444;
+  --si-sky: #0ea5e9;
+  --si-sky-dark: #0284c7;
+  --si-sky-deep: #0369a1;
+  --si-sky-light: #38bdf8;
   --si-black: #0f172a;
   --si-black-soft: #1e293b;
-  --si-red-soft: rgba(220, 38, 38, 0.12);
+  --si-sky-soft: rgba(14, 165, 233, 0.12);
   --si-bg: #ffffff;
   --si-bg-light: #f8fafc;
   --si-card-bg: #ffffff;
-  --si-border: rgba(220, 38, 38, 0.18);
-  --si-border-hover: rgba(220, 38, 38, 0.35);
+  --si-border: rgba(14, 165, 233, 0.18);
+  --si-border-hover: rgba(14, 165, 233, 0.35);
   --si-text-dark: #0f172a;
   --si-text-muted: #475569;
   --si-text-light: #64748b;
   --si-text-grey: #64748b;
-  --si-text-red: #dc2626;
+  --si-text-sky: #0ea5e9;
   --si-serif: "Goldman", system-ui, sans-serif;
   --si-sans: "Goldman", system-ui, sans-serif;
   --si-ease: 0.5s cubic-bezier(0.22, 1, 0.36, 1);
   --si-error: #ff6b6b;
-  --si-success: #dc2626;
+  --si-success: #0ea5e9;
 }
 
 .si-root {
@@ -45,19 +45,19 @@
   padding-top: 4rem;
 }
 
-/* Fine grid texture - Red + Black Mixed */
+/* Fine grid texture - Sky Blue + Black Mixed */
 .si-grain {
   position: absolute;
   inset: 0;
   background-image:
-    linear-gradient(rgba(220, 38, 38, 0.04) 1px, transparent 1px),
+    linear-gradient(rgba(14, 165, 233, 0.04) 1px, transparent 1px),
     linear-gradient(90deg, rgba(15, 23, 42, 0.03) 1px, transparent 1px);
   background-size: 48px 48px;
   pointer-events: none;
   z-index: 0;
 }
 
-/* Top Border Line - RED + BLACK */
+/* Top Border Line - SKY BLUE + BLACK */
 .si-root::before {
   content: "";
   position: absolute;
@@ -69,9 +69,9 @@
   background: linear-gradient(
     to right,
     transparent,
-    rgba(220, 38, 38, 0.5),
+    rgba(14, 165, 233, 0.5),
     rgba(15, 23, 42, 0.2),
-    rgba(220, 38, 38, 0.5),
+    rgba(14, 165, 233, 0.5),
     transparent
   );
   pointer-events: none;
@@ -92,8 +92,8 @@
   background: linear-gradient(
     to bottom,
     transparent 0%,
-    rgba(220, 38, 38, 0.08) 30%,
-    rgba(220, 38, 38, 0.08) 70%,
+    rgba(14, 165, 233, 0.08) 30%,
+    rgba(14, 165, 233, 0.08) 70%,
     transparent 100%
   );
 }
@@ -108,26 +108,26 @@
 .si-corner--tl {
   top: 1.5rem;
   left: 1.5rem;
-  border-top: 1px solid rgba(220, 38, 38, 0.4);
-  border-left: 1px solid rgba(220, 38, 38, 0.4);
+  border-top: 1px solid rgba(14, 165, 233, 0.4);
+  border-left: 1px solid rgba(14, 165, 233, 0.4);
 }
 .si-corner--tr {
   top: 1.5rem;
   right: 1.5rem;
-  border-top: 1px solid rgba(220, 38, 38, 0.4);
-  border-right: 1px solid rgba(220, 38, 38, 0.4);
+  border-top: 1px solid rgba(14, 165, 233, 0.4);
+  border-right: 1px solid rgba(14, 165, 233, 0.4);
 }
 .si-corner--bl {
   bottom: 1.5rem;
   left: 1.5rem;
-  border-bottom: 1px solid rgba(220, 38, 38, 0.4);
-  border-left: 1px solid rgba(220, 38, 38, 0.4);
+  border-bottom: 1px solid rgba(14, 165, 233, 0.4);
+  border-left: 1px solid rgba(14, 165, 233, 0.4);
 }
 .si-corner--br {
   bottom: 1.5rem;
   right: 1.5rem;
-  border-bottom: 1px solid rgba(220, 38, 38, 0.4);
-  border-right: 1px solid rgba(220, 38, 38, 0.4);
+  border-bottom: 1px solid rgba(14, 165, 233, 0.4);
+  border-right: 1px solid rgba(14, 165, 233, 0.4);
 }
 
 .si-card {
@@ -138,18 +138,18 @@
   width: 100%;
   max-width: 900px;
   min-height: 580px;
-  border: 1px solid rgba(220, 38, 38, 0.2);
+  border: 1px solid rgba(14, 165, 233, 0.2);
   border-radius: 20px;
   overflow: hidden;
   box-shadow: 0 25px 50px rgba(0, 0, 0, 0.05);
   background: #ffffff;
 }
 
-/* LEFT BRAND PANEL - RED Theme */
+/* LEFT BRAND PANEL - SKY BLUE Theme */
 .si-brand {
   position: relative;
   background: linear-gradient(180deg, #0f172a 0%, #1a1a2e 100%);
-  border-right: 1px solid rgba(220, 38, 38, 0.18);
+  border-right: 1px solid rgba(14, 165, 233, 0.18);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -166,7 +166,7 @@
   height: 360px;
   background: radial-gradient(
     circle,
-    rgba(220, 38, 38, 0.08) 0%,
+    rgba(14, 165, 233, 0.08) 0%,
     transparent 70%
   );
   pointer-events: none;
@@ -189,13 +189,13 @@
   font-weight: 700;
   letter-spacing: 0.35em;
   text-transform: uppercase;
-  color: #ef4444;
+  color: #38bdf8;
 }
 .si-ey-line {
   display: block;
   width: 24px;
   height: 1px;
-  background: #dc2626;
+  background: #0ea5e9;
   opacity: 0.6;
 }
 .si-brand-title {
@@ -206,7 +206,7 @@
   letter-spacing: 0.12em;
   line-height: 1;
   margin: 0;
-  text-shadow: 0 2px 8px rgba(220, 38, 38, 0.15);
+  text-shadow: 0 2px 8px rgba(14, 165, 233, 0.15);
 }
 .si-brand-tagline {
   font-family: var(--si-serif);
@@ -218,7 +218,7 @@
 }
 .si-brand-tagline em {
   font-style: italic;
-  background: linear-gradient(180deg, #dc2626 0%, #ef4444 50%, #0f172a 100%);
+  background: linear-gradient(180deg, #0ea5e9 0%, #38bdf8 50%, #0f172a 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -226,7 +226,7 @@
 .si-brand-divider {
   width: 36px;
   height: 1px;
-  background: #dc2626;
+  background: #0ea5e9;
   opacity: 0.6;
   margin: 0.25rem auto;
 }
@@ -246,7 +246,7 @@
   right: -60px;
   width: 200px;
   height: 200px;
-  border: 1px solid rgba(220, 38, 38, 0.12);
+  border: 1px solid rgba(14, 165, 233, 0.12);
   border-radius: 50%;
   animation: si-rotate 30s linear infinite;
   pointer-events: none;
@@ -257,7 +257,7 @@
   left: 14px;
   right: 14px;
   bottom: 14px;
-  border: 1px solid rgba(220, 38, 38, 0.06);
+  border: 1px solid rgba(14, 165, 233, 0.06);
   border-radius: 50%;
 }
 @keyframes si-rotate {
@@ -299,7 +299,7 @@
   font-weight: 700;
   letter-spacing: 0.35em;
   text-transform: uppercase;
-  color: #dc2626;
+  color: #0ea5e9;
   margin: 0;
 }
 .si-form-title {
@@ -313,7 +313,7 @@
 }
 .si-form-title em {
   font-style: italic;
-  background: linear-gradient(180deg, #dc2626 0%, #ef4444 50%, #0f172a 100%);
+  background: linear-gradient(180deg, #0ea5e9 0%, #38bdf8 50%, #0f172a 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -327,7 +327,7 @@
   margin: 0;
 }
 
-/* Success Box - RED */
+/* Success Box - SKY BLUE */
 .si-success-box {
   position: absolute;
   top: 20px;
@@ -337,14 +337,14 @@
   align-items: center;
   gap: 0.5rem;
   padding: 0.75rem 1rem;
-  background: rgba(220, 38, 38, 0.08);
-  border: 1px solid rgba(220, 38, 38, 0.25);
+  background: rgba(14, 165, 233, 0.08);
+  border: 1px solid rgba(14, 165, 233, 0.25);
   border-radius: 12px;
   font-family: var(--si-sans);
   font-size: 0.7rem;
   font-weight: 500;
   letter-spacing: 0.03em;
-  color: #dc2626;
+  color: #0ea5e9;
   max-width: 280px;
   z-index: 10;
   animation: si-slide-down 0.4s ease;
@@ -360,7 +360,7 @@
   }
 }
 
-/* Error Box - RED */
+/* Error Box */
 .si-error-box {
   display: flex;
   align-items: center;
@@ -420,7 +420,7 @@
 }
 .si-field--focused .si-label,
 .si-field--filled .si-label {
-  color: #dc2626;
+  color: #0ea5e9;
 }
 .si-input-wrap {
   position: relative;
@@ -444,7 +444,7 @@
 }
 .si-field--focused .si-input-icon,
 .si-field--filled .si-input-icon {
-  color: #dc2626;
+  color: #0ea5e9;
 }
 .si-input {
   width: 100%;
@@ -458,7 +458,7 @@
   font-weight: 500;
   letter-spacing: 0.02em;
   color: #0f172a;
-  caret-color: #dc2626;
+  caret-color: #0ea5e9;
 }
 .si-input:focus,
 .si-input:active,
@@ -474,7 +474,7 @@
 }
 .si-field-line {
   height: 1px;
-  background: rgba(220, 38, 38, 0.15);
+  background: rgba(14, 165, 233, 0.15);
   position: relative;
   overflow: hidden;
 }
@@ -485,7 +485,7 @@
   top: 0;
   width: 100%;
   height: 100%;
-  background: #dc2626;
+  background: #0ea5e9;
   transition: left var(--si-ease);
 }
 .si-field--focused .si-field-line::after {
@@ -510,7 +510,7 @@
   transition: color var(--si-ease);
 }
 .si-eye-btn:hover {
-  color: #dc2626;
+  color: #0ea5e9;
 }
 .si-eye-btn svg {
   width: 16px;
@@ -532,7 +532,7 @@
   transition: color var(--si-ease);
 }
 .si-forgot-link:hover {
-  color: #dc2626;
+  color: #0ea5e9;
 }
 
 .si-submit-btn {
@@ -542,7 +542,7 @@
   gap: 0.6rem;
   width: 100%;
   padding: 0.9rem 1.5rem;
-  background: linear-gradient(180deg, #dc2626 0%, #0f172a 100%);
+  background: linear-gradient(180deg, #0ea5e9 0%, #0f172a 100%);
   border: 1px solid transparent;
   color: #ffffff;
   font-family: var(--si-sans);
@@ -562,9 +562,9 @@
 }
 .si-submit-btn:hover:not(:disabled) {
   background: transparent;
-  border-color: #dc2626;
-  color: #dc2626;
-  box-shadow: 0 8px 25px rgba(220, 38, 38, 0.15);
+  border-color: #0ea5e9;
+  color: #0ea5e9;
+  box-shadow: 0 8px 25px rgba(14, 165, 233, 0.15);
   transform: translateY(-2px);
   gap: 1rem;
 }
@@ -604,7 +604,7 @@
 .si-or-line {
   flex: 1;
   height: 1px;
-  background: rgba(220, 38, 38, 0.2);
+  background: rgba(14, 165, 233, 0.2);
 }
 .si-or-text {
   font-family: var(--si-sans);
@@ -625,7 +625,7 @@
   margin: 0;
 }
 .si-switch-link {
-  color: #dc2626;
+  color: #0ea5e9;
   text-decoration: none;
   display: inline-flex;
   align-items: center;
@@ -634,7 +634,7 @@
   font-weight: 600;
 }
 .si-switch-link:hover {
-  color: #ef4444;
+  color: #38bdf8;
   gap: 0.5rem;
 }
 
@@ -713,13 +713,13 @@
   left: auto;
   right: 1.5rem;
   border-left: none;
-  border-right: 1px solid rgba(220, 38, 38, 0.4);
+  border-right: 1px solid rgba(14, 165, 233, 0.4);
 }
 [dir="rtl"] .si-corner--tr {
   right: auto;
   left: 1.5rem;
   border-right: none;
-  border-left: 1px solid rgba(220, 38, 38, 0.4);
+  border-left: 1px solid rgba(14, 165, 233, 0.4);
 }
 [dir="rtl"] .si-success-box {
   right: auto;

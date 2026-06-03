@@ -1,10 +1,10 @@
 /* ═══════════════════════════════════════════
    SEARCH SIDEBAR — searchsidebar.css
-   WHITE BACKGROUND | BLACK TEXT | TOP RED → BOTTOM BLACK GRADIENT
-   Matching Explore Aurexia style
+   WHITE BACKGROUND | BLACK TEXT | SKY BLUE + BLACK GRADIENT
+   Matching GlobalFAQSection color scheme
 ═══════════════════════════════════════════ */
 
-/* Overlay - Dark with RED tint */
+/* Overlay - Dark with SKY BLUE tint */
 .ss-overlay {
   position: fixed;
   inset: 0;
@@ -23,7 +23,7 @@
   pointer-events: auto;
 }
 
-/* Sidebar Panel - White with RED Accents */
+/* Sidebar Panel - White with SKY BLUE Accents */
 .ss-sidebar {
   position: fixed;
   top: 0;
@@ -32,7 +32,7 @@
   max-width: 100vw;
   height: 100vh;
   background: #ffffff;
-  border-right: 1px solid rgba(220, 38, 38, 0.25);
+  border-right: 1px solid rgba(14, 165, 233, 0.25);
   z-index: 1200 !important;
   display: flex;
   flex-direction: column;
@@ -47,7 +47,7 @@
   transform: translateX(0);
 }
 
-/* Decorative Lines - RED */
+/* Decorative Lines - SKY BLUE */
 .ss-deco-lines {
   position: absolute;
   top: 0;
@@ -67,8 +67,8 @@
   background: linear-gradient(
     to bottom,
     transparent,
-    #dc2626 30%,
-    #dc2626 70%,
+    #0ea5e9 30%,
+    #0ea5e9 70%,
     transparent
   );
 }
@@ -83,10 +83,10 @@
   left: 75%;
 }
 
-/* Header - RED Theme */
+/* Header - SKY BLUE Theme */
 .ss-header {
   padding: 2rem 2rem 1.5rem;
-  border-bottom: 1px solid rgba(220, 38, 38, 0.12);
+  border-bottom: 1px solid rgba(14, 165, 233, 0.12);
   flex-shrink: 0;
 }
 
@@ -107,7 +107,7 @@
   display: block;
   width: 20px;
   height: 1px;
-  background: #dc2626;
+  background: #0ea5e9;
   opacity: 0.7;
 }
 
@@ -117,7 +117,7 @@
   font-weight: 600;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: #dc2626;
+  color: #0ea5e9;
 }
 
 .ss-title {
@@ -131,17 +131,17 @@
 
 .ss-title em {
   font-style: italic;
-  background: linear-gradient(180deg, #dc2626 0%, #ef4444 50%, #0f172a 100%);
+  background: linear-gradient(180deg, #0ea5e9 0%, #38bdf8 50%, #0f172a 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
 }
 
-/* Close Button - RED */
+/* Close Button - SKY BLUE */
 .ss-close-btn {
   width: 36px;
   height: 36px;
-  border: 1px solid rgba(220, 38, 38, 0.25);
+  border: 1px solid rgba(14, 165, 233, 0.25);
   border-radius: 50%;
   background: transparent;
   color: #64748b;
@@ -159,14 +159,14 @@
 }
 
 .ss-close-btn:hover {
-  border-color: #dc2626;
-  color: #dc2626;
-  background: rgba(220, 38, 38, 0.08);
+  border-color: #0ea5e9;
+  color: #0ea5e9;
+  background: rgba(14, 165, 233, 0.08);
   transform: rotate(90deg);
-  box-shadow: 0 0 12px rgba(220, 38, 38, 0.1);
+  box-shadow: 0 0 12px rgba(14, 165, 233, 0.1);
 }
 
-/* Input - RED Theme */
+/* Input - SKY BLUE Theme */
 .ss-input-wrap {
   position: relative;
   margin: 1.5rem 2rem 0;
@@ -190,7 +190,7 @@
 }
 
 .ss-input-wrap.focused .ss-input-icon {
-  color: #dc2626;
+  color: #0ea5e9;
 }
 
 .ss-input {
@@ -220,7 +220,7 @@
   left: 0;
   right: 0;
   height: 1px;
-  background: rgba(220, 38, 38, 0.15);
+  background: rgba(14, 165, 233, 0.15);
   overflow: hidden;
 }
 
@@ -228,7 +228,7 @@
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(90deg, transparent, #dc2626, transparent);
+  background: linear-gradient(90deg, transparent, #0ea5e9, transparent);
   transform: translateX(-100%);
   transition: transform 0.5s ease;
 }
@@ -237,7 +237,7 @@
   transform: translateX(0);
 }
 
-/* Clear Button - RED */
+/* Clear Button - SKY BLUE */
 .ss-clear-btn {
   position: absolute;
   right: 0;
@@ -260,7 +260,7 @@
 }
 
 .ss-clear-btn:hover {
-  color: #dc2626;
+  color: #0ea5e9;
 }
 
 /* Content Scroll Area */
@@ -269,7 +269,7 @@
   overflow-y: auto;
   padding: 1.5rem 2rem;
   scrollbar-width: thin;
-  scrollbar-color: rgba(220, 38, 38, 0.3) transparent;
+  scrollbar-color: rgba(14, 165, 233, 0.3) transparent;
 }
 
 .ss-content::-webkit-scrollbar {
@@ -281,11 +281,11 @@
 }
 
 .ss-content::-webkit-scrollbar-thumb {
-  background: rgba(220, 38, 38, 0.3);
+  background: rgba(14, 165, 233, 0.3);
   border-radius: 2px;
 }
 
-/* Sections - RED */
+/* Sections - SKY BLUE */
 .ss-section {
   margin-bottom: 2rem;
 }
@@ -299,15 +299,15 @@
   font-weight: 600;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: #dc2626;
+  color: #0ea5e9;
   margin: 0 0 0.9rem;
 }
 
 .ss-section-label svg {
-  stroke: #dc2626;
+  stroke: #0ea5e9;
 }
 
-/* Tags - RED Theme */
+/* Tags - SKY BLUE Theme */
 .ss-tags {
   display: flex;
   flex-wrap: wrap;
@@ -315,8 +315,8 @@
 }
 
 .ss-tag {
-  background: rgba(220, 38, 38, 0.05);
-  border: 1px solid rgba(220, 38, 38, 0.2);
+  background: rgba(14, 165, 233, 0.05);
+  border: 1px solid rgba(14, 165, 233, 0.2);
   color: #475569;
   font-family: "Goldman", system-ui, sans-serif;
   font-size: 0.75rem;
@@ -334,23 +334,23 @@
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(135deg, rgba(220, 38, 38, 0.1), transparent);
+  background: linear-gradient(135deg, rgba(14, 165, 233, 0.1), transparent);
   opacity: 0;
   transition: opacity 0.25s ease;
 }
 
 .ss-tag:hover {
-  border-color: #dc2626;
-  color: #dc2626;
+  border-color: #0ea5e9;
+  color: #0ea5e9;
   transform: translateY(-1px);
-  box-shadow: 0 0 10px rgba(220, 38, 38, 0.1);
+  box-shadow: 0 0 10px rgba(14, 165, 233, 0.1);
 }
 
 .ss-tag:hover::before {
   opacity: 1;
 }
 
-/* Recent List - RED */
+/* Recent List - SKY BLUE */
 .ss-recent-list {
   display: flex;
   flex-direction: column;
@@ -392,14 +392,14 @@
 }
 
 .ss-recent-btn:hover {
-  background: rgba(220, 38, 38, 0.05);
-  color: #dc2626;
+  background: rgba(14, 165, 233, 0.05);
+  color: #0ea5e9;
 }
 
 .ss-recent-arrow {
   display: flex;
   margin-left: auto;
-  color: rgba(220, 38, 38, 0);
+  color: rgba(14, 165, 233, 0);
   transition:
     color 0.2s ease,
     transform 0.2s ease;
@@ -412,11 +412,11 @@
 }
 
 .ss-recent-btn:hover .ss-recent-arrow {
-  color: #dc2626;
+  color: #0ea5e9;
   transform: translate(2px, -2px);
 }
 
-/* Quick Links - RED */
+/* Quick Links - SKY BLUE */
 .ss-quick-links {
   display: flex;
   flex-direction: column;
@@ -427,8 +427,8 @@
   display: flex;
   align-items: center;
   gap: 0.8rem;
-  background: rgba(220, 38, 38, 0.03);
-  border: 1px solid rgba(220, 38, 38, 0.15);
+  background: rgba(14, 165, 233, 0.03);
+  border: 1px solid rgba(14, 165, 233, 0.15);
   border-radius: 12px;
   padding: 0.85rem 1rem;
   color: #475569;
@@ -449,15 +449,15 @@
   top: 0;
   bottom: 0;
   width: 2px;
-  background: #dc2626;
+  background: #0ea5e9;
   transform: scaleY(0);
   transition: transform 0.3s ease;
 }
 
 .ss-quick-card:hover {
-  border-color: rgba(220, 38, 38, 0.35);
-  color: #dc2626;
-  background: rgba(220, 38, 38, 0.08);
+  border-color: rgba(14, 165, 233, 0.35);
+  color: #0ea5e9;
+  background: rgba(14, 165, 233, 0.08);
   transform: translateX(4px);
 }
 
@@ -467,7 +467,7 @@
 
 .ss-quick-icon {
   display: flex;
-  color: #dc2626;
+  color: #0ea5e9;
   flex-shrink: 0;
 }
 
@@ -480,16 +480,16 @@
   width: 14px;
   height: 14px;
   margin-left: auto;
-  color: rgba(220, 38, 38, 0);
+  color: rgba(14, 165, 233, 0);
   transition: color 0.2s ease;
   flex-shrink: 0;
 }
 
 .ss-quick-card:hover .ss-quick-arrow {
-  color: #dc2626;
+  color: #0ea5e9;
 }
 
-/* Results - RED */
+/* Results - SKY BLUE */
 .ss-results-label {
   font-family: "Goldman", system-ui, sans-serif;
   font-size: 0.78rem;
@@ -500,7 +500,7 @@
 
 .ss-results-label em {
   font-style: normal;
-  color: #dc2626;
+  color: #0ea5e9;
 }
 
 .ss-no-results {
@@ -513,7 +513,7 @@
 }
 
 .ss-no-results-icon {
-  color: rgba(220, 38, 38, 0.3);
+  color: rgba(14, 165, 233, 0.3);
   margin-bottom: 0.5rem;
 }
 
@@ -535,7 +535,7 @@
   color: #64748b !important;
 }
 
-/* Result Items - RED */
+/* Result Items - SKY BLUE */
 .ss-results-list {
   display: flex;
   flex-direction: column;
@@ -548,8 +548,8 @@
   align-items: center;
   gap: 0.8rem;
   padding: 0.7rem;
-  background: rgba(220, 38, 38, 0.02);
-  border: 1px solid rgba(220, 38, 38, 0.12);
+  background: rgba(14, 165, 233, 0.02);
+  border: 1px solid rgba(14, 165, 233, 0.12);
   border-radius: 12px;
   cursor: pointer;
   transition: all 0.25s ease;
@@ -558,8 +558,8 @@
 }
 
 .ss-result-item:hover {
-  border-color: #dc2626;
-  background: rgba(220, 38, 38, 0.05);
+  border-color: #0ea5e9;
+  background: rgba(14, 165, 233, 0.05);
   transform: translateX(4px);
 }
 
@@ -570,7 +570,7 @@
   overflow: hidden;
   flex-shrink: 0;
   background: #f8fafc;
-  border: 1px solid rgba(220, 38, 38, 0.15);
+  border: 1px solid rgba(14, 165, 233, 0.15);
 }
 
 .ss-result-img img {
@@ -606,7 +606,7 @@
   font-weight: 600;
   letter-spacing: 0.15em;
   text-transform: uppercase;
-  background: linear-gradient(180deg, #dc2626, #ef4444);
+  background: linear-gradient(180deg, #0ea5e9, #38bdf8);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -629,14 +629,14 @@
   font-family: "Goldman", system-ui, sans-serif;
   font-size: 0.85rem;
   font-weight: 600;
-  background: linear-gradient(180deg, #dc2626, #ef4444);
+  background: linear-gradient(180deg, #0ea5e9, #38bdf8);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
 }
 
 .ss-result-arrow {
-  color: #dc2626;
+  color: #0ea5e9;
   opacity: 0;
   transition:
     opacity 0.2s ease,
@@ -653,7 +653,7 @@
   height: 16px;
 }
 
-/* View All Button - RED */
+/* View All Button - SKY BLUE */
 .ss-view-all {
   display: flex;
   align-items: center;
@@ -662,22 +662,22 @@
   width: 100%;
   padding: 0.8rem;
   background: transparent;
-  border: 1px solid rgba(220, 38, 38, 0.25);
+  border: 1px solid rgba(14, 165, 233, 0.25);
   border-radius: 40px;
   font-family: "Goldman", system-ui, sans-serif;
   font-size: 0.6rem;
   font-weight: 600;
   letter-spacing: 0.15em;
-  color: #dc2626;
+  color: #0ea5e9;
   cursor: pointer;
   transition: all 0.25s ease;
 }
 
 .ss-view-all:hover {
-  background: rgba(220, 38, 38, 0.08);
-  border-color: #dc2626;
-  color: #dc2626;
-  box-shadow: 0 0 15px rgba(220, 38, 38, 0.1);
+  background: rgba(14, 165, 233, 0.08);
+  border-color: #0ea5e9;
+  color: #0ea5e9;
+  box-shadow: 0 0 15px rgba(14, 165, 233, 0.1);
 }
 
 .ss-view-all svg {
@@ -685,7 +685,7 @@
   height: 14px;
 }
 
-/* Featured Products - RED */
+/* Featured Products - SKY BLUE */
 .ss-featured-list {
   display: flex;
   flex-direction: column;
@@ -697,8 +697,8 @@
   align-items: center;
   gap: 0.8rem;
   padding: 0.6rem 0.8rem;
-  background: rgba(220, 38, 38, 0.02);
-  border: 1px solid rgba(220, 38, 38, 0.1);
+  background: rgba(14, 165, 233, 0.02);
+  border: 1px solid rgba(14, 165, 233, 0.1);
   border-radius: 12px;
   cursor: pointer;
   transition: all 0.25s ease;
@@ -707,8 +707,8 @@
 }
 
 .ss-featured-item:hover {
-  border-color: #dc2626;
-  background: rgba(220, 38, 38, 0.08);
+  border-color: #0ea5e9;
+  background: rgba(14, 165, 233, 0.08);
   transform: translateX(4px);
 }
 
@@ -719,7 +719,7 @@
   overflow: hidden;
   background: #f8fafc;
   flex-shrink: 0;
-  border: 1px solid rgba(220, 38, 38, 0.15);
+  border: 1px solid rgba(14, 165, 233, 0.15);
 }
 
 .ss-featured-img img {
@@ -760,16 +760,16 @@
   font-family: "Goldman", system-ui, sans-serif;
   font-size: 0.85rem;
   font-weight: 600;
-  background: linear-gradient(180deg, #dc2626, #ef4444);
+  background: linear-gradient(180deg, #0ea5e9, #38bdf8);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
 }
 
-/* Footer - RED */
+/* Footer - SKY BLUE */
 .ss-footer {
   padding: 1rem 2rem;
-  border-top: 1px solid rgba(220, 38, 38, 0.12);
+  border-top: 1px solid rgba(14, 165, 233, 0.12);
   flex-shrink: 0;
 }
 
@@ -786,12 +786,12 @@
 .ss-footer kbd {
   display: inline-block;
   background: #f8fafc;
-  border: 1px solid rgba(220, 38, 38, 0.25);
+  border: 1px solid rgba(14, 165, 233, 0.25);
   border-radius: 4px;
   padding: 0.1em 0.45em;
   font-size: 0.65rem;
   font-family: "Goldman", system-ui, sans-serif;
-  color: #dc2626;
+  color: #0ea5e9;
 }
 
 /* Clear Recent Button */
@@ -815,10 +815,10 @@
 }
 
 .ss-clear-recent:hover {
-  color: #dc2626;
+  color: #0ea5e9;
 }
 
-/* Loading Spinner - RED */
+/* Loading Spinner - SKY BLUE */
 .ss-loading {
   display: flex;
   flex-direction: column;
@@ -830,8 +830,8 @@
 .ss-loading-spinner {
   width: 32px;
   height: 32px;
-  border: 2px solid rgba(220, 38, 38, 0.2);
-  border-top-color: #dc2626;
+  border: 2px solid rgba(14, 165, 233, 0.2);
+  border-top-color: #0ea5e9;
   border-radius: 50%;
   animation: ssSpin 0.7s linear infinite;
 }
@@ -900,7 +900,7 @@
 
 /* Featured item hover background fix */
 .ss-featured-item:hover {
-  background: rgba(220, 38, 38, 0.08);
+  background: rgba(14, 165, 233, 0.08);
 }
 
 /* Results list spacing fix */
@@ -915,7 +915,7 @@
   left: auto;
   right: 0;
   transform: translateX(100%);
-  border-left: 1px solid rgba(220, 38, 38, 0.25);
+  border-left: 1px solid rgba(14, 165, 233, 0.25);
   border-right: none;
 }
 

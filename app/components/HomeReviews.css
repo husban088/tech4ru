@@ -1,23 +1,23 @@
 /* ═══════════════════════════════════════════════════════════════════════════
-   HOME REVIEWS — TOP RED → BOTTOM BLACK GRADIENTS | YELLOW STARS | BLACK TEXT
+   HOME REVIEWS — BLACK + SKY BLUE GRADIENTS | YELLOW STARS | BLACK TEXT
    Fully responsive: Desktop 3 cards | Tablet 2 | Mobile 1
-   (Exactly like QuickHighlights Blue + Black style but with RED + BLACK)
+   (Exactly like QuickHighlights Blue + Black style but with BLACK + SKY BLUE)
    ═══════════════════════════════════════════════════════════════════════════ */
 
 @import url("https://fonts.googleapis.com/css2?family=Goldman:wght@400;700&display=swap");
 
-/* ── CSS Variables – White Background with TOP RED → BOTTOM BLACK Mixed Accents ── */
+/* ── CSS Variables – White Background with BLACK + SKY BLUE Mixed Accents ── */
 .hr-section {
-  --hr-red: #dc2626;
-  --hr-red-dark: #b91c1c;
-  --hr-red-deep: #991b1b;
-  --hr-red-light: #ef4444;
+  --hr-sky: #0ea5e9;
+  --hr-sky-bright: #38bdf8;
+  --hr-sky-deep: #0284c7;
+  --hr-sky-light: #7dd3fc;
   --hr-black: #0f172a;
   --hr-black-soft: #1e293b;
-  --hr-red-glow: rgba(220, 38, 38, 0.12);
+  --hr-sky-glow: rgba(14, 165, 233, 0.12);
   --hr-bg: #ffffff;
   --hr-card-bg: #ffffff;
-  --hr-card-border: rgba(220, 38, 38, 0.25);
+  --hr-card-border: rgba(14, 165, 233, 0.2);
   --hr-text: #0f172a;
   --hr-text-muted: #475569;
   --hr-text-light: #64748b;
@@ -27,8 +27,8 @@
   --hr-ease: cubic-bezier(0.22, 1, 0.36, 1);
   --hr-ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
   --hr-shadow-sm: 0 8px 30px rgba(0, 0, 0, 0.04);
-  --hr-shadow-md: 0 15px 40px rgba(220, 38, 38, 0.08);
-  --hr-shadow-lg: 0 25px 50px rgba(220, 38, 38, 0.12);
+  --hr-shadow-md: 0 15px 40px rgba(14, 165, 233, 0.08);
+  --hr-shadow-lg: 0 25px 50px rgba(14, 165, 233, 0.12);
 }
 
 /* ── Section Container ─────────────────────────────────────────────────── */
@@ -40,7 +40,7 @@
   isolation: isolate;
 }
 
-/* Top Border Line - TOP RED → BOTTOM BLACK Mixed */
+/* Top Border Line - BLACK + SKY BLUE Mixed */
 .hr-section::after {
   content: "";
   position: absolute;
@@ -52,9 +52,9 @@
   background: linear-gradient(
     to right,
     transparent,
-    rgba(220, 38, 38, 0.5),
+    rgba(14, 165, 233, 0.5),
     rgba(15, 23, 42, 0.2),
-    rgba(220, 38, 38, 0.5),
+    rgba(14, 165, 233, 0.5),
     transparent
   );
   pointer-events: none;
@@ -72,7 +72,7 @@
   z-index: 0;
 }
 
-/* ── Animated Background Orbs – RED (subtle) ──────────────────────────── */
+/* ── Animated Background Orbs – SKY BLUE (subtle) ──────────────────────────── */
 .hr-bg-orb {
   position: absolute;
   border-radius: 50%;
@@ -87,7 +87,7 @@
   height: 600px;
   background: radial-gradient(
     circle,
-    rgba(220, 38, 38, 0.06) 0%,
+    rgba(14, 165, 233, 0.06) 0%,
     transparent 70%
   );
   top: -200px;
@@ -100,7 +100,7 @@
   height: 500px;
   background: radial-gradient(
     circle,
-    rgba(220, 38, 38, 0.05) 0%,
+    rgba(14, 165, 233, 0.05) 0%,
     transparent 70%
   );
   bottom: -150px;
@@ -113,7 +113,7 @@
   height: 400px;
   background: radial-gradient(
     circle,
-    rgba(220, 38, 38, 0.04) 0%,
+    rgba(14, 165, 233, 0.04) 0%,
     transparent 70%
   );
   top: 40%;
@@ -130,14 +130,14 @@
   }
 }
 
-/* ── Subtle Grid Pattern – RED Tint ─────────────────────────────────── */
+/* ── Subtle Grid Pattern – SKY BLUE Tint ─────────────────────────────────── */
 .hr-bg-grid {
   position: absolute;
   inset: 0;
   z-index: 0;
   background-image:
-    linear-gradient(rgba(220, 38, 38, 0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(220, 38, 38, 0.03) 1px, transparent 1px);
+    linear-gradient(rgba(14, 165, 233, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(14, 165, 233, 0.03) 1px, transparent 1px);
   background-size: 50px 50px;
   pointer-events: none;
 }
@@ -158,24 +158,24 @@
   background: linear-gradient(
     to bottom,
     transparent 0%,
-    rgba(220, 38, 38, 0.08) 30%,
+    rgba(14, 165, 233, 0.06) 30%,
     rgba(15, 23, 42, 0.04) 70%,
     transparent 100%
   );
 }
 
-/* ── RED Sparkle Decoration ───────────────────────────────────────── */
+/* ── SKY BLUE Sparkle Decoration ───────────────────────────────────────── */
 .hr-sparkle {
   position: absolute;
   width: 4px;
   height: 4px;
-  background: var(--hr-red);
+  background: #0ea5e9;
   border-radius: 50%;
   opacity: 0;
   animation: hr-sparkle-pulse 3s ease-in-out infinite;
   pointer-events: none;
   z-index: 1;
-  box-shadow: 0 0 6px rgba(220, 38, 38, 0.5);
+  box-shadow: 0 0 6px rgba(14, 165, 233, 0.4);
 }
 
 .hr-sparkle--1 {
@@ -231,7 +231,7 @@
 }
 
 /* ═══════════════════════════════════════════════════════════════════════
-   HEADER SECTION — TOP RED → BOTTOM BLACK Mixed Theme
+   HEADER SECTION — BLACK + SKY BLUE Mixed Theme
    ═══════════════════════════════════════════════════════════════════════ */
 .hr-header {
   text-align: center;
@@ -251,7 +251,7 @@
   font-size: 10px;
   letter-spacing: 0.25em;
   text-transform: uppercase;
-  background: linear-gradient(180deg, #dc2626 0%, #0f172a 100%);
+  background: linear-gradient(135deg, #0f172a 0%, #0ea5e9 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -261,11 +261,11 @@
 .hr-eyebrow-line {
   height: 1px;
   width: 60px;
-  background: linear-gradient(90deg, #dc2626, #0f172a, transparent);
+  background: linear-gradient(90deg, #0f172a, #0ea5e9, transparent);
 }
 
 [dir="rtl"] .hr-eyebrow-line {
-  background: linear-gradient(90deg, transparent, #0f172a, #dc2626);
+  background: linear-gradient(90deg, transparent, #0ea5e9, #0f172a);
 }
 
 .hr-title {
@@ -280,7 +280,7 @@
 
 .hr-title em {
   font-style: italic;
-  background: linear-gradient(180deg, #dc2626 0%, #0f172a 100%);
+  background: linear-gradient(135deg, #0f172a 0%, #0ea5e9 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -290,7 +290,7 @@
 .hr-accent-bar {
   width: 52px;
   height: 3px;
-  background: linear-gradient(90deg, #dc2626, #0f172a, #b91c1c);
+  background: linear-gradient(90deg, #0f172a, #0ea5e9, #38bdf8);
   margin: 0 auto 1rem;
   border-radius: 99px;
 }
@@ -306,7 +306,7 @@
 }
 
 /* ═══════════════════════════════════════════════════════════════════════
-   STATS SECTION — Glassmorphism Cards (RED Theme)
+   STATS SECTION — Glassmorphism Cards (SKY BLUE Theme)
    ═══════════════════════════════════════════════════════════════════════ */
 .hr-stats {
   display: flex;
@@ -323,14 +323,14 @@
   backdrop-filter: blur(10px);
   padding: 1rem 2rem;
   border-radius: 60px;
-  border: 1px solid rgba(220, 38, 38, 0.25);
+  border: 1px solid rgba(14, 165, 233, 0.25);
   transition: all 0.4s var(--hr-ease);
   min-width: 140px;
 }
 
 .hr-stat:hover {
   transform: translateY(-5px);
-  border-color: #dc2626;
+  border-color: #0ea5e9;
   box-shadow: var(--hr-shadow-md);
   background: #ffffff;
 }
@@ -340,7 +340,7 @@
   font-family: "Goldman", system-ui, sans-serif;
   font-size: 2rem;
   font-weight: 700;
-  background: linear-gradient(180deg, #dc2626 0%, #0f172a 100%);
+  background: linear-gradient(135deg, #0f172a 0%, #0ea5e9 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -363,7 +363,7 @@
   background: linear-gradient(
     to bottom,
     transparent,
-    #dc2626,
+    #0ea5e9,
     #0f172a,
     transparent
   );
@@ -433,13 +433,13 @@
 }
 
 /* ═══════════════════════════════════════════════════════════════════════
-   REVIEW CARD — White Card with TOP RED → BOTTOM BLACK Accents | Black Text
+   REVIEW CARD — White Card with BLACK + SKY BLUE Accents | Black Text
    ═══════════════════════════════════════════════════════════════════════ */
 .hr-card {
   position: relative;
   background: #ffffff;
   backdrop-filter: blur(0px);
-  border: 1px solid rgba(220, 38, 38, 0.25);
+  border: 1px solid rgba(14, 165, 233, 0.25);
   border-radius: var(--hr-radius);
   padding: 2rem 1.5rem 1.8rem;
   display: flex;
@@ -455,12 +455,12 @@
 /* Card Hover Effects */
 .hr-card:hover {
   transform: translateY(-12px) scale(1.02);
-  border-color: #dc2626;
+  border-color: #0ea5e9;
   box-shadow: var(--hr-shadow-lg);
   background: #f8fafc;
 }
 
-/* Animated Shimmer Border Top - RED */
+/* Animated Shimmer Border Top - SKY BLUE */
 .hr-card-shimmer {
   position: absolute;
   top: 0;
@@ -470,8 +470,8 @@
   background: linear-gradient(
     90deg,
     transparent,
-    #dc2626,
-    #ef4444,
+    #0ea5e9,
+    #7dd3fc,
     transparent
   );
   transition: left 0.6s var(--hr-ease);
@@ -489,7 +489,7 @@
   bottom: 20px;
   right: 20px;
   font-size: 12px;
-  color: #dc2626;
+  color: #0ea5e9;
   opacity: 0;
   transform: translate(5px, 5px);
   transition: all 0.4s var(--hr-ease-bounce);
@@ -501,7 +501,7 @@
   transform: translate(0, 0);
 }
 
-/* Decorative Quote Mark - TOP RED → BOTTOM BLACK Gradient */
+/* Decorative Quote Mark - BLACK + SKY BLUE Gradient */
 .hr-card-quote {
   position: absolute;
   top: 0.8rem;
@@ -509,7 +509,7 @@
   font-family: "Goldman", system-ui, sans-serif;
   font-size: 4.5rem;
   line-height: 1;
-  background: linear-gradient(180deg, #dc2626 0%, #0f172a 100%);
+  background: linear-gradient(135deg, #0f172a 0%, #0ea5e9 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -518,13 +518,13 @@
 }
 
 .hr-card:hover .hr-card-quote {
-  background: linear-gradient(180deg, #dc2626, #b91c1c);
+  background: linear-gradient(135deg, #0f172a 0%, #0ea5e9 100%);
   -webkit-background-clip: text;
   background-clip: text;
   transform: scale(1.05);
 }
 
-/* ── Avatar — Premium Round with RED Ring ───────────────────────────── */
+/* ── Avatar — Premium Round with SKY BLUE Ring ───────────────────────────── */
 .hr-card-avatar-wrap {
   position: relative;
   width: 85px;
@@ -541,27 +541,27 @@
   object-fit: cover;
   object-position: center;
   display: block;
-  border: 3px solid rgba(220, 38, 38, 0.3);
+  border: 3px solid rgba(14, 165, 233, 0.3);
   box-shadow:
-    0 0 0 4px rgba(220, 38, 38, 0.05),
+    0 0 0 4px rgba(14, 165, 233, 0.05),
     0 10px 25px rgba(0, 0, 0, 0.08);
   transition: all 0.45s var(--hr-ease-bounce);
 }
 
 .hr-card:hover .hr-card-avatar-img {
-  border-color: #dc2626;
+  border-color: #0ea5e9;
   box-shadow:
-    0 0 0 6px rgba(220, 38, 38, 0.1),
+    0 0 0 6px rgba(14, 165, 233, 0.1),
     0 15px 35px rgba(0, 0, 0, 0.1);
   transform: scale(1.05);
 }
 
-/* Fallback Initial Avatar - TOP RED → BOTTOM BLACK Gradient */
+/* Fallback Initial Avatar - BLACK + SKY BLUE Gradient */
 .hr-card-avatar-fallback {
   width: 100%;
   height: 100%;
   border-radius: 50%;
-  background: linear-gradient(180deg, #dc2626 0%, #0f172a 100%);
+  background: linear-gradient(135deg, #0f172a 0%, #0ea5e9 100%);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -569,24 +569,24 @@
   font-size: 2rem;
   font-weight: 700;
   color: #ffffff;
-  border: 3px solid rgba(220, 38, 38, 0.3);
+  border: 3px solid rgba(14, 165, 233, 0.3);
   transition: all 0.45s var(--hr-ease-bounce);
 }
 
 .hr-card:hover .hr-card-avatar-fallback {
-  border-color: #dc2626;
+  border-color: #0ea5e9;
   transform: scale(1.05);
-  box-shadow: 0 0 0 6px rgba(220, 38, 38, 0.1);
+  box-shadow: 0 0 0 6px rgba(14, 165, 233, 0.1);
 }
 
-/* Verified Badge on Avatar - RED */
+/* Verified Badge on Avatar - SKY BLUE */
 .hr-card-badge {
   position: absolute;
   bottom: -2px;
   right: -4px;
   width: 26px;
   height: 26px;
-  background: linear-gradient(180deg, #dc2626 0%, #0f172a 100%);
+  background: linear-gradient(135deg, #0f172a 0%, #0ea5e9 100%);
   border-radius: 50%;
   border: 2.5px solid #ffffff;
   display: flex;
@@ -598,7 +598,7 @@
 
 .hr-card:hover .hr-card-badge {
   transform: scale(1.15) rotate(5deg);
-  box-shadow: 0 5px 15px rgba(220, 38, 38, 0.3);
+  box-shadow: 0 5px 15px rgba(14, 165, 233, 0.3);
 }
 
 .hr-card-badge svg {
@@ -608,7 +608,7 @@
   stroke-width: 2.5;
 }
 
-/* ── Name - BLACK TEXT with RED hover gradient ── */
+/* ── Name - BLACK TEXT with SKY BLUE hover gradient ── */
 .hr-card-name {
   font-family: "Goldman", system-ui, sans-serif;
   font-size: 1.2rem;
@@ -620,7 +620,7 @@
 }
 
 .hr-card:hover .hr-card-name {
-  background: linear-gradient(180deg, #dc2626 0%, #dc2626 100%);
+  background: linear-gradient(90deg, #0f172a 0%, #0ea5e9 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -657,7 +657,7 @@
   filter: drop-shadow(0 0 3px rgba(251, 191, 36, 0.4));
 }
 
-/* ── Review Title - BLACK TEXT with RED hover ── */
+/* ── Review Title - BLACK TEXT with SKY BLUE hover ── */
 .hr-card-title {
   font-family: "Goldman", system-ui, sans-serif;
   font-size: 1.2rem;
@@ -669,10 +669,10 @@
 }
 
 .hr-card:hover .hr-card-title {
-  color: #dc2626;
+  color: #0ea5e9;
 }
 
-/* ── Review Body (Description) - BLACK TEXT with RED hover ── */
+/* ── Review Body (Description) - BLACK TEXT with SKY BLUE hover ── */
 .hr-card-body {
   font-family: "Goldman", system-ui, sans-serif;
   font-size: 0.9rem;
@@ -687,10 +687,10 @@
 }
 
 .hr-card:hover .hr-card-body {
-  color: #dc2626;
+  color: #0ea5e9;
 }
 
-/* ── Product Tag - TOP RED → BOTTOM BLACK Theme ── */
+/* ── Product Tag - BLACK + SKY BLUE Theme ── */
 .hr-card-product {
   display: inline-flex;
   align-items: center;
@@ -699,9 +699,9 @@
   font-size: 0.55rem;
   letter-spacing: 0.15em;
   text-transform: uppercase;
-  color: #dc2626;
-  background: rgba(220, 38, 38, 0.08);
-  border: 1px solid rgba(220, 38, 38, 0.25);
+  color: #0ea5e9;
+  background: rgba(14, 165, 233, 0.08);
+  border: 1px solid rgba(14, 165, 233, 0.25);
   padding: 0.4rem 1rem;
   border-radius: 50px;
   transition: all 0.35s var(--hr-ease);
@@ -709,19 +709,19 @@
 }
 
 .hr-card:hover .hr-card-product {
-  background: rgba(220, 38, 38, 0.15);
-  border-color: #dc2626;
+  background: rgba(14, 165, 233, 0.15);
+  border-color: #0ea5e9;
   transform: translateX(3px);
-  color: #dc2626;
+  color: #0ea5e9;
 }
 
 .hr-card-product svg {
   width: 11px;
   height: 11px;
-  stroke: #dc2626;
+  stroke: #0ea5e9;
 }
 
-/* Bottom Animated RED Line */
+/* Bottom Animated SKY BLUE Line */
 .hr-card-bottom-line {
   position: absolute;
   bottom: 0;
@@ -731,9 +731,9 @@
   background: linear-gradient(
     90deg,
     transparent,
-    #dc2626,
-    #ef4444,
-    #dc2626,
+    #0ea5e9,
+    #7dd3fc,
+    #0ea5e9,
     transparent
   );
   transform: scaleX(0);
@@ -746,7 +746,7 @@
 }
 
 /* ═══════════════════════════════════════════════════════════════════════
-   NAVIGATION ARROWS — TOP RED → BOTTOM BLACK Theme
+   NAVIGATION ARROWS — BLACK + SKY BLUE Theme
    ═══════════════════════════════════════════════════════════════════════ */
 .hr-arrow {
   flex-shrink: 0;
@@ -754,22 +754,22 @@
   height: 48px;
   border-radius: 50%;
   background: rgba(255, 255, 255, 0.95);
-  border: 1px solid rgba(220, 38, 38, 0.35);
+  border: 1px solid rgba(14, 165, 233, 0.35);
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  color: #dc2626;
+  color: #0ea5e9;
   transition: all 0.35s var(--hr-ease-bounce);
   backdrop-filter: blur(8px);
   box-shadow: var(--hr-shadow-sm);
 }
 
 .hr-arrow:hover {
-  background: linear-gradient(180deg, #dc2626 0%, #0f172a 100%);
-  border-color: #dc2626;
+  background: linear-gradient(135deg, #0f172a 0%, #0ea5e9 100%);
+  border-color: #0ea5e9;
   color: #ffffff;
-  box-shadow: 0 8px 25px rgba(220, 38, 38, 0.3);
+  box-shadow: 0 8px 25px rgba(14, 165, 233, 0.3);
   transform: scale(1.12);
 }
 
@@ -779,7 +779,7 @@
 }
 
 /* ═══════════════════════════════════════════════════════════════════════
-   DOT INDICATORS — RED Theme
+   DOT INDICATORS — SKY BLUE Theme
    ═══════════════════════════════════════════════════════════════════════ */
 .hr-dots {
   display: flex;
@@ -793,7 +793,7 @@
   width: 32px;
   height: 3px;
   border-radius: 3px;
-  background: rgba(220, 38, 38, 0.25);
+  background: rgba(14, 165, 233, 0.25);
   border: none;
   cursor: pointer;
   transition: all 0.35s var(--hr-ease);
@@ -801,13 +801,13 @@
 }
 
 .hr-dot--active {
-  background: linear-gradient(90deg, #dc2626, #0f172a, #b91c1c);
+  background: linear-gradient(90deg, #0f172a, #0ea5e9, #38bdf8);
   width: 48px;
-  box-shadow: 0 0 8px rgba(220, 38, 38, 0.4);
+  box-shadow: 0 0 8px rgba(14, 165, 233, 0.4);
 }
 
 .hr-dot:hover:not(.hr-dot--active) {
-  background: rgba(220, 38, 38, 0.5);
+  background: rgba(14, 165, 233, 0.5);
   transform: scaleX(1.1);
   width: 40px;
 }
@@ -825,7 +825,7 @@
 .hr-skeleton-card {
   background: rgba(248, 250, 252, 0.8);
   backdrop-filter: blur(4px);
-  border: 1px solid rgba(220, 38, 38, 0.15);
+  border: 1px solid rgba(14, 165, 233, 0.15);
   border-radius: var(--hr-radius);
   padding: 2rem 1.5rem 1.5rem;
   display: flex;

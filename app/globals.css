@@ -1,15 +1,24 @@
 @import "tailwindcss";
 
 :root {
-  --background: #0a0f1a;
-  --foreground: #e6f7ff;
+  --background: #ffffff;
+  --foreground: #0f172a;
   --font-goldman: "Goldman", system-ui, sans-serif;
   --navbar-height: 70px;
-  --scrollbar-thumb: #dc2626;
-  --scrollbar-thumb-hover: #ef4444;
-  --scrollbar-track: #0a0f1a;
+  --scrollbar-sky: #0ea5e9;
+  --scrollbar-sky-light: #38bdf8;
+  --scrollbar-sky-glow: #7dd3fc;
+  --scrollbar-sky-dark: #0284c7;
+  --scrollbar-track: #f1f5f9;
+  --scrollbar-thumb-gradient: linear-gradient(
+    135deg,
+    #0f172a 0%,
+    #0ea5e9 50%,
+    #38bdf8 100%
+  );
 }
 
+/* Base styles - White background with Sky Blue + Black theme */
 *,
 *::before,
 *::after {
@@ -21,7 +30,7 @@ html {
   overflow-x: hidden;
   overflow-y: auto;
   scrollbar-width: thin;
-  scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
+  scrollbar-color: var(--scrollbar-sky) var(--scrollbar-track);
   scroll-behavior: auto;
 }
 
@@ -43,24 +52,103 @@ body {
   font-synthesis: none;
 }
 
+/* ============================================================
+   NAVBAR-MATCHING GRADIENT SCROLLBAR — BLACK → SKY BLUE → LIGHT BLUE
+   Matches: linear-gradient(135deg, #0f172a 0%, #0ea5e9 50%, #38bdf8 100%)
+   ============================================================ */
+
+/* Webkit (Chrome, Safari, Edge) — Main page scrollbar */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
 }
+
 ::-webkit-scrollbar-track {
   background: var(--scrollbar-track);
   border-radius: 4px;
+  box-shadow: inset 0 0 3px rgba(14, 165, 233, 0.12);
 }
+
 ::-webkit-scrollbar-thumb {
-  background: var(--scrollbar-thumb);
+  background: linear-gradient(180deg, #0f172a 0%, #0ea5e9 55%, #38bdf8 100%);
   border-radius: 8px;
+  border: 1.5px solid var(--scrollbar-track);
+  background-clip: padding-box;
 }
+
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--scrollbar-thumb-hover);
+  background: linear-gradient(180deg, #0284c7 0%, #38bdf8 50%, #7dd3fc 100%);
+  border: 1.5px solid var(--scrollbar-track);
+  background-clip: padding-box;
+  box-shadow: 0 0 10px rgba(14, 165, 233, 0.45);
 }
+
+::-webkit-scrollbar-thumb:active {
+  background: linear-gradient(180deg, #0f172a 0%, #0284c7 50%, #0ea5e9 100%);
+  border: 1.5px solid var(--scrollbar-track);
+  background-clip: padding-box;
+}
+
 ::-webkit-scrollbar-corner {
   background: var(--scrollbar-track);
 }
+
+/* Firefox scrollbar — thin with navy-to-sky gradient fallback */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #0ea5e9 #f1f5f9;
+}
+
+/* ── Scrollbar for containers with sky blue theme ── */
+.scrollbar-sky::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.scrollbar-sky::-webkit-scrollbar-track {
+  background: rgba(14, 165, 233, 0.05);
+  border-radius: 4px;
+}
+
+.scrollbar-sky::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #0f172a 0%, #0ea5e9 55%, #38bdf8 100%);
+  border-radius: 8px;
+}
+
+.scrollbar-sky::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #0284c7 0%, #38bdf8 50%, #7dd3fc 100%);
+  box-shadow: 0 0 8px rgba(14, 165, 233, 0.4);
+}
+
+/* ── Hover-reveal scrollbar for subtle containers ── */
+.hover-scrollbar::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+
+.hover-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+  border-radius: 4px;
+}
+
+.hover-scrollbar::-webkit-scrollbar-thumb {
+  background: transparent;
+  border-radius: 4px;
+  transition: background 0.3s ease;
+}
+
+.hover-scrollbar:hover::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #0f172a 0%, #0ea5e9 55%, #38bdf8 100%);
+}
+
+.hover-scrollbar:hover::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #0284c7 0%, #38bdf8 50%, #7dd3fc 100%);
+  box-shadow: 0 0 6px rgba(14, 165, 233, 0.35);
+}
+
+/* ============================================================
+   FONT & TYPOGRAPHY
+   ============================================================ */
 
 *,
 *::before,
@@ -85,6 +173,10 @@ var,
   font-style: normal !important;
 }
 
+/* ============================================================
+   RESET STYLES
+   ============================================================ */
+
 ul,
 ol {
   list-style: none;
@@ -108,16 +200,20 @@ button {
 }
 
 button:focus-visible {
-  outline: 2px solid rgba(220, 38, 38, 0.6);
+  outline: 2px solid rgba(14, 165, 233, 0.6);
   outline-offset: 2px;
 }
 
 input:focus-visible,
 textarea:focus-visible,
 select:focus-visible {
-  outline: 2px solid rgba(220, 38, 38, 0.4);
+  outline: 2px solid rgba(14, 165, 233, 0.4);
   outline-offset: 1px;
 }
+
+/* ============================================================
+   NAVBAR STICKY WRAPPER
+   ============================================================ */
 
 .navbar-sticky-wrapper {
   position: fixed;
@@ -127,6 +223,10 @@ select:focus-visible {
   z-index: 100;
   transform: translateZ(0);
 }
+
+/* ============================================================
+   SWIPER OPTIMIZATIONS
+   ============================================================ */
 
 .swiper {
   overflow: hidden;
@@ -139,15 +239,24 @@ select:focus-visible {
   backface-visibility: hidden;
 }
 
+/* ============================================================
+   RTL SUPPORT
+   ============================================================ */
+
 body.rtl,
 [dir="rtl"] {
   text-align: right;
 }
+
 [dir="rtl"] .dropdown-menu {
   right: auto;
   left: 0;
   text-align: right;
 }
+
+/* ============================================================
+   REDUCED MOTION PREFERENCE
+   ============================================================ */
 
 @media (prefers-reduced-motion: reduce) {
   *,
@@ -158,4 +267,60 @@ body.rtl,
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
+}
+
+/* ============================================================
+   UTILITY CLASSES - SKY BLUE THEME
+   ============================================================ */
+
+/* Text gradients */
+.text-gradient-sky {
+  background: linear-gradient(135deg, #0f172a 0%, #0ea5e9 50%, #38bdf8 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.text-gradient-sky-light {
+  background: linear-gradient(135deg, #0ea5e9 0%, #38bdf8 50%, #7dd3fc 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Border gradients */
+.border-gradient-sky {
+  border-image: linear-gradient(135deg, #0f172a, #0ea5e9, #38bdf8) 1;
+}
+
+.border-bottom-gradient-sky {
+  border-bottom: 2px solid transparent;
+  border-image: linear-gradient(90deg, #0f172a, #0ea5e9, #38bdf8);
+  border-image-slice: 1;
+}
+
+/* Background gradients */
+.bg-gradient-sky {
+  background: linear-gradient(135deg, #0f172a 0%, #0ea5e9 50%, #38bdf8 100%);
+}
+
+.bg-gradient-sky-light {
+  background: linear-gradient(135deg, #0ea5e9 0%, #38bdf8 50%, #7dd3fc 100%);
+}
+
+/* Selection color */
+::selection {
+  background: rgba(14, 165, 233, 0.2);
+  color: #0f172a;
+}
+
+::-moz-selection {
+  background: rgba(14, 165, 233, 0.2);
+  color: #0f172a;
+}
+
+/* Focus ring */
+*:focus-visible {
+  outline: 2px solid #0ea5e9;
+  outline-offset: 2px;
 }

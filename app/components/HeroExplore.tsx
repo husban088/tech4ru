@@ -4,12 +4,6 @@ import { useEffect, useRef } from "react";
 import Link from "next/link";
 import "./hero-explore.css";
 
-/* ──────────────────────────────────────────
-   HERO EXPLORE SECTION - TOP RED TO BOTTOM BLACK GRADIENT
-   Left: Heading + Para + Button | Right: 4 Images Grid (uniform sizes, fully visible)
-   All Text: WHITE
-────────────────────────────────────────── */
-
 const images = [
   {
     src: "/hero2.png",
@@ -40,7 +34,6 @@ export default function HeroExplore() {
     const section = sectionRef.current;
     if (!section) return;
 
-    // Add visible immediately if already in viewport (above the fold)
     const rect = section.getBoundingClientRect();
     if (rect.top < window.innerHeight) {
       section.classList.add("he-visible");
@@ -61,7 +54,6 @@ export default function HeroExplore() {
 
     observer.observe(section);
 
-    // Safety fallback — always show after 800ms even if observer doesn't fire
     const fallback = setTimeout(() => {
       section.classList.add("he-visible");
     }, 800);
@@ -78,7 +70,6 @@ export default function HeroExplore() {
       className="he-section"
       aria-label="Explore Aurexia"
     >
-      {/* Background Decorations */}
       <div className="he-grain" aria-hidden="true" />
       <div className="he-ambient" aria-hidden="true" />
       <div className="he-orb-left" aria-hidden="true" />
@@ -91,17 +82,14 @@ export default function HeroExplore() {
         <span />
       </div>
 
-      {/* Main Content */}
       <div className="he-container">
-        {/* ── LEFT SIDE ── */}
+        {/* LEFT SIDE */}
         <div className="he-left">
-          {/* Eyebrow */}
           <div className="he-eyebrow-row">
             <span className="he-eyebrow">Luxury Collections</span>
             <div className="he-eyebrow-line" />
           </div>
 
-          {/* Heading */}
           <h2 className="he-heading">
             Luxury Tech
             <br />
@@ -110,21 +98,18 @@ export default function HeroExplore() {
             <span className="he-heading-accent">Essentials</span>
           </h2>
 
-          {/* Decorative line */}
           <div className="he-divider" aria-hidden="true">
             <span className="he-divider-line" />
             <span className="he-divider-diamond" />
             <span className="he-divider-line he-divider-line--short" />
           </div>
 
-          {/* Paragraph */}
           <p className="he-para">
             Discover premium watches, automotive accessories, home décor, and
             modern tech essentials designed for style, performance, and everyday
             living.
           </p>
 
-          {/* CTA Button - White text on Red/Black gradient */}
           <Link href="/accessories" className="he-btn" aria-label="Shop Now">
             <span className="he-btn-text">Shop Now</span>
             <span className="he-btn-icon" aria-hidden="true">
@@ -144,7 +129,6 @@ export default function HeroExplore() {
             <span className="he-btn-glow" aria-hidden="true" />
           </Link>
 
-          {/* Stats Row - White Text */}
           <div className="he-stats">
             <div className="he-stat">
               <span className="he-stat-num">
@@ -169,9 +153,8 @@ export default function HeroExplore() {
           </div>
         </div>
 
-        {/* ── RIGHT SIDE — 4 Images Grid (Uniform Sizes, Fully Visible) ── */}
+        {/* RIGHT SIDE — 4 Images Grid */}
         <div className="he-right">
-          {/* Corner ornaments - Red */}
           <div
             className="he-grid-corner he-grid-corner--tl"
             aria-hidden="true"
@@ -188,11 +171,8 @@ export default function HeroExplore() {
                 className="he-img-card"
                 style={{ "--delay": `${i * 0.12}s` } as React.CSSProperties}
               >
-                {/* Shimmer */}
                 <div className="he-img-shimmer" aria-hidden="true" />
-                {/* Label - White text on gradient */}
                 <span className="he-img-label">{img.label}</span>
-                {/* Image - plain img tag, foran show, no Next.js overhead */}
                 <div className="he-img-wrap">
                   <img
                     src={img.src}
@@ -206,15 +186,12 @@ export default function HeroExplore() {
                     }}
                   />
                 </div>
-                {/* Overlay */}
                 <div className="he-img-overlay" aria-hidden="true" />
-                {/* Bottom glow bar - Gradient */}
                 <div className="he-img-bar" aria-hidden="true" />
               </div>
             ))}
           </div>
 
-          {/* Floating ring decoration - Red */}
           <div className="he-ring" aria-hidden="true" />
         </div>
       </div>

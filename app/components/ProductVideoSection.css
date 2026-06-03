@@ -1,26 +1,26 @@
 /* app/components/ProductVideoSection.css */
 
 /* ============================================================
-   PRODUCT VIDEO SECTION — WHITE BACKGROUND | BLACK TEXT | RED + BLACK GRADIENTS
-   Matching Explore Aurexia style
+   PRODUCT VIDEO SECTION — WHITE BACKGROUND | BLACK TEXT | SKY BLUE + BLACK GRADIENTS
+   Matching GlobalFAQSection color scheme
    ============================================================ */
 
 @import url("https://fonts.googleapis.com/css2?family=Russo+One&display=swap");
 
 :root {
-  /* ── RED + BLACK accents (matching Explore Aurexia) ── */
-  --pvs-red: #dc2626;
-  --pvs-red-dark: #b91c1c;
-  --pvs-red-deep: #991b1b;
-  --pvs-red-light: #ef4444;
+  /* ── SKY BLUE + BLACK accents (matching GlobalFAQSection) ── */
+  --pvs-sky: #0ea5e9;
+  --pvs-sky-dark: #0284c7;
+  --pvs-sky-deep: #0369a1;
+  --pvs-sky-light: #38bdf8;
   --pvs-black: #0f172a;
-  --pvs-red-dim: rgba(220, 38, 38, 0.08);
-  --pvs-red-glow: rgba(220, 38, 38, 0.12);
+  --pvs-sky-dim: rgba(14, 165, 233, 0.08);
+  --pvs-sky-glow: rgba(14, 165, 233, 0.12);
 
   /* ── White Background ── */
   --pvs-bg: #ffffff;
-  --pvs-glass: rgba(220, 38, 38, 0.03);
-  --pvs-glass-border: rgba(220, 38, 38, 0.15);
+  --pvs-glass: rgba(14, 165, 233, 0.03);
+  --pvs-glass-border: rgba(14, 165, 233, 0.15);
 
   /* ── Text Colors ── */
   --pvs-text-dark: #0f172a;
@@ -55,19 +55,19 @@
   display: none;
 }
 
-/* Fine grid texture - Red + Black Mixed */
+/* Fine grid texture - Sky Blue + Black Mixed */
 .pvs-grain {
   position: absolute;
   inset: 0;
   background-image:
-    linear-gradient(rgba(220, 38, 38, 0.04) 1px, transparent 1px),
+    linear-gradient(rgba(14, 165, 233, 0.04) 1px, transparent 1px),
     linear-gradient(90deg, rgba(15, 23, 42, 0.03) 1px, transparent 1px);
   background-size: 48px 48px;
   pointer-events: none;
   z-index: 0;
 }
 
-/* Top Border Line - RED + BLACK */
+/* Top Border Line - SKY BLUE + BLACK */
 .pvs-root::before {
   content: "";
   position: absolute;
@@ -79,16 +79,16 @@
   background: linear-gradient(
     to right,
     transparent,
-    rgba(220, 38, 38, 0.5),
+    rgba(14, 165, 233, 0.5),
     rgba(15, 23, 42, 0.2),
-    rgba(220, 38, 38, 0.5),
+    rgba(14, 165, 233, 0.5),
     transparent
   );
   pointer-events: none;
   z-index: 1;
 }
 
-/* Top radial glow — RED */
+/* Top radial glow — SKY BLUE */
 .pvs-root::after {
   content: "";
   position: absolute;
@@ -98,8 +98,8 @@
   height: 130%;
   background: radial-gradient(
     ellipse at 60% 30%,
-    rgba(220, 38, 38, 0.05) 0%,
-    rgba(200, 50, 50, 0.03) 40%,
+    rgba(14, 165, 233, 0.05) 0%,
+    rgba(14, 165, 233, 0.03) 40%,
     transparent 70%
   );
   pointer-events: none;
@@ -122,14 +122,14 @@
   background: linear-gradient(
     to bottom,
     transparent 0%,
-    rgba(220, 38, 38, 0.06) 30%,
-    rgba(220, 38, 38, 0.06) 70%,
+    rgba(14, 165, 233, 0.06) 30%,
+    rgba(14, 165, 233, 0.06) 70%,
     transparent 100%
   );
 }
 
-/* ── RED Orbs ── */
-.pvs-red-orb {
+/* ── SKY BLUE Orbs ── */
+.pvs-sky-orb {
   position: absolute;
   bottom: -150px;
   left: -150px;
@@ -137,8 +137,8 @@
   height: 500px;
   background: radial-gradient(
     circle,
-    rgba(220, 38, 38, 0.05) 0%,
-    rgba(200, 50, 50, 0.02) 50%,
+    rgba(14, 165, 233, 0.05) 0%,
+    rgba(14, 165, 233, 0.02) 50%,
     transparent 80%
   );
   border-radius: 50%;
@@ -146,7 +146,7 @@
   z-index: 0;
 }
 
-.pvs-red-orb-right {
+.pvs-sky-orb-right {
   position: absolute;
   top: -100px;
   right: -100px;
@@ -154,7 +154,7 @@
   height: 400px;
   background: radial-gradient(
     circle,
-    rgba(220, 38, 38, 0.04) 0%,
+    rgba(14, 165, 233, 0.04) 0%,
     transparent 70%
   );
   border-radius: 50%;
@@ -162,7 +162,7 @@
   z-index: 0;
 }
 
-/* ── Ambient Glow Behind Video — RED ── */
+/* ── Ambient Glow Behind Video — SKY BLUE ── */
 .pvs-ambient {
   position: absolute;
   top: 0;
@@ -172,8 +172,8 @@
   height: 600px;
   background: radial-gradient(
     circle,
-    rgba(220, 38, 38, 0.08) 0%,
-    rgba(200, 50, 50, 0.03) 40%,
+    rgba(14, 165, 233, 0.08) 0%,
+    rgba(14, 165, 233, 0.03) 40%,
     transparent 80%
   );
   pointer-events: none;
@@ -221,8 +221,8 @@
 .pvs-corner--tl {
   top: 0;
   left: 0;
-  border-top: 2px solid #dc2626;
-  border-left: 2px solid #dc2626;
+  border-top: 2px solid #0ea5e9;
+  border-left: 2px solid #0ea5e9;
   border-radius: 20px 0 0 0;
   transform: translate(-10px, -10px);
 }
@@ -234,8 +234,8 @@
 .pvs-corner--tr {
   top: 0;
   right: 0;
-  border-top: 2px solid #dc2626;
-  border-right: 2px solid #dc2626;
+  border-top: 2px solid #0ea5e9;
+  border-right: 2px solid #0ea5e9;
   border-radius: 0 20px 0 0;
   transform: translate(10px, -10px);
 }
@@ -247,8 +247,8 @@
 .pvs-corner--bl {
   bottom: 0;
   left: 0;
-  border-bottom: 2px solid #dc2626;
-  border-left: 2px solid #dc2626;
+  border-bottom: 2px solid #0ea5e9;
+  border-left: 2px solid #0ea5e9;
   border-radius: 0 0 0 20px;
   transform: translate(-10px, 10px);
 }
@@ -260,8 +260,8 @@
 .pvs-corner--br {
   bottom: 0;
   right: 0;
-  border-bottom: 2px solid #dc2626;
-  border-right: 2px solid #dc2626;
+  border-bottom: 2px solid #0ea5e9;
+  border-right: 2px solid #0ea5e9;
   border-radius: 0 0 20px 0;
   transform: translate(10px, 10px);
 }
@@ -295,7 +295,7 @@
 .pvs-ey-line {
   width: 40px;
   height: 1px;
-  background: linear-gradient(90deg, transparent, #dc2626, transparent);
+  background: linear-gradient(90deg, transparent, #0ea5e9, transparent);
 }
 
 .pvs-ey-text {
@@ -304,7 +304,7 @@
   font-weight: 600;
   letter-spacing: 0.3em;
   text-transform: uppercase;
-  color: #dc2626;
+  color: #0ea5e9;
 }
 
 .pvs-title {
@@ -317,7 +317,7 @@
 
 .pvs-title em {
   font-style: italic;
-  background: linear-gradient(180deg, #dc2626 0%, #ef4444 50%, #0f172a 100%);
+  background: linear-gradient(180deg, #0ea5e9 0%, #38bdf8 50%, #0f172a 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -338,7 +338,7 @@
 .pvs-sub-line {
   width: 30px;
   height: 1px;
-  background: rgba(220, 38, 38, 0.3);
+  background: rgba(14, 165, 233, 0.3);
 }
 
 /* ── Video Wrapper ── */
@@ -350,14 +350,14 @@
   background: #f8fafc;
   box-shadow:
     0 20px 60px rgba(0, 0, 0, 0.08),
-    0 0 0 1px rgba(220, 38, 38, 0.2);
+    0 0 0 1px rgba(14, 165, 233, 0.2);
   transition: all 0.5s var(--pvs-ease);
 }
 
 .pvs-video-wrapper:hover {
   box-shadow:
-    0 30px 80px rgba(220, 38, 38, 0.1),
-    0 0 0 2px rgba(220, 38, 38, 0.35);
+    0 30px 80px rgba(14, 165, 233, 0.1),
+    0 0 0 2px rgba(14, 165, 233, 0.35);
   transform: scale(1.01);
 }
 
@@ -413,12 +413,12 @@
   opacity: 1;
 }
 
-/* Play/Pause Button - RED */
+/* Play/Pause Button - SKY BLUE */
 .pvs-play-btn {
   width: 80px;
   height: 80px;
   border-radius: 50%;
-  background: linear-gradient(180deg, #dc2626 0%, #0f172a 100%);
+  background: linear-gradient(180deg, #0ea5e9 0%, #0f172a 100%);
   border: none;
   cursor: pointer;
   display: flex;
@@ -432,8 +432,8 @@
 
 .pvs-play-btn:hover {
   transform: scale(1.1);
-  background: linear-gradient(180deg, #ef4444 0%, #dc2626 100%);
-  box-shadow: 0 12px 35px rgba(220, 38, 38, 0.3);
+  background: linear-gradient(180deg, #38bdf8 0%, #0ea5e9 100%);
+  box-shadow: 0 12px 35px rgba(14, 165, 233, 0.3);
 }
 
 .pvs-play-btn svg {
@@ -441,7 +441,7 @@
   height: 32px;
 }
 
-/* Mute Button - RED */
+/* Mute Button - SKY BLUE */
 .pvs-mute-btn {
   position: absolute;
   bottom: 20px;
@@ -450,7 +450,7 @@
   height: 40px;
   border-radius: 50%;
   background: rgba(0, 0, 0, 0.6);
-  border: 1px solid rgba(220, 38, 38, 0.3);
+  border: 1px solid rgba(14, 165, 233, 0.3);
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -458,13 +458,13 @@
   transition: all 0.3s ease;
   backdrop-filter: blur(4px);
   z-index: 3;
-  color: #dc2626;
+  color: #0ea5e9;
 }
 
 .pvs-mute-btn:hover {
   background: rgba(0, 0, 0, 0.8);
-  border-color: #dc2626;
-  box-shadow: 0 0 12px rgba(220, 38, 38, 0.2);
+  border-color: #0ea5e9;
+  box-shadow: 0 0 12px rgba(14, 165, 233, 0.2);
   transform: scale(1.05);
 }
 
@@ -473,7 +473,7 @@
   height: 18px;
 }
 
-/* Progress Bar - RED */
+/* Progress Bar - SKY BLUE */
 .pvs-progress-bar {
   position: absolute;
   bottom: 0;
@@ -487,12 +487,12 @@
 
 .pvs-progress-fill {
   height: 100%;
-  background: linear-gradient(90deg, #dc2626, #ef4444);
+  background: linear-gradient(90deg, #0ea5e9, #38bdf8);
   width: 0%;
   transition: width 0.1s linear;
 }
 
-/* Floating Particles - RED */
+/* Floating Particles - SKY BLUE */
 .pvs-particles {
   position: absolute;
   top: 0;
@@ -508,10 +508,10 @@
   position: absolute;
   width: 4px;
   height: 4px;
-  background: rgba(220, 38, 38, 0.3);
+  background: rgba(14, 165, 233, 0.3);
   border-radius: 50%;
   animation: pvs-float 12s infinite ease-in-out;
-  box-shadow: 0 0 6px rgba(220, 38, 38, 0.2);
+  box-shadow: 0 0 6px rgba(14, 165, 233, 0.2);
 }
 
 .pvs-particle:nth-child(1) {
@@ -587,7 +587,7 @@
   justify-content: center;
   gap: 1rem;
   margin-top: 2rem;
-  color: #dc2626;
+  color: #0ea5e9;
   opacity: 0;
   transition: opacity 0.8s var(--pvs-ease) 0.4s;
 }
@@ -599,7 +599,7 @@
 .pvs-orn-line {
   width: 60px;
   height: 1px;
-  background: linear-gradient(90deg, transparent, #dc2626, transparent);
+  background: linear-gradient(90deg, transparent, #0ea5e9, transparent);
   opacity: 0.6;
 }
 

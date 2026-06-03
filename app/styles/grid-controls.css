@@ -1,5 +1,5 @@
 /* ============================================================
-   GRID CONTROLS - TOP RED → BOTTOM BLACK GRADIENT THEME
+   GRID CONTROLS - SKY BLUE + BLACK GRADIENT THEME
    Products Per Row & Sorting
    ============================================================ */
 
@@ -12,7 +12,7 @@
   margin-bottom: 1.5rem;
   flex-wrap: wrap;
   padding-bottom: 0.8rem;
-  border-bottom: 1px solid rgba(220, 38, 38, 0.12);
+  border-bottom: 1px solid rgba(14, 165, 233, 0.12);
 }
 
 .grid-controls-left {
@@ -21,30 +21,30 @@
   gap: 0.8rem;
 }
 
-/* Filter Trigger Button - RED */
+/* Filter Trigger Button - SKY BLUE */
 .filter-trigger {
   display: flex;
   align-items: center;
   gap: 0.5rem;
   padding: 0.55rem 1rem;
-  background: rgba(220, 38, 38, 0.08);
-  border: 1px solid rgba(220, 38, 38, 0.25);
+  background: rgba(14, 165, 233, 0.08);
+  border: 1px solid rgba(14, 165, 233, 0.25);
   border-radius: 40px;
   font-family: "Goldman", system-ui, sans-serif;
   font-size: 0.6rem;
   font-weight: 600;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: #ef4444;
+  color: #38bdf8;
   cursor: pointer;
   transition: all 0.3s ease;
 }
 
 .filter-trigger:hover {
-  background: rgba(220, 38, 38, 0.15);
-  border-color: #dc2626;
+  background: rgba(14, 165, 233, 0.15);
+  border-color: #0ea5e9;
   transform: translateY(-2px);
-  box-shadow: 0 0 10px rgba(220, 38, 38, 0.2);
+  box-shadow: 0 0 10px rgba(14, 165, 233, 0.2);
 }
 
 .filter-trigger svg {
@@ -55,19 +55,19 @@
 .filter-active-dot {
   width: 7px;
   height: 7px;
-  background: #dc2626;
+  background: #0ea5e9;
   border-radius: 50%;
-  box-shadow: 0 0 6px rgba(220, 38, 38, 0.5);
+  box-shadow: 0 0 6px rgba(14, 165, 233, 0.5);
   animation: filterPulse 1.5s ease-in-out infinite;
 }
 
-/* Products Per Row Selector - RED */
+/* Products Per Row Selector - SKY BLUE */
 .per-row-selector {
   display: flex;
   align-items: center;
   gap: 0.25rem;
-  background: rgba(220, 38, 38, 0.06);
-  border: 1px solid rgba(220, 38, 38, 0.15);
+  background: rgba(14, 165, 233, 0.06);
+  border: 1px solid rgba(14, 165, 233, 0.15);
   border-radius: 40px;
   padding: 0.15rem;
 }
@@ -97,14 +97,14 @@
 }
 
 .per-row-btn:hover {
-  color: #dc2626;
-  background: rgba(220, 38, 38, 0.15);
+  color: #0ea5e9;
+  background: rgba(14, 165, 233, 0.15);
 }
 
 .per-row-btn.active {
-  background: linear-gradient(180deg, #dc2626 0%, #0f172a 100%);
+  background: linear-gradient(180deg, #0ea5e9 0%, #0f172a 100%);
   color: #ffffff;
-  box-shadow: 0 2px 8px rgba(220, 38, 38, 0.3);
+  box-shadow: 0 2px 8px rgba(14, 165, 233, 0.3);
 }
 
 /* Tooltip */
@@ -115,7 +115,7 @@
   left: 50%;
   transform: translateX(-50%);
   background: #0f172a;
-  color: #dc2626;
+  color: #0ea5e9;
   font-family: "Goldman", system-ui, sans-serif;
   font-size: 0.5rem;
   font-weight: 600;
@@ -128,7 +128,7 @@
   transition: all 0.2s ease;
   pointer-events: none;
   z-index: 100;
-  border: 1px solid rgba(220, 38, 38, 0.3);
+  border: 1px solid rgba(14, 165, 233, 0.3);
 }
 
 .per-row-btn:hover::before {
@@ -137,11 +137,11 @@
   bottom: -35px;
 }
 
-/* Sort Select - RED */
+/* Sort Select - SKY BLUE */
 .grid-sort-select {
   padding: 0.55rem 2rem 0.55rem 1rem;
   background: rgba(15, 23, 42, 0.8);
-  border: 1px solid rgba(220, 38, 38, 0.25);
+  border: 1px solid rgba(14, 165, 233, 0.25);
   border-radius: 40px;
   font-family: "Goldman", system-ui, sans-serif;
   font-size: 0.6rem;
@@ -150,7 +150,7 @@
   color: #cbd5e1;
   cursor: pointer;
   outline: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23dc2626' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230ea5e9' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-position: right 0.8rem center;
   background-size: 11px;
@@ -159,12 +159,12 @@
 }
 
 .grid-sort-select:hover {
-  border-color: #dc2626;
+  border-color: #0ea5e9;
 }
 
 .grid-sort-select:focus {
-  border-color: #dc2626;
-  box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1);
+  border-color: #0ea5e9;
+  box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.1);
 }
 
 /* Result Count */
@@ -176,7 +176,7 @@
 }
 
 .grid-result-count em {
-  color: #dc2626;
+  color: #0ea5e9;
   font-style: normal;
   font-weight: 600;
 }

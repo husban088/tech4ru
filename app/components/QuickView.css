@@ -1,17 +1,17 @@
 /* ============================================================
-   QUICK VIEW POPUP - WHITE BACKGROUND | BLACK TEXT | RED + BLACK GRADIENTS
-   Matching Explore Aurexia style
+   QUICK VIEW POPUP - WHITE BACKGROUND | BLACK TEXT | SKY BLUE + BLACK GRADIENTS
+   Matching GlobalFAQSection color scheme
    ============================================================ */
 
 :root {
-  --qv-red: #dc2626;
-  --qv-red-dark: #b91c1c;
-  --qv-red-light: #ef4444;
+  --qv-sky: #0ea5e9;
+  --qv-sky-dark: #0284c7;
+  --qv-sky-light: #38bdf8;
   --qv-black: #0f172a;
   --qv-black-soft: #1e293b;
-  --qv-red-soft: rgba(220, 38, 38, 0.08);
-  --qv-border: rgba(220, 38, 38, 0.18);
-  --qv-border-hover: rgba(220, 38, 38, 0.35);
+  --qv-sky-soft: rgba(14, 165, 233, 0.08);
+  --qv-border: rgba(14, 165, 233, 0.18);
+  --qv-border-hover: rgba(14, 165, 233, 0.35);
   --qv-text-dark: #0f172a;
   --qv-text-muted: #475569;
   --qv-text-light: #64748b;
@@ -99,15 +99,15 @@
 }
 
 .qv-close:hover {
-  background: rgba(220, 38, 38, 0.15);
+  background: rgba(14, 165, 233, 0.15);
   transform: rotate(90deg);
 }
 
 .qv-close:hover svg {
-  color: #dc2626;
+  color: #0ea5e9;
 }
 
-/* Decorative Corners - RED */
+/* Decorative Corners - SKY BLUE */
 .qv-corner {
   position: absolute;
   width: 20px;
@@ -119,29 +119,29 @@
 .qv-corner-tl {
   top: 16px;
   left: 16px;
-  border-top: 2px solid #dc2626;
-  border-left: 2px solid #dc2626;
+  border-top: 2px solid #0ea5e9;
+  border-left: 2px solid #0ea5e9;
 }
 
 .qv-corner-tr {
   top: 16px;
   right: 16px;
-  border-top: 2px solid #dc2626;
-  border-right: 2px solid #dc2626;
+  border-top: 2px solid #0ea5e9;
+  border-right: 2px solid #0ea5e9;
 }
 
 .qv-corner-bl {
   bottom: 16px;
   left: 16px;
-  border-bottom: 2px solid #dc2626;
-  border-left: 2px solid #dc2626;
+  border-bottom: 2px solid #0ea5e9;
+  border-left: 2px solid #0ea5e9;
 }
 
 .qv-corner-br {
   bottom: 16px;
   right: 16px;
-  border-bottom: 2px solid #dc2626;
-  border-right: 2px solid #dc2626;
+  border-bottom: 2px solid #0ea5e9;
+  border-right: 2px solid #0ea5e9;
 }
 
 /* Grid Layout */
@@ -187,7 +187,7 @@
   position: absolute;
   top: 1rem;
   left: 1rem;
-  background: linear-gradient(180deg, #dc2626 0%, #0f172a 100%);
+  background: linear-gradient(180deg, #0ea5e9 0%, #0f172a 100%);
   color: #ffffff;
   font-family: "Goldman", system-ui, sans-serif;
   font-size: 0.78rem;
@@ -218,13 +218,13 @@
   font-weight: 600;
   letter-spacing: 0.3em;
   text-transform: uppercase;
-  color: #dc2626;
+  color: #0ea5e9;
 }
 
 .qv-ey-line {
   width: 20px;
   height: 1px;
-  background: #dc2626;
+  background: #0ea5e9;
 }
 
 .qv-brand {
@@ -233,7 +233,7 @@
   font-weight: 600;
   letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: #dc2626;
+  color: #0ea5e9;
   margin: 0;
 }
 
@@ -257,7 +257,7 @@
   font-family: "Goldman", system-ui, sans-serif;
   font-size: 1.8rem;
   font-weight: 700;
-  background: linear-gradient(180deg, #dc2626 0%, #0f172a 100%);
+  background: linear-gradient(180deg, #0ea5e9 0%, #0f172a 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -304,7 +304,7 @@
 }
 
 .qv-stock-dot.out {
-  background: #dc2626;
+  background: #0ea5e9;
 }
 
 /* Features */
@@ -331,7 +331,7 @@
 .qv-feature svg {
   width: 14px;
   height: 14px;
-  color: #dc2626;
+  color: #0ea5e9;
 }
 
 /* Actions */
@@ -348,7 +348,7 @@
   justify-content: center;
   gap: 0.6rem;
   padding: 0.9rem 1rem;
-  background: linear-gradient(180deg, #dc2626 0%, #0f172a 100%);
+  background: linear-gradient(180deg, #0ea5e9 0%, #0f172a 100%);
   border: none;
   border-radius: 40px;
   font-family: "Goldman", system-ui, sans-serif;
@@ -368,8 +368,8 @@
 
 .qv-add-cart:hover:not(:disabled) {
   background: transparent;
-  border: 1px solid #dc2626;
-  color: #dc2626;
+  border: 1px solid #0ea5e9;
+  color: #0ea5e9;
   transform: translateY(-2px);
 }
 
@@ -386,22 +386,22 @@
   gap: 0.6rem;
   padding: 0.9rem 1rem;
   background: transparent;
-  border: 1px solid rgba(220, 38, 38, 0.3);
+  border: 1px solid rgba(14, 165, 233, 0.3);
   border-radius: 40px;
   font-family: "Goldman", system-ui, sans-serif;
   font-size: 0.7rem;
   font-weight: 700;
   letter-spacing: 0.15em;
   text-transform: uppercase;
-  color: #dc2626;
+  color: #0ea5e9;
   cursor: pointer;
   transition: all 0.3s ease;
 }
 
 .qv-buy-now:hover:not(:disabled) {
-  border-color: #dc2626;
-  color: #dc2626;
-  background: rgba(220, 38, 38, 0.08);
+  border-color: #0ea5e9;
+  color: #0ea5e9;
+  background: rgba(14, 165, 233, 0.08);
   transform: translateY(-2px);
 }
 
@@ -427,7 +427,7 @@
 }
 
 .qv-view-details:hover {
-  color: #dc2626;
+  color: #0ea5e9;
   gap: 0.8rem;
 }
 
@@ -435,7 +435,7 @@
 .qv-attributes {
   margin-top: 1rem;
   padding-top: 0.75rem;
-  border-top: 1px solid rgba(220, 38, 38, 0.15);
+  border-top: 1px solid rgba(14, 165, 233, 0.15);
 }
 
 .qv-attr {
@@ -449,7 +449,7 @@
   font-weight: 600;
   letter-spacing: 0.15em;
   text-transform: uppercase;
-  color: #dc2626;
+  color: #0ea5e9;
   margin-bottom: 0.4rem;
 }
 
@@ -465,7 +465,7 @@
   gap: 0.4rem;
   padding: 0.4rem 0.8rem;
   background: #f8fafc;
-  border: 1px solid rgba(220, 38, 38, 0.15);
+  border: 1px solid rgba(14, 165, 233, 0.15);
   border-radius: 30px;
   font-family: "Goldman", system-ui, sans-serif;
   font-size: 0.65rem;
@@ -476,15 +476,15 @@
 }
 
 .qv-attr-tag.active {
-  background: linear-gradient(180deg, #dc2626 0%, #0f172a 100%);
+  background: linear-gradient(180deg, #0ea5e9 0%, #0f172a 100%);
   border-color: transparent;
   color: #ffffff;
 }
 
 .qv-attr-tag:hover:not(.active) {
-  background: rgba(220, 38, 38, 0.1);
-  border-color: #dc2626;
-  color: #dc2626;
+  background: rgba(14, 165, 233, 0.1);
+  border-color: #0ea5e9;
+  color: #0ea5e9;
 }
 
 .qv-attr-img {
@@ -525,7 +525,7 @@
 .qv-bulk-section {
   margin-top: 0.5rem;
   padding-top: 0.5rem;
-  border-top: 1px solid rgba(220, 38, 38, 0.15);
+  border-top: 1px solid rgba(14, 165, 233, 0.15);
 }
 
 .qv-bulk-tiers {
@@ -542,12 +542,12 @@
 }
 
 .qv-bulk-tiers::-webkit-scrollbar-track {
-  background: rgba(220, 38, 38, 0.05);
+  background: rgba(14, 165, 233, 0.05);
   border-radius: 3px;
 }
 
 .qv-bulk-tiers::-webkit-scrollbar-thumb {
-  background: rgba(220, 38, 38, 0.3);
+  background: rgba(14, 165, 233, 0.3);
   border-radius: 3px;
 }
 
@@ -558,8 +558,8 @@
   flex-wrap: wrap;
   gap: 0.5rem;
   padding: 0.75rem 1rem;
-  background: rgba(220, 38, 38, 0.03);
-  border: 1px solid rgba(220, 38, 38, 0.15);
+  background: rgba(14, 165, 233, 0.03);
+  border: 1px solid rgba(14, 165, 233, 0.15);
   border-radius: 12px;
   cursor: pointer;
   transition: all 0.2s ease;
@@ -568,19 +568,19 @@
 }
 
 .qv-bulk-tier:hover {
-  background: rgba(220, 38, 38, 0.08);
-  border-color: #dc2626;
+  background: rgba(14, 165, 233, 0.08);
+  border-color: #0ea5e9;
   transform: translateX(4px);
 }
 
 .qv-bulk-tier.active {
-  background: rgba(220, 38, 38, 0.12);
-  border-color: #dc2626;
+  background: rgba(14, 165, 233, 0.12);
+  border-color: #0ea5e9;
   border-width: 2px;
 }
 
 .qv-bulk-tier.single-item {
-  background: rgba(220, 38, 38, 0.02);
+  background: rgba(14, 165, 233, 0.02);
 }
 
 .qv-bulk-tier.best-value {
@@ -597,13 +597,13 @@
   height: 0;
   border-style: solid;
   border-width: 0 30px 30px 0;
-  border-color: transparent #dc2626 transparent transparent;
+  border-color: transparent #0ea5e9 transparent transparent;
 }
 
 .qv-bulk-best {
   font-size: 0.55rem;
   font-weight: 700;
-  background: linear-gradient(180deg, #dc2626, #ef4444);
+  background: linear-gradient(180deg, #0ea5e9, #38bdf8);
   color: #ffffff;
   padding: 0.2rem 0.5rem;
   border-radius: 12px;
@@ -624,7 +624,7 @@
   font-family: "Goldman", system-ui, sans-serif;
   font-size: 1rem;
   font-weight: 700;
-  background: linear-gradient(180deg, #dc2626, #ef4444);
+  background: linear-gradient(180deg, #0ea5e9, #38bdf8);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -671,7 +671,7 @@
   font-weight: 600;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: #dc2626;
+  color: #0ea5e9;
 }
 
 .qv-qty-value {
@@ -682,14 +682,14 @@
   background: #ffffff;
   padding: 0.2rem 0.6rem;
   border-radius: 20px;
-  border: 1px solid rgba(220, 38, 38, 0.2);
+  border: 1px solid rgba(14, 165, 233, 0.2);
 }
 
 .qv-qty-total {
   font-family: "Goldman", system-ui, sans-serif;
   font-size: 0.85rem;
   font-weight: 700;
-  background: linear-gradient(180deg, #dc2626, #ef4444);
+  background: linear-gradient(180deg, #0ea5e9, #38bdf8);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -708,7 +708,7 @@
   display: flex;
   align-items: center;
   gap: 0;
-  border: 1px solid rgba(220, 38, 38, 0.35);
+  border: 1px solid rgba(14, 165, 233, 0.35);
   border-radius: 40px;
   overflow: hidden;
   background: #ffffff;
@@ -723,7 +723,7 @@
   background: transparent;
   border: none;
   cursor: pointer;
-  color: #dc2626;
+  color: #0ea5e9;
   transition:
     background 0.2s ease,
     color 0.2s ease;
@@ -736,8 +736,8 @@
 }
 
 .qv-qty-btn:hover:not(:disabled) {
-  background: rgba(220, 38, 38, 0.12);
-  color: #ef4444;
+  background: rgba(14, 165, 233, 0.12);
+  color: #38bdf8;
 }
 
 .qv-qty-btn:disabled {
@@ -769,7 +769,7 @@
   font-family: "Goldman", system-ui, sans-serif;
   font-size: 0.7rem;
   font-weight: 600;
-  color: #dc2626;
+  color: #0ea5e9;
 }
 
 .qv-rating-count {
@@ -793,10 +793,10 @@
   align-items: center;
   gap: 0.3rem;
   padding: 0.2rem 0.6rem;
-  background: rgba(220, 38, 38, 0.08);
-  border: 1px solid rgba(220, 38, 38, 0.25);
+  background: rgba(14, 165, 233, 0.08);
+  border: 1px solid rgba(14, 165, 233, 0.25);
   border-radius: 20px;
-  color: #dc2626;
+  color: #0ea5e9;
   font-family: "Goldman", system-ui, sans-serif;
   font-size: 0.55rem;
   font-weight: 500;
@@ -810,8 +810,8 @@
 }
 
 .qv-tier-clear:hover {
-  background: rgba(220, 38, 38, 0.15);
-  border-color: #dc2626;
+  background: rgba(14, 165, 233, 0.15);
+  border-color: #0ea5e9;
 }
 
 /* Tier check mark */
@@ -821,7 +821,7 @@
   justify-content: center;
   width: 20px;
   height: 20px;
-  background: linear-gradient(180deg, #dc2626, #ef4444);
+  background: linear-gradient(180deg, #0ea5e9, #38bdf8);
   border-radius: 50%;
   flex-shrink: 0;
 }
@@ -842,8 +842,8 @@
 .qv-tiers-spinner {
   width: 24px;
   height: 24px;
-  border: 2px solid rgba(220, 38, 38, 0.2);
-  border-top-color: #dc2626;
+  border: 2px solid rgba(14, 165, 233, 0.2);
+  border-top-color: #0ea5e9;
   border-radius: 50%;
   animation: qv-spin 0.8s linear infinite;
 }
@@ -857,7 +857,7 @@
 /* Qty clear button */
 .qv-qty-clear {
   background: transparent;
-  border: 1px solid rgba(220, 38, 38, 0.3);
+  border: 1px solid rgba(14, 165, 233, 0.3);
   border-radius: 50%;
   width: 22px;
   height: 22px;
@@ -865,13 +865,13 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  color: #dc2626;
+  color: #0ea5e9;
   transition: all 0.2s ease;
 }
 
 .qv-qty-clear:hover {
-  background: rgba(220, 38, 38, 0.1);
-  border-color: #dc2626;
+  background: rgba(14, 165, 233, 0.1);
+  border-color: #0ea5e9;
 }
 
 /* Ensure modal has proper max-height and scroll */

@@ -1,29 +1,27 @@
 /* ============================================================
-   WHY CHOOSE US - AUSSIE TECH SECURITY STYLE WITH SWIPER
-   RED + BLACK GRADIENTS | DARK BACKGROUND | PREMIUM CARDS
+   WHY CHOOSE US - WHITE BG | BLACK + SKY BLUE ACCENTS
+   Matching TrustBadgesSection design tokens exactly
    ============================================================ */
 
 @import url("https://fonts.googleapis.com/css2?family=Goldman:wght@400;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&display=swap");
 @import url("https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css");
 
-/* ── Variables - RED + BLACK ── */
+/* ── Variables - BLACK + SKY BLUE (matching TrustBadgesSection) ── */
 :root {
-  --wcu-red: #dc2626;
-  --wcu-red-dark: #b91c1c;
-  --wcu-red-deep: #991b1b;
-  --wcu-red-light: #ef4444;
+  --wcu-sky: #0ea5e9;
+  --wcu-sky-bright: #38bdf8;
+  --wcu-sky-glow: #7dd3fc;
   --wcu-black: #0f172a;
   --wcu-black-soft: #1e293b;
-  --wcu-red-glow: rgba(220, 38, 38, 0.25);
-  --wcu-red-border: rgba(220, 38, 38, 0.3);
-  --wcu-red-border-h: rgba(220, 38, 38, 0.6);
+  --wcu-gray: #475569;
+  --wcu-gray-light: #64748b;
 }
 
-/* ── Section - Dark Background like Aussie Tech ── */
+/* ── Section - WHITE Background like TrustBadgesSection ── */
 .wcu-section {
   position: relative;
   padding: 5rem 0 7rem;
-  background: linear-gradient(180deg, #0a0f1e 0%, #0f172a 50%, #06090f 100%);
+  background: #ffffff;
   overflow: hidden;
   isolation: isolate;
   opacity: 0;
@@ -38,21 +36,19 @@
   transform: translateY(0);
 }
 
-/* Fine grid texture */
+/* Fine grid texture - Sky Blue tint */
 .wcu-bg-texture {
   position: absolute;
   inset: 0;
-  background-image: radial-gradient(
-    circle at 1px 1px,
-    rgba(220, 38, 38, 0.06) 1px,
-    transparent 0
-  );
-  background-size: 40px 40px;
+  background-image:
+    linear-gradient(rgba(14, 165, 233, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(14, 165, 233, 0.04) 1px, transparent 1px);
+  background-size: 48px 48px;
   pointer-events: none;
   z-index: 0;
 }
 
-/* Ambient Glow - RED */
+/* Ambient Glow - Sky Blue */
 .wcu-bg-glow {
   position: absolute;
   top: -200px;
@@ -62,14 +58,14 @@
   height: 500px;
   background: radial-gradient(
     ellipse,
-    rgba(220, 38, 38, 0.15) 0%,
+    rgba(14, 165, 233, 0.06) 0%,
     transparent 70%
   );
   pointer-events: none;
   z-index: 0;
 }
 
-/* Top Border Line - RED + BLACK */
+/* Top Border Line - Black + Sky Blue */
 .wcu-section::before {
   content: "";
   position: absolute;
@@ -81,9 +77,9 @@
   background: linear-gradient(
     to right,
     transparent,
-    rgba(220, 38, 38, 0.5),
+    rgba(14, 165, 233, 0.6),
     rgba(15, 23, 42, 0.3),
-    rgba(220, 38, 38, 0.5),
+    rgba(14, 165, 233, 0.6),
     transparent
   );
   pointer-events: none;
@@ -102,9 +98,9 @@
   background: linear-gradient(
     to right,
     transparent,
-    rgba(220, 38, 38, 0.3),
+    rgba(14, 165, 233, 0.3),
     rgba(15, 23, 42, 0.2),
-    rgba(220, 38, 38, 0.3),
+    rgba(14, 165, 233, 0.3),
     transparent
   );
   pointer-events: none;
@@ -133,7 +129,10 @@
   font-size: 0.7rem;
   letter-spacing: 0.25em;
   text-transform: uppercase;
-  color: #dc2626;
+  background: linear-gradient(90deg, #0f172a 0%, #0ea5e9 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
   margin-bottom: 1rem;
   display: block;
 }
@@ -142,30 +141,41 @@
   font-family: "Cormorant Garamond", Georgia, serif;
   font-size: clamp(2.5rem, 6vw, 4rem);
   font-weight: 600;
-  color: #f1f5f9;
+  color: #0f172a;
   letter-spacing: -0.03em;
   line-height: 1.1;
   margin-bottom: 1.2rem;
 }
 
 .wcu-gradient-text {
-  background: linear-gradient(180deg, #dc2626 0%, #ef4444 40%, #0f172a 100%);
+  background: linear-gradient(90deg, #0f172a 0%, #0ea5e9 60%, #38bdf8 100%);
+  background-size: 200% auto;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  animation: wcu-shine 4s linear infinite;
+}
+
+@keyframes wcu-shine {
+  0% {
+    background-position: 0% center;
+  }
+  100% {
+    background-position: 200% center;
+  }
 }
 
 .wcu-heading-line {
-  width: 60px;
+  width: 52px;
   height: 3px;
-  background: linear-gradient(90deg, #dc2626, #0f172a, #b91c1c);
+  background: linear-gradient(90deg, #0f172a, #0ea5e9, #38bdf8);
   margin: 0 auto 1.2rem;
   border-radius: 99px;
 }
 
 .wcu-subheading {
   font-family: "Goldman", system-ui, sans-serif;
-  color: #94a3b8;
+  color: #64748b;
   font-size: 0.85rem;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -186,17 +196,16 @@
 .wcu-nav-next {
   width: 44px;
   height: 44px;
-  border: 1px solid rgba(220, 38, 38, 0.35);
+  border: 1px solid rgba(14, 165, 233, 0.3);
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(8px);
-  color: #dc2626;
+  background: #ffffff;
+  color: #0ea5e9;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
   transition: all 0.35s ease;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
 }
 
 .wcu-nav-prev svg,
@@ -208,10 +217,10 @@
 
 .wcu-nav-prev:hover,
 .wcu-nav-next:hover {
-  border-color: #dc2626;
-  background: linear-gradient(180deg, #dc2626 0%, #0f172a 100%);
+  background: linear-gradient(135deg, #0f172a 0%, #0ea5e9 100%);
+  border-color: #0ea5e9;
   color: #ffffff;
-  box-shadow: 0 6px 20px rgba(220, 38, 38, 0.3);
+  box-shadow: 0 8px 20px rgba(14, 165, 233, 0.3);
   transform: scale(1.1);
 }
 
@@ -228,11 +237,11 @@
   display: flex;
 }
 
-/* ── Card - Like Aussie Tech Security ── */
+/* ── Card - WHITE with Sky Blue accents ── */
 .wcu-card {
   position: relative;
-  background: linear-gradient(145deg, #111827, #0f172a);
-  border: 1px solid rgba(220, 38, 38, 0.15);
+  background: #ffffff;
+  border: 1px solid #e8edf5;
   border-radius: 20px;
   padding: 2rem 1.8rem 2rem;
   overflow: hidden;
@@ -241,23 +250,27 @@
   height: 100%;
   display: flex;
   flex-direction: column;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
 }
 
-/* Top accent bar - RED */
+/* Top accent bar - Black + Sky Blue */
 .wcu-card-bar {
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   height: 3px;
-  background: linear-gradient(90deg, #dc2626, #0f172a, #b91c1c);
+  background: linear-gradient(90deg, #0f172a, #0ea5e9, #38bdf8);
   opacity: 0.9;
 }
 
 .wcu-card:hover {
   transform: translateY(-10px) scale(1.02);
-  box-shadow: 0 30px 60px -10px rgba(220, 38, 38, 0.35);
-  border-color: rgba(220, 38, 38, 0.4);
+  border-color: rgba(14, 165, 233, 0.25);
+  box-shadow:
+    0 0 0 1px rgba(14, 165, 233, 0.12),
+    0 20px 50px -8px rgba(14, 165, 233, 0.2),
+    0 4px 12px rgba(15, 23, 42, 0.06);
 }
 
 /* Watermark number */
@@ -267,42 +280,56 @@
   right: 16px;
   font-size: 5rem;
   font-weight: 900;
-  color: rgba(220, 38, 38, 0.04);
+  background: linear-gradient(
+    180deg,
+    rgba(14, 165, 233, 0.1),
+    rgba(15, 23, 42, 0.05)
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
   line-height: 1;
   pointer-events: none;
   user-select: none;
   font-family: "Georgia", serif;
-  transition: color 0.4s;
+  transition: all 0.4s;
 }
 
 .wcu-card:hover .wcu-watermark {
-  color: rgba(220, 38, 38, 0.08);
+  background: linear-gradient(
+    180deg,
+    rgba(14, 165, 233, 0.15),
+    rgba(15, 23, 42, 0.08)
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
-/* Icon - TOP RED → BOTTOM BLACK Gradient */
+/* Icon - Black + Sky Blue gradient */
 .wcu-icon-wrap {
   width: 64px;
   height: 64px;
   border-radius: 18px;
-  background: linear-gradient(180deg, #dc2626 0%, #0f172a 100%);
+  background: linear-gradient(135deg, #0f172a 0%, #0ea5e9 100%);
   display: flex;
   align-items: center;
   justify-content: center;
   margin-bottom: 1.4rem;
-  box-shadow: 0 8px 24px rgba(220, 38, 38, 0.3);
+  box-shadow: 0 8px 24px rgba(14, 165, 233, 0.3);
   transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
 }
 
 .wcu-card:hover .wcu-icon-wrap {
-  transform: translateY(-4px) rotate(-6deg) scale(1.1);
-  box-shadow: 0 16px 32px rgba(220, 38, 38, 0.45);
+  transform: translateY(-6px) rotate(-8deg) scale(1.1);
+  box-shadow: 0 16px 36px rgba(14, 165, 233, 0.4);
 }
 
 .wcu-icon {
   width: 30px;
   height: 30px;
   color: #ffffff;
-  stroke-width: 1.5;
+  stroke-width: 1.8;
 }
 
 /* Card content */
@@ -314,16 +341,16 @@
 
 .wcu-card-title {
   font-family: "Goldman", system-ui, sans-serif;
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   font-weight: 700;
-  color: #f1f5f9;
+  color: #0f172a;
   margin-bottom: 0.75rem;
   letter-spacing: -0.02em;
   transition: all 0.3s ease;
 }
 
 .wcu-card:hover .wcu-card-title {
-  background: linear-gradient(180deg, #dc2626, #ef4444);
+  background: linear-gradient(90deg, #0f172a 0%, #0ea5e9 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -331,14 +358,15 @@
 
 .wcu-card-desc {
   font-family: "Goldman", system-ui, sans-serif;
-  font-size: 0.85rem;
+  font-size: 0.83rem;
+  font-weight: 500;
   line-height: 1.7;
   color: #94a3b8;
   transition: color 0.3s ease;
 }
 
 .wcu-card:hover .wcu-card-desc {
-  color: #cbd5e1;
+  color: #64748b;
 }
 
 /* Hover shine sweep */
@@ -346,19 +374,19 @@
   position: absolute;
   inset: 0;
   background: linear-gradient(
-    105deg,
-    transparent 40%,
-    rgba(255, 255, 255, 0.05) 50%,
-    transparent 60%
+    110deg,
+    transparent 30%,
+    rgba(14, 165, 233, 0.08) 50%,
+    transparent 70%
   );
-  transform: translateX(-100%);
-  transition: transform 0.6s ease;
+  transform: translateX(-100%) skewX(-10deg);
+  transition: transform 0.65s ease;
   pointer-events: none;
   z-index: 1;
 }
 
 .wcu-card:hover .wcu-shine {
-  transform: translateX(100%);
+  transform: translateX(130%) skewX(-10deg);
 }
 
 /* Bottom glow line */
@@ -371,9 +399,9 @@
   background: linear-gradient(
     90deg,
     transparent,
-    #dc2626,
+    #0ea5e9,
     #0f172a,
-    #dc2626,
+    #0ea5e9,
     transparent
   );
   opacity: 0;
@@ -400,19 +428,19 @@
   width: 18px;
   height: 2px;
   border-radius: 2px;
-  background: rgba(220, 38, 38, 0.3);
+  background: rgba(14, 165, 233, 0.3);
   cursor: pointer;
   transition: all 0.35s ease;
 }
 
 .wcu-pagination .wcu-bullet:hover {
-  background: rgba(220, 38, 38, 0.6);
+  background: linear-gradient(90deg, #0f172a, #0ea5e9);
   transform: scaleX(1.2);
 }
 
 .wcu-pagination .wcu-bullet-active {
   width: 36px;
-  background: linear-gradient(90deg, #dc2626, #0f172a, #b91c1c);
+  background: linear-gradient(90deg, #0f172a, #0ea5e9, #38bdf8);
 }
 
 /* ── RTL Support ── */
@@ -427,16 +455,22 @@
 
 [dir="rtl"] .wcu-shine {
   background: linear-gradient(
-    -105deg,
-    transparent 40%,
-    rgba(255, 255, 255, 0.05) 50%,
-    transparent 60%
+    -110deg,
+    transparent 30%,
+    rgba(14, 165, 233, 0.08) 50%,
+    transparent 70%
   );
 }
 
 [dir="rtl"] .wcu-nav-prev svg,
 [dir="rtl"] .wcu-nav-next svg {
   transform: scaleX(-1);
+}
+
+[dir="rtl"] .wcu-eyebrow {
+  background: linear-gradient(90deg, #0ea5e9 0%, #0f172a 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
 }
 
 /* ── Responsive Design ── */
@@ -550,5 +584,8 @@
   .wcu-section {
     opacity: 1;
     transform: none;
+  }
+  .wcu-gradient-text {
+    animation: none;
   }
 }

@@ -173,20 +173,15 @@ function FAQAccordionItem({
         id={`gfaq-question-${item.id}`}
       >
         <div className="gfaq-question-left">
-          {/* Number badge — matching FAQSection .faq-num */}
           <span className="gfaq-question-num" aria-hidden="true">
             {item.id}
           </span>
           <span className="gfaq-question-text">{item.question}</span>
         </div>
-
-        {/* Plus/X icon — CSS pseudo-elements handle the visual */}
         <div className="gfaq-icon-wrap" aria-hidden="true" />
       </button>
-
-      {/* Answer — CSS grid animation */}
       <div
-        className="gfaq-answer-container"
+        className="gfaq-answer"
         id={`gfaq-answer-${item.id}`}
         role="region"
         aria-labelledby={`gfaq-question-${item.id}`}
@@ -238,17 +233,11 @@ export default function GlobalFAQSection() {
       dir={isRTLMode ? "rtl" : "ltr"}
       aria-label="Frequently Asked Questions"
     >
-      {/* Radial glow (replaces grain — now top glow) */}
       <div className="gfaq-grain" aria-hidden="true" />
-
-      {/* Animated grid pattern */}
       <div className="gfaq-grid" aria-hidden="true" />
-
-      {/* Corner accent lines */}
       <div className="gfaq-corner-tl" aria-hidden="true" />
       <div className="gfaq-corner-br" aria-hidden="true" />
 
-      {/* Header */}
       <header className="gfaq-header">
         <div className="gfaq-eyebrow" aria-hidden="true">
           <span className="gfaq-eyebrow-line" />
@@ -261,7 +250,6 @@ export default function GlobalFAQSection() {
         <p className="gfaq-subtitle">{t.subtitle[lang]}</p>
       </header>
 
-      {/* FAQ Accordion */}
       <div className="gfaq-accordion-wrapper">
         <div className="gfaq-accordion-container" role="list">
           {faqsData.map((faq) => (
@@ -275,7 +263,6 @@ export default function GlobalFAQSection() {
         </div>
       </div>
 
-      {/* Bottom CTA strip */}
       <div className="gfaq-cta">
         <div className="gfaq-cta-inner">
           <p className="gfaq-cta-title">
@@ -286,7 +273,6 @@ export default function GlobalFAQSection() {
                 ? "فريقنا مستعد للمساعدة."
                 : "Unser Team ist bereit zu helfen."}
           </p>
-
           <div className="gfaq-cta-buttons">
             <Link href="/contact" className="gfaq-cta-btn gfaq-cta-btn-primary">
               <span>{t.contactBtn[lang]}</span>
@@ -300,7 +286,6 @@ export default function GlobalFAQSection() {
                 />
               </svg>
             </Link>
-
             <button
               className="gfaq-cta-btn gfaq-cta-btn-whatsapp"
               onClick={openWhatsApp}

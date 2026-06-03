@@ -1,18 +1,18 @@
 /* ============================================================
    ESTIMATED DELIVERY SECTION
-   WHITE BACKGROUND | BLACK TEXT | TOP RED → BOTTOM BLACK GRADIENT
-   Matching Explore Aurexia style
+   WHITE BACKGROUND | BLACK TEXT | SKY BLUE + BLACK GRADIENT
+   Matching GlobalFAQSection color scheme
    ============================================================ */
 
 /* ── Variables ── */
 .pd-delivery-section {
-  --pd-red: #dc2626;
-  --pd-red-dark: #b91c1c;
-  --pd-red-light: #ef4444;
+  --pd-sky: #0ea5e9;
+  --pd-sky-dark: #0284c7;
+  --pd-sky-light: #38bdf8;
   --pd-black: #0f172a;
-  --pd-red-dim: rgba(220, 38, 38, 0.06);
-  --pd-red-glow: rgba(220, 38, 38, 0.12);
-  --pd-red-border: rgba(220, 38, 38, 0.2);
+  --pd-sky-dim: rgba(14, 165, 233, 0.06);
+  --pd-sky-glow: rgba(14, 165, 233, 0.12);
+  --pd-sky-border: rgba(14, 165, 233, 0.2);
   --pd-bg: #ffffff;
   --pd-text: #0f172a;
   --pd-text-muted: #475569;
@@ -27,7 +27,7 @@
   margin: 1.5rem 0;
   padding: 1.5rem;
   background: #ffffff;
-  border: 1px solid rgba(220, 38, 38, 0.2);
+  border: 1px solid rgba(14, 165, 233, 0.2);
   border-radius: 20px;
   position: relative;
   overflow: hidden;
@@ -36,19 +36,19 @@
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
 }
 
-/* Fine grid texture - Red + Black Mixed */
+/* Fine grid texture - Sky Blue + Black Mixed */
 .pd-delivery-section .pd-grain-texture {
   position: absolute;
   inset: 0;
   background-image:
-    linear-gradient(rgba(220, 38, 38, 0.03) 1px, transparent 1px),
+    linear-gradient(rgba(14, 165, 233, 0.03) 1px, transparent 1px),
     linear-gradient(90deg, rgba(15, 23, 42, 0.02) 1px, transparent 1px);
   background-size: 48px 48px;
   pointer-events: none;
   z-index: 0;
 }
 
-/* Top red bar — slides in on hover */
+/* Top sky blue bar — slides in on hover */
 .pd-delivery-section::before {
   content: "";
   position: absolute;
@@ -59,9 +59,9 @@
   background: linear-gradient(
     90deg,
     transparent,
-    #dc2626,
-    #ef4444,
-    #dc2626,
+    #0ea5e9,
+    #38bdf8,
+    #0ea5e9,
     transparent
   );
   transform: scaleX(0);
@@ -78,12 +78,12 @@
   transform: translateY(-3px);
   box-shadow:
     0 15px 40px rgba(0, 0, 0, 0.08),
-    0 0 0 1px rgba(220, 38, 38, 0.3),
-    0 0 30px rgba(220, 38, 38, 0.05);
-  border-color: rgba(220, 38, 38, 0.35);
+    0 0 0 1px rgba(14, 165, 233, 0.3),
+    0 0 30px rgba(14, 165, 233, 0.05);
+  border-color: rgba(14, 165, 233, 0.35);
 }
 
-/* Ambient red orb behind content */
+/* Ambient sky blue orb behind content */
 .pd-delivery-orb {
   position: absolute;
   top: -60px;
@@ -92,7 +92,7 @@
   height: 220px;
   background: radial-gradient(
     circle,
-    rgba(220, 38, 38, 0.05) 0%,
+    rgba(14, 165, 233, 0.05) 0%,
     transparent 70%
   );
   border-radius: 50%;
@@ -108,7 +108,7 @@
   height: 160px;
   background: radial-gradient(
     circle,
-    rgba(220, 38, 38, 0.04) 0%,
+    rgba(14, 165, 233, 0.04) 0%,
     transparent 70%
   );
   border-radius: 50%;
@@ -136,23 +136,23 @@
 .pd-delivery-icon {
   width: 44px;
   height: 44px;
-  background: rgba(220, 38, 38, 0.08);
-  border: 1px solid rgba(220, 38, 38, 0.2);
+  background: rgba(14, 165, 233, 0.08);
+  border: 1px solid rgba(14, 165, 233, 0.2);
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #dc2626;
+  color: #0ea5e9;
   flex-shrink: 0;
   transition: all 0.35s var(--pd-ease);
 }
 
 .pd-delivery-section:hover .pd-delivery-icon {
   transform: scale(1.08);
-  background: linear-gradient(180deg, #dc2626 0%, #0f172a 100%);
+  background: linear-gradient(180deg, #0ea5e9 0%, #0f172a 100%);
   color: #ffffff;
-  box-shadow: 0 0 16px rgba(220, 38, 38, 0.25);
-  border-color: #dc2626;
+  box-shadow: 0 0 16px rgba(14, 165, 233, 0.25);
+  border-color: #0ea5e9;
 }
 
 .pd-delivery-icon svg {
@@ -200,10 +200,10 @@
 .pd-timeline-dot {
   width: 12px;
   height: 12px;
-  background: #dc2626;
+  background: #0ea5e9;
   border-radius: 50%;
   position: relative;
-  box-shadow: 0 0 8px rgba(220, 38, 38, 0.4);
+  box-shadow: 0 0 8px rgba(14, 165, 233, 0.4);
   transition: all 0.3s ease;
 }
 
@@ -215,7 +215,7 @@
   transform: translate(-50%, -50%);
   width: 24px;
   height: 24px;
-  background: rgba(220, 38, 38, 0.12);
+  background: rgba(14, 165, 233, 0.12);
   border-radius: 50%;
   opacity: 0;
   transition: opacity 0.3s ease;
@@ -226,7 +226,7 @@
 }
 
 .pd-delivery-section:hover .pd-timeline-dot {
-  box-shadow: 0 0 14px rgba(220, 38, 38, 0.6);
+  box-shadow: 0 0 14px rgba(14, 165, 233, 0.6);
   transform: scale(1.2);
 }
 
@@ -249,7 +249,7 @@
 .pd-timeline-line {
   flex: 1;
   height: 2px;
-  background: linear-gradient(90deg, #dc2626, rgba(220, 38, 38, 0.15));
+  background: linear-gradient(90deg, #0ea5e9, rgba(14, 165, 233, 0.15));
   margin: 0 0.25rem;
 }
 
@@ -259,7 +259,7 @@
   align-items: center;
   justify-content: space-between;
   padding: 0.7rem 0;
-  border-bottom: 1px dashed rgba(220, 38, 38, 0.15);
+  border-bottom: 1px dashed rgba(14, 165, 233, 0.15);
   position: relative;
   z-index: 1;
 }
@@ -282,14 +282,14 @@
 .pd-delivery-row-label svg {
   width: 15px;
   height: 15px;
-  color: #dc2626;
+  color: #0ea5e9;
 }
 
 .pd-delivery-row-value {
   font-family: var(--pd-serif);
   font-size: 0.78rem;
   font-weight: 600;
-  color: #dc2626;
+  color: #0ea5e9;
 }
 
 /* ── Status Bar ── */
@@ -299,7 +299,7 @@
   justify-content: space-between;
   margin-top: 1rem;
   padding-top: 0.8rem;
-  border-top: 1px solid rgba(220, 38, 38, 0.15);
+  border-top: 1px solid rgba(14, 165, 233, 0.15);
   flex-wrap: wrap;
   gap: 0.8rem;
   position: relative;
@@ -327,17 +327,17 @@
   font-weight: 700;
   letter-spacing: 0.08em;
   padding: 0.3rem 0.9rem;
-  background: rgba(220, 38, 38, 0.08);
+  background: rgba(14, 165, 233, 0.08);
   border-radius: 30px;
-  color: #dc2626;
-  border: 1px solid rgba(220, 38, 38, 0.2);
+  color: #0ea5e9;
+  border: 1px solid rgba(14, 165, 233, 0.2);
   transition: all 0.3s ease;
 }
 
 .pd-delivery-section:hover .pd-delivery-urgency {
-  background: rgba(220, 38, 38, 0.12);
-  border-color: rgba(220, 38, 38, 0.35);
-  box-shadow: 0 0 10px rgba(220, 38, 38, 0.1);
+  background: rgba(14, 165, 233, 0.12);
+  border-color: rgba(14, 165, 233, 0.35);
+  box-shadow: 0 0 10px rgba(14, 165, 233, 0.1);
 }
 
 /* ── Skeleton Loading ── */
@@ -373,7 +373,7 @@
     width: 2px;
     height: 20px;
     min-height: 20px;
-    background: linear-gradient(180deg, #dc2626, rgba(220, 38, 38, 0.15));
+    background: linear-gradient(180deg, #0ea5e9, rgba(14, 165, 233, 0.15));
   }
   .pd-timeline-node {
     flex-direction: row;

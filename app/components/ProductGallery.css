@@ -1,16 +1,33 @@
-/* ── CSS Variables: Red + Black Theme (inherits from product-detail.css :root) ── */
+/* ── CSS Variables: Sky Blue + Black Theme (Matching Contact Page) ── */
 .pg-gallery,
 .pg-lightbox {
-  --pd-red: #dc2626;
-  --pd-red-dark: #b91c1c;
-  --pd-red-light: #ef4444;
+  --pd-sky: #0ea5e9;
+  --pd-sky-dark: #0284c7;
+  --pd-sky-light: #38bdf8;
   --pd-black: #0f172a;
-  --pd-border: rgba(220, 38, 38, 0.18);
-  --pd-border-hover: rgba(220, 38, 38, 0.35);
+  --pd-black-soft: #1e293b;
+  --pd-border: rgba(14, 165, 233, 0.18);
+  --pd-border-hover: rgba(14, 165, 233, 0.35);
+
+  /* Gradient variables from Contact Page */
+  --pg-gradient-primary: linear-gradient(180deg, #0ea5e9 0%, #0f172a 100%);
+  --pg-gradient-accent: linear-gradient(
+    90deg,
+    #0f172a 0%,
+    #0ea5e9 60%,
+    #38bdf8 100%
+  );
+  --pg-gradient-sky: linear-gradient(180deg, #0ea5e9 0%, #38bdf8 100%);
+  --pg-gradient-bg: radial-gradient(
+    ellipse,
+    rgba(14, 165, 233, 0.07) 0%,
+    rgba(14, 165, 233, 0.03) 35%,
+    transparent 70%
+  );
 }
 
 /* ============================================================
-   PRODUCT GALLERY - Lightbox & Swiper
+   PRODUCT GALLERY - Lightbox & Swiper with Enhanced Gradients
    ============================================================ */
 
 /* ── CSS Variables (inherits from root) ── */
@@ -21,6 +38,24 @@
   width: 100%;
   overflow: hidden;
   box-sizing: border-box;
+  position: relative;
+  isolation: isolate;
+}
+
+/* Enhanced Gallery Background with Gradient Texture */
+.pg-gallery::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--pg-gradient-bg);
+  opacity: 0;
+  transition: opacity 0.6s ease;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.pg-gallery:hover::before {
+  opacity: 1;
 }
 
 /* Main image viewer */
@@ -28,12 +63,12 @@
   position: relative;
   aspect-ratio: 1 / 1;
   background: #ffffff;
-  border: 1px solid rgba(220, 38, 38, 0.18);
+  border: 1px solid rgba(14, 165, 233, 0.18);
   border-radius: 20px;
   overflow: hidden;
   cursor: default;
   box-shadow:
-    0 4px 24px rgba(220, 38, 38, 0.08),
+    0 4px 24px rgba(14, 165, 233, 0.08),
     0 1px 4px rgba(0, 0, 0, 0.04);
   user-select: none;
   -webkit-user-select: none;
@@ -44,22 +79,36 @@
 }
 
 .pg-main-img-wrap:hover {
-  border-color: rgba(220, 38, 38, 0.35);
+  border-color: rgba(14, 165, 233, 0.35);
   box-shadow:
-    0 8px 32px rgba(220, 38, 38, 0.12),
+    0 8px 32px rgba(14, 165, 233, 0.12),
     0 2px 8px rgba(0, 0, 0, 0.06);
 }
 
-/* Red → transparent gradient overlay — top-left accent */
+/* Sky Blue → transparent gradient overlay — top-left accent */
 .pg-main-img-wrap::before {
   content: "";
   position: absolute;
   inset: 0;
   background: linear-gradient(
     135deg,
-    rgba(220, 38, 38, 0.05) 0%,
+    rgba(14, 165, 233, 0.05) 0%,
     rgba(15, 23, 42, 0.02) 40%,
     transparent 65%
+  );
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* Enhanced gradient overlay for depth */
+.pg-main-img-wrap .gradient-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    45deg,
+    rgba(14, 165, 233, 0.03) 0%,
+    rgba(14, 165, 233, 0.02) 50%,
+    transparent 100%
   );
   z-index: 1;
   pointer-events: none;
@@ -108,7 +157,7 @@
   }
 }
 
-/* ── EXPAND BUTTON (bottom-right of main image) ── */
+/* ── EXPAND BUTTON (bottom-right of main image) with gradient ── */
 .pg-expand-btn {
   position: absolute;
   bottom: 0.9rem;
@@ -117,15 +166,15 @@
   width: 42px;
   height: 42px;
   background: rgba(255, 255, 255, 0.95);
-  border: 1px solid rgba(220, 38, 38, 0.25);
+  border: 1px solid rgba(14, 165, 233, 0.25);
   border-radius: 12px;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--pd-red-dark, #b91c1c);
+  color: var(--pd-sky-dark, #0284c7);
   backdrop-filter: blur(12px);
-  box-shadow: 0 4px 16px rgba(220, 38, 38, 0.08);
+  box-shadow: 0 4px 16px rgba(14, 165, 233, 0.08);
   transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
   opacity: 0;
 }
@@ -136,10 +185,10 @@
 }
 
 .pg-expand-btn:hover {
-  background: var(--pd-red, #dc2626) !important;
-  border-color: var(--pd-red, #dc2626) !important;
+  background: var(--pg-gradient-primary) !important;
+  border-color: var(--pd-sky, #0ea5e9) !important;
   color: #fff !important;
-  box-shadow: 0 6px 24px rgba(220, 38, 38, 0.4) !important;
+  box-shadow: 0 6px 24px rgba(14, 165, 233, 0.4) !important;
   transform: scale(1.12) !important;
 }
 
@@ -158,19 +207,22 @@
   height: 17px;
 }
 
-/* Image counter */
+/* Image counter with gradient text */
 .pg-img-counter {
   position: absolute;
   top: 1rem;
   left: 1rem;
   background: rgba(255, 255, 255, 0.9);
-  border: 1px solid var(--pd-border, rgba(220, 38, 38, 0.18));
+  border: 1px solid var(--pd-border, rgba(14, 165, 233, 0.18));
   backdrop-filter: blur(10px);
   padding: 0.35rem 0.6rem;
   font-family: var(--pd-sans, "Goldman", "Josefin Sans", sans-serif);
   font-size: 0.5rem;
   letter-spacing: 0.15em;
-  color: var(--pd-red-dark, #b91c1c);
+  background: var(--pg-gradient-primary);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
   border-radius: 30px;
   z-index: 2;
 }
@@ -217,7 +269,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--pd-border-hover, rgba(220, 38, 38, 0.35));
+  color: var(--pd-border-hover, rgba(14, 165, 233, 0.35));
 }
 
 .pg-img-placeholder svg {
@@ -247,7 +299,7 @@
   gap: 6px;
 }
 
-/* Nav buttons - fixed size, never changes */
+/* Nav buttons with gradient hover */
 .pg-thumb-nav {
   flex: 0 0 28px;
   width: 28px;
@@ -255,25 +307,25 @@
   min-width: 28px;
   max-width: 28px;
   border-radius: 50%;
-  border: 1px solid rgba(220, 38, 38, 0.3);
+  border: 1px solid rgba(14, 165, 233, 0.3);
   background: rgba(255, 255, 255, 0.9);
-  color: var(--pd-red-dark, #b91c1c);
+  color: var(--pd-sky-dark, #0284c7);
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
   transition: all 0.2s;
   padding: 0;
-  box-shadow: 0 2px 8px rgba(220, 38, 38, 0.08);
+  box-shadow: 0 2px 8px rgba(14, 165, 233, 0.08);
   backdrop-filter: blur(8px);
 }
 
 .pg-thumb-nav:hover {
-  background: var(--pd-red, #dc2626);
-  border-color: var(--pd-red, #dc2626);
+  background: var(--pg-gradient-primary);
+  border-color: var(--pd-sky, #0ea5e9);
   color: #ffffff;
   transform: scale(1.1);
-  box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3);
+  box-shadow: 0 4px 12px rgba(14, 165, 233, 0.3);
 }
 
 .pg-thumb-nav svg {
@@ -305,7 +357,7 @@
   justify-content: center;
 }
 
-/* Individual thumb button - FIXED SIZE, NO MOVEMENT */
+/* Individual thumb button with gradient active state */
 .pg-thumb {
   display: flex;
   align-items: center;
@@ -314,7 +366,7 @@
   height: 70px;
   border-radius: 10px;
   overflow: hidden;
-  border: 2px solid rgba(220, 38, 38, 0.2);
+  border: 2px solid rgba(14, 165, 233, 0.2);
   cursor: pointer;
   background: rgba(255, 255, 255, 0.04);
   padding: 0;
@@ -325,16 +377,21 @@
 }
 
 .pg-thumb:hover {
-  border-color: rgba(220, 38, 38, 0.6);
+  border-color: rgba(14, 165, 233, 0.6);
   opacity: 0.9;
   transform: translateY(-2px);
 }
 
 .pg-thumb.active {
-  border-color: #dc2626;
+  border-color: #0ea5e9;
   opacity: 1;
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(220, 38, 38, 0.35);
+  box-shadow: 0 4px 12px rgba(14, 165, 233, 0.35);
+  background: var(--pg-gradient-primary);
+}
+
+.pg-thumb.active img {
+  opacity: 0.95;
 }
 
 .pg-thumb img {
@@ -345,7 +402,7 @@
   pointer-events: none;
 }
 
-/* Variant image indicator dot */
+/* Variant image indicator dot with gradient */
 .pg-thumb-variant-dot {
   position: absolute;
   bottom: 4px;
@@ -353,7 +410,7 @@
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background: var(--pd-red, #dc2626);
+  background: var(--pg-gradient-primary);
   border: 1.5px solid #fff;
   pointer-events: none;
   z-index: 2;
@@ -361,13 +418,13 @@
 
 /* Variant thumb highlight */
 .pg-thumb--variant {
-  border-color: rgba(220, 38, 38, 0.4);
+  border-color: rgba(14, 165, 233, 0.4);
 }
 .pg-thumb--variant.active {
-  border-color: #dc2626;
+  border-color: #0ea5e9;
 }
 
-/* Separator "Gallery" label above first main image */
+/* Separator "Gallery" label with gradient */
 .pg-thumb-separator-label {
   position: absolute;
   top: -18px;
@@ -377,7 +434,10 @@
   font-weight: 700;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: rgba(220, 38, 38, 0.65);
+  background: var(--pg-gradient-accent);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
   white-space: nowrap;
   pointer-events: none;
 }
@@ -446,15 +506,15 @@
   width: 44px;
   height: 44px;
   background: rgba(255, 255, 255, 0.95);
-  border: 1px solid rgba(220, 38, 38, 0.25);
+  border: 1px solid rgba(14, 165, 233, 0.25);
   border-radius: 50%;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--pd-red-dark, #b91c1c);
+  color: var(--pd-sky-dark, #0284c7);
   backdrop-filter: blur(12px);
-  box-shadow: 0 4px 16px rgba(220, 38, 38, 0.1);
+  box-shadow: 0 4px 16px rgba(14, 165, 233, 0.1);
   transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
   opacity: 0;
   pointer-events: none;
@@ -474,10 +534,10 @@
 }
 
 .pg-swiper-arrow:hover {
-  background: var(--pd-red, #dc2626);
-  border-color: var(--pd-red, #dc2626);
+  background: var(--pg-gradient-primary);
+  border-color: var(--pd-sky, #0ea5e9);
   color: white;
-  box-shadow: 0 8px 30px rgba(220, 38, 38, 0.35);
+  box-shadow: 0 8px 30px rgba(14, 165, 233, 0.35);
   transform: translateY(-50%) scale(1.1);
 }
 
@@ -487,7 +547,7 @@
 }
 
 /* ============================================================
-   LUXURY LIGHTBOX
+   LUXURY LIGHTBOX WITH ENHANCED GRADIENTS
    ============================================================ */
 
 .pg-lightbox {
@@ -501,6 +561,17 @@
   backdrop-filter: blur(20px) saturate(0.4);
   animation: pg-lb-in 0.4s cubic-bezier(0.22, 1, 0.36, 1) both;
   overflow: hidden;
+}
+
+/* Lightbox gradient overlay */
+.pg-lightbox::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--pg-gradient-bg);
+  opacity: 0.3;
+  pointer-events: none;
+  z-index: 0;
 }
 
 @keyframes pg-lb-in {
@@ -529,7 +600,7 @@
   }
 }
 
-/* Lightbox Header Bar */
+/* Lightbox Header Bar with gradient */
 .pg-lb-header {
   display: flex;
   align-items: center;
@@ -567,8 +638,8 @@
 }
 
 .pg-lb-dot.active {
-  background: var(--pd-red, #dc2626);
-  box-shadow: 0 0 8px rgba(220, 38, 38, 0.6);
+  background: var(--pg-gradient-primary);
+  box-shadow: 0 0 8px rgba(14, 165, 233, 0.6);
 }
 
 .pg-lb-dot:hover {
@@ -579,12 +650,15 @@
   font-family: var(--pd-sans, "Goldman", "Josefin Sans", sans-serif);
   font-size: 0.55rem;
   letter-spacing: 0.22em;
-  color: rgba(255, 255, 255, 0.6);
+  background: var(--pg-gradient-accent);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
   white-space: nowrap;
   text-transform: uppercase;
 }
 
-/* Zoom Controls */
+/* Zoom Controls with gradient */
 .pg-lb-zoom-controls {
   display: flex;
   align-items: center;
@@ -611,8 +685,8 @@
 }
 
 .pg-lb-zoom-btn:hover {
-  color: var(--pd-red, #dc2626);
-  background: rgba(220, 38, 38, 0.12);
+  background: var(--pg-gradient-primary);
+  color: white;
 }
 
 .pg-lb-zoom-btn svg {
@@ -624,7 +698,10 @@
   font-family: var(--pd-sans, "Goldman", "Josefin Sans", sans-serif);
   font-size: 0.52rem;
   letter-spacing: 0.1em;
-  color: rgba(255, 255, 255, 0.5);
+  background: var(--pg-gradient-accent);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
   min-width: 36px;
   text-align: center;
 }
@@ -646,9 +723,9 @@
 }
 
 .pg-lightbox-close:hover {
-  border-color: var(--pd-red, #dc2626);
-  color: var(--pd-red, #dc2626);
-  background: rgba(220, 38, 38, 0.12);
+  border-color: var(--pd-sky, #0ea5e9);
+  background: var(--pg-gradient-primary);
+  color: #ffffff;
   transform: rotate(90deg);
 }
 
@@ -682,6 +759,7 @@
   will-change: transform;
   z-index: 6;
   pointer-events: none;
+  transition: transform 0.1s ease-out;
 }
 
 .pg-lb-img-container img {
@@ -695,6 +773,7 @@
   animation: pg-lb-img-in 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
   user-select: none;
   -webkit-user-select: none;
+  transition: transform 0.1s ease-out;
 }
 
 @keyframes pg-lb-img-in {
@@ -708,7 +787,7 @@
   }
 }
 
-/* Lightbox Nav Arrows */
+/* Lightbox Nav Arrows with gradient */
 .pg-lb-arrow {
   position: absolute;
   top: 50%;
@@ -729,10 +808,10 @@
 }
 
 .pg-lb-arrow:hover {
-  background: var(--pd-red, #dc2626);
-  border-color: var(--pd-red, #dc2626);
-  color: #111;
-  box-shadow: 0 0 40px rgba(220, 38, 38, 0.4);
+  background: var(--pg-gradient-primary);
+  border-color: var(--pd-sky, #0ea5e9);
+  color: #ffffff;
+  box-shadow: 0 0 40px rgba(14, 165, 233, 0.4);
   transform: translateY(-50%) scale(1.08);
 }
 
@@ -749,7 +828,7 @@
   right: 1.5rem;
 }
 
-/* Lightbox Thumbnail Strip */
+/* Lightbox Thumbnail Strip with gradient background */
 .pg-lb-thumbs-wrap {
   position: fixed;
   bottom: 0;
@@ -786,7 +865,7 @@
   height: 68px;
   border-radius: 6px;
   overflow: hidden;
-  border: 2px solid rgba(220, 38, 38, 0.2);
+  border: 2px solid rgba(14, 165, 233, 0.2);
   cursor: pointer;
   background: rgba(255, 255, 255, 0.04);
   padding: 0;
@@ -795,16 +874,17 @@
 }
 
 .pg-lb-thumb:hover {
-  border-color: rgba(220, 38, 38, 0.6);
+  border-color: rgba(14, 165, 233, 0.6);
   opacity: 0.85;
   transform: translateY(-2px);
 }
 
 .pg-lb-thumb.active {
-  border-color: #dc2626;
+  border-color: #0ea5e9;
   opacity: 1;
   transform: translateY(-3px);
-  box-shadow: 0 4px 16px rgba(220, 38, 38, 0.4);
+  box-shadow: 0 4px 16px rgba(14, 165, 233, 0.4);
+  background: var(--pg-gradient-primary);
 }
 
 .pg-lb-thumb img {
@@ -821,7 +901,10 @@
   left: 4px;
   font-size: 9px;
   font-weight: 600;
-  color: rgba(255, 255, 255, 0.7);
+  background: var(--pg-gradient-accent);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
   line-height: 1;
   pointer-events: none;
 }
@@ -833,17 +916,17 @@
   width: 7px;
   height: 7px;
   border-radius: 50%;
-  background: #dc2626;
+  background: var(--pg-gradient-primary);
   border: 1.5px solid #fff;
   pointer-events: none;
   z-index: 2;
 }
 
 .pg-lb-thumb--variant {
-  border-color: rgba(220, 38, 38, 0.4);
+  border-color: rgba(14, 165, 233, 0.4);
 }
 .pg-lb-thumb--variant.active {
-  border-color: #dc2626;
+  border-color: #0ea5e9;
 }
 
 .pg-lb-thumb-nav {
@@ -851,9 +934,9 @@
   width: 30px;
   height: 30px;
   border-radius: 50%;
-  border: 1px solid rgba(220, 38, 38, 0.35);
+  border: 1px solid rgba(14, 165, 233, 0.35);
   background: rgba(255, 255, 255, 0.08);
-  color: #ef4444;
+  color: #0ea5e9;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -865,11 +948,11 @@
 }
 
 .pg-lb-thumb-nav:hover {
-  background: var(--pd-red, #dc2626);
-  border-color: var(--pd-red, #dc2626);
+  background: var(--pg-gradient-primary);
+  border-color: var(--pd-sky, #0ea5e9);
   color: #ffffff;
   transform: scale(1.12);
-  box-shadow: 0 4px 12px rgba(220, 38, 38, 0.35);
+  box-shadow: 0 4px 12px rgba(14, 165, 233, 0.35);
 }
 
 .pg-lb-thumb-nav svg {
@@ -899,7 +982,7 @@
   }
 }
 
-/* Swipe down hint */
+/* Swipe down hint with gradient */
 .pg-lb-swipe-hint {
   position: absolute;
   bottom: 2rem;
@@ -911,7 +994,10 @@
   font-family: var(--pd-sans, "Goldman", "Josefin Sans", sans-serif);
   font-size: 0.55rem;
   letter-spacing: 0.1em;
-  color: rgba(255, 255, 255, 0.7);
+  background: var(--pg-gradient-accent);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
   border-radius: 30px;
   z-index: 25;
   display: flex;
@@ -940,6 +1026,33 @@
     transform: translateX(-50%) translateY(-10px);
     visibility: hidden;
   }
+}
+
+/* ============================================================
+   ZOOMABLE IMAGE CURSOR & OVERLAY with gradient
+   ============================================================ */
+
+.pg-main-img-wrap.zoomable {
+  cursor: zoom-in;
+}
+
+.pg-main-img-wrap.zoomed {
+  cursor: grab;
+}
+
+.pg-main-img-wrap.zoomed:active {
+  cursor: grabbing;
+}
+
+/* Zoom lens overlay effect on hover with gradient */
+.pg-main-img-wrap.zoomable::before {
+  background: radial-gradient(
+    circle at var(--zoom-x, 50%) var(--zoom-y, 50%),
+    rgba(14, 165, 233, 0.08) 0%,
+    rgba(14, 165, 233, 0.04) 30%,
+    transparent 70%
+  );
+  transition: background 0.1s ease;
 }
 
 /* ============================================================
@@ -1006,5 +1119,167 @@
     max-width: 100%;
     width: 100%;
     overflow: hidden;
+  }
+}
+
+/* ============================================================
+   ADDITIONAL GRADIENT ANIMATIONS & EFFECTS
+   ============================================================ */
+
+/* Shine animation for active elements */
+@keyframes pg-gradient-shine {
+  0% {
+    background-position: 0% center;
+  }
+  100% {
+    background-position: 200% center;
+  }
+}
+
+/* Apply shine to gradient text elements */
+.pg-img-counter,
+.pg-thumb-separator-label,
+.pg-lb-counter,
+.pg-lb-zoom-level,
+.pg-lb-thumb-num,
+.pg-lb-swipe-hint {
+  background-size: 200% auto;
+  animation: pg-gradient-shine 4s linear infinite;
+}
+
+/* Smooth gradient transition for interactive elements */
+.pg-expand-btn,
+.pg-thumb-nav,
+.pg-swiper-arrow,
+.pg-lb-arrow,
+.pg-lb-thumb-nav,
+.pg-lightbox-close,
+.pg-lb-zoom-btn {
+  position: relative;
+  overflow: hidden;
+}
+
+/* Ripple effect on buttons with gradient */
+.pg-expand-btn::before,
+.pg-thumb-nav::before,
+.pg-swiper-arrow::before,
+.pg-lb-arrow::before,
+.pg-lb-thumb-nav::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--pg-gradient-primary);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: -1;
+  border-radius: inherit;
+}
+
+.pg-expand-btn:hover::before,
+.pg-thumb-nav:hover::before,
+.pg-swiper-arrow:hover::before,
+.pg-lb-arrow:hover::before,
+.pg-lb-thumb-nav:hover::before {
+  opacity: 1;
+}
+
+.pg-expand-btn:hover,
+.pg-thumb-nav:hover,
+.pg-swiper-arrow:hover,
+.pg-lb-arrow:hover,
+.pg-lb-thumb-nav:hover {
+  background: transparent;
+  color: white;
+  position: relative;
+  z-index: 1;
+}
+
+.pg-expand-btn:hover svg,
+.pg-thumb-nav:hover svg,
+.pg-swiper-arrow:hover svg,
+.pg-lb-arrow:hover svg,
+.pg-lb-thumb-nav:hover svg {
+  position: relative;
+  z-index: 2;
+  color: white;
+}
+
+/* Glass morphism enhancement with gradient tint */
+.pg-main-img-wrap,
+.pg-thumb,
+.pg-lb-thumb {
+  position: relative;
+  overflow: hidden;
+}
+
+.pg-main-img-wrap::after,
+.pg-thumb::after,
+.pg-lb-thumb::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    transparent 0%,
+    rgba(14, 165, 233, 0.05) 50%,
+    transparent 100%
+  );
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.pg-main-img-wrap:hover::after,
+.pg-thumb:hover::after,
+.pg-lb-thumb:hover::after {
+  opacity: 1;
+}
+
+/* Active state gradient glow */
+.pg-thumb.active,
+.pg-lb-thumb.active {
+  position: relative;
+}
+
+.pg-thumb.active::before,
+.pg-lb-thumb.active::before {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  background: var(--pg-gradient-primary);
+  border-radius: 12px;
+  opacity: 0.6;
+  z-index: -1;
+  filter: blur(4px);
+  transition: opacity 0.3s ease;
+}
+
+.pg-lb-thumb.active::before {
+  border-radius: 8px;
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .pg-img-counter,
+  .pg-thumb-separator-label,
+  .pg-lb-counter,
+  .pg-lb-zoom-level,
+  .pg-lb-thumb-num,
+  .pg-lb-swipe-hint {
+    animation: none;
+  }
+
+  .pg-expand-btn::before,
+  .pg-thumb-nav::before,
+  .pg-swiper-arrow::before,
+  .pg-lb-arrow::before,
+  .pg-lb-thumb-nav::before {
+    transition: none;
+  }
+
+  .pg-thumb.active::before,
+  .pg-lb-thumb.active::before {
+    filter: none;
   }
 }

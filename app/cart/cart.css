@@ -1,26 +1,26 @@
 /* ============================================================
    CART PAGE · LUXURY DESIGN
-   WHITE BACKGROUND | BLACK TEXT | TOP RED → BOTTOM BLACK GRADIENT
-   Matching Explore Aurexia style
+   WHITE BACKGROUND | BLACK TEXT | SKY BLUE GRADIENT ACCENTS
+   Matching GlobalFAQSection color scheme
    ============================================================ */
 
 @import url("https://fonts.googleapis.com/css2?family=Goldman:wght@400;700&display=swap");
 
 :root {
-  --cart-red: #dc2626;
-  --cart-red-dark: #b91c1c;
-  --cart-red-light: #ef4444;
-  --cart-red-soft: rgba(220, 38, 38, 0.08);
-  --cart-red-glow: rgba(220, 38, 38, 0.12);
+  --cart-sky: #0ea5e9;
+  --cart-sky-dark: #0284c7;
+  --cart-sky-light: #38bdf8;
+  --cart-sky-soft: rgba(14, 165, 233, 0.08);
+  --cart-sky-glow: rgba(14, 165, 233, 0.12);
   --cart-bg: #ffffff;
   --cart-card-bg: #ffffff;
   --cart-dark: #0f172a;
-  --cart-border: rgba(220, 38, 38, 0.18);
-  --cart-border-light: rgba(220, 38, 38, 0.08);
+  --cart-border: rgba(14, 165, 233, 0.18);
+  --cart-border-light: rgba(14, 165, 233, 0.08);
   --cart-white: #ffffff;
   --cart-grey: #475569;
   --cart-grey-light: #64748b;
-  --cart-success: #dc2626;
+  --cart-success: #0ea5e9;
   --cart-warning: #f59e0b;
   --cart-danger: #ff6b6b;
   --cart-serif: "Goldman", system-ui, sans-serif;
@@ -38,12 +38,12 @@
   isolation: isolate;
 }
 
-/* Fine grid texture - Red + Black Mixed */
+/* Fine grid texture - Sky Blue Mixed */
 .cart-grain {
   position: absolute;
   inset: 0;
   background-image:
-    linear-gradient(rgba(220, 38, 38, 0.04) 1px, transparent 1px),
+    linear-gradient(rgba(14, 165, 233, 0.04) 1px, transparent 1px),
     linear-gradient(90deg, rgba(15, 23, 42, 0.03) 1px, transparent 1px);
   background-size: 48px 48px;
   pointer-events: none;
@@ -60,7 +60,7 @@
   height: 800px;
   background: radial-gradient(
     circle,
-    rgba(220, 38, 38, 0.04) 0%,
+    rgba(14, 165, 233, 0.04) 0%,
     transparent 70%
   );
   pointer-events: none;
@@ -77,7 +77,7 @@
   }
 }
 
-/* Top Border Line - RED + BLACK */
+/* Top Border Line - SKY BLUE */
 .cart-root::before {
   content: "";
   position: absolute;
@@ -89,9 +89,9 @@
   background: linear-gradient(
     to right,
     transparent,
-    rgba(220, 38, 38, 0.5),
+    rgba(14, 165, 233, 0.5),
     rgba(15, 23, 42, 0.2),
-    rgba(220, 38, 38, 0.5),
+    rgba(14, 165, 233, 0.5),
     transparent
   );
   pointer-events: none;
@@ -114,13 +114,13 @@
   background: linear-gradient(
     to bottom,
     transparent,
-    rgba(220, 38, 38, 0.08),
-    rgba(220, 38, 38, 0.08),
+    rgba(14, 165, 233, 0.08),
+    rgba(14, 165, 233, 0.08),
     transparent
   );
 }
 
-/* RED Corners */
+/* SKY BLUE Corners */
 .cart-corner {
   position: fixed;
   width: 32px;
@@ -132,15 +132,15 @@
 .cart-corner--tl {
   top: 2rem;
   left: 2rem;
-  border-top: 2px solid rgba(220, 38, 38, 0.3);
-  border-left: 2px solid rgba(220, 38, 38, 0.3);
+  border-top: 2px solid rgba(14, 165, 233, 0.3);
+  border-left: 2px solid rgba(14, 165, 233, 0.3);
 }
 
 .cart-corner--tr {
   top: 2rem;
   right: 2rem;
-  border-top: 2px solid rgba(220, 38, 38, 0.3);
-  border-right: 2px solid rgba(220, 38, 38, 0.3);
+  border-top: 2px solid rgba(14, 165, 233, 0.3);
+  border-right: 2px solid rgba(14, 165, 233, 0.3);
 }
 
 /* Main Container */
@@ -180,18 +180,18 @@
   font-weight: 600;
   letter-spacing: 0.35em;
   text-transform: uppercase;
-  color: #dc2626;
+  color: #0ea5e9;
   margin-bottom: 1rem;
 }
 
 .cart-ey-line {
   width: 30px;
   height: 1px;
-  background: linear-gradient(90deg, var(--cart-red), transparent);
+  background: linear-gradient(90deg, var(--cart-sky), transparent);
 }
 
 .cart-ey-line:last-child {
-  background: linear-gradient(90deg, transparent, var(--cart-red));
+  background: linear-gradient(90deg, transparent, var(--cart-sky));
 }
 
 .cart-page-title {
@@ -204,16 +204,16 @@
 
 .cart-page-title em {
   font-style: italic;
-  background: linear-gradient(180deg, #dc2626 0%, #ef4444 50%, #0f172a 100%);
+  background: linear-gradient(180deg, #0ea5e9 0%, #38bdf8 50%, #0f172a 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
 }
 
-/* Free Shipping Banner - RED */
+/* Free Shipping Banner - SKY BLUE */
 .cart-ship-bar {
-  background: rgba(220, 38, 38, 0.05);
-  border: 1px solid rgba(220, 38, 38, 0.2);
+  background: rgba(14, 165, 233, 0.05);
+  border: 1px solid rgba(14, 165, 233, 0.2);
   border-radius: 16px;
   padding: 1rem 1.5rem;
   margin-bottom: 2.5rem;
@@ -224,10 +224,10 @@
 .cart-ship-bar--done {
   background: linear-gradient(
     135deg,
-    rgba(220, 38, 38, 0.08),
-    rgba(220, 38, 38, 0.03)
+    rgba(14, 165, 233, 0.08),
+    rgba(14, 165, 233, 0.03)
   );
-  border-color: rgba(220, 38, 38, 0.3);
+  border-color: rgba(14, 165, 233, 0.3);
 }
 
 .cart-ship-text {
@@ -242,7 +242,7 @@
 }
 
 .cart-ship-text--done {
-  color: #dc2626;
+  color: #0ea5e9;
 }
 
 /* Main Layout */
@@ -275,7 +275,7 @@
   display: flex;
   flex-direction: column;
   gap: 0;
-  border: 1px solid rgba(220, 38, 38, 0.2);
+  border: 1px solid rgba(14, 165, 233, 0.2);
   border-radius: 20px;
   overflow: hidden;
   background: #ffffff;
@@ -289,7 +289,7 @@
   gap: 1.25rem;
   padding: 1.5rem;
   background: #ffffff;
-  border-bottom: 1px solid rgba(220, 38, 38, 0.08);
+  border-bottom: 1px solid rgba(14, 165, 233, 0.08);
   position: relative;
   transition: all var(--cart-ease);
 }
@@ -310,7 +310,7 @@
   flex-shrink: 0;
   border-radius: 14px;
   background: #f8fafc;
-  border: 1px solid rgba(220, 38, 38, 0.2);
+  border: 1px solid rgba(14, 165, 233, 0.2);
   overflow: hidden;
   transition: all var(--cart-ease);
 }
@@ -323,9 +323,9 @@
 }
 
 .cart-item:hover .cart-item-img-wrap {
-  border-color: #dc2626;
+  border-color: #0ea5e9;
   transform: scale(1.02);
-  box-shadow: 0 4px 12px rgba(220, 38, 38, 0.1);
+  box-shadow: 0 4px 12px rgba(14, 165, 233, 0.1);
 }
 
 .cart-item:hover .cart-item-img {
@@ -338,7 +338,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  color: rgba(220, 38, 38, 0.3);
+  color: rgba(14, 165, 233, 0.3);
 }
 
 .cart-item-img-placeholder svg {
@@ -358,7 +358,7 @@
   font-weight: 600;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  background: linear-gradient(180deg, #dc2626, #ef4444);
+  background: linear-gradient(180deg, #0ea5e9, #38bdf8);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -397,9 +397,9 @@
 }
 
 .cart-item-stock.in {
-  background: rgba(220, 38, 38, 0.08);
-  color: #dc2626;
-  border: 1px solid rgba(220, 38, 38, 0.3);
+  background: rgba(14, 165, 233, 0.08);
+  color: #0ea5e9;
+  border: 1px solid rgba(14, 165, 233, 0.3);
 }
 
 .cart-item-stock.low {
@@ -423,20 +423,20 @@
   flex-wrap: wrap;
 }
 
-/* Quantity Selector - RED */
+/* Quantity Selector - SKY BLUE */
 .cart-qty {
   display: flex;
   align-items: center;
-  background: rgba(220, 38, 38, 0.05);
-  border: 1px solid rgba(220, 38, 38, 0.2);
+  background: rgba(14, 165, 233, 0.05);
+  border: 1px solid rgba(14, 165, 233, 0.2);
   border-radius: 30px;
   overflow: hidden;
   transition: all var(--cart-ease);
 }
 
 .cart-qty:hover {
-  border-color: #dc2626;
-  box-shadow: 0 2px 8px rgba(220, 38, 38, 0.1);
+  border-color: #0ea5e9;
+  box-shadow: 0 2px 8px rgba(14, 165, 233, 0.1);
 }
 
 .cart-qty-btn {
@@ -458,11 +458,11 @@
 }
 
 .cart-qty-btn:hover:not(:disabled) {
-  color: #dc2626;
-  background: rgba(220, 38, 38, 0.1);
+  color: #0ea5e9;
+  background: rgba(14, 165, 233, 0.1);
 }
 
-/* quantity=1 pe minus → trash icon — red warning state */
+/* quantity=1 pe minus → trash icon — warning state */
 .cart-qty-btn--delete {
   color: #dc2626 !important;
 }
@@ -487,24 +487,24 @@
   text-align: center;
 }
 
-/* Item Price - RED */
+/* Item Price - SKY BLUE */
 .cart-item-price {
   font-family: var(--cart-serif);
   font-size: 1.15rem;
   font-weight: 700;
-  background: linear-gradient(180deg, #dc2626, #ef4444);
+  background: linear-gradient(180deg, #0ea5e9, #38bdf8);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
   margin: 0;
 }
 
-/* Remove Button - RED */
+/* Remove Button */
 .cart-item-remove {
   width: 34px;
   height: 34px;
   background: transparent;
-  border: 1px solid rgba(220, 38, 38, 0.2);
+  border: 1px solid rgba(239, 68, 68, 0.2);
   border-radius: 50%;
   color: #ff6b6b;
   cursor: pointer;
@@ -527,7 +527,7 @@
   transform: rotate(90deg);
 }
 
-/* Continue Shopping Link - RED */
+/* Continue Shopping Link - SKY BLUE */
 .cart-continue-link {
   display: inline-flex;
   align-items: center;
@@ -544,15 +544,15 @@
 }
 
 .cart-continue-link:hover {
-  color: #dc2626;
+  color: #0ea5e9;
   gap: 1rem;
   transform: translateX(4px);
 }
 
-/* Summary Card - RED */
+/* Summary Card - SKY BLUE */
 .cart-summary-card {
   background: #ffffff;
-  border: 1px solid rgba(220, 38, 38, 0.2);
+  border: 1px solid rgba(14, 165, 233, 0.2);
   border-radius: 20px;
   padding: 1.75rem;
   position: sticky;
@@ -562,8 +562,8 @@
 }
 
 .cart-summary-card:hover {
-  border-color: rgba(220, 38, 38, 0.4);
-  box-shadow: 0 8px 30px rgba(220, 38, 38, 0.08);
+  border-color: rgba(14, 165, 233, 0.4);
+  box-shadow: 0 8px 30px rgba(14, 165, 233, 0.08);
   transform: translateY(-2px);
 }
 
@@ -577,17 +577,17 @@
   font-weight: 600;
   letter-spacing: 0.35em;
   text-transform: uppercase;
-  color: #dc2626;
+  color: #0ea5e9;
   margin: 0 0 1.5rem;
 }
 
-/* Coupon Section - RED */
+/* Coupon Section - SKY BLUE */
 .cart-coupon-section {
   margin-bottom: 1.25rem;
   padding: 1rem;
-  border: 1px solid rgba(220, 38, 38, 0.2);
+  border: 1px solid rgba(14, 165, 233, 0.2);
   border-radius: 12px;
-  background: rgba(220, 38, 38, 0.02);
+  background: rgba(14, 165, 233, 0.02);
 }
 
 .cart-coupon-label {
@@ -607,7 +607,7 @@
 .cart-coupon-input {
   flex: 1;
   background: #f8fafc;
-  border: 1px solid rgba(220, 38, 38, 0.3);
+  border: 1px solid rgba(14, 165, 233, 0.3);
   border-radius: 8px;
   padding: 0.5rem 0.75rem;
   color: #0f172a;
@@ -619,7 +619,7 @@
 }
 
 .cart-coupon-input:focus {
-  border-color: #dc2626;
+  border-color: #0ea5e9;
 }
 
 .cart-coupon-input::placeholder {
@@ -629,10 +629,10 @@
 
 .cart-coupon-btn {
   padding: 0.5rem 1rem;
-  background: rgba(220, 38, 38, 0.1);
-  border: 1px solid rgba(220, 38, 38, 0.4);
+  background: rgba(14, 165, 233, 0.1);
+  border: 1px solid rgba(14, 165, 233, 0.4);
   border-radius: 8px;
-  color: #dc2626;
+  color: #0ea5e9;
   font-size: 0.72rem;
   font-weight: 600;
   letter-spacing: 0.05em;
@@ -642,8 +642,8 @@
 }
 
 .cart-coupon-btn:hover:not(:disabled) {
-  background: rgba(220, 38, 38, 0.2);
-  border-color: #dc2626;
+  background: rgba(14, 165, 233, 0.2);
+  border-color: #0ea5e9;
 }
 
 .cart-coupon-btn:disabled {
@@ -651,7 +651,7 @@
   cursor: not-allowed;
 }
 
-/* Applied Coupon Badge - RED */
+/* Applied Coupon Badge - SKY BLUE */
 .cart-coupon-applied {
   display: flex;
   align-items: center;
@@ -664,10 +664,10 @@
   align-items: center;
   gap: 0.4rem;
   padding: 0.4rem 0.75rem;
-  background: rgba(220, 38, 38, 0.1);
-  border: 1px solid rgba(220, 38, 38, 0.3);
+  background: rgba(14, 165, 233, 0.1);
+  border: 1px solid rgba(14, 165, 233, 0.3);
   border-radius: 8px;
-  color: #dc2626;
+  color: #0ea5e9;
   font-size: 0.78rem;
   flex: 1;
 }
@@ -687,14 +687,14 @@
   background: rgba(255, 107, 107, 0.08);
 }
 
-/* Coupon Messages - RED */
+/* Coupon Messages - SKY BLUE */
 .cart-coupon-success {
   margin: 0.6rem 0 0;
   padding: 0.5rem 0.75rem;
-  background: rgba(220, 38, 38, 0.08);
-  border: 1px solid rgba(220, 38, 38, 0.2);
+  background: rgba(14, 165, 233, 0.08);
+  border: 1px solid rgba(14, 165, 233, 0.2);
   border-radius: 8px;
-  color: #dc2626;
+  color: #0ea5e9;
   font-size: 0.72rem;
 }
 
@@ -708,7 +708,7 @@
   font-size: 0.72rem;
 }
 
-/* Breakdown - RED */
+/* Breakdown - SKY BLUE */
 .cart-breakdown {
   display: flex;
   flex-direction: column;
@@ -726,7 +726,7 @@
 }
 
 .cart-breakdown-row--discount {
-  color: #dc2626;
+  color: #0ea5e9;
 }
 
 .cart-breakdown-row--total {
@@ -739,29 +739,29 @@
   font-family: var(--cart-serif);
   font-size: 1.3rem;
   font-weight: 700;
-  background: linear-gradient(180deg, #dc2626, #ef4444);
+  background: linear-gradient(180deg, #0ea5e9, #38bdf8);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
 }
 
 .cart-discount-value {
-  color: #dc2626;
+  color: #0ea5e9;
   font-weight: 600;
 }
 
 .cart-breakdown-divider {
   height: 1px;
-  background: linear-gradient(90deg, transparent, var(--cart-red), transparent);
+  background: linear-gradient(90deg, transparent, var(--cart-sky), transparent);
   margin: 0.25rem 0;
 }
 
 .free-shipping-text {
-  color: #dc2626;
+  color: #0ea5e9;
   font-weight: 500;
 }
 
-/* Checkout Button - RED */
+/* Checkout Button - SKY BLUE */
 .cart-checkout-btn {
   display: flex;
   align-items: center;
@@ -770,7 +770,7 @@
   width: 100%;
   padding: 1rem 1.5rem;
   margin-top: 1.5rem;
-  background: linear-gradient(180deg, #dc2626 0%, #0f172a 100%);
+  background: linear-gradient(180deg, #0ea5e9 0%, #0f172a 100%);
   border: none;
   border-radius: 40px;
   color: #ffffff;
@@ -797,7 +797,7 @@
 
 .cart-checkout-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 12px 30px rgba(220, 38, 38, 0.25);
+  box-shadow: 0 12px 30px rgba(14, 165, 233, 0.25);
   gap: 1rem;
 }
 
@@ -805,14 +805,14 @@
   opacity: 1;
 }
 
-/* Trust Badges - RED */
+/* Trust Badges - SKY BLUE */
 .cart-trust {
   display: flex;
   justify-content: space-between;
   gap: 0.5rem;
   margin-top: 1.5rem;
   padding-top: 1rem;
-  border-top: 1px solid rgba(220, 38, 38, 0.12);
+  border-top: 1px solid rgba(14, 165, 233, 0.12);
   flex-wrap: wrap;
 }
 
@@ -828,7 +828,7 @@
 }
 
 .cart-trust-badge:hover {
-  background: rgba(220, 38, 38, 0.05);
+  background: rgba(14, 165, 233, 0.05);
   transform: translateY(-2px);
 }
 
@@ -846,7 +846,7 @@
   text-align: center;
 }
 
-/* Empty State - RED */
+/* Empty State - SKY BLUE */
 .cart-empty {
   display: flex;
   flex-direction: column;
@@ -858,7 +858,7 @@
 }
 
 .cart-empty-icon {
-  color: rgba(220, 38, 38, 0.2);
+  color: rgba(14, 165, 233, 0.2);
   margin-bottom: 1rem;
   animation: float 3s ease-in-out infinite;
 }
@@ -900,9 +900,9 @@
   gap: 0.7rem;
   padding: 0.85rem 2rem;
   background: transparent;
-  border: 1px solid rgba(220, 38, 38, 0.3);
+  border: 1px solid rgba(14, 165, 233, 0.3);
   border-radius: 40px;
-  color: #dc2626;
+  color: #0ea5e9;
   font-family: var(--cart-sans);
   font-size: 0.65rem;
   font-weight: 600;
@@ -913,18 +913,18 @@
 }
 
 .cart-empty-cta:hover {
-  background: rgba(220, 38, 38, 0.08);
-  border-color: #dc2626;
+  background: rgba(14, 165, 233, 0.08);
+  border-color: #0ea5e9;
   transform: translateY(-2px);
   gap: 1rem;
 }
 
-/* Spinner - RED */
+/* Spinner - SKY BLUE */
 .cart-spinner {
   width: 45px;
   height: 45px;
-  border: 2px solid rgba(220, 38, 38, 0.2);
-  border-top-color: #dc2626;
+  border: 2px solid rgba(14, 165, 233, 0.2);
+  border-top-color: #0ea5e9;
   border-radius: 50%;
   animation: cart-spin 0.8s linear infinite;
   margin: 0 auto;
@@ -1155,7 +1155,7 @@
   }
 }
 
-/* Custom Scrollbar - RED */
+/* Custom Scrollbar - SKY BLUE */
 ::-webkit-scrollbar {
   width: 6px;
 }
@@ -1165,12 +1165,12 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #dc2626;
+  background: #0ea5e9;
   border-radius: 3px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #ef4444;
+  background: #38bdf8;
 }
 
 /* ============================================================
@@ -1227,14 +1227,14 @@
   left: auto;
   right: 2rem;
   border-left: none;
-  border-right: 2px solid rgba(220, 38, 38, 0.3);
+  border-right: 2px solid rgba(14, 165, 233, 0.3);
 }
 
 [dir="rtl"] .cart-corner--tr {
   right: auto;
   left: 2rem;
   border-right: none;
-  border-left: 2px solid rgba(220, 38, 38, 0.3);
+  border-left: 2px solid rgba(14, 165, 233, 0.3);
 }
 
 [dir="rtl"] .cart-coupon-row {

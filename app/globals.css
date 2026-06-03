@@ -10,43 +10,26 @@
   --scrollbar-track: #0a0f1a;
 }
 
-/* ─── Box Model ────────────────────────────────────── */
 *,
 *::before,
 *::after {
   box-sizing: border-box;
 }
 
-/* ─── HTML Root ─────────────────────────────────────
-   FIX: Removed duplicate overflow-y; kept scroll-behavior auto
-   to prevent janky smooth-scroll lag on every navigation.
-   contain:paint isolates the stacking context without
-   creating a new scroll container.
-─────────────────────────────────────────────────── */
 html {
   height: 100%;
   overflow-x: hidden;
+  overflow-y: auto;
   scrollbar-width: thin;
   scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
   scroll-behavior: auto;
-  /* Hint browser to skip unnecessary repaints outside viewport */
-  contain: paint;
 }
 
-/* ─── Body ──────────────────────────────────────────
-   FIX 1: Removed overflow-y: visible — it conflicts with
-           overflow-x: hidden and can create invisible scroll
-           containers that cause layout jank.
-   FIX 2: Added contain: layout style — tells browser body
-           layout does not escape its bounds, enabling faster
-           incremental layout passes.
-   FIX 3: text-rendering optimizeLegibility improves GPU
-           rasterisation of the Goldman font.
-─────────────────────────────────────────────────── */
 body {
   margin: 0;
   padding: 0;
   overflow-x: hidden;
+  overflow-y: visible;
   min-height: 100%;
   background: var(--background);
   color: var(--foreground);
@@ -55,14 +38,11 @@ body {
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  /* FIX: momentum scrolling — critical for iOS smoothness */
   -webkit-overflow-scrolling: touch;
   text-rendering: optimizeSpeed;
-  /* Prevent layout thrash from font-weight shifts */
   font-synthesis: none;
 }
 
-/* ─── Scrollbar Styling ─────────────────────────── */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
@@ -82,11 +62,6 @@ body {
   background: var(--scrollbar-track);
 }
 
-/* ─── Global Font Enforcement ───────────────────────
-   FIX: Kept as one block (was duplicated in original).
-   The !important is necessary here to beat Tailwind's
-   utility specificity for font-family.
-─────────────────────────────────────────────────── */
 *,
 *::before,
 *::after {
@@ -101,7 +76,6 @@ samp,
   font-family: monospace !important;
 }
 
-/* ─── Typography Resets ─────────────────────────── */
 i,
 em,
 cite,
@@ -125,15 +99,11 @@ a {
 img {
   max-width: 100%;
   height: auto;
-  /* FIX: Prevents CLS (Cumulative Layout Shift) — images
-     no longer cause reflows after they load */
   display: block;
 }
 
-/* ─── Button & Input Focus ──────────────────────── */
 button {
   outline: none;
-  /* FIX: cursor:pointer on all buttons avoids confusion */
   cursor: pointer;
 }
 
@@ -149,14 +119,6 @@ select:focus-visible {
   outline-offset: 1px;
 }
 
-/* ─── Navbar Sticky Wrapper ─────────────────────────
-   FIX: Replaced will-change:transform with will-change:auto
-   on elements that don't animate. will-change:transform on a
-   FIXED element causes the browser to promote it to its own
-   GPU layer permanently, consuming VRAM and slowing compositing
-   for the ENTIRE page. Use it only during active animations.
-   The translateZ(0) hack is kept for Safari compatibility.
-─────────────────────────────────────────────────── */
 .navbar-sticky-wrapper {
   position: fixed;
   top: 0;
@@ -164,19 +126,8 @@ select:focus-visible {
   right: 0;
   z-index: 100;
   transform: translateZ(0);
-  /* Removed will-change: transform — it was forcing GPU
-     layer promotion on a static element, causing:
-     - Higher VRAM usage
-     - Slower paint on scroll
-     - Blurry text on some devices */
 }
 
-/* ─── Swiper Performance ────────────────────────────
-   FIX: will-change on .swiper-wrapper is correct because
-   the wrapper actively translates during swipe. But
-   .swiper-slide does NOT need will-change or translateZ —
-   promotes too many layers and wastes GPU memory.
-─────────────────────────────────────────────────── */
 .swiper {
   overflow: hidden;
 }
@@ -184,13 +135,10 @@ select:focus-visible {
   will-change: transform;
   transform: translateZ(0);
 }
-/* Removed translateZ(0) from .swiper-slide — was creating
-   N extra GPU layers (one per slide), killing scroll perf */
 .swiper-slide {
   backface-visibility: hidden;
 }
 
-/* ─── RTL Support ───────────────────────────────── */
 body.rtl,
 [dir="rtl"] {
   text-align: right;
@@ -201,22 +149,6 @@ body.rtl,
   text-align: right;
 }
 
-/* ─── Global Paint Containment ──────────────────────
-   FIX: Sidebars and modals that slide in/out should be
-   isolated from the main document paint tree so their
-   animations don't trigger full-page repaints.
-─────────────────────────────────────────────────── */
-[data-sidebar],
-[data-modal],
-[data-drawer] {
-  contain: layout style;
-  will-change: transform;
-}
-
-/* ─── Reduce animation for accessibility & perf ────
-   Users who prefer reduced motion get no animations,
-   which also helps on low-end devices.
-─────────────────────────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

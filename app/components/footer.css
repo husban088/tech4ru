@@ -1336,9 +1336,15 @@ html {
     gap: 2rem;
   }
 
+  /* ── Links Grid: center on tablet/mobile ── */
   .footer-links-grid {
     grid-template-columns: 1fr;
     gap: 0;
+    /* Center the entire links grid block */
+    width: 100%;
+    max-width: 420px;
+    margin-left: auto;
+    margin-right: auto;
   }
 
   .footer-links-column {
@@ -1353,11 +1359,18 @@ html {
     transform: none;
   }
 
-  /* Quick Links Header - Fix gradient and icon color */
+  /* ── Header row: icon + title LEFT · toggle RIGHT ── */
   .footer-links-header {
     display: flex;
     align-items: center;
     gap: 0.5rem;
+    padding: 0.85rem 0.25rem;
+    cursor: pointer;
+  }
+
+  /* icon stays left, natural size */
+  .footer-links-icon {
+    flex-shrink: 0;
   }
 
   .footer-links-icon svg {
@@ -1366,10 +1379,20 @@ html {
     height: 18px;
   }
 
-  .footer-links-mobile-toggle {
-    display: flex;
+  /* title: left-aligned next to icon, grows to push toggle right */
+  .footer-links-title {
+    flex: 1;
+    text-align: left;
   }
 
+  /* toggle pinned to far right */
+  .footer-links-mobile-toggle {
+    display: flex;
+    flex-shrink: 0;
+    margin-left: auto;
+  }
+
+  /* ── Links list: each link centered ── */
   .footer-links-list {
     max-height: 0;
     overflow: hidden;
@@ -1378,8 +1401,20 @@ html {
   }
 
   .footer-links-list.active {
-    max-height: 400px;
+    max-height: 500px;
     padding-bottom: 1rem;
+  }
+
+  /* Center each link row */
+  .footer-link-item {
+    display: flex;
+    justify-content: center;
+  }
+
+  /* Link itself auto width so it stays centered */
+  .footer-link {
+    width: auto;
+    justify-content: center;
   }
 
   .footer-features-grid {
@@ -1468,6 +1503,7 @@ html {
 
   .footer-links-grid {
     gap: 0;
+    max-width: 100%;
   }
 
   .footer-features-grid {
@@ -1619,6 +1655,9 @@ html {
 @media (max-width: 768px) {
   [dir="rtl"] .footer-links-header {
     flex-direction: row-reverse;
+  }
+  [dir="rtl"] .footer-links-title {
+    text-align: center;
   }
   [dir="rtl"] .footer-links-mobile-toggle svg.rotated {
     transform: rotate(-90deg);

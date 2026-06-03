@@ -378,19 +378,30 @@ export default function Footer() {
                 className={`footer-links-column ${hoveredColumn === category.id ? "hovered" : ""}`}
                 onMouseEnter={() => setHoveredColumn(category.id)}
                 onMouseLeave={() => setHoveredColumn(null)}
-                onClick={() =>
-                  setActiveCategory(
-                    activeCategory === category.id ? null : category.id,
-                  )
-                }
               >
-                <div className="footer-links-header">
+                <div
+                  className="footer-links-header"
+                  onClick={() =>
+                    setActiveCategory(
+                      activeCategory === category.id ? null : category.id,
+                    )
+                  }
+                >
                   <div className="footer-links-icon">{category.icon}</div>
                   <h4 className="footer-links-title">
                     {category.title}
                     <div className="footer-links-gold-dot" />
                   </h4>
-                  <button className="footer-links-mobile-toggle">
+                  <button
+                    className="footer-links-mobile-toggle"
+                    aria-label={`Toggle ${category.title}`}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setActiveCategory(
+                        activeCategory === category.id ? null : category.id,
+                      );
+                    }}
+                  >
                     <MdKeyboardArrowRight
                       className={
                         activeCategory === category.id ? "rotated" : ""

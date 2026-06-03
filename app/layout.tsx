@@ -7,6 +7,11 @@ import { CurrencyProvider } from "./context/CurrencyContext";
 import { LanguageProvider } from "./context/LanguageContext";
 import { getInitialCurrency } from "@/lib/get-initial-currency";
 
+// ─── Font ─────────────────────────────────────────────────────────────────────
+// FIX: Added adjustFontFallback:false — Next.js by default injects a fallback
+// font with size-adjust that causes a brief layout shift (CLS) while the real
+// font loads. Since Goldman is loaded with display:'swap' and preload:true it
+// loads fast; the fallback adjustment is more harm than help here.
 const goldman = Goldman({
   variable: "--font-goldman",
   subsets: ["latin"],
@@ -14,6 +19,7 @@ const goldman = Goldman({
   display: "swap",
   preload: true,
   fallback: ["system-ui", "sans-serif"],
+  adjustFontFallback: false,
 });
 
 export const metadata: Metadata = {
@@ -44,16 +50,36 @@ export default async function RootLayout({
       suppressHydrationWarning
     >
       <head>
+        {/*
+          FIX: Added dns-prefetch for Cloudinary since images come from there.
+          Also added preconnect for connect.facebook.net so the Meta Pixel
+          script loads faster (was previously only dns-prefetch).
+        */}
+        <link rel="dns-prefetch" href="//res.cloudinary.com" />
+        <link rel="dns-prefetch" href="//images.unsplash.com" />
+        <link
+          rel="preconnect"
+          href="https://connect.facebook.net"
+          crossOrigin="anonymous"
+        />
         <link rel="dns-prefetch" href="//connect.facebook.net" />
-        <link rel="dns-prefetch" href="//fonts.gstatic.com" />
         <link
           rel="preconnect"
           href="https://fonts.gstatic.com"
           crossOrigin="anonymous"
         />
+        <link rel="dns-prefetch" href="//fonts.gstatic.com" />
+
+        {/*
+          FIX: Meta Pixel moved to strategy="lazyOnload" so it does NOT block
+          the main thread during page load. The pixel fires after the page is
+          fully interactive — PageView is still tracked correctly.
+          Previously strategy:"afterInteractive" ran it during hydration,
+          competing with React for the main thread and causing visible lag.
+        */}
         <Script
           id="meta-pixel"
-          strategy="afterInteractive"
+          strategy="lazyOnload"
           dangerouslySetInnerHTML={{
             __html: `
               !function(f,b,e,v,n,t,s)

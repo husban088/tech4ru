@@ -26,7 +26,7 @@ const NavbarWrapper = memo(function NavbarWrapper({
   onSearchOpen,
   onCartOpen,
 }: {
-  wrapperRef: React.RefObject<HTMLDivElement>;
+  wrapperRef: React.RefObject<HTMLDivElement | null>;
   onMenuOpen: () => void;
   onSearchOpen: () => void;
   onCartOpen: () => void;

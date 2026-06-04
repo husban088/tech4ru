@@ -91,6 +91,20 @@ function extractIdFromSlug(raw: string): { id: string | null; slug: string } {
   return { id: null, slug: raw };
 }
 
+function normalizeDescImages(val: any): string[] {
+  if (!val) return [];
+  if (typeof val === "string") {
+    try {
+      const parsed = JSON.parse(val);
+      return Array.isArray(parsed) ? parsed.filter(Boolean) : [];
+    } catch {
+      return val ? [val] : [];
+    }
+  }
+  if (Array.isArray(val)) return val.filter(Boolean);
+  return [];
+}
+
 function processProductData(data: any): any {
   const variants = (data.product_variants || []).map((variant: any) => {
     const variantImages = (variant.variant_images || [])
@@ -99,7 +113,7 @@ function processProductData(data: any): any {
     return {
       ...variant,
       images: variantImages,
-      description_images: variant.description_images || [],
+      description_images: normalizeDescImages(variant.description_images),
       description_rich: variant.description_rich || variant.description || "",
       variant_images: variant.variant_images || [],
     };
@@ -108,7 +122,7 @@ function processProductData(data: any): any {
     ...data,
     product_variants: variants,
     _description: data.description || "",
-    _description_images: data.description_images || [],
+    _description_images: normalizeDescImages(data.description_images),
   };
 }
 
@@ -581,31 +595,19 @@ export default function ProductDetail() {
     setLiveRating(productData.rating || null);
     setLiveReviewCount(productData.reviews_count || null);
 
-    const productDesc =
-      productData._description || productData.description || "";
-    const productDescImages =
-      productData._description_images || productData.description_images || [];
-
-    const fallbackVariant = (productData.product_variants || []).find(
-      (v: any) => v.description_rich || v.description,
-    );
-    const finalDesc =
-      productDesc ||
-      fallbackVariant?.description_rich ||
-      fallbackVariant?.description ||
-      "";
-    const finalDescImages =
-      productDescImages.length > 0
-        ? productDescImages
-        : fallbackVariant?.description_images || [];
-
-    setCurrentDescription(finalDesc);
-    setCurrentDescriptionImages(finalDescImages);
-
     document.title = `${productData.name} | Tech4U`;
 
     const variantsData: VariantWithDetails[] =
       productData.product_variants || [];
+
+    // ── Compute product-level desc/images ──
+    const productDesc =
+      productData._description || productData.description || "";
+    const productDescImages: string[] = Array.isArray(
+      productData._description_images || productData.description_images,
+    )
+      ? productData._description_images || productData.description_images
+      : [];
 
     if (variantsData.length > 0) {
       const sortedVariants = [...variantsData].sort((a: any, b: any) => {
@@ -622,22 +624,28 @@ export default function ProductDetail() {
       const firstVariant = sortedVariants[0];
       setSelectedVariant(firstVariant);
 
-      // ── After sorting, re-compute desc/images using first variant if it has them ──
+      // ── Pick description + images for the initially selected (first) variant ──
       const firstVariantDesc =
         firstVariant?.description_rich ||
         (firstVariant as any)?.description ||
         "";
-      const firstVariantDescImages =
-        (firstVariant as VariantWithDetails)?.description_images || [];
-      if (firstVariantDesc && !finalDesc) {
-        setCurrentDescription(firstVariantDesc);
-      }
-      if (firstVariantDescImages.length > 0 && finalDescImages.length === 0) {
-        setCurrentDescriptionImages(firstVariantDescImages);
-      } else if (firstVariantDescImages.length > 0) {
-        // Prefer variant-level description images for the initially selected variant
-        setCurrentDescriptionImages(firstVariantDescImages);
-      }
+      const firstVariantDescImages: string[] = Array.isArray(
+        (firstVariant as VariantWithDetails)?.description_images,
+      )
+        ? ((firstVariant as VariantWithDetails).description_images as string[])
+        : [];
+
+      // Priority: variant desc images → product desc images → variant fallback
+      const finalDesc = firstVariantDesc || productDesc;
+      const finalDescImages =
+        firstVariantDescImages.length > 0
+          ? firstVariantDescImages
+          : productDescImages.length > 0
+            ? productDescImages
+            : [];
+
+      setCurrentDescription(finalDesc);
+      setCurrentDescriptionImages(finalDescImages);
 
       const imagesByVariant: VariantImagesMap = {};
       variantsData.forEach((v: any) => {
@@ -650,6 +658,23 @@ export default function ProductDetail() {
     } else {
       setVariants([]);
       setSelectedVariant(null);
+
+      // No variants — use product-level desc/images with fallback
+      const fallbackVariant = (productData.product_variants || []).find(
+        (v: any) => v.description_rich || v.description,
+      );
+      const finalDesc =
+        productDesc ||
+        fallbackVariant?.description_rich ||
+        fallbackVariant?.description ||
+        "";
+      const finalDescImages =
+        productDescImages.length > 0
+          ? productDescImages
+          : fallbackVariant?.description_images || [];
+
+      setCurrentDescription(finalDesc);
+      setCurrentDescriptionImages(finalDescImages);
     }
   }, []);
 
@@ -1006,29 +1031,7 @@ export default function ProductDetail() {
     };
   }, [(product as any)?.id, cacheKey, hydrateFromData]);
 
-  // ── Update description/images when product loads ──
-  useEffect(() => {
-    if (product) {
-      const p = product as any;
-      const productDesc = p._description || p.description || "";
-      const productDescImages =
-        p._description_images || p.description_images || [];
-      const fallbackVariant = (p.product_variants || []).find(
-        (v: any) => v.description_rich || v.description,
-      );
-      const finalDesc =
-        productDesc ||
-        fallbackVariant?.description_rich ||
-        fallbackVariant?.description ||
-        "";
-      const finalDescImages =
-        productDescImages.length > 0
-          ? productDescImages
-          : fallbackVariant?.description_images || [];
-      setCurrentDescription(finalDesc);
-      setCurrentDescriptionImages(finalDescImages);
-    }
-  }, [product]);
+  // ── description/images are set inside hydrateFromData — no separate effect needed ──
 
   // ── Fetch bulk pricing tiers when variant changes ──
   useEffect(() => {
@@ -1246,14 +1249,16 @@ export default function ProductDetail() {
     // ── Update description + description images when variant changes ──
     const p = product as any;
     const productDesc = p?._description || p?.description || "";
-    const productDescImages =
-      p?._description_images || p?.description_images || [];
+    const productDescImages: string[] = normalizeDescImages(
+      p?._description_images || p?.description_images,
+    );
 
     // Prefer variant-level description/images if they exist
     const variantDesc =
       variant.description_rich || (variant as any).description || "";
-    const variantDescImages =
-      (variant as VariantWithDetails).description_images || [];
+    const variantDescImages: string[] = normalizeDescImages(
+      (variant as VariantWithDetails).description_images,
+    );
 
     // Use variant desc/images if present, else fall back to product-level
     const finalDesc = variantDesc || productDesc;

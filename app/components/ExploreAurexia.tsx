@@ -266,6 +266,8 @@ function ExploreInner() {
   const { language, isRTLMode } = useLanguage();
   const prevBtnRef = useRef<HTMLButtonElement>(null);
   const nextBtnRef = useRef<HTMLButtonElement>(null);
+  const mobilePrevRef = useRef<HTMLButtonElement>(null);
+  const mobileNextRef = useRef<HTMLButtonElement>(null);
 
   return (
     <section
@@ -302,7 +304,50 @@ function ExploreInner() {
         <p className="ea-header-sub">{getTranslation("headerSub", language)}</p>
       </div>
 
+      {/* Mobile / Tablet nav row — visible only on ≤900px */}
+      <div className="ea-mobile-nav-row" aria-hidden="false">
+        <button
+          ref={mobilePrevRef}
+          className="ea-nav-btn ea-mobile-nav-btn"
+          aria-label="Previous category"
+          type="button"
+        >
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.5"
+          >
+            <path
+              d="M15 18l-6-6 6-6"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+        </button>
+        <button
+          ref={mobileNextRef}
+          className="ea-nav-btn ea-mobile-nav-btn"
+          aria-label="Next category"
+          type="button"
+        >
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.5"
+          >
+            <path
+              d="M9 18l6-6-6-6"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+        </button>
+      </div>
+
       <div className="ea-slider-wrap">
+        {/* Desktop nav buttons — visible only on >900px */}
         <button
           ref={prevBtnRef}
           className="ea-nav-btn ea-nav-prev"
@@ -366,17 +411,26 @@ function ExploreInner() {
             pauseOnMouseEnter: true,
           }}
           navigation={{
-            prevEl: prevBtnRef.current,
-            nextEl: nextBtnRef.current,
+            prevEl: [prevBtnRef.current, mobilePrevRef.current].filter(
+              Boolean,
+            ) as HTMLElement[],
+            nextEl: [nextBtnRef.current, mobileNextRef.current].filter(
+              Boolean,
+            ) as HTMLElement[],
           }}
           onSwiper={(swiper) => {
-            // Wire up nav buttons after swiper mounts
             if (
               swiper.params.navigation &&
               typeof swiper.params.navigation !== "boolean"
             ) {
-              swiper.params.navigation.prevEl = prevBtnRef.current;
-              swiper.params.navigation.nextEl = nextBtnRef.current;
+              swiper.params.navigation.prevEl = [
+                prevBtnRef.current,
+                mobilePrevRef.current,
+              ].filter(Boolean) as HTMLElement[];
+              swiper.params.navigation.nextEl = [
+                nextBtnRef.current,
+                mobileNextRef.current,
+              ].filter(Boolean) as HTMLElement[];
               swiper.navigation.init();
               swiper.navigation.update();
             }

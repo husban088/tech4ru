@@ -237,6 +237,7 @@ select:focus-visible {
 }
 .swiper-slide {
   backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
 }
 
 /* ============================================================

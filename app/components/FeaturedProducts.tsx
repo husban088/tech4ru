@@ -138,28 +138,50 @@ const getStockStatus = (
   return "in_stock";
 };
 
-/* ── Fetch function with retry ── */
+/* ── Fetch function with retry + timeout ── */
 async function fetchFeaturedTabData(
   tab: string,
   attempt = 0,
 ): Promise<CachedData> {
   const MAX_RETRIES = 3;
   const RETRY_DELAY = 600;
+  // FIX: 8s timeout per attempt — without this, slow wifi causes fetch to hang
+  // forever and the skeleton never resolves. On timeout we fall to cached data.
+  const FETCH_TIMEOUT_MS = 8000;
 
   try {
-    const { data: productsData, error } = await supabase
-      .from("products")
-      .select("*, product_variants(*, variant_images(*))")
-      .eq("is_active", true)
-      .eq("is_featured", true)
-      .eq("category", tab)
-      .order("created_at", { ascending: false });
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), FETCH_TIMEOUT_MS);
+
+    let productsData: any[] | null = null;
+    let error: any = null;
+
+    try {
+      const result = await supabase
+        .from("products")
+        .select("*, product_variants(*, variant_images(*))")
+        .eq("is_active", true)
+        .eq("is_featured", true)
+        .eq("category", tab)
+        .order("created_at", { ascending: false })
+        .abortSignal(controller.signal);
+      productsData = result.data;
+      error = result.error;
+    } finally {
+      clearTimeout(timeoutId);
+    }
 
     if (error) {
-      if (attempt < MAX_RETRIES) {
+      // FIX: On error, check if abort (timeout) or real error
+      const isAbort =
+        error?.message?.includes("abort") || error?.name === "AbortError";
+      if (!isAbort && attempt < MAX_RETRIES) {
         await new Promise((r) => setTimeout(r, RETRY_DELAY * (attempt + 1)));
         return fetchFeaturedTabData(tab, attempt + 1);
       }
+      // FIX: Return whatever we have in tabCache rather than empty array
+      // This means slow wifi shows stale data instead of blank
+      if (tabCache[tab]?.products?.length) return tabCache[tab];
       return { products: [], variantsMap: {}, variantImagesMap: {} };
     }
 
@@ -222,21 +244,64 @@ async function fetchFeaturedTabData(
     };
 
     tabCache[tab] = result;
+    persistCacheToSession(tab, result);
     return result;
-  } catch {
-    if (attempt < MAX_RETRIES) {
+  } catch (err: any) {
+    const isAbort =
+      err?.name === "AbortError" || err?.message?.includes("abort");
+    if (!isAbort && attempt < MAX_RETRIES) {
       await new Promise((r) => setTimeout(r, RETRY_DELAY * (attempt + 1)));
       return fetchFeaturedTabData(tab, attempt + 1);
     }
+    // FIX: On any failure (including wifi off), return cached data if available
+    if (tabCache[tab]?.products?.length) return tabCache[tab];
     return { products: [], variantsMap: {}, variantImagesMap: {} };
   }
 }
 
 const ALL_TABS = ["Accessories", "Watches", "Automotive", "Home Decor"];
 const CACHE_TTL_MS = 5 * 60 * 1000; // 5 minutes
+const SESSION_KEY = "fp_cache_v2";
 
 // Module-level cache — persists across re-renders and tab changes
 const tabCache: Record<string, CachedData> = {};
+
+// ── sessionStorage helpers ──────────────────────────────────────────────────
+// FIX: Module-level cache clears on page reload (it's just JS memory).
+// sessionStorage survives reload, so we seed tabCache from it on startup.
+// This means products show INSTANTLY even after a hard refresh.
+function persistCacheToSession(tab: string, data: CachedData) {
+  try {
+    const stored = JSON.parse(sessionStorage.getItem(SESSION_KEY) || "{}");
+    stored[tab] = { ...data, fetchedAt: Date.now() };
+    sessionStorage.setItem(SESSION_KEY, JSON.stringify(stored));
+  } catch {
+    // sessionStorage can throw if storage quota exceeded — silently ignore
+  }
+}
+
+function seedCacheFromSession() {
+  try {
+    const stored = JSON.parse(sessionStorage.getItem(SESSION_KEY) || "{}");
+    const now = Date.now();
+    for (const tab of ALL_TABS) {
+      const entry = stored[tab];
+      if (
+        entry &&
+        Array.isArray(entry.products) &&
+        entry.products.length > 0 &&
+        now - (entry.fetchedAt || 0) < CACHE_TTL_MS
+      ) {
+        tabCache[tab] = entry;
+      }
+    }
+  } catch {
+    // ignore parse errors
+  }
+}
+
+// Seed immediately when module loads (runs once per page)
+seedCacheFromSession();
 
 /* ─────────────────────────────────────────────────────────────
    STAR COMPONENTS - YELLOW COLOR
@@ -810,6 +875,8 @@ export default function FeaturedProducts() {
   const { language, isRTLMode } = useLanguage();
 
   const [products, setProducts] = useState<FeaturedProduct[]>(
+    // FIX: tabCache is already seeded from sessionStorage at module load,
+    // so this will have data on page reload, not just SPA navigation
     () => tabCache["Accessories"]?.products || [],
   );
   const [variantsMap, setVariantsMap] = useState<
@@ -818,6 +885,7 @@ export default function FeaturedProducts() {
   const [variantImagesMap, setVariantImagesMap] = useState<
     Record<string, string[]>
   >(() => tabCache["Accessories"]?.variantImagesMap || {});
+  // FIX: isLoading starts false if we already have data from sessionStorage cache
   const [isLoading, setIsLoading] = useState(
     () => (tabCache["Accessories"]?.products?.length ?? 0) === 0,
   );
@@ -1015,10 +1083,35 @@ export default function FeaturedProducts() {
       const hasCached = (tabCache[tab]?.products?.length ?? 0) > 0;
 
       if (e.persisted) {
-        // bfcache restore — clear all cache and refetch fresh
+        // bfcache restore — clear module cache but keep session cache
+        // FIX: Do NOT call setIsLoading(true) here — it blanks the screen.
+        // Instead show existing products while silently refetching.
         ALL_TABS.forEach((t) => delete tabCache[t]);
-        setIsLoading(true);
-        loadProductsForTab(tab, true);
+        // Re-seed from sessionStorage so we still have something to show
+        seedCacheFromSession();
+        const reseeded = (tabCache[tab]?.products?.length ?? 0) > 0;
+        if (reseeded) {
+          setProducts(tabCache[tab].products);
+          setVariantsMap(tabCache[tab].variantsMap);
+          setVariantImagesMap(tabCache[tab].variantImagesMap);
+          setIsLoading(false);
+          setSwiperKey((prev) => prev + 1);
+          // Silent background refetch
+          fetchFeaturedTabData(tab)
+            .then((data) => {
+              if (activeTabRef.current === tab && data.products.length > 0) {
+                setProducts(data.products);
+                setVariantsMap(data.variantsMap);
+                setVariantImagesMap(data.variantImagesMap);
+                setSwiperKey((prev) => prev + 1);
+              }
+            })
+            .catch(() => {});
+        } else {
+          // Truly nothing — show skeleton and fetch
+          setIsLoading(true);
+          loadProductsForTab(tab, true);
+        }
       } else if (hasCached) {
         setProducts(tabCache[tab].products);
         setVariantsMap(tabCache[tab].variantsMap);
@@ -1034,12 +1127,25 @@ export default function FeaturedProducts() {
     return () => window.removeEventListener("pageshow", handlePageShow);
   }, [loadProductsForTab]);
 
-  // Safety net: if loading is somehow stuck for >5 seconds, force a fresh fetch
+  // Safety net: if loading is somehow stuck for >3 seconds, show cached or force fetch
   useEffect(() => {
     if (!isLoading) return;
+    // FIX: Reduced from 5s to 3s — 5s is too long for a user to stare at skeleton
     const timer = setTimeout(() => {
-      // Try one more fetch — force refresh to bypass any stale cache
-      fetchFeaturedTabData(activeTabRef.current, 0)
+      // First try sessionStorage — maybe products are there but tabCache was cleared
+      seedCacheFromSession();
+      const tab = activeTabRef.current;
+      const nowCached = (tabCache[tab]?.products?.length ?? 0) > 0;
+      if (nowCached) {
+        setProducts(tabCache[tab].products);
+        setVariantsMap(tabCache[tab].variantsMap);
+        setVariantImagesMap(tabCache[tab].variantImagesMap);
+        setIsLoading(false);
+        setSwiperKey((prev) => prev + 1);
+        return;
+      }
+      // No session data — force a fresh fetch
+      fetchFeaturedTabData(tab, 0)
         .then((data) => {
           setIsLoading(false);
           if (data.products.length > 0) {
@@ -1052,7 +1158,7 @@ export default function FeaturedProducts() {
         .catch(() => {
           setIsLoading(false);
         });
-    }, 5000);
+    }, 3000);
     return () => clearTimeout(timer);
   }, [isLoading]);
 

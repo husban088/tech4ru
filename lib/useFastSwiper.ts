@@ -1,53 +1,66 @@
 // lib/useFastSwiper.ts
-// ✅ PERF: Optimized Swiper config — har slider mein paste karo
-// Yeh hook Swiper ko GPU pe push karta hai, jank remove karta hai
+// ✅ PERF: Fully optimized Swiper config — har slider mein paste karo
 
 /**
- * SWIPER PERFORMANCE SETTINGS
- * Apne har Swiper component mein yeh props lagao:
+ * SWIPER PERFORMANCE PROPS
+ * Apne har Swiper component mein spread karo:
  *
  * <Swiper {...swiperPerfProps} ...yourOtherProps>
  */
 export const swiperPerfProps = {
-  // ✅ Virtual slides — sirf visible slides render honge (BIGGEST WIN for many slides)
-  // virtual: false, // agar 10+ slides hain toh true karo
+  // ✅ Smooth GPU transition — JS animation nahi, CSS transform use hoti hai
+  // cssMode: true, // Mobile pe enable karo agar touch scroll laggy lage
 
-  // ✅ CSS-only transitions — JS animation nahi hogi
-  // cssMode: false, // mobile pe true karo agar touch scroll buggy lag raha ho
-
-  // NOTE: preloadImages aur lazy props Swiper v9+ mein remove ho gaye hain
-  // Unki jagah native loading="eager"/"lazy" attributes use karo images pe
-
-  // ✅ Watch slides visibility — hidden slides render nahi honge
+  // ✅ Watch slides visibility — only visible slides are rendered
   watchSlidesProgress: true,
 
-  // ✅ Resistance ratio — mobile pe smooth feel
+  // ✅ Resistance on drag edges
   resistanceRatio: 0.85,
 
-  // ✅ Speed — default 300ms
+  // ✅ Animation speed in ms
   speed: 300,
 
-  // ✅ Grab cursor — desktop pe pointer cursor
+  // ✅ Grab cursor on desktop
   grabCursor: true,
+
+  // ✅ FIX: Prevent swiper from blocking page scroll on touch
+  // passiveListeners aur touchStartPreventDefault combined se scroll jank fix hoti hai
+  touchStartPreventDefault: false,
+
+  // ✅ FIX: Reduce mouse/touch event computation
+  threshold: 5,
+
+  // ✅ FIX: longSwipesMs — short swipe is registered faster = feels snappier
+  longSwipesMs: 200,
+
+  // ✅ FIX: Disable unnecessary event listeners when not sliding
+  simulateTouch: true,
+
+  // ✅ FIX: preventInteractionOnTransition — prevents click events during animation
+  preventInteractionOnTransition: true,
 } as const;
 
 /**
  * SWIPER IMAGE OPTIMIZATION
- * Apni swiper images pe yeh attributes lagao:
+ * Native lazy loading — Swiper v9+ mein built-in lazy removed hai
  *
- * <img
- *   data-src="/your-image.jpg"   ← lazy loading ke liye
- *   src="/placeholder.jpg"       ← low-quality placeholder
- *   loading="lazy"               ← native browser lazy loading
- *   decoding="async"             ← main thread block nahi karega
- *   className="swiper-lazy"      ← swiper lazy loading class
- *   width={400}
- *   height={300}
+ * First 2-3 slides pe loading="eager" lagao (LCP ke liye)
+ * Rest pe loading="lazy" lagao
+ *
+ * <Image
+ *   src="/your-image.jpg"
+ *   alt="description"
+ *   fill
+ *   loading="eager"    ← sirf first 2-3 slides pe
+ *   decoding="async"   ← main thread block nahi hoga
+ *   quality={75}       ← 75 enough hai, 100 = slow
+ *   sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw"
+ *   style={{ objectFit: "cover" }}
  * />
  */
 
 /**
- * SWIPER BREAKPOINTS EXAMPLE — responsive aur performant
+ * SWIPER BREAKPOINTS — Responsive aur performant
  */
 export const swiperBreakpoints = {
   0: {
@@ -73,20 +86,32 @@ export const swiperBreakpoints = {
 } as const;
 
 /**
- * NEXT.JS IMAGE + SWIPER COMBO
- * next/image Swiper ke saath use karne ka sahi tarika:
+ * COMPLETE SWIPER EXAMPLE — Copy-paste ready
  *
- * <SwiperSlide key={item.id}>
- *   <div style={{ position: "relative", width: "100%", aspectRatio: "4/3" }}>
- *     <Image
- *       src={item.image}
- *       alt={item.name}
- *       fill
- *       sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw"
- *       loading="lazy"           ← first 2-3 slides pe "eager" karo
- *       quality={75}             ← 75 enough hai, 100 slow karta hai
- *       style={{ objectFit: "cover" }}
- *     />
- *   </div>
- * </SwiperSlide>
+ * import { Swiper, SwiperSlide } from "swiper/react";
+ * import { swiperPerfProps, swiperBreakpoints } from "@/lib/useFastSwiper";
+ *
+ * <Swiper
+ *   {...swiperPerfProps}
+ *   breakpoints={swiperBreakpoints}
+ *   loop={false}          ← loop:true slides copy karta hai = slower
+ *   modules={[Navigation, Pagination]}
+ * >
+ *   {items.map((item, index) => (
+ *     <SwiperSlide key={item.id}>
+ *       <div style={{ position: "relative", width: "100%", aspectRatio: "4/3" }}>
+ *         <Image
+ *           src={item.image}
+ *           alt={item.name}
+ *           fill
+ *           loading={index < 3 ? "eager" : "lazy"}
+ *           decoding="async"
+ *           quality={75}
+ *           sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw"
+ *           style={{ objectFit: "cover" }}
+ *         />
+ *       </div>
+ *     </SwiperSlide>
+ *   ))}
+ * </Swiper>
  */

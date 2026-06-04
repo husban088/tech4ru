@@ -15,10 +15,7 @@ import SaleBannerPopup from "./components/SaleBannerPopup";
 import { initSaleStore } from "@/lib/saleStore";
 
 // ─── NavbarWrapper ────────────────────────────────────────────────────────────
-// FIX: Extracted into its own memoized component so that sidebar/cart state
-// changes do NOT re-render the Navbar and AnnouncementBar. Previously every
-// setState call (setSidebarOpen, setCartOpen, etc.) caused the entire AppShell
-// tree — including Navbar — to re-render, which is very expensive.
+// memo() prevents re-render when sidebar/cart state changes — Navbar is expensive
 // ─────────────────────────────────────────────────────────────────────────────
 const NavbarWrapper = memo(function NavbarWrapper({
   wrapperRef,
@@ -44,8 +41,7 @@ const NavbarWrapper = memo(function NavbarWrapper({
 });
 
 // ─── Sidebars ─────────────────────────────────────────────────────────────────
-// FIX: Memoized so they only re-render when their own open/close state changes,
-// not when unrelated state (navbarHeight, etc.) updates.
+// memo() prevents re-render when navbar height or unrelated state changes
 // ─────────────────────────────────────────────────────────────────────────────
 const Sidebars = memo(function Sidebars({
   sidebarOpen,
@@ -78,19 +74,14 @@ function AppShell({ children }: { children: React.ReactNode }) {
   const [cartOpen, setCartOpen] = useState(false);
   const [isClient, setIsClient] = useState(false);
 
-  // FIX: navbarHeight starts at the CSS variable value (70px) rather than 0.
-  // Previously it started at 0 then jumped to the real height, causing a
-  // visible content shift on every page load and navigation.
+  // Start at CSS var value (70px) — prevents height jump on mount
   const [navbarHeight, setNavbarHeight] = useState(70);
 
   const pathname = usePathname();
   const wrapperRef = useRef<HTMLDivElement>(null);
   const cartInitialized = useRef(false);
 
-  // ── Stable callbacks (useCallback) ────────────────────────────────────────
-  // FIX: Without useCallback these arrow functions are recreated on every render,
-  // defeating the memo() on NavbarWrapper and Sidebars, and causing unnecessary
-  // child re-renders.
+  // ── Stable callbacks — required for memo() to work on children ────────────
   const { fetchCart, setOnCartOpen } = useCartStore();
   const openSidebar = useCallback(() => setSidebarOpen(true), []);
   const openSearch = useCallback(() => setSearchOpen(true), []);
@@ -105,30 +96,34 @@ function AppShell({ children }: { children: React.ReactNode }) {
   }, []);
 
   // ── One-time store initialisations ────────────────────────────────────────
-  // FIX: Merged into a single effect to avoid 3 separate effect registrations.
   useEffect(() => {
     initSaleStore();
     useCouponStore.getState().fetchCouponSettings();
   }, []);
 
   // ── Navbar height observer ─────────────────────────────────────────────────
-  // FIX: Debounced with requestAnimationFrame so ResizeObserver does not fire
-  // a setState on every pixel during resize, which was causing scroll jank.
+  // FIX: rAF debounce — ResizeObserver fires many times per second during resize.
+  // Without debounce, every pixel of resize causes a setState + re-render,
+  // which causes scroll jank because the main thread is busy.
   useEffect(() => {
     if (!isClient || !wrapperRef.current) return;
     let rafId: number;
+
     const updateHeight = () => {
       cancelAnimationFrame(rafId);
       rafId = requestAnimationFrame(() => {
         if (wrapperRef.current) {
           const h = wrapperRef.current.offsetHeight;
-          if (h > 0) setNavbarHeight(h);
+          // FIX: Only setState if height actually changed — avoids pointless renders
+          if (h > 0) setNavbarHeight((prev) => (prev === h ? prev : h));
         }
       });
     };
+
     updateHeight();
     const observer = new ResizeObserver(updateHeight);
     observer.observe(wrapperRef.current);
+
     return () => {
       observer.disconnect();
       cancelAnimationFrame(rafId);
@@ -136,14 +131,13 @@ function AppShell({ children }: { children: React.ReactNode }) {
   }, [isClient]);
 
   // ── Scroll-to-top & panel close on route change ───────────────────────────
-  // FIX: Merged into one effect (was two separate effects on pathname).
-  // Also moved window.scrollTo inside the RAF so it doesn't block the
-  // React paint commit phase.
+  // FIX: 'instant' scroll behavior avoids scroll animation competing with
+  // React's route transition render — was a major source of jank on navigation
   useEffect(() => {
     setSidebarOpen(false);
     setSearchOpen(false);
     setCartOpen(false);
-    // Use 'instant' when supported to avoid scroll animation lag
+
     const supportsScrollBehavior =
       "scrollBehavior" in document.documentElement.style;
     if (supportsScrollBehavior) {
@@ -165,7 +159,6 @@ function AppShell({ children }: { children: React.ReactNode }) {
     if (!initialized) fetchCart();
   }, [isClient, setOnCartOpen, fetchCart]);
 
-  // FIX: Use CSS variable fallback so there's never a flash with paddingTop:0
   const contentStyle = isPanelPage ? undefined : { paddingTop: navbarHeight };
 
   return (
@@ -181,10 +174,9 @@ function AppShell({ children }: { children: React.ReactNode }) {
         />
       )}
 
-      {/* FIX: Sidebars are always mounted (with isOpen=false) so their CSS
-          transitions work correctly. Previously they were conditionally
-          mounted on isClient which caused the slide-in animation to start
-          from an unmounted state, causing a flash/jump on first open. */}
+      {/* FIX: Always mounted (isOpen=false) so CSS transitions work correctly.
+          Conditional mounting causes first-open flash because transition
+          starts from unmounted (display:none) state. */}
       {isClient && (
         <Sidebars
           sidebarOpen={sidebarOpen}
@@ -212,9 +204,7 @@ function AppShell({ children }: { children: React.ReactNode }) {
 
 // ─── Providers ────────────────────────────────────────────────────────────────
 export default function Providers({ children }: { children: React.ReactNode }) {
-  // ── BFCache: reload on back/forward navigation ─────────────────────────────
-  // FIX: Moved pageshow listener here (not inside AppShell) so it's registered
-  // once globally and not recreated on every shell render.
+  // FIX: BFCache handler at top level — registered once, not per shell render
   useEffect(() => {
     let lastReloadTime = 0;
     const RELOAD_COOLDOWN = 3000;
@@ -224,19 +214,13 @@ export default function Providers({ children }: { children: React.ReactNode }) {
       const now = Date.now();
       if (now - lastReloadTime < RELOAD_COOLDOWN) return;
       lastReloadTime = now;
-      // FIX: Increased timeout to 200ms — 100ms was sometimes firing before
-      // the browser finished restoring BFCache state, causing a double reload.
-      setTimeout(() => {
-        window.location.reload();
-      }, 200);
+      // 200ms gives browser time to finish restoring BFCache state
+      setTimeout(() => window.location.reload(), 200);
     }
 
     window.addEventListener("pageshow", handlePageShow);
     return () => window.removeEventListener("pageshow", handlePageShow);
   }, []);
 
-  // FIX: Removed the [shellKey] useState(0) + key={shellKey} pattern.
-  // key={0} is a constant — it never changes — so it was just adding an
-  // extra reconciliation step on every render for zero benefit.
   return <AppShell>{children}</AppShell>;
 }

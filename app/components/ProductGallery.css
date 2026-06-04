@@ -1,36 +1,19 @@
-/* ── CSS Variables: Sky Blue + Black Theme (Matching Contact Page) ── */
+/* ============================================================
+   PRODUCT GALLERY - Sky Blue + Black Theme (matches product-detail.css)
+   ============================================================ */
+
+/* ── CSS Variables: Sky Blue + Black Theme ── */
 .pg-gallery,
 .pg-lightbox {
   --pd-sky: #0ea5e9;
   --pd-sky-dark: #0284c7;
   --pd-sky-light: #38bdf8;
   --pd-black: #0f172a;
-  --pd-black-soft: #1e293b;
   --pd-border: rgba(14, 165, 233, 0.18);
   --pd-border-hover: rgba(14, 165, 233, 0.35);
-
-  /* Gradient variables from Contact Page */
-  --pg-gradient-primary: linear-gradient(180deg, #0ea5e9 0%, #0f172a 100%);
-  --pg-gradient-accent: linear-gradient(
-    90deg,
-    #0f172a 0%,
-    #0ea5e9 60%,
-    #38bdf8 100%
-  );
-  --pg-gradient-sky: linear-gradient(180deg, #0ea5e9 0%, #38bdf8 100%);
-  --pg-gradient-bg: radial-gradient(
-    ellipse,
-    rgba(14, 165, 233, 0.07) 0%,
-    rgba(14, 165, 233, 0.03) 35%,
-    transparent 70%
-  );
 }
 
-/* ============================================================
-   PRODUCT GALLERY - Lightbox & Swiper with Enhanced Gradients
-   ============================================================ */
-
-/* ── CSS Variables (inherits from root) ── */
+/* ── Gallery container ── */
 .pg-gallery {
   position: sticky;
   top: calc(var(--pd-nav-h, 68px) + 1rem);
@@ -38,27 +21,12 @@
   width: 100%;
   overflow: hidden;
   box-sizing: border-box;
-  position: relative;
-  isolation: isolate;
+  contain: layout style;
 }
 
-/* Enhanced Gallery Background with Gradient Texture */
-.pg-gallery::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: var(--pg-gradient-bg);
-  opacity: 0;
-  transition: opacity 0.6s ease;
-  pointer-events: none;
-  z-index: -1;
-}
-
-.pg-gallery:hover::before {
-  opacity: 1;
-}
-
-/* Main image viewer */
+/* ============================================================
+   MAIN IMAGE VIEWER
+   ============================================================ */
 .pg-main-img-wrap {
   position: relative;
   aspect-ratio: 1 / 1;
@@ -92,23 +60,9 @@
   inset: 0;
   background: linear-gradient(
     135deg,
-    rgba(14, 165, 233, 0.05) 0%,
+    rgba(14, 165, 233, 0.06) 0%,
     rgba(15, 23, 42, 0.02) 40%,
     transparent 65%
-  );
-  z-index: 1;
-  pointer-events: none;
-}
-
-/* Enhanced gradient overlay for depth */
-.pg-main-img-wrap .gradient-overlay {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    45deg,
-    rgba(14, 165, 233, 0.03) 0%,
-    rgba(14, 165, 233, 0.02) 50%,
-    transparent 100%
   );
   z-index: 1;
   pointer-events: none;
@@ -142,8 +96,7 @@
 
 /* Image transition state */
 .pg-img-entering {
-  animation: pg-img-reveal 0.5s
-    var(--pd-ease, 0.55s cubic-bezier(0.22, 1, 0.36, 1)) both;
+  animation: pg-img-reveal 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
 @keyframes pg-img-reveal {
@@ -157,7 +110,7 @@
   }
 }
 
-/* ── EXPAND BUTTON (bottom-right of main image) with gradient ── */
+/* ── EXPAND / ZOOM BUTTON — ALWAYS VISIBLE (no hover needed) ── */
 .pg-expand-btn {
   position: absolute;
   bottom: 0.9rem;
@@ -166,35 +119,30 @@
   width: 42px;
   height: 42px;
   background: rgba(255, 255, 255, 0.95);
-  border: 1px solid rgba(14, 165, 233, 0.25);
+  border: 1px solid rgba(14, 165, 233, 0.35);
   border-radius: 12px;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--pd-sky-dark, #0284c7);
+  color: #0284c7;
   backdrop-filter: blur(12px);
-  box-shadow: 0 4px 16px rgba(14, 165, 233, 0.08);
+  box-shadow: 0 4px 16px rgba(14, 165, 233, 0.15);
   transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
-  opacity: 0;
-}
-
-.pg-main-img-wrap:hover .pg-expand-btn {
+  /* ALWAYS VISIBLE — removed opacity:0 */
   opacity: 1;
-  transform: scale(1.05);
 }
 
 .pg-expand-btn:hover {
-  background: var(--pg-gradient-primary) !important;
-  border-color: var(--pd-sky, #0ea5e9) !important;
+  background: linear-gradient(135deg, #0ea5e9, #0f172a) !important;
+  border-color: #0ea5e9 !important;
   color: #fff !important;
-  box-shadow: 0 6px 24px rgba(14, 165, 233, 0.4) !important;
-  transform: scale(1.12) !important;
+  box-shadow: 0 6px 24px rgba(14, 165, 233, 0.45) !important;
+  transform: scale(1.1) !important;
 }
 
 @media (max-width: 768px) {
   .pg-expand-btn {
-    opacity: 0.85;
     width: 36px;
     height: 36px;
     bottom: 0.6rem;
@@ -207,22 +155,19 @@
   height: 17px;
 }
 
-/* Image counter with gradient text */
+/* Image counter */
 .pg-img-counter {
   position: absolute;
   top: 1rem;
   left: 1rem;
   background: rgba(255, 255, 255, 0.9);
-  border: 1px solid var(--pd-border, rgba(14, 165, 233, 0.18));
+  border: 1px solid rgba(14, 165, 233, 0.25);
   backdrop-filter: blur(10px);
   padding: 0.35rem 0.6rem;
   font-family: var(--pd-sans, "Goldman", "Josefin Sans", sans-serif);
   font-size: 0.5rem;
   letter-spacing: 0.15em;
-  background: var(--pg-gradient-primary);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+  color: #0284c7;
   border-radius: 30px;
   z-index: 2;
 }
@@ -233,7 +178,7 @@
   bottom: 1rem;
   left: 50%;
   transform: translateX(-50%);
-  background: rgba(0, 0, 0, 0.6);
+  background: rgba(15, 23, 42, 0.7);
   backdrop-filter: blur(10px);
   padding: 0.4rem 0.8rem;
   font-family: var(--pd-sans, "Goldman", "Josefin Sans", sans-serif);
@@ -269,7 +214,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--pd-border-hover, rgba(14, 165, 233, 0.35));
+  color: rgba(14, 165, 233, 0.4);
 }
 
 .pg-img-placeholder svg {
@@ -277,20 +222,68 @@
   height: 60px;
 }
 
-/* ═══════════════════════════════════════════════════════════════
-   THUMBNAIL STRIP - BELOW BIG IMAGE, PERFECT ALIGNMENT
-   All thumbnails: SAME HEIGHT, SAME WIDTH, SAME POSITION
-═══════════════════════════════════════════════════════════════ */
-
-/* Gallery wrapper */
-.pg-gallery {
-  contain: layout style;
+/* ============================================================
+   MAIN IMAGE NAV ARROWS — ALWAYS VISIBLE (no hover-only)
+   ============================================================ */
+.pg-swiper-wrap {
+  position: relative;
+  max-width: 100%;
+  overflow: hidden;
+  box-sizing: border-box;
 }
 
-/* Thumb strip wrapper — strict width constraint, NO overflow */
-.pg-thumbs-swiper-wrap {
+.pg-swiper-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  width: 44px;
+  height: 44px;
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid rgba(14, 165, 233, 0.3);
+  border-radius: 50%;
+  cursor: pointer;
   display: flex;
   align-items: center;
+  justify-content: center;
+  color: #0284c7;
+  backdrop-filter: blur(12px);
+  box-shadow: 0 4px 16px rgba(14, 165, 233, 0.15);
+  transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+  /* ALWAYS VISIBLE — removed hover-only opacity */
+  opacity: 1;
+  pointer-events: all;
+}
+
+.pg-swiper-prev {
+  left: 12px;
+}
+
+.pg-swiper-next {
+  right: 12px;
+}
+
+.pg-swiper-arrow:hover {
+  background: linear-gradient(135deg, #0ea5e9, #0f172a);
+  border-color: #0ea5e9;
+  color: white;
+  box-shadow: 0 8px 30px rgba(14, 165, 233, 0.4);
+  transform: translateY(-50%) scale(1.1);
+}
+
+.pg-swiper-arrow svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* ============================================================
+   THUMBNAIL STRIP — PERFECT UNIFORM ALIGNMENT
+   ============================================================ */
+
+/* Thumb strip wrapper */
+.pg-thumbs-swiper-wrap {
+  display: flex;
+  align-items: center; /* vertically center ALL items */
   width: 100%;
   max-width: 100%;
   overflow: hidden;
@@ -299,7 +292,7 @@
   gap: 6px;
 }
 
-/* Nav buttons with gradient hover */
+/* Nav buttons — fixed size, perfectly centered */
 .pg-thumb-nav {
   flex: 0 0 28px;
   width: 28px;
@@ -309,23 +302,25 @@
   border-radius: 50%;
   border: 1px solid rgba(14, 165, 233, 0.3);
   background: rgba(255, 255, 255, 0.9);
-  color: var(--pd-sky-dark, #0284c7);
+  color: #0284c7;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
   transition: all 0.2s;
   padding: 0;
-  box-shadow: 0 2px 8px rgba(14, 165, 233, 0.08);
+  box-shadow: 0 2px 8px rgba(14, 165, 233, 0.1);
   backdrop-filter: blur(8px);
+  align-self: center; /* force self-align to center */
+  flex-shrink: 0;
 }
 
 .pg-thumb-nav:hover {
-  background: var(--pg-gradient-primary);
-  border-color: var(--pd-sky, #0ea5e9);
+  background: linear-gradient(135deg, #0ea5e9, #0f172a);
+  border-color: #0ea5e9;
   color: #ffffff;
   transform: scale(1.1);
-  box-shadow: 0 4px 12px rgba(14, 165, 233, 0.3);
+  box-shadow: 0 4px 12px rgba(14, 165, 233, 0.35);
 }
 
 .pg-thumb-nav svg {
@@ -333,7 +328,7 @@
   height: 14px;
 }
 
-/* Swiper exactly uses remaining space */
+/* Swiper takes remaining space */
 .pg-thumbs-swiper {
   flex: 1 1 auto;
   min-width: 0;
@@ -341,23 +336,25 @@
   width: 100%;
 }
 
-/* Swiper wrapper */
+/* Swiper wrapper — align items to center so all thumbs same baseline */
 .pg-thumbs-swiper .swiper-wrapper {
   display: flex;
   flex-wrap: nowrap;
-  align-items: center;
+  align-items: center; /* ALL slides same vertical alignment */
 }
 
-/* Each slide - auto width, consistent alignment */
+/* Each slide — uniform, no extra padding that shifts position */
 .pg-thumbs-swiper .swiper-slide {
   width: auto !important;
   flex-shrink: 0;
   display: flex;
-  align-items: center;
+  align-items: center; /* center thumb inside slide */
   justify-content: center;
+  /* remove separator padding here, handle it differently */
+  padding-top: 0 !important;
 }
 
-/* Individual thumb button with gradient active state */
+/* Individual thumb button — FIXED UNIFORM SIZE */
 .pg-thumb {
   display: flex;
   align-items: center;
@@ -370,28 +367,30 @@
   cursor: pointer;
   background: rgba(255, 255, 255, 0.04);
   padding: 0;
-  transition: all 0.2s ease;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    opacity 0.2s ease;
   opacity: 0.65;
   position: relative;
   flex-shrink: 0;
+  /* NO transform on hover/active — keeps alignment stable */
+  vertical-align: middle;
 }
 
 .pg-thumb:hover {
-  border-color: rgba(14, 165, 233, 0.6);
+  border-color: rgba(14, 165, 233, 0.55);
   opacity: 0.9;
-  transform: translateY(-2px);
+  /* removed translateY — causes misalignment */
 }
 
 .pg-thumb.active {
   border-color: #0ea5e9;
+  border-width: 2px;
   opacity: 1;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(14, 165, 233, 0.35);
-  background: var(--pg-gradient-primary);
-}
-
-.pg-thumb.active img {
-  opacity: 0.95;
+  box-shadow:
+    0 0 0 2px rgba(14, 165, 233, 0.25),
+    0 4px 14px rgba(14, 165, 233, 0.3);
 }
 
 .pg-thumb img {
@@ -402,7 +401,7 @@
   pointer-events: none;
 }
 
-/* Variant image indicator dot with gradient */
+/* Variant image indicator dot */
 .pg-thumb-variant-dot {
   position: absolute;
   bottom: 4px;
@@ -410,7 +409,7 @@
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background: var(--pg-gradient-primary);
+  background: #0ea5e9;
   border: 1.5px solid #fff;
   pointer-events: none;
   z-index: 2;
@@ -424,31 +423,18 @@
   border-color: #0ea5e9;
 }
 
-/* Separator "Gallery" label with gradient */
-.pg-thumb-separator-label {
-  position: absolute;
-  top: -18px;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 0.45rem;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  background: var(--pg-gradient-accent);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  white-space: nowrap;
-  pointer-events: none;
-}
-
-/* Thumb slide with separator spacing */
+/* Separator label — no longer uses padding-top on slide (which misaligns) */
 .pg-thumb-slide {
   position: relative;
 }
 
+/* Remove old padding-top separator approach entirely */
 .pg-thumb-slide--with-separator {
-  padding-top: 20px;
+  padding-top: 0;
+}
+
+.pg-thumb-separator-label {
+  display: none; /* hide separator label to avoid misalignment */
 }
 
 /* Mobile tweaks */
@@ -490,70 +476,14 @@
   }
 }
 
-/* Main image wrap should never overflow */
-.pg-swiper-wrap {
-  max-width: 100%;
-  overflow: hidden;
-  box-sizing: border-box;
-}
-
-/* Main gallery arrows on big image */
-.pg-swiper-arrow {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  z-index: 10;
-  width: 44px;
-  height: 44px;
-  background: rgba(255, 255, 255, 0.95);
-  border: 1px solid rgba(14, 165, 233, 0.25);
-  border-radius: 50%;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--pd-sky-dark, #0284c7);
-  backdrop-filter: blur(12px);
-  box-shadow: 0 4px 16px rgba(14, 165, 233, 0.1);
-  transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
-  opacity: 0;
-  pointer-events: none;
-}
-
-.pg-swiper-wrap:hover .pg-swiper-arrow {
-  opacity: 1;
-  pointer-events: all;
-}
-
-.pg-swiper-prev {
-  left: 12px;
-}
-
-.pg-swiper-next {
-  right: 12px;
-}
-
-.pg-swiper-arrow:hover {
-  background: var(--pg-gradient-primary);
-  border-color: var(--pd-sky, #0ea5e9);
-  color: white;
-  box-shadow: 0 8px 30px rgba(14, 165, 233, 0.35);
-  transform: translateY(-50%) scale(1.1);
-}
-
-.pg-swiper-arrow svg {
-  width: 18px;
-  height: 18px;
-}
-
 /* ============================================================
-   LUXURY LIGHTBOX WITH ENHANCED GRADIENTS
+   LUXURY LIGHTBOX
    ============================================================ */
 
 .pg-lightbox {
   position: fixed;
   inset: 0;
-  background: rgba(8, 6, 4, 0.97);
+  background: rgba(6, 10, 20, 0.97);
   z-index: 99999;
   display: flex;
   flex-direction: column;
@@ -561,17 +491,6 @@
   backdrop-filter: blur(20px) saturate(0.4);
   animation: pg-lb-in 0.4s cubic-bezier(0.22, 1, 0.36, 1) both;
   overflow: hidden;
-}
-
-/* Lightbox gradient overlay */
-.pg-lightbox::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: var(--pg-gradient-bg);
-  opacity: 0.3;
-  pointer-events: none;
-  z-index: 0;
 }
 
 @keyframes pg-lb-in {
@@ -600,13 +519,13 @@
   }
 }
 
-/* Lightbox Header Bar with gradient */
+/* Lightbox Header Bar */
 .pg-lb-header {
   display: flex;
   align-items: center;
   gap: 1rem;
   padding: 1rem 1.5rem;
-  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.6), transparent);
+  background: linear-gradient(to bottom, rgba(15, 23, 42, 0.7), transparent);
   position: absolute;
   top: 0;
   left: 0;
@@ -638,33 +557,30 @@
 }
 
 .pg-lb-dot.active {
-  background: var(--pg-gradient-primary);
+  background: linear-gradient(90deg, #0ea5e9, #0f172a);
   box-shadow: 0 0 8px rgba(14, 165, 233, 0.6);
 }
 
 .pg-lb-dot:hover {
-  background: rgba(255, 255, 255, 0.5);
+  background: rgba(14, 165, 233, 0.5);
 }
 
 .pg-lb-counter {
   font-family: var(--pd-sans, "Goldman", "Josefin Sans", sans-serif);
   font-size: 0.55rem;
   letter-spacing: 0.22em;
-  background: var(--pg-gradient-accent);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+  color: rgba(255, 255, 255, 0.6);
   white-space: nowrap;
   text-transform: uppercase;
 }
 
-/* Zoom Controls with gradient */
+/* Zoom Controls */
 .pg-lb-zoom-controls {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(14, 165, 233, 0.08);
+  border: 1px solid rgba(14, 165, 233, 0.2);
   border-radius: 30px;
   padding: 0.3rem 0.75rem;
   backdrop-filter: blur(10px);
@@ -685,8 +601,8 @@
 }
 
 .pg-lb-zoom-btn:hover {
-  background: var(--pg-gradient-primary);
-  color: white;
+  color: #0ea5e9;
+  background: rgba(14, 165, 233, 0.15);
 }
 
 .pg-lb-zoom-btn svg {
@@ -698,10 +614,7 @@
   font-family: var(--pd-sans, "Goldman", "Josefin Sans", sans-serif);
   font-size: 0.52rem;
   letter-spacing: 0.1em;
-  background: var(--pg-gradient-accent);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+  color: rgba(255, 255, 255, 0.5);
   min-width: 36px;
   text-align: center;
 }
@@ -723,9 +636,9 @@
 }
 
 .pg-lightbox-close:hover {
-  border-color: var(--pd-sky, #0ea5e9);
-  background: var(--pg-gradient-primary);
-  color: #ffffff;
+  border-color: #0ea5e9;
+  color: #0ea5e9;
+  background: rgba(14, 165, 233, 0.12);
   transform: rotate(90deg);
 }
 
@@ -787,7 +700,7 @@
   }
 }
 
-/* Lightbox Nav Arrows with gradient */
+/* Lightbox Nav Arrows */
 .pg-lb-arrow {
   position: absolute;
   top: 50%;
@@ -796,7 +709,7 @@
   width: 54px;
   height: 54px;
   background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.14);
+  border: 1px solid rgba(14, 165, 233, 0.2);
   border-radius: 50%;
   cursor: pointer;
   display: flex;
@@ -808,9 +721,9 @@
 }
 
 .pg-lb-arrow:hover {
-  background: var(--pg-gradient-primary);
-  border-color: var(--pd-sky, #0ea5e9);
-  color: #ffffff;
+  background: linear-gradient(135deg, #0ea5e9, #0f172a);
+  border-color: #0ea5e9;
+  color: #fff;
   box-shadow: 0 0 40px rgba(14, 165, 233, 0.4);
   transform: translateY(-50%) scale(1.08);
 }
@@ -828,7 +741,7 @@
   right: 1.5rem;
 }
 
-/* Lightbox Thumbnail Strip with gradient background */
+/* Lightbox Thumbnail Strip */
 .pg-lb-thumbs-wrap {
   position: fixed;
   bottom: 0;
@@ -841,8 +754,8 @@
   padding: 10px 12px 14px;
   background: linear-gradient(
     to top,
-    rgba(10, 5, 5, 0.98) 60%,
-    rgba(15, 5, 5, 0.4) 85%,
+    rgba(6, 10, 20, 0.98) 60%,
+    rgba(15, 23, 42, 0.4) 85%,
     transparent
   );
 }
@@ -869,22 +782,24 @@
   cursor: pointer;
   background: rgba(255, 255, 255, 0.04);
   padding: 0;
-  transition: all 0.2s ease;
+  transition:
+    border-color 0.2s ease,
+    opacity 0.2s ease,
+    box-shadow 0.2s ease;
   opacity: 0.55;
 }
 
 .pg-lb-thumb:hover {
   border-color: rgba(14, 165, 233, 0.6);
   opacity: 0.85;
-  transform: translateY(-2px);
 }
 
 .pg-lb-thumb.active {
   border-color: #0ea5e9;
   opacity: 1;
-  transform: translateY(-3px);
-  box-shadow: 0 4px 16px rgba(14, 165, 233, 0.4);
-  background: var(--pg-gradient-primary);
+  box-shadow:
+    0 0 0 2px rgba(14, 165, 233, 0.3),
+    0 4px 16px rgba(14, 165, 233, 0.35);
 }
 
 .pg-lb-thumb img {
@@ -901,10 +816,7 @@
   left: 4px;
   font-size: 9px;
   font-weight: 600;
-  background: var(--pg-gradient-accent);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+  color: rgba(255, 255, 255, 0.7);
   line-height: 1;
   pointer-events: none;
 }
@@ -916,7 +828,7 @@
   width: 7px;
   height: 7px;
   border-radius: 50%;
-  background: var(--pg-gradient-primary);
+  background: #0ea5e9;
   border: 1.5px solid #fff;
   pointer-events: none;
   z-index: 2;
@@ -935,8 +847,8 @@
   height: 30px;
   border-radius: 50%;
   border: 1px solid rgba(14, 165, 233, 0.35);
-  background: rgba(255, 255, 255, 0.08);
-  color: #0ea5e9;
+  background: rgba(14, 165, 233, 0.08);
+  color: #38bdf8;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -948,8 +860,8 @@
 }
 
 .pg-lb-thumb-nav:hover {
-  background: var(--pg-gradient-primary);
-  border-color: var(--pd-sky, #0ea5e9);
+  background: linear-gradient(135deg, #0ea5e9, #0f172a);
+  border-color: #0ea5e9;
   color: #ffffff;
   transform: scale(1.12);
   box-shadow: 0 4px 12px rgba(14, 165, 233, 0.35);
@@ -982,22 +894,19 @@
   }
 }
 
-/* Swipe down hint with gradient */
+/* Swipe down hint */
 .pg-lb-swipe-hint {
   position: absolute;
   bottom: 2rem;
   left: 50%;
   transform: translateX(-50%);
-  background: rgba(0, 0, 0, 0.6);
+  background: rgba(15, 23, 42, 0.75);
   backdrop-filter: blur(10px);
   padding: 0.5rem 1rem;
   font-family: var(--pd-sans, "Goldman", "Josefin Sans", sans-serif);
   font-size: 0.55rem;
   letter-spacing: 0.1em;
-  background: var(--pg-gradient-accent);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+  color: rgba(255, 255, 255, 0.7);
   border-radius: 30px;
   z-index: 25;
   display: flex;
@@ -1029,7 +938,7 @@
 }
 
 /* ============================================================
-   ZOOMABLE IMAGE CURSOR & OVERLAY with gradient
+   ZOOMABLE IMAGE CURSOR
    ============================================================ */
 
 .pg-main-img-wrap.zoomable {
@@ -1044,20 +953,18 @@
   cursor: grabbing;
 }
 
-/* Zoom lens overlay effect on hover with gradient */
-.pg-main-img-wrap.zoomable::before {
-  background: radial-gradient(
-    circle at var(--zoom-x, 50%) var(--zoom-y, 50%),
-    rgba(14, 165, 233, 0.08) 0%,
-    rgba(14, 165, 233, 0.04) 30%,
-    transparent 70%
-  );
-  transition: background 0.1s ease;
-}
-
 /* ============================================================
    RESPONSIVE
    ============================================================ */
+
+@media (max-width: 1024px) {
+  .pg-gallery {
+    position: static !important;
+    max-width: 100%;
+    width: 100%;
+    overflow: hidden;
+  }
+}
 
 @media (max-width: 768px) {
   .pg-gallery {
@@ -1110,176 +1017,5 @@
 
   .pg-lb-zoom-controls {
     display: none;
-  }
-}
-
-@media (max-width: 1024px) {
-  .pg-gallery {
-    position: static !important;
-    max-width: 100%;
-    width: 100%;
-    overflow: hidden;
-  }
-}
-
-/* ============================================================
-   ADDITIONAL GRADIENT ANIMATIONS & EFFECTS
-   ============================================================ */
-
-/* Shine animation for active elements */
-@keyframes pg-gradient-shine {
-  0% {
-    background-position: 0% center;
-  }
-  100% {
-    background-position: 200% center;
-  }
-}
-
-/* Apply shine to gradient text elements */
-.pg-img-counter,
-.pg-thumb-separator-label,
-.pg-lb-counter,
-.pg-lb-zoom-level,
-.pg-lb-thumb-num,
-.pg-lb-swipe-hint {
-  background-size: 200% auto;
-  animation: pg-gradient-shine 4s linear infinite;
-}
-
-/* Smooth gradient transition for interactive elements */
-.pg-expand-btn,
-.pg-thumb-nav,
-.pg-swiper-arrow,
-.pg-lb-arrow,
-.pg-lb-thumb-nav,
-.pg-lightbox-close,
-.pg-lb-zoom-btn {
-  position: relative;
-  overflow: hidden;
-}
-
-/* Ripple effect on buttons with gradient */
-.pg-expand-btn::before,
-.pg-thumb-nav::before,
-.pg-swiper-arrow::before,
-.pg-lb-arrow::before,
-.pg-lb-thumb-nav::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: var(--pg-gradient-primary);
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  z-index: -1;
-  border-radius: inherit;
-}
-
-.pg-expand-btn:hover::before,
-.pg-thumb-nav:hover::before,
-.pg-swiper-arrow:hover::before,
-.pg-lb-arrow:hover::before,
-.pg-lb-thumb-nav:hover::before {
-  opacity: 1;
-}
-
-.pg-expand-btn:hover,
-.pg-thumb-nav:hover,
-.pg-swiper-arrow:hover,
-.pg-lb-arrow:hover,
-.pg-lb-thumb-nav:hover {
-  background: transparent;
-  color: white;
-  position: relative;
-  z-index: 1;
-}
-
-.pg-expand-btn:hover svg,
-.pg-thumb-nav:hover svg,
-.pg-swiper-arrow:hover svg,
-.pg-lb-arrow:hover svg,
-.pg-lb-thumb-nav:hover svg {
-  position: relative;
-  z-index: 2;
-  color: white;
-}
-
-/* Glass morphism enhancement with gradient tint */
-.pg-main-img-wrap,
-.pg-thumb,
-.pg-lb-thumb {
-  position: relative;
-  overflow: hidden;
-}
-
-.pg-main-img-wrap::after,
-.pg-thumb::after,
-.pg-lb-thumb::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    135deg,
-    transparent 0%,
-    rgba(14, 165, 233, 0.05) 50%,
-    transparent 100%
-  );
-  opacity: 0;
-  transition: opacity 0.4s ease;
-  pointer-events: none;
-  z-index: 2;
-}
-
-.pg-main-img-wrap:hover::after,
-.pg-thumb:hover::after,
-.pg-lb-thumb:hover::after {
-  opacity: 1;
-}
-
-/* Active state gradient glow */
-.pg-thumb.active,
-.pg-lb-thumb.active {
-  position: relative;
-}
-
-.pg-thumb.active::before,
-.pg-lb-thumb.active::before {
-  content: "";
-  position: absolute;
-  inset: -2px;
-  background: var(--pg-gradient-primary);
-  border-radius: 12px;
-  opacity: 0.6;
-  z-index: -1;
-  filter: blur(4px);
-  transition: opacity 0.3s ease;
-}
-
-.pg-lb-thumb.active::before {
-  border-radius: 8px;
-}
-
-/* Reduced motion */
-@media (prefers-reduced-motion: reduce) {
-  .pg-img-counter,
-  .pg-thumb-separator-label,
-  .pg-lb-counter,
-  .pg-lb-zoom-level,
-  .pg-lb-thumb-num,
-  .pg-lb-swipe-hint {
-    animation: none;
-  }
-
-  .pg-expand-btn::before,
-  .pg-thumb-nav::before,
-  .pg-swiper-arrow::before,
-  .pg-lb-arrow::before,
-  .pg-lb-thumb-nav::before {
-    transition: none;
-  }
-
-  .pg-thumb.active::before,
-  .pg-lb-thumb.active::before {
-    filter: none;
   }
 }

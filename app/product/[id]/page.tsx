@@ -586,21 +586,8 @@ export default function ProductDetail() {
     const productDescImages =
       productData._description_images || productData.description_images || [];
 
-    const fallbackVariant = (productData.product_variants || []).find(
-      (v: any) => v.description_rich || v.description,
-    );
-    const finalDesc =
-      productDesc ||
-      fallbackVariant?.description_rich ||
-      fallbackVariant?.description ||
-      "";
-    const finalDescImages =
-      productDescImages.length > 0
-        ? productDescImages
-        : fallbackVariant?.description_images || [];
-
-    setCurrentDescription(finalDesc);
-    setCurrentDescriptionImages(finalDescImages);
+    setCurrentDescription(productDesc);
+    setCurrentDescriptionImages(productDescImages);
 
     document.title = `${productData.name} | Tech4U`;
 
@@ -621,23 +608,6 @@ export default function ProductDetail() {
       setVariants(sortedVariants);
       const firstVariant = sortedVariants[0];
       setSelectedVariant(firstVariant);
-
-      // ── After sorting, re-compute desc/images using first variant if it has them ──
-      const firstVariantDesc =
-        firstVariant?.description_rich ||
-        (firstVariant as any)?.description ||
-        "";
-      const firstVariantDescImages =
-        (firstVariant as VariantWithDetails)?.description_images || [];
-      if (firstVariantDesc && !finalDesc) {
-        setCurrentDescription(firstVariantDesc);
-      }
-      if (firstVariantDescImages.length > 0 && finalDescImages.length === 0) {
-        setCurrentDescriptionImages(firstVariantDescImages);
-      } else if (firstVariantDescImages.length > 0) {
-        // Prefer variant-level description images for the initially selected variant
-        setCurrentDescriptionImages(firstVariantDescImages);
-      }
 
       const imagesByVariant: VariantImagesMap = {};
       variantsData.forEach((v: any) => {
@@ -1013,20 +983,8 @@ export default function ProductDetail() {
       const productDesc = p._description || p.description || "";
       const productDescImages =
         p._description_images || p.description_images || [];
-      const fallbackVariant = (p.product_variants || []).find(
-        (v: any) => v.description_rich || v.description,
-      );
-      const finalDesc =
-        productDesc ||
-        fallbackVariant?.description_rich ||
-        fallbackVariant?.description ||
-        "";
-      const finalDescImages =
-        productDescImages.length > 0
-          ? productDescImages
-          : fallbackVariant?.description_images || [];
-      setCurrentDescription(finalDesc);
-      setCurrentDescriptionImages(finalDescImages);
+      setCurrentDescription(productDesc);
+      setCurrentDescriptionImages(productDescImages);
     }
   }, [product]);
 
@@ -1243,25 +1201,14 @@ export default function ProductDetail() {
     setSelectedTier(null);
     setQty(1);
 
-    // ── Update description + description images when variant changes ──
+    // ── Always use product-level main description + images (never variant-level) ──
     const p = product as any;
     const productDesc = p?._description || p?.description || "";
     const productDescImages =
       p?._description_images || p?.description_images || [];
 
-    // Prefer variant-level description/images if they exist
-    const variantDesc =
-      variant.description_rich || (variant as any).description || "";
-    const variantDescImages =
-      (variant as VariantWithDetails).description_images || [];
-
-    // Use variant desc/images if present, else fall back to product-level
-    const finalDesc = variantDesc || productDesc;
-    const finalDescImages =
-      variantDescImages.length > 0 ? variantDescImages : productDescImages;
-
-    setCurrentDescription(finalDesc);
-    setCurrentDescriptionImages(finalDescImages);
+    setCurrentDescription(productDesc);
+    setCurrentDescriptionImages(productDescImages);
   }
 
   function handleAddToCart() {

@@ -3,7 +3,7 @@
 /* Container Styles */
 .sale-panel-container {
   min-height: 100vh;
-  background: #f8fafc;
+  background: #0a0a0a;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -24,13 +24,13 @@
 
 /* Card Styles */
 .sale-panel-card {
-  background: #ffffff;
-  border: 1px solid rgba(14, 165, 233, 0.2);
+  background: #111;
+  border: 1px solid #222;
   border-radius: 16px;
   padding: 1.5rem;
   max-width: 560px;
   width: 100%;
-  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.6);
   transition: all 0.3s ease;
 }
 
@@ -59,8 +59,8 @@
 }
 
 .sale-panel-title {
-  color: #0284c7;
-  font-family: "Goldman", monospace, sans-serif;
+  color: #daa520;
+  font-family: monospace;
   font-size: 1.25rem;
   margin-bottom: 0.5rem;
   word-break: break-word;
@@ -79,8 +79,8 @@
 }
 
 .sale-panel-description {
-  color: #64748b;
-  font-family: "Goldman", monospace, sans-serif;
+  color: #888;
+  font-family: monospace;
   font-size: 0.75rem;
   line-height: 1.4;
 }
@@ -98,7 +98,7 @@
 }
 
 .highlight-text {
-  color: #0ea5e9;
+  color: #daa520;
 }
 
 /* Options Grid */
@@ -122,10 +122,10 @@
   flex: 1;
   padding: 1rem;
   border-radius: 12px;
-  border: 2px solid #e2e8f0;
-  background: #f8fafc;
-  color: #64748b;
-  font-family: "Goldman", monospace, sans-serif;
+  border: 2px solid #333;
+  background: #1a1a1a;
+  color: #888;
+  font-family: monospace;
   font-size: 1.1rem;
   font-weight: 700;
   cursor: pointer;
@@ -150,8 +150,8 @@
 
 .option-button:hover:not(:disabled) {
   transform: translateY(-2px);
-  border-color: #0ea5e9;
-  background: rgba(14, 165, 233, 0.1);
+  border-color: #daa520;
+  background: rgba(218, 165, 32, 0.1);
 }
 
 .option-button:active:not(:disabled) {
@@ -159,9 +159,9 @@
 }
 
 .option-button-active {
-  border-color: #0ea5e9 !important;
-  background: rgba(14, 165, 233, 0.15) !important;
-  color: #0ea5e9 !important;
+  border-color: #daa520 !important;
+  background: rgba(218, 165, 32, 0.15) !important;
+  color: #daa520 !important;
 }
 
 .option-button:disabled {
@@ -181,12 +181,12 @@
 
 /* Status Card */
 .status-card {
-  background: #f8fafc;
-  border: 1px solid #e2e8f0;
+  background: #0d0d0d;
+  border: 1px solid #1e1e1e;
   border-radius: 8px;
   padding: 0.75rem;
   margin-bottom: 1.25rem;
-  font-family: "Goldman", monospace, sans-serif;
+  font-family: monospace;
   font-size: 0.75rem;
 }
 
@@ -205,7 +205,7 @@
 }
 
 .status-label {
-  color: #64748b;
+  color: #555;
   margin-bottom: 0.25rem;
 }
 
@@ -216,11 +216,11 @@
 }
 
 .status-value-active {
-  color: #0ea5e9;
+  color: #daa520;
 }
 
 .status-value-inactive {
-  color: #94a3b8;
+  color: #444;
 }
 
 /* Remove Button */
@@ -228,10 +228,10 @@
   width: 100%;
   padding: 0.75rem;
   border-radius: 10px;
-  border: 1px solid #e2e8f0;
+  border: 1px solid #333;
   background: transparent;
-  color: #ef4444;
-  font-family: "Goldman", monospace, sans-serif;
+  color: #e05555;
+  font-family: monospace;
   font-size: 0.8rem;
   cursor: pointer;
   transition: all 0.2s ease;
@@ -246,8 +246,8 @@
 }
 
 .remove-button:hover:not(:disabled) {
-  background: rgba(239, 68, 68, 0.1);
-  border-color: #ef4444;
+  background: rgba(224, 85, 85, 0.1);
+  border-color: #e05555;
   transform: translateY(-1px);
 }
 
@@ -263,7 +263,7 @@
 /* Success Message */
 .success-message {
   margin-top: 1rem;
-  background: rgba(34, 197, 94, 0.1);
+  background: rgba(76, 175, 80, 0.1);
   padding: 0.75rem;
   border-radius: 8px;
   animation: fadeInUp 0.3s ease;
@@ -277,8 +277,8 @@
 }
 
 .success-message-main {
-  color: #22c55e;
-  font-family: "Goldman", monospace, sans-serif;
+  color: #4caf50;
+  font-family: monospace;
   font-size: 0.75rem;
   text-align: center;
   margin-bottom: 0.25rem;
@@ -292,9 +292,9 @@
 
 .success-message-sub {
   font-size: 0.65rem;
-  color: #0ea5e9;
+  color: #daa520;
   text-align: center;
-  font-family: "Goldman", monospace, sans-serif;
+  font-family: monospace;
 }
 
 @media (min-width: 480px) {
@@ -306,7 +306,7 @@
 /* Loader Styles */
 .sale-panel-loader {
   min-height: 100vh;
-  background: #f8fafc;
+  background: #0a0a0a;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -317,8 +317,8 @@
 .loader-spinner {
   width: 40px;
   height: 40px;
-  border: 3px solid #e2e8f0;
-  border-top-color: #0ea5e9;
+  border: 3px solid #333;
+  border-top-color: #daa520;
   border-radius: 50%;
   animation: spin 0.8s linear infinite;
 }
@@ -332,8 +332,8 @@
 }
 
 .loader-text {
-  color: #0ea5e9;
-  font-family: "Goldman", monospace, sans-serif;
+  color: #daa520;
+  font-family: monospace;
   font-size: 0.9rem;
 }
 
@@ -417,7 +417,7 @@
   .sale-panel-card:hover {
     transform: translateY(-4px);
     transition: transform 0.3s ease;
-    border-color: rgba(14, 165, 233, 0.3);
+    border-color: #2a2a2a;
   }
 }
 
@@ -427,11 +427,11 @@
   padding: 24px 20px;
   background: linear-gradient(
     135deg,
-    rgba(14, 165, 233, 0.08) 0%,
-    rgba(14, 165, 233, 0.02) 100%
+    rgba(218, 165, 32, 0.08) 0%,
+    rgba(218, 165, 32, 0.02) 100%
   );
   border-radius: 20px;
-  border: 1px solid rgba(14, 165, 233, 0.2);
+  border: 1px solid rgba(218, 165, 32, 0.2);
 }
 
 .banner-toggle-header {
@@ -448,7 +448,7 @@
 .banner-toggle-title {
   font-size: 20px;
   font-weight: 600;
-  background: linear-gradient(135deg, #0f172a 0%, #0ea5e9 50%, #38bdf8 100%);
+  background: linear-gradient(135deg, #daa520 0%, #ffd700 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -459,21 +459,21 @@
 }
 
 .banner-toggle-description p {
-  color: #64748b;
+  color: #888;
   font-size: 14px;
   line-height: 1.5;
   margin-bottom: 8px;
 }
 
 .banner-toggle-note {
-  background: rgba(14, 165, 233, 0.1);
+  background: rgba(218, 165, 32, 0.1);
   padding: 10px 12px;
   border-radius: 10px;
-  border-left: 3px solid #0ea5e9;
+  border-left: 3px solid #daa520;
 }
 
 .banner-toggle-note strong {
-  color: #0ea5e9;
+  color: #daa520;
 }
 
 .banner-toggle-switch {
@@ -496,7 +496,7 @@
   display: inline-block;
   width: 60px;
   height: 34px;
-  background-color: #e2e8f0;
+  background-color: #333;
   border-radius: 34px;
   transition: 0.3s;
   cursor: pointer;
@@ -515,7 +515,7 @@
 }
 
 .banner-toggle-switch input:checked + .banner-toggle-slider {
-  background-color: #0ea5e9;
+  background-color: #daa520;
 }
 
 .banner-toggle-switch input:checked + .banner-toggle-slider:before {
@@ -530,16 +530,16 @@
 .banner-toggle-label {
   font-size: 16px;
   font-weight: 500;
-  color: #0f172a;
+  color: #fff;
 }
 
 .banner-warning {
   margin-top: 16px;
   padding: 12px 16px;
-  background: rgba(245, 158, 11, 0.1);
-  border: 1px solid rgba(245, 158, 11, 0.3);
+  background: rgba(255, 193, 7, 0.1);
+  border: 1px solid rgba(255, 193, 7, 0.3);
   border-radius: 12px;
-  color: #d97706;
+  color: #ffd700;
   font-size: 13px;
   line-height: 1.4;
 }
@@ -558,6 +558,8 @@
     font-size: 14px;
   }
 }
+
+/* Add these styles to your existing sale-panel.css */
 
 /* Overlay and Container - For outside click */
 .sale-panel-overlay {
@@ -612,9 +614,9 @@
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  background: #ffffff;
-  border: 2px solid rgba(14, 165, 233, 0.5);
-  color: #0ea5e9;
+  background: #1a1a1a;
+  border: 2px solid rgba(218, 165, 32, 0.5);
+  color: #daa520;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -625,9 +627,9 @@
 }
 
 .sale-panel-close-btn:hover {
-  background: rgba(14, 165, 233, 0.2);
+  background: rgba(218, 165, 32, 0.2);
   transform: scale(1.1);
-  border-color: rgba(14, 165, 233, 0.8);
+  border-color: rgba(218, 165, 32, 0.8);
 }
 
 .sale-panel-close-btn svg {
@@ -643,13 +645,13 @@
 }
 
 .cancel-button {
-  background: rgba(100, 116, 139, 0.2);
-  border: 1px solid rgba(100, 116, 139, 0.3);
+  background: rgba(100, 100, 100, 0.2);
+  border: 1px solid rgba(150, 150, 150, 0.3);
   padding: 0.75rem 1.5rem;
   border-radius: 40px;
   font-size: 0.9rem;
   font-weight: 600;
-  color: #64748b;
+  color: #ccc;
   cursor: pointer;
   transition: all 0.3s ease;
   display: inline-flex;
@@ -657,13 +659,13 @@
   gap: 0.5rem;
   width: 100%;
   justify-content: center;
-  font-family: "Goldman", monospace, sans-serif;
+  font-family: monospace;
 }
 
 .cancel-button:hover {
-  background: rgba(100, 116, 139, 0.3);
-  border-color: rgba(100, 116, 139, 0.5);
-  color: #0f172a;
+  background: rgba(150, 150, 150, 0.3);
+  border-color: rgba(150, 150, 150, 0.5);
+  color: #fff;
   transform: translateY(-2px);
 }
 
@@ -746,12 +748,12 @@
 
 /* Update existing card for new context */
 .sale-panel-card {
-  background: #ffffff;
-  border: 1px solid rgba(14, 165, 233, 0.15);
+  background: #111;
+  border: 1px solid #222;
   border-radius: 24px;
   padding: 1.5rem;
   width: 100%;
-  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.06);
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.6);
   transition: all 0.3s ease;
   max-height: 85vh;
   overflow-y: auto;
@@ -763,17 +765,17 @@
 }
 
 .sale-panel-card::-webkit-scrollbar-track {
-  background: #f1f5f9;
+  background: #1a1a1a;
   border-radius: 10px;
 }
 
 .sale-panel-card::-webkit-scrollbar-thumb {
-  background: #0ea5e9;
+  background: #daa520;
   border-radius: 10px;
 }
 
 .sale-panel-card::-webkit-scrollbar-thumb:hover {
-  background: #38bdf8;
+  background: #ffd700;
 }
 
 @media (min-width: 480px) {

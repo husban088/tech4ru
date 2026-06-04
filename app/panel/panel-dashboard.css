@@ -1,7 +1,6 @@
 /* ============================================================
    PANEL DASHBOARD  ·  panel-dashboard.css
    Product cards exactly matching FeaturedProducts / ProductGrid design
-   SKY BLUE + BLACK GRADIENT THEME
    ============================================================ */
 
 /* ── Controls Bar ── */
@@ -27,7 +26,7 @@
   transform: translateY(-50%);
   width: 18px;
   height: 18px;
-  color: #0284c7;
+  color: #8b6914;
   pointer-events: none;
 }
 
@@ -35,24 +34,22 @@
   width: 100%;
   padding: 0.85rem 3rem 0.85rem 3rem;
   background: #ffffff;
-  border: 1px solid rgba(14, 165, 233, 0.2);
+  border: 1px solid rgba(218, 165, 32, 0.2);
   border-radius: 50px;
-  font-family: "Goldman", system-ui, sans-serif;
+  font-family: "Josefin Sans", sans-serif;
   font-size: 0.88rem;
-  color: #0f172a;
+  color: #1a1a1a;
   outline: none;
-  transition:
-    border-color 0.25s,
-    box-shadow 0.25s;
+  transition: border-color 0.25s, box-shadow 0.25s;
 }
 
 .pd-search-input:focus {
-  border-color: #0ea5e9;
-  box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.1);
+  border-color: #daa520;
+  box-shadow: 0 0 0 3px rgba(218, 165, 32, 0.1);
 }
 
 .pd-search-input::placeholder {
-  color: #94a3b8;
+  color: #aaa;
 }
 
 .pd-search-clear {
@@ -63,7 +60,7 @@
   background: none;
   border: none;
   cursor: pointer;
-  color: #94a3b8;
+  color: #999;
   padding: 4px;
   display: flex;
   align-items: center;
@@ -84,25 +81,25 @@
   align-items: center;
   gap: 0.6rem;
   padding: 0.85rem 1.8rem;
-  background: linear-gradient(135deg, #0f172a 0%, #0ea5e9 100%);
+  background: #daa520;
   border: none;
   border-radius: 50px;
-  font-family: "Goldman", system-ui, sans-serif;
+  font-family: "Josefin Sans", sans-serif;
   font-size: 0.78rem;
   font-weight: 600;
   letter-spacing: 0.15em;
   text-transform: uppercase;
-  color: #ffffff;
+  color: #1a1a1a;
   text-decoration: none;
   cursor: pointer;
   white-space: nowrap;
-  transition: all 0.25s ease;
+  transition: background 0.25s, transform 0.25s, box-shadow 0.25s;
 }
 
 .pd-add-btn:hover {
-  background: linear-gradient(135deg, #0ea5e9 0%, #38bdf8 100%);
+  background: #f0c040;
   transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(14, 165, 233, 0.3);
+  box-shadow: 0 8px 24px rgba(218, 165, 32, 0.3);
 }
 
 .pd-add-btn svg {
@@ -111,9 +108,9 @@
 }
 
 .pd-search-info {
-  font-family: "Goldman", system-ui, sans-serif;
+  font-family: "Josefin Sans", sans-serif;
   font-size: 0.82rem;
-  color: #0284c7;
+  color: #8b6914;
   margin-bottom: 1.5rem;
   letter-spacing: 0.04em;
 }
@@ -131,16 +128,16 @@
   justify-content: center;
   gap: 1rem;
   padding: 5rem 2rem;
-  color: #0284c7;
-  font-family: "Goldman", system-ui, sans-serif;
+  color: #8b6914;
+  font-family: "Josefin Sans", sans-serif;
   font-size: 0.85rem;
 }
 
 .pd-spinner {
   width: 36px;
   height: 36px;
-  border: 3px solid rgba(14, 165, 233, 0.2);
-  border-top-color: #0ea5e9;
+  border: 3px solid rgba(218, 165, 32, 0.2);
+  border-top-color: #daa520;
   border-radius: 50%;
   animation: pd-spin 0.8s linear infinite;
 }
@@ -154,7 +151,7 @@
 
 .pd-category-section {
   background: #ffffff;
-  border: 1px solid rgba(14, 165, 233, 0.12);
+  border: 1px solid rgba(218, 165, 32, 0.12);
   border-radius: 20px;
   overflow: hidden;
 }
@@ -164,14 +161,14 @@
   align-items: center;
   justify-content: space-between;
   padding: 1.3rem 2rem;
-  background: rgba(14, 165, 233, 0.04);
+  background: rgba(218, 165, 32, 0.04);
   cursor: pointer;
   user-select: none;
   transition: background 0.25s;
 }
 
 .pd-category-header:hover {
-  background: rgba(14, 165, 233, 0.08);
+  background: rgba(218, 165, 32, 0.08);
 }
 
 .pd-category-header-left {
@@ -186,7 +183,7 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  color: #0284c7;
+  color: #8b6914;
 }
 
 .pd-category-expand svg {
@@ -195,20 +192,20 @@
 }
 
 .pd-category-title {
-  font-family: "Goldman", system-ui, sans-serif;
+  font-family: "Cormorant Garamond", Georgia, serif;
   font-size: 1.5rem;
   font-weight: 500;
-  color: #0f172a;
+  color: #1a1a1a;
   margin: 0;
 }
 
 .pd-category-count {
-  font-family: "Goldman", system-ui, sans-serif;
+  font-family: "Josefin Sans", sans-serif;
   font-size: 0.72rem;
   font-weight: 500;
   letter-spacing: 0.1em;
-  color: #0284c7;
-  background: rgba(14, 165, 233, 0.1);
+  color: #8b6914;
+  background: rgba(218, 165, 32, 0.1);
   padding: 0.3rem 0.9rem;
   border-radius: 25px;
 }
@@ -222,7 +219,7 @@
 }
 
 .pd-subcategory-block {
-  border-bottom: 1px solid rgba(14, 165, 233, 0.08);
+  border-bottom: 1px solid rgba(218, 165, 32, 0.08);
   padding-bottom: 2rem;
 }
 
@@ -237,24 +234,24 @@
   gap: 1rem;
   margin-bottom: 1.2rem;
   padding-bottom: 0.7rem;
-  border-bottom: 1px solid rgba(14, 165, 233, 0.1);
+  border-bottom: 1px solid rgba(218, 165, 32, 0.1);
 }
 
 .pd-subcategory-title {
-  font-family: "Goldman", system-ui, sans-serif;
+  font-family: "Josefin Sans", sans-serif;
   font-size: 0.9rem;
   font-weight: 600;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: #0284c7;
+  color: #8b6914;
   margin: 0;
 }
 
 .pd-subcategory-count {
-  font-family: "Goldman", system-ui, sans-serif;
+  font-family: "Josefin Sans", sans-serif;
   font-size: 0.7rem;
   font-weight: 400;
-  color: #94a3b8;
+  color: #999;
 }
 
 /* ── Products Grid — matches fp/pg card grid ── */
@@ -269,22 +266,19 @@
   display: flex;
   flex-direction: column;
   background: #ffffff;
-  border: 1px solid rgba(14, 165, 233, 0.12);
+  border: 1px solid rgba(218, 165, 32, 0.12);
   border-radius: 16px;
   overflow: hidden;
   position: relative;
-  transition:
-    transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
-    border-color 0.35s,
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.35s,
     box-shadow 0.35s;
+  /* No cursor: pointer — no click to product page */
 }
 
 .pd-card:hover {
   transform: translateY(-4px);
-  border-color: rgba(14, 165, 233, 0.3);
-  box-shadow:
-    0 12px 30px rgba(0, 0, 0, 0.08),
-    0 0 0 1px rgba(14, 165, 233, 0.1);
+  border-color: rgba(218, 165, 32, 0.3);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(218, 165, 32, 0.1);
 }
 
 /* ── Image Area ── */
@@ -292,7 +286,7 @@
   position: relative;
   width: 100%;
   aspect-ratio: 4/3;
-  background: rgba(14, 165, 233, 0.04);
+  background: rgba(218, 165, 32, 0.04);
   overflow: hidden;
 }
 
@@ -314,8 +308,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(14, 165, 233, 0.06);
-  color: rgba(14, 165, 233, 0.35);
+  background: rgba(218, 165, 32, 0.06);
+  color: rgba(218, 165, 32, 0.35);
 }
 
 .pd-card-placeholder svg {
@@ -332,11 +326,12 @@
   flex-direction: column;
   gap: 0.3rem;
   z-index: 2;
+  /* Shift down slightly so delete button doesn't overlap */
   top: 2.8rem;
 }
 
 .pd-badge {
-  font-family: "Goldman", system-ui, sans-serif;
+  font-family: "Josefin Sans", sans-serif;
   font-size: 0.6rem;
   font-weight: 700;
   letter-spacing: 0.08em;
@@ -348,8 +343,8 @@
 }
 
 .pd-badge--featured {
-  background: linear-gradient(135deg, #0f172a 0%, #0ea5e9 100%);
-  color: #ffffff;
+  background: rgba(218, 165, 32, 0.9);
+  color: #1a1a1a;
 }
 
 .pd-badge--discount {
@@ -375,10 +370,7 @@
   border: none;
   cursor: pointer;
   z-index: 10;
-  transition:
-    transform 0.2s ease,
-    opacity 0.2s ease,
-    background 0.2s ease;
+  transition: transform 0.2s ease, opacity 0.2s ease, background 0.2s ease;
   opacity: 0;
   text-decoration: none;
 }
@@ -403,13 +395,13 @@
 /* Edit — top-right */
 .pd-action-btn--edit {
   right: 0.55rem;
-  background: rgba(14, 165, 233, 0.92);
-  color: #ffffff;
+  background: rgba(218, 165, 32, 0.92);
+  color: #1a1a1a;
   backdrop-filter: blur(6px);
 }
 
 .pd-action-btn--edit:hover {
-  background: #0ea5e9;
+  background: #daa520;
   transform: scale(1.1);
 }
 
@@ -429,20 +421,20 @@
 }
 
 .pd-card-brand {
-  font-family: "Goldman", system-ui, sans-serif;
+  font-family: "Josefin Sans", sans-serif;
   font-size: 0.65rem;
   font-weight: 400;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: #0284c7;
+  color: #8b6914;
   margin: 0;
 }
 
 .pd-card-name {
-  font-family: "Goldman", system-ui, sans-serif;
+  font-family: "Cormorant Garamond", Georgia, serif;
   font-size: 1rem;
   font-weight: 600;
-  color: #0f172a;
+  color: #1a1a1a;
   margin: 0;
   line-height: 1.35;
   display: -webkit-box;
@@ -460,21 +452,21 @@
 }
 
 .pd-card-price {
-  font-family: "Goldman", system-ui, sans-serif;
+  font-family: "Cormorant Garamond", Georgia, serif;
   font-size: 1.2rem;
   font-weight: 700;
-  color: #0ea5e9;
+  color: #daa520;
 }
 
 .pd-card-orig {
-  font-family: "Goldman", system-ui, sans-serif;
+  font-family: "Josefin Sans", sans-serif;
   font-size: 0.72rem;
-  color: #94a3b8;
+  color: #999;
   text-decoration: line-through;
 }
 
 .pd-card-discount-text {
-  font-family: "Goldman", system-ui, sans-serif;
+  font-family: "Josefin Sans", sans-serif;
   font-size: 0.62rem;
   font-weight: 700;
   color: #ef4444;
@@ -492,24 +484,24 @@
 }
 
 .pd-tag {
-  font-family: "Goldman", system-ui, sans-serif;
+  font-family: "Josefin Sans", sans-serif;
   font-size: 0.6rem;
   font-weight: 400;
   letter-spacing: 0.06em;
-  color: #64748b;
-  background: rgba(14, 165, 233, 0.07);
+  color: #666;
+  background: rgba(218, 165, 32, 0.07);
   padding: 0.2rem 0.6rem;
   border-radius: 20px;
 }
 
 .pd-tag--variant {
-  color: #0284c7;
-  background: rgba(14, 165, 233, 0.12);
+  color: #8b6914;
+  background: rgba(218, 165, 32, 0.12);
 }
 
 /* Stock */
 .pd-card-stock {
-  font-family: "Goldman", system-ui, sans-serif;
+  font-family: "Josefin Sans", sans-serif;
   font-size: 0.65rem;
   font-weight: 600;
   letter-spacing: 0.08em;
@@ -535,7 +527,7 @@
   background: linear-gradient(
     90deg,
     transparent 0%,
-    rgba(14, 165, 233, 0.4) 50%,
+    rgba(218, 165, 32, 0.4) 50%,
     transparent 100%
   );
   transform: scaleX(0);

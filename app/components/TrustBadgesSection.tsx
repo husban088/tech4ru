@@ -203,6 +203,8 @@ export default function TrustBadgesSection() {
   const sectionRef = useRef<HTMLElement | null>(null);
   const prevRef = useRef<HTMLButtonElement>(null);
   const nextRef = useRef<HTMLButtonElement>(null);
+  const mobilePrevRef = useRef<HTMLButtonElement>(null);
+  const mobileNextRef = useRef<HTMLButtonElement>(null);
   const isRTL = isRTLMode;
 
   // Scroll reveal animation
@@ -264,6 +266,28 @@ export default function TrustBadgesSection() {
           <p className="tbs-subtitle">{t.subtitle[lang]}</p>
         </div>
 
+        {/* Mobile / Tablet nav row — top-right, visible only on ≤1024px */}
+        <div className="tbs-nav-row">
+          <button
+            ref={mobilePrevRef}
+            className="tbs-nav-prev"
+            aria-label="Previous"
+          >
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <polyline points={isRTL ? "9 18 15 12 9 6" : "15 18 9 12 15 6"} />
+            </svg>
+          </button>
+          <button
+            ref={mobileNextRef}
+            className="tbs-nav-next"
+            aria-label="Next"
+          >
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <polyline points={isRTL ? "15 18 9 12 15 6" : "9 18 15 12 9 6"} />
+            </svg>
+          </button>
+        </div>
+
         {/* Swiper Slider */}
         <div className="tbs-slider-wrapper">
           {/* Nav Buttons — single set, wired via onSwiper */}
@@ -314,6 +338,15 @@ export default function TrustBadgesSection() {
                 swiper.params.navigation.nextEl = nextRef.current;
                 swiper.navigation.init();
                 swiper.navigation.update();
+              }
+              // Wire mobile nav buttons via refs
+              if (mobilePrevRef.current && mobileNextRef.current) {
+                mobilePrevRef.current.addEventListener("click", () =>
+                  swiper.slidePrev(),
+                );
+                mobileNextRef.current.addEventListener("click", () =>
+                  swiper.slideNext(),
+                );
               }
             }}
             pagination={{

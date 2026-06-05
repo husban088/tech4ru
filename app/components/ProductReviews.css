@@ -956,10 +956,25 @@
 }
 
 /* ═══════════════════════════════════════════════════════════════════════
-   SLIDER STAGE — Smooth Transitions
+   SLIDER STAGE — Swiper-based (matching HomeReviews)
    ═══════════════════════════════════════════════════════════════════════ */
 .pr-slider {
   width: 100%;
+}
+
+/* Mobile/Tablet nav row (top-right, hidden on desktop) */
+.pr-mobile-nav-row {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  margin-bottom: 1.25rem;
+}
+
+@media (min-width: 1024px) {
+  .pr-mobile-nav-row {
+    display: none;
+  }
 }
 
 .pr-stage-wrap {
@@ -967,59 +982,41 @@
   display: flex;
   align-items: center;
   gap: 1rem;
-  user-select: none;
   padding: 0.5rem 0 1.5rem;
 }
 
-/* Cards Grid */
-.pr-cards-grid {
-  display: grid;
+/* Desktop side arrows — hidden on mobile/tablet */
+.pr-arrow--desktop {
+  display: none;
+}
+
+@media (min-width: 1024px) {
+  .pr-arrow--desktop {
+    display: flex;
+  }
+}
+
+/* Swiper container fills remaining space */
+.pr-swiper {
   flex: 1;
   min-width: 0;
-  gap: 1.5rem;
-  opacity: 1;
+  overflow: hidden;
 }
 
-.pr-cards-grid--3 {
-  grid-template-columns: repeat(3, 1fr);
-}
-.pr-cards-grid--2 {
-  grid-template-columns: repeat(2, 1fr);
-}
-.pr-cards-grid--1 {
-  grid-template-columns: 1fr;
+/* Slides must be full height */
+.pr-slide {
+  height: auto;
+  display: flex;
 }
 
-/* Slide animations */
-.pr-cards-grid--anim-right {
-  animation: pr-slide-left 0.45s var(--pr-ease) both;
-}
-.pr-cards-grid--anim-left {
-  animation: pr-slide-right 0.45s var(--pr-ease) both;
-}
-.pr-cards-grid--anim-idle {
-  animation: none;
+.pr-slide .pr-card {
+  width: 100%;
+  height: 100%;
 }
 
-@keyframes pr-slide-left {
-  from {
-    transform: translateX(20px);
-    opacity: 0.7;
-  }
-  to {
-    transform: translateX(0);
-    opacity: 1;
-  }
-}
-@keyframes pr-slide-right {
-  from {
-    transform: translateX(-20px);
-    opacity: 0.7;
-  }
-  to {
-    transform: translateX(0);
-    opacity: 1;
-  }
+/* Override Swiper default pagination position */
+.pr-swiper .swiper-pagination {
+  display: none;
 }
 
 /* ═══════════════════════════════════════════════════════════════════════

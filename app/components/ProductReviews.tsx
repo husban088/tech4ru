@@ -2,9 +2,17 @@
 "use client";
 
 import { useEffect, useState, useCallback, useRef } from "react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay, Navigation, Pagination } from "swiper/modules";
 import { supabase } from "@/lib/supabase";
 import { useLanguage } from "@/app/context/LanguageContext";
+import { swiperPerfProps } from "@/lib/useFastSwiper";
 import "./ProductReviews.css";
+
+// Import Swiper styles
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
 
 export interface Review {
   id: string;
@@ -214,7 +222,7 @@ function SkeletonCard() {
   );
 }
 
-// ── Reviews Slider ──
+// ── Reviews Slider (Swiper-based, matching HomeReviews pattern) ──
 function ReviewsSlider({
   reviews,
   isRTL,
@@ -222,180 +230,115 @@ function ReviewsSlider({
   reviews: Review[];
   isRTL: boolean;
 }) {
-  const [visibleCount, setVisibleCount] = useState(3);
-  const [offset, setOffset] = useState(0);
-  const [animDir, setAnimDir] = useState<"idle" | "left" | "right">("idle");
-  const dragStart = useRef<number | null>(null);
-  const touchStart = useRef<number | null>(null);
-  const isDragging = useRef(false);
-  const autoTimer = useRef<ReturnType<typeof setInterval> | null>(null);
-
-  useEffect(() => {
-    const update = () => {
-      if (window.innerWidth >= 1024) setVisibleCount(3);
-      else if (window.innerWidth >= 640) setVisibleCount(2);
-      else setVisibleCount(1);
-    };
-    update();
-    window.addEventListener("resize", update);
-    return () => window.removeEventListener("resize", update);
-  }, []);
-
-  const totalSlides = reviews.length;
-  const showNav = totalSlides > visibleCount;
-
-  const go = useCallback(
-    (dir: "left" | "right") => {
-      if (animDir !== "idle") return;
-      setAnimDir(dir);
-      setTimeout(() => {
-        setOffset((prev) => {
-          if (dir === "right") {
-            const n = prev + 1;
-            return n + visibleCount > totalSlides ? 0 : n;
-          } else {
-            const n = prev - 1;
-            return n < 0 ? Math.max(0, totalSlides - visibleCount) : n;
-          }
-        });
-        setAnimDir("idle");
-      }, 450);
-    },
-    [animDir, totalSlides, visibleCount],
-  );
-
-  const next = useCallback(() => go("right"), [go]);
-  const prev = useCallback(() => go("left"), [go]);
-
-  const startAutoplay = useCallback(() => {
-    if (autoTimer.current) clearInterval(autoTimer.current);
-    if (totalSlides > visibleCount)
-      autoTimer.current = setInterval(() => next(), 5000);
-  }, [next, totalSlides, visibleCount]);
-
-  const stopAutoplay = useCallback(() => {
-    if (autoTimer.current) clearInterval(autoTimer.current);
-  }, []);
-
-  useEffect(() => {
-    startAutoplay();
-    return stopAutoplay;
-  }, [startAutoplay, stopAutoplay]);
-
-  const handleMouseDown = (e: React.MouseEvent) => {
-    dragStart.current = e.clientX;
-    isDragging.current = false;
-    stopAutoplay();
-  };
-  const handleMouseMove = (e: React.MouseEvent) => {
-    if (
-      dragStart.current !== null &&
-      Math.abs(e.clientX - dragStart.current) > 8
-    ) {
-      isDragging.current = true;
-    }
-  };
-  const handleMouseUp = (e: React.MouseEvent) => {
-    if (dragStart.current === null) return;
-    const dx = e.clientX - dragStart.current;
-    if (Math.abs(dx) > 55) dx > 0 ? prev() : next();
-    dragStart.current = null;
-    setTimeout(() => {
-      isDragging.current = false;
-    }, 60);
-    startAutoplay();
-  };
-  const handleMouseLeave = () => {
-    dragStart.current = null;
-    isDragging.current = false;
-    startAutoplay();
-  };
-  const handleTouchStart = (e: React.TouchEvent) => {
-    touchStart.current = e.touches[0].clientX;
-    stopAutoplay();
-  };
-  const handleTouchEnd = (e: React.TouchEvent) => {
-    if (touchStart.current === null) return;
-    const dx = e.changedTouches[0].clientX - touchStart.current;
-    if (Math.abs(dx) > 50) dx > 0 ? prev() : next();
-    touchStart.current = null;
-    startAutoplay();
-  };
-
-  const visibleReviews = reviews.slice(offset, offset + visibleCount);
-  const pages = Math.ceil(totalSlides / visibleCount);
-  const currentPage = Math.floor(offset / visibleCount);
+  const prevRef = useRef<HTMLButtonElement>(null);
+  const nextRef = useRef<HTMLButtonElement>(null);
 
   return (
     <div className="pr-slider">
-      <div
-        className="pr-stage-wrap"
-        onMouseDown={handleMouseDown}
-        onMouseMove={handleMouseMove}
-        onMouseUp={handleMouseUp}
-        onMouseLeave={handleMouseLeave}
-        onTouchStart={handleTouchStart}
-        onTouchEnd={handleTouchEnd}
-        style={{ cursor: isDragging.current ? "grabbing" : "grab" }}
-      >
-        {showNav && (
-          <button
-            className="pr-arrow pr-arrow--prev"
-            onClick={prev}
-            aria-label="Previous"
+      {/* Mobile/Tablet nav row */}
+      <div className="pr-mobile-nav-row">
+        <button ref={prevRef} className="pr-arrow" aria-label="Previous">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2.2"
           >
-            <svg
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2.2"
-            >
-              <polyline points={isRTL ? "9 18 15 12 9 6" : "15 18 9 12 15 6"} />
-            </svg>
-          </button>
-        )}
-        <div
-          className={`pr-cards-grid pr-cards-grid--${visibleCount} pr-cards-grid--anim-${animDir}`}
-        >
-          {visibleReviews.map((review) => (
-            <ReviewCard key={review.id} review={review} isRTL={isRTL} />
-          ))}
-        </div>
-        {showNav && (
-          <button
-            className="pr-arrow pr-arrow--next"
-            onClick={next}
-            aria-label="Next"
+            <polyline points={isRTL ? "9 18 15 12 9 6" : "15 18 9 12 15 6"} />
+          </svg>
+        </button>
+        <button ref={nextRef} className="pr-arrow" aria-label="Next">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2.2"
           >
-            <svg
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2.2"
-            >
-              <polyline points={isRTL ? "15 18 9 12 15 6" : "9 18 15 12 9 6"} />
-            </svg>
-          </button>
-        )}
+            <polyline points={isRTL ? "15 18 9 12 15 6" : "9 18 15 12 9 6"} />
+          </svg>
+        </button>
       </div>
-      {showNav && (
-        <div className="pr-dots">
-          {Array.from({ length: pages }).map((_, i) => (
-            <button
-              key={i}
-              className={`pr-dot${i === currentPage ? " pr-dot--active" : ""}`}
-              onClick={() => {
-                stopAutoplay();
-                setOffset(
-                  Math.min(i * visibleCount, totalSlides - visibleCount),
-                );
-                startAutoplay();
-              }}
-              aria-label={`Page ${i + 1}`}
-            />
+
+      {/* Swiper Stage */}
+      <div className="pr-stage-wrap">
+        {/* Desktop side prev arrow */}
+        <button
+          className="pr-arrow pr-arrow--prev pr-arrow--desktop"
+          aria-label="Previous"
+        >
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2.2"
+          >
+            <polyline points={isRTL ? "9 18 15 12 9 6" : "15 18 9 12 15 6"} />
+          </svg>
+        </button>
+
+        <Swiper
+          {...swiperPerfProps}
+          modules={[Autoplay, Navigation, Pagination]}
+          loop={true}
+          autoplay={{
+            delay: 4500,
+            disableOnInteraction: false,
+            pauseOnMouseEnter: true,
+          }}
+          navigation={{
+            prevEl: ".pr-arrow--prev",
+            nextEl: ".pr-arrow--next",
+          }}
+          onSwiper={(swiper) => {
+            if (prevRef.current && nextRef.current) {
+              prevRef.current.addEventListener("click", () =>
+                swiper.slidePrev(),
+              );
+              nextRef.current.addEventListener("click", () =>
+                swiper.slideNext(),
+              );
+            }
+          }}
+          pagination={{
+            clickable: true,
+            el: ".pr-dots",
+            bulletClass: "pr-dot",
+            bulletActiveClass: "pr-dot--active",
+            renderBullet: (_index: number, className: string) =>
+              `<button class="${className}" />`,
+          }}
+          breakpoints={{
+            0: { slidesPerView: 1, spaceBetween: 16 },
+            640: { slidesPerView: 2, spaceBetween: 20 },
+            1024: { slidesPerView: 3, spaceBetween: 28 },
+          }}
+          className="pr-swiper"
+        >
+          {reviews.map((review) => (
+            <SwiperSlide key={review.id} className="pr-slide">
+              <ReviewCard review={review} isRTL={isRTL} />
+            </SwiperSlide>
           ))}
-        </div>
-      )}
+        </Swiper>
+
+        {/* Desktop side next arrow */}
+        <button
+          className="pr-arrow pr-arrow--next pr-arrow--desktop"
+          aria-label="Next"
+        >
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2.2"
+          >
+            <polyline points={isRTL ? "15 18 9 12 15 6" : "9 18 15 12 9 6"} />
+          </svg>
+        </button>
+      </div>
+
+      {/* Pagination dots */}
+      <div className="pr-dots" />
     </div>
   );
 }
@@ -1109,17 +1052,6 @@ export default function ProductReviews({ productId }: ProductReviewsProps) {
           <ReviewsSlider reviews={reviews} isRTL={isRTLMode} />
         )}
       </div>
-
-      <style jsx>{`
-        @keyframes pr-spin {
-          0% {
-            transform: rotate(0deg);
-          }
-          100% {
-            transform: rotate(360deg);
-          }
-        }
-      `}</style>
     </section>
   );
 }

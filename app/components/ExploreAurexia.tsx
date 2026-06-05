@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useRef, useState, useEffect } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Autoplay, A11y } from "swiper/modules";
 import "swiper/css";
@@ -263,15 +264,26 @@ function CategoryCard({
 ────────────────────────────────────────── */
 function ExploreInner() {
   const { language, isRTLMode } = useLanguage();
+  const prevRef = useRef<HTMLButtonElement>(null);
+  const nextRef = useRef<HTMLButtonElement>(null);
+  // Prevent hydration mismatch — RTL/Swiper only render after client mount
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  // SSR-safe arrow direction — always LTR on server, correct on client
+  const prevArrow = mounted && isRTLMode ? "M9 18l6-6-6-6" : "M15 18l-6-6 6-6";
+  const nextArrow = mounted && isRTLMode ? "M15 18l-6-6 6-6" : "M9 18l6-6-6-6";
 
   return (
     <section
       className="ea-section"
       aria-label="Explore Aurexia Categories"
-      dir={isRTLMode ? "rtl" : "ltr"}
+      dir={mounted && isRTLMode ? "rtl" : "ltr"}
       suppressHydrationWarning
     >
-      {/* Decorative elements - Black + Red Mixed Theme */}
+      {/* Decorative elements */}
       <div className="ea-grain" aria-hidden="true" />
       <div className="ea-ambient" aria-hidden="true" />
       <div className="ea-red-orb" aria-hidden="true" />
@@ -300,9 +312,10 @@ function ExploreInner() {
       </div>
 
       {/* Mobile / Tablet nav row — visible only on ≤900px */}
-      <div className="ea-mobile-nav-row" aria-hidden="false">
+      <div className="ea-mobile-nav-row">
         <button
-          className="ea-nav-btn ea-mobile-nav-btn ea-mobile-prev"
+          ref={prevRef}
+          className="ea-nav-btn ea-mobile-nav-btn"
           aria-label="Previous category"
           type="button"
         >
@@ -312,15 +325,12 @@ function ExploreInner() {
             stroke="currentColor"
             strokeWidth="1.5"
           >
-            <path
-              d="M15 18l-6-6 6-6"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
+            <path d={prevArrow} strokeLinecap="round" strokeLinejoin="round" />
           </svg>
         </button>
         <button
-          className="ea-nav-btn ea-mobile-nav-btn ea-mobile-next"
+          ref={nextRef}
+          className="ea-nav-btn ea-mobile-nav-btn"
           aria-label="Next category"
           type="button"
         >
@@ -330,11 +340,7 @@ function ExploreInner() {
             stroke="currentColor"
             strokeWidth="1.5"
           >
-            <path
-              d="M9 18l6-6-6-6"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
+            <path d={nextArrow} strokeLinecap="round" strokeLinejoin="round" />
           </svg>
         </button>
       </div>
@@ -352,11 +358,7 @@ function ExploreInner() {
             stroke="currentColor"
             strokeWidth="1.5"
           >
-            <path
-              d="M15 18l-6-6 6-6"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
+            <path d={prevArrow} strokeLinecap="round" strokeLinejoin="round" />
           </svg>
         </button>
 
@@ -371,67 +373,64 @@ function ExploreInner() {
             stroke="currentColor"
             strokeWidth="1.5"
           >
-            <path
-              d="M9 18l6-6-6-6"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
+            <path d={nextArrow} strokeLinecap="round" strokeLinejoin="round" />
           </svg>
         </button>
 
-        <Swiper
-          modules={[Navigation, Pagination, Autoplay, A11y]}
-          slidesPerView={1}
-          spaceBetween={20}
-          centeredSlides={false}
-          loop={true}
-          grabCursor={true}
-          speed={300}
-          watchSlidesProgress={true}
-          resistanceRatio={0.85}
-          touchRatio={1}
-          touchAngle={45}
-          simulateTouch={true}
-          observer={true}
-          observeParents={true}
-          resizeObserver={true}
-          dir={isRTLMode ? "rtl" : "ltr"}
-          autoplay={{
-            delay: 3800,
-            disableOnInteraction: false,
-            pauseOnMouseEnter: true,
-          }}
-          navigation={{
-            prevEl: ".ea-nav-prev, .ea-mobile-prev",
-            nextEl: ".ea-nav-next, .ea-mobile-next",
-          }}
-          onSwiper={(swiper) => {
-            if (
-              swiper.params.navigation &&
-              typeof swiper.params.navigation !== "boolean"
-            ) {
-              swiper.params.navigation.prevEl = ".ea-nav-prev, .ea-mobile-prev";
-              swiper.params.navigation.nextEl = ".ea-nav-next, .ea-mobile-next";
-              swiper.navigation.init();
-              swiper.navigation.update();
-            }
-          }}
-          pagination={{
-            clickable: true,
-            dynamicBullets: true,
-          }}
-          breakpoints={{
-            768: { slidesPerView: 2, spaceBetween: 24 },
-            1024: { slidesPerView: 3, spaceBetween: 32 },
-          }}
-          className="ea-swiper"
-        >
-          {categories.map((cat) => (
-            <SwiperSlide key={cat.id} className="ea-slide">
-              <CategoryCard cat={cat} language={language} isRTL={isRTLMode} />
-            </SwiperSlide>
-          ))}
-        </Swiper>
+        {mounted && (
+          <Swiper
+            modules={[Navigation, Pagination, Autoplay, A11y]}
+            slidesPerView={1}
+            spaceBetween={20}
+            centeredSlides={false}
+            loop={true}
+            grabCursor={true}
+            speed={300}
+            watchSlidesProgress={true}
+            resistanceRatio={0.85}
+            touchRatio={1}
+            touchAngle={45}
+            simulateTouch={true}
+            observer={true}
+            observeParents={true}
+            resizeObserver={true}
+            dir={isRTLMode ? "rtl" : "ltr"}
+            autoplay={{
+              delay: 3800,
+              disableOnInteraction: false,
+              pauseOnMouseEnter: true,
+            }}
+            navigation={{
+              prevEl: ".ea-nav-prev",
+              nextEl: ".ea-nav-next",
+            }}
+            onSwiper={(swiper) => {
+              if (prevRef.current && nextRef.current) {
+                prevRef.current.addEventListener("click", () =>
+                  swiper.slidePrev(),
+                );
+                nextRef.current.addEventListener("click", () =>
+                  swiper.slideNext(),
+                );
+              }
+            }}
+            pagination={{
+              clickable: true,
+              dynamicBullets: true,
+            }}
+            breakpoints={{
+              768: { slidesPerView: 2, spaceBetween: 24 },
+              1024: { slidesPerView: 3, spaceBetween: 32 },
+            }}
+            className="ea-swiper"
+          >
+            {categories.map((cat) => (
+              <SwiperSlide key={cat.id} className="ea-slide">
+                <CategoryCard cat={cat} language={language} isRTL={isRTLMode} />
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        )}
       </div>
 
       <div className="ea-footer-ornament" aria-hidden="true">

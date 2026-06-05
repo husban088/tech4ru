@@ -452,6 +452,8 @@
   border: none !important;
   outline: none !important;
   box-shadow: none !important;
+  -webkit-appearance: none;
+  appearance: none;
   padding: 0.6rem 2rem 0.6rem 1.8rem;
   font-family: var(--si-sans);
   font-size: 0.85rem;
@@ -463,10 +465,13 @@
 .si-input:focus,
 .si-input:active,
 .si-input:hover,
-.si-input:focus-visible {
+.si-input:focus-visible,
+.si-input:focus-within,
+.si-input:-webkit-autofill {
   border: none !important;
   outline: none !important;
   box-shadow: none !important;
+  -webkit-box-shadow: none !important;
 }
 .si-input::placeholder {
   color: #94a3b8;

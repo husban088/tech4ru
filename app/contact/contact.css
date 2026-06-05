@@ -660,14 +660,29 @@
 .co-input {
   width: 100%;
   background: transparent;
-  border: none;
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+  -webkit-box-shadow: none !important;
+  -webkit-appearance: none;
+  appearance: none;
   padding: 0.6rem 0 0.6rem 1.8rem;
   font-family: var(--co-sans);
   font-size: 0.9rem;
   font-weight: 500;
   color: #0f172a;
-  outline: none;
   letter-spacing: 0.02em;
+}
+.co-input:focus,
+.co-input:active,
+.co-input:hover,
+.co-input:focus-visible,
+.co-input:focus-within,
+.co-input:-webkit-autofill {
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+  -webkit-box-shadow: none !important;
 }
 .co-input::placeholder {
   color: #94a3b8;
@@ -677,16 +692,31 @@
 .co-textarea {
   width: 100%;
   background: transparent;
-  border: none;
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+  -webkit-box-shadow: none !important;
+  -webkit-appearance: none;
+  appearance: none;
   padding: 0.6rem 0 0.6rem 1.8rem;
   font-family: var(--co-sans);
   font-size: 0.9rem;
   font-weight: 500;
   color: #0f172a;
-  outline: none;
   letter-spacing: 0.02em;
   resize: none;
   line-height: 1.6;
+}
+.co-textarea:focus,
+.co-textarea:active,
+.co-textarea:hover,
+.co-textarea:focus-visible,
+.co-textarea:focus-within,
+.co-textarea:-webkit-autofill {
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+  -webkit-box-shadow: none !important;
 }
 .co-textarea::placeholder {
   color: #94a3b8;

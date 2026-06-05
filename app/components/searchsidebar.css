@@ -196,14 +196,29 @@
 .ss-input {
   width: 100%;
   background: transparent;
-  border: none;
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+  -webkit-box-shadow: none !important;
+  -webkit-appearance: none;
+  appearance: none;
   padding: 0.6rem 2rem 0.6rem 2rem;
   font-family: "Goldman", system-ui, sans-serif;
   font-size: 0.9rem;
   font-weight: 500;
   color: #0f172a;
-  outline: none;
   letter-spacing: 0.03em;
+}
+.ss-input:focus,
+.ss-input:active,
+.ss-input:hover,
+.ss-input:focus-visible,
+.ss-input:focus-within,
+.ss-input:-webkit-autofill {
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+  -webkit-box-shadow: none !important;
 }
 
 .ss-input::placeholder {

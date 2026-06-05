@@ -447,6 +447,8 @@
   border: none !important;
   outline: none !important;
   box-shadow: none !important;
+  -webkit-appearance: none;
+  appearance: none;
   padding: 0.6rem 2rem 0.6rem 1.8rem;
   font-family: var(--su-sans);
   font-size: 0.85rem;
@@ -458,10 +460,13 @@
 .su-input:focus,
 .su-input:active,
 .su-input:hover,
-.su-input:focus-visible {
+.su-input:focus-visible,
+.su-input:focus-within,
+.su-input:-webkit-autofill {
   border: none !important;
   outline: none !important;
   box-shadow: none !important;
+  -webkit-box-shadow: none !important;
 }
 .su-input::placeholder {
   color: #94a3b8;

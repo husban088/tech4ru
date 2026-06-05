@@ -257,13 +257,13 @@
 }
 
 /* Show on tablet + mobile, hide desktop side arrows */
-@media (max-width: 900px) {
+@media (max-width: 1024px) {
   .ea-mobile-nav-row {
     display: flex;
   }
   .ea-nav-prev,
   .ea-nav-next {
-    display: none;
+    display: none !important;
   }
 }
 

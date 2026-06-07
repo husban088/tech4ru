@@ -26,8 +26,8 @@ const images = [
   },
   {
     src: "/hero1.png",
-    alt: "Tech Accessories",
-    label: "Tech",
+    alt: "Automotive Accessories",
+    label: "Automotive",
     icon: (
       <svg
         viewBox="0 0 24 24"
@@ -37,9 +37,10 @@ const images = [
         strokeLinecap="round"
         strokeLinejoin="round"
       >
-        <rect x="2" y="3" width="20" height="14" rx="2" />
-        <line x1="8" y1="21" x2="16" y2="21" />
-        <line x1="12" y1="17" x2="12" y2="21" />
+        <path d="M5 17H3a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h1l2-3h10l2 3h1a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2h-2" />
+        <circle cx="7.5" cy="17" r="2.5" />
+        <circle cx="16.5" cy="17" r="2.5" />
+        <path d="M7.5 7v4M16.5 7v4" />
       </svg>
     ),
   },
@@ -63,8 +64,8 @@ const images = [
   },
   {
     src: "/hero3.png",
-    alt: "Women's Watch",
-    label: "Elegance",
+    alt: "Mobile Accessories",
+    label: "Mobile Accessories",
     icon: (
       <svg
         viewBox="0 0 24 24"
@@ -74,7 +75,8 @@ const images = [
         strokeLinecap="round"
         strokeLinejoin="round"
       >
-        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+        <rect x="5" y="2" width="14" height="20" rx="2" />
+        <line x1="12" y1="18" x2="12.01" y2="18" />
       </svg>
     ),
   },

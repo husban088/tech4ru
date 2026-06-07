@@ -506,24 +506,25 @@
   transition-delay: calc(0.2s + var(--delay, 0s));
 }
 
-/* Hover — only shine, no lift */
+/* Hover — only shimmer shine, no border/frame/glow */
 .he-img-card:hover {
-  box-shadow:
-    0 0 0 2px #0ea5e9,
-    0 8px 32px rgba(14, 165, 233, 0.18),
-    0 4px 12px rgba(10, 10, 10, 0.08);
-  border-color: #0ea5e9;
   z-index: 2;
 }
 
-/* Gradient border on hover */
+/* Gradient border frame — ALWAYS VISIBLE, black + skyblue */
 .he-img-card::before {
   content: "";
   position: absolute;
   inset: 0;
   border-radius: 20px;
   padding: 2px;
-  background: linear-gradient(135deg, #0ea5e9 0%, #0a0a0a 50%, #38bdf8 100%);
+  background: linear-gradient(
+    135deg,
+    #0ea5e9 0%,
+    #0a0a0a 40%,
+    #0ea5e9 70%,
+    #0a0a0a 100%
+  );
   -webkit-mask:
     linear-gradient(#fff 0 0) content-box,
     linear-gradient(#fff 0 0);
@@ -532,25 +533,21 @@
     linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
-  opacity: 0;
-  transition: opacity 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  opacity: 1;
   pointer-events: none;
   z-index: 5;
 }
-.he-img-card:hover::before {
-  opacity: 1;
-}
 
-/* Shimmer */
+/* Shimmer — pure white light sweep only */
 .he-img-shimmer {
   position: absolute;
   inset: 0;
   background: linear-gradient(
     115deg,
-    transparent 25%,
-    rgba(14, 165, 233, 0.18) 45%,
-    rgba(255, 255, 255, 0.25) 55%,
-    transparent 75%
+    transparent 20%,
+    rgba(255, 255, 255, 0.35) 45%,
+    rgba(255, 255, 255, 0.15) 55%,
+    transparent 80%
   );
   transform: translateX(-100%);
   transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
@@ -587,20 +584,17 @@
   filter: brightness(1.08) saturate(1.1);
 }
 
-/* Overlay */
+/* Overlay — very subtle, no darkening on hover */
 .he-img-overlay {
   position: absolute;
   inset: 0;
   background: linear-gradient(
     to top,
-    rgba(10, 10, 10, 0.5) 0%,
-    rgba(14, 165, 233, 0.06) 45%,
-    transparent 70%
+    rgba(10, 10, 10, 0.35) 0%,
+    transparent 50%
   );
   pointer-events: none;
   z-index: 2;
-  opacity: 0.7;
-  transition: opacity 0.4s ease;
 }
 .he-img-card:hover .he-img-overlay {
   opacity: 1;
@@ -652,20 +646,9 @@
   white-space: nowrap;
 }
 
-/* Bottom bar — sky+black */
+/* Bottom bar — removed */
 .he-img-bar {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  height: 3px;
-  width: 0;
-  background: linear-gradient(90deg, #0a0a0a, #0ea5e9, #38bdf8);
-  transition: width 0.55s cubic-bezier(0.22, 1, 0.36, 1);
-  pointer-events: none;
-  z-index: 7;
-}
-.he-img-card:hover .he-img-bar {
-  width: 100%;
+  display: none;
 }
 
 /* Grid corner decorations */

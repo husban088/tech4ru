@@ -9,21 +9,74 @@ const images = [
     src: "/hero2.png",
     alt: "Luxury Men's Watch",
     label: "Timepieces",
+    icon: (
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.8"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        <circle cx="12" cy="12" r="8" />
+        <polyline points="12 6 12 12 16 14" />
+        <path d="M9 2h6M9 22h6" />
+      </svg>
+    ),
   },
   {
     src: "/hero1.png",
     alt: "Tech Accessories",
     label: "Tech",
+    icon: (
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.8"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        <rect x="2" y="3" width="20" height="14" rx="2" />
+        <line x1="8" y1="21" x2="16" y2="21" />
+        <line x1="12" y1="17" x2="12" y2="21" />
+      </svg>
+    ),
   },
   {
     src: "/hero4.png",
     alt: "Home Décor",
     label: "Décor",
+    icon: (
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.8"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+        <polyline points="9 22 9 12 15 12 15 22" />
+      </svg>
+    ),
   },
   {
     src: "/hero3.png",
     alt: "Women's Watch",
     label: "Elegance",
+    icon: (
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.8"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+      </svg>
+    ),
   },
 ];
 
@@ -70,10 +123,12 @@ export default function HeroExplore() {
       className="he-section"
       aria-label="Explore Aurexia"
     >
+      {/* WATERMARK */}
+      <div className="he-watermark" aria-hidden="true">
+        TECH4U
+      </div>
+
       <div className="he-grain" aria-hidden="true" />
-      <div className="he-ambient" aria-hidden="true" />
-      <div className="he-orb-left" aria-hidden="true" />
-      <div className="he-orb-right" aria-hidden="true" />
       <div className="he-bg-lines" aria-hidden="true">
         <span />
         <span />
@@ -81,11 +136,14 @@ export default function HeroExplore() {
         <span />
         <span />
       </div>
+      <div className="he-top-accent" aria-hidden="true" />
+      <div className="he-bottom-accent" aria-hidden="true" />
 
       <div className="he-container">
         {/* LEFT SIDE */}
         <div className="he-left">
           <div className="he-eyebrow-row">
+            <span className="he-eyebrow-dot" aria-hidden="true" />
             <span className="he-eyebrow">Luxury Collections</span>
             <div className="he-eyebrow-line" />
           </div>
@@ -172,7 +230,6 @@ export default function HeroExplore() {
                 style={{ "--delay": `${i * 0.12}s` } as React.CSSProperties}
               >
                 <div className="he-img-shimmer" aria-hidden="true" />
-                <span className="he-img-label">{img.label}</span>
                 <div className="he-img-wrap">
                   <img
                     src={img.src}
@@ -187,6 +244,13 @@ export default function HeroExplore() {
                   />
                 </div>
                 <div className="he-img-overlay" aria-hidden="true" />
+
+                {/* NAME BOX at bottom */}
+                <div className="he-img-namebox">
+                  <span className="he-img-namebox-icon">{img.icon}</span>
+                  <span className="he-img-namebox-text">{img.label}</span>
+                </div>
+
                 <div className="he-img-bar" aria-hidden="true" />
               </div>
             ))}

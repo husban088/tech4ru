@@ -1,8 +1,11 @@
-/* app/panel/orders/orders.css */
+/* app/panel/orders/orders.css
+   ─────────────────────────────────────────────────────────────
+   Vercel-safe: no @import, no :root clash, hardcoded fallbacks
+   ─────────────────────────────────────────────────────────────
+*/
 
-@import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300&family=Josefin+Sans:wght@200;300;400;500;600&display=swap");
-
-:root {
+/* ── Variables scoped to component root — Vercel-safe ── */
+.ords-root {
   --ords-gold: #daa520;
   --ords-gold-light: #f0c040;
   --ords-gold-deep: #8b6914;
@@ -13,19 +16,19 @@
   --ords-text-primary: #1a1a1a;
   --ords-text-secondary: #444444;
   --ords-text-muted: #666666;
-  --ords-serif: "Cormorant Garamond", Georgia, serif;
-  --ords-sans: "Josefin Sans", sans-serif;
+  --ords-serif: "Cormorant Garamond", Georgia, "Times New Roman", serif;
+  --ords-sans: "Josefin Sans", "Trebuchet MS", Arial, sans-serif;
   --ords-ease: 0.3s cubic-bezier(0.22, 1, 0.36, 1);
-}
 
-/* Base */
-.ords-root {
   min-height: 100vh;
+  background: #f9f5f0;
   background: var(--ords-bg);
   position: relative;
   padding-top: 80px;
+  box-sizing: border-box;
 }
 
+/* ── Ambient + Grain ── */
 .ords-ambient {
   position: fixed;
   top: 0;
@@ -38,6 +41,7 @@
     transparent 60%
   );
   pointer-events: none;
+  z-index: 0;
 }
 
 .ords-grain {
@@ -49,28 +53,32 @@
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
   pointer-events: none;
   opacity: 0.4;
+  z-index: 0;
 }
 
+/* ── Content Wrapper ── */
 .ords-content {
   max-width: 1400px;
   margin: 0 auto;
   padding: 2rem 2rem 4rem;
   position: relative;
   z-index: 1;
+  box-sizing: border-box;
+  width: 100%;
 }
 
-/* Page Header */
+/* ── Page Header ── */
 .ords-page-header {
   text-align: center;
   margin-bottom: 3rem;
 }
 
 .ords-eyebrow {
-  font-family: var(--ords-sans);
+  font-family: "Josefin Sans", "Trebuchet MS", Arial, sans-serif;
   font-size: 0.55rem;
   letter-spacing: 0.3em;
   text-transform: uppercase;
-  color: var(--ords-gold-deep);
+  color: #8b6914;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -81,97 +89,110 @@
 .ords-ey-line {
   width: 40px;
   height: 1px;
-  background: var(--ords-gold);
+  background: #daa520;
   opacity: 0.4;
+  display: block;
 }
 
 .ords-page-title {
-  font-family: var(--ords-serif);
+  font-family: "Cormorant Garamond", Georgia, "Times New Roman", serif;
   font-size: clamp(1.8rem, 5vw, 2.8rem);
   font-weight: 400;
-  color: var(--ords-text-primary);
+  color: #1a1a1a;
   margin: 0 0 0.5rem;
+  line-height: 1.2;
 }
 
 .ords-page-title em {
   font-style: italic;
-  color: var(--ords-gold-deep);
+  color: #8b6914;
 }
 
 .ords-page-sub {
-  font-family: var(--ords-sans);
+  font-family: "Josefin Sans", "Trebuchet MS", Arial, sans-serif;
   font-size: clamp(0.7rem, 3vw, 0.8rem);
-  color: var(--ords-text-muted);
+  color: #666666;
   letter-spacing: 0.05em;
 }
 
-/* Stats Grid - FULLY RESPONSIVE (6 cards) */
+/* ── Stats Grid ── */
 .ords-stats-grid {
   display: grid;
   grid-template-columns: repeat(6, 1fr);
   gap: 1rem;
   margin-bottom: 2rem;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .ords-stat-card {
-  background: var(--ords-card-bg);
+  background: #ffffff;
   border-radius: 20px;
-  padding: clamp(1rem, 4vw, 1.5rem);
+  padding: clamp(0.75rem, 3vw, 1.5rem);
   text-align: center;
   position: relative;
   overflow: hidden;
-  transition: all var(--ords-ease);
-  border: 1px solid var(--ords-border);
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease,
+    border-color 0.3s ease;
+  border: 1px solid rgba(218, 165, 32, 0.15);
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+  box-sizing: border-box;
 }
 
 .ords-stat-card:hover {
   transform: translateY(-4px);
   box-shadow: 0 20px 35px rgba(218, 165, 32, 0.08);
-  border-color: var(--ords-gold);
+  border-color: #daa520;
 }
 
 .ords-stat-icon {
-  width: clamp(40px, 8vw, 50px);
-  height: clamp(40px, 8vw, 50px);
-  background: var(--ords-gold-dim);
+  width: clamp(36px, 6vw, 50px);
+  height: clamp(36px, 6vw, 50px);
+  background: rgba(218, 165, 32, 0.1);
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 0 auto 0.75rem;
-  color: var(--ords-gold-deep);
+  margin: 0 auto 0.6rem;
+  color: #8b6914;
+  flex-shrink: 0;
 }
 
 .ords-stat-icon svg {
-  width: clamp(18px, 4vw, 24px);
-  height: clamp(18px, 4vw, 24px);
+  width: clamp(16px, 3vw, 22px);
+  height: clamp(16px, 3vw, 22px);
 }
 
 .ords-stat-value {
-  font-family: var(--ords-serif);
-  font-size: clamp(1.2rem, 5vw, 2.2rem);
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: clamp(1.1rem, 3.5vw, 2rem);
   font-weight: 600;
-  color: var(--ords-text-primary);
-  margin-bottom: 0.25rem;
+  color: #1a1a1a;
+  margin-bottom: 0.2rem;
   word-break: break-word;
+  line-height: 1.1;
 }
 
 .ords-stat-label {
-  font-family: var(--ords-sans);
-  font-size: clamp(0.55rem, 2.5vw, 0.65rem);
-  letter-spacing: 0.1em;
+  font-family: "Josefin Sans", Arial, sans-serif;
+  font-size: clamp(0.45rem, 1.5vw, 0.6rem);
+  letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--ords-text-muted);
+  color: #666666;
+  line-height: 1.3;
 }
 
-/* Filters Section - FULLY RESPONSIVE */
+/* ── Filters Section ── */
 .ords-filters-section {
   display: flex;
   flex-wrap: wrap;
   gap: 0.75rem;
   margin-bottom: 2rem;
   align-items: stretch;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .ords-search-bar {
@@ -179,22 +200,25 @@
   min-width: 200px;
   display: flex;
   align-items: center;
-  background: var(--ords-card-bg);
-  border: 1px solid var(--ords-border);
+  background: #ffffff;
+  border: 1px solid rgba(218, 165, 32, 0.15);
   border-radius: 60px;
   padding: 0.5rem 1rem;
-  transition: all var(--ords-ease);
+  transition:
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
+  box-sizing: border-box;
 }
 
 .ords-search-bar:focus-within {
-  border-color: var(--ords-gold);
-  box-shadow: 0 0 0 3px var(--ords-gold-dim);
+  border-color: #daa520;
+  box-shadow: 0 0 0 3px rgba(218, 165, 32, 0.1);
 }
 
 .ords-search-bar svg {
   width: 18px;
   height: 18px;
-  color: var(--ords-text-muted);
+  color: #666666;
   margin-right: 0.75rem;
   flex-shrink: 0;
 }
@@ -203,15 +227,15 @@
   flex: 1;
   border: none;
   background: transparent;
-  font-family: var(--ords-sans);
+  font-family: "Josefin Sans", Arial, sans-serif;
   font-size: 0.8rem;
   outline: none;
-  color: var(--ords-text-primary);
+  color: #1a1a1a;
   min-width: 0;
 }
 
 .ords-search-bar input::placeholder {
-  color: var(--ords-text-muted);
+  color: #666666;
   font-size: 0.75rem;
 }
 
@@ -222,13 +246,13 @@
   padding: 0;
   display: flex;
   align-items: center;
-  color: var(--ords-text-muted);
-  transition: color var(--ords-ease);
+  color: #666666;
+  transition: color 0.3s ease;
   flex-shrink: 0;
 }
 
 .ords-clear-search:hover {
-  color: var(--ords-gold-deep);
+  color: #8b6914;
 }
 
 .ords-clear-search svg {
@@ -247,26 +271,26 @@
 .ords-filter-btn {
   padding: 0.5rem 1rem;
   background: transparent;
-  border: 1px solid var(--ords-border);
+  border: 1px solid rgba(218, 165, 32, 0.15);
   border-radius: 40px;
-  font-family: var(--ords-sans);
+  font-family: "Josefin Sans", Arial, sans-serif;
   font-size: 0.7rem;
   font-weight: 600;
   letter-spacing: 0.05em;
-  color: var(--ords-text-secondary);
+  color: #444444;
   cursor: pointer;
-  transition: all var(--ords-ease);
+  transition: all 0.3s ease;
   white-space: nowrap;
 }
 
 .ords-filter-btn:hover {
-  border-color: var(--ords-gold);
-  color: var(--ords-gold-deep);
+  border-color: #daa520;
+  color: #8b6914;
 }
 
 .ords-filter-btn.active {
-  background: var(--ords-gold);
-  border-color: var(--ords-gold);
+  background: #daa520;
+  border-color: #daa520;
   color: #fff;
 }
 
@@ -274,27 +298,28 @@
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  background: var(--ords-card-bg);
-  border: 1px solid var(--ords-border);
+  background: #ffffff;
+  border: 1px solid rgba(218, 165, 32, 0.15);
   border-radius: 40px;
   padding: 0.5rem 1rem;
   flex-wrap: wrap;
+  box-sizing: border-box;
 }
 
 .ords-date-filter svg {
   width: 16px;
   height: 16px;
-  color: var(--ords-text-muted);
+  color: #666666;
   flex-shrink: 0;
 }
 
 .ords-date-filter input {
   border: none;
   background: transparent;
-  font-family: var(--ords-sans);
+  font-family: "Josefin Sans", Arial, sans-serif;
   font-size: 0.75rem;
   outline: none;
-  color: var(--ords-text-primary);
+  color: #1a1a1a;
   min-width: 120px;
 }
 
@@ -302,23 +327,25 @@
   background: transparent;
   border: none;
   cursor: pointer;
-  font-family: var(--ords-sans);
+  font-family: "Josefin Sans", Arial, sans-serif;
   font-size: 0.65rem;
-  color: var(--ords-text-muted);
+  color: #666666;
   padding: 0 0.25rem;
-  transition: color var(--ords-ease);
+  transition: color 0.3s ease;
   white-space: nowrap;
 }
 
 .ords-clear-date:hover {
-  color: var(--ords-gold-deep);
+  color: #8b6914;
 }
 
-/* Orders Grid - FULLY RESPONSIVE */
+/* ── Orders Grid ── */
 .ords-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(min(100%, 380px), 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 360px), 1fr));
   gap: 1.5rem;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .ords-section {
@@ -334,40 +361,44 @@
 }
 
 .ords-section-header h2 {
-  font-family: var(--ords-serif);
+  font-family: "Cormorant Garamond", Georgia, serif;
   font-size: clamp(1rem, 4vw, 1.4rem);
   font-weight: 400;
-  color: var(--ords-text-primary);
+  color: #1a1a1a;
   margin: 0;
 }
 
 .ords-section-count {
-  background: var(--ords-gold-dim);
+  background: rgba(218, 165, 32, 0.1);
   padding: 0.2rem 0.6rem;
   border-radius: 20px;
-  font-family: var(--ords-sans);
+  font-family: "Josefin Sans", Arial, sans-serif;
   font-size: 0.7rem;
   font-weight: 600;
-  color: var(--ords-gold-deep);
+  color: #8b6914;
 }
 
-/* Order Card - FULLY RESPONSIVE */
+/* ── Order Card ── */
 .ords-card {
-  background: var(--ords-card-bg);
+  background: #ffffff;
   border-radius: 20px;
   overflow: hidden;
-  transition: all var(--ords-ease);
-  border: 1px solid var(--ords-border);
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease,
+    border-color 0.3s ease;
+  border: 1px solid rgba(218, 165, 32, 0.15);
   cursor: pointer;
   height: 100%;
   display: flex;
   flex-direction: column;
+  box-sizing: border-box;
 }
 
 .ords-card:hover {
   transform: translateY(-4px);
   box-shadow: 0 25px 40px rgba(0, 0, 0, 0.1);
-  border-color: var(--ords-gold);
+  border-color: #daa520;
 }
 
 .ords-card-header {
@@ -375,7 +406,7 @@
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  border-bottom: 1px solid var(--ords-border);
+  border-bottom: 1px solid rgba(218, 165, 32, 0.15);
   gap: 0.75rem;
   flex-wrap: wrap;
 }
@@ -388,25 +419,25 @@
 }
 
 .ords-card-label {
-  font-family: var(--ords-sans);
+  font-family: "Josefin Sans", Arial, sans-serif;
   font-size: 0.55rem;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--ords-text-muted);
+  color: #666666;
 }
 
 .ords-card-value {
-  font-family: var(--ords-serif);
+  font-family: "Cormorant Garamond", Georgia, serif;
   font-size: 0.9rem;
   font-weight: 600;
-  color: var(--ords-text-primary);
+  color: #1a1a1a;
   word-break: break-word;
 }
 
 .ords-card-status {
   padding: 0.25rem 0.75rem;
   border-radius: 40px;
-  font-family: var(--ords-sans);
+  font-family: "Josefin Sans", Arial, sans-serif;
   font-size: 0.6rem;
   font-weight: 600;
   letter-spacing: 0.05em;
@@ -417,25 +448,25 @@
   background: rgba(245, 158, 11, 0.1);
   color: #d97706;
 }
-
 .ords-card-status.processing {
   background: rgba(59, 130, 246, 0.1);
   color: #2563eb;
 }
-
 .ords-card-status.confirmed {
   background: rgba(16, 185, 129, 0.1);
   color: #059669;
 }
-
 .ords-card-status.delivered {
   background: rgba(34, 197, 94, 0.1);
   color: #16a34a;
 }
-
 .ords-card-status.cancelled {
   background: rgba(239, 68, 68, 0.1);
   color: #dc2626;
+}
+.ords-card-status.shipped {
+  background: rgba(59, 130, 246, 0.1);
+  color: #1d4ed8;
 }
 
 .ords-card-body {
@@ -453,9 +484,9 @@
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  font-family: var(--ords-sans);
+  font-family: "Josefin Sans", Arial, sans-serif;
   font-size: 0.75rem;
-  color: var(--ords-text-secondary);
+  color: #444444;
   margin-bottom: 0.4rem;
   word-break: break-word;
 }
@@ -465,22 +496,22 @@
 .ords-customer-phone svg {
   width: 14px;
   height: 14px;
-  color: var(--ords-gold-deep);
+  color: #8b6914;
   flex-shrink: 0;
 }
 
 .ords-card-items {
-  background: var(--ords-gold-dim);
+  background: rgba(218, 165, 32, 0.1);
   border-radius: 12px;
   padding: 0.75rem;
   margin-bottom: 1rem;
 }
 
 .ords-items-count {
-  font-family: var(--ords-sans);
+  font-family: "Josefin Sans", Arial, sans-serif;
   font-size: 0.6rem;
   font-weight: 600;
-  color: var(--ords-gold-deep);
+  color: #8b6914;
   margin-bottom: 0.4rem;
 }
 
@@ -491,9 +522,9 @@
 }
 
 .ords-item-preview {
-  font-family: var(--ords-sans);
+  font-family: "Josefin Sans", Arial, sans-serif;
   font-size: 0.7rem;
-  color: var(--ords-text-secondary);
+  color: #444444;
   background: rgba(255, 255, 255, 0.5);
   padding: 0.2rem 0.5rem;
   border-radius: 12px;
@@ -501,9 +532,9 @@
 }
 
 .ords-item-more {
-  font-family: var(--ords-sans);
+  font-family: "Josefin Sans", Arial, sans-serif;
   font-size: 0.65rem;
-  color: var(--ords-text-muted);
+  color: #666666;
 }
 
 .ords-card-total {
@@ -512,22 +543,22 @@
   align-items: baseline;
   margin-bottom: 1rem;
   padding-top: 0.5rem;
-  border-top: 1px dashed var(--ords-border);
+  border-top: 1px dashed rgba(218, 165, 32, 0.15);
   flex-wrap: wrap;
   gap: 0.5rem;
 }
 
 .ords-total-label {
-  font-family: var(--ords-sans);
+  font-family: "Josefin Sans", Arial, sans-serif;
   font-size: 0.7rem;
-  color: var(--ords-text-muted);
+  color: #666666;
 }
 
 .ords-total-value {
-  font-family: var(--ords-serif);
+  font-family: "Cormorant Garamond", Georgia, serif;
   font-size: clamp(1rem, 4vw, 1.2rem);
   font-weight: 600;
-  color: var(--ords-gold-deep);
+  color: #8b6914;
 }
 
 .ords-card-footer {
@@ -542,9 +573,9 @@
   display: flex;
   align-items: center;
   gap: 0.4rem;
-  font-family: var(--ords-sans);
+  font-family: "Josefin Sans", Arial, sans-serif;
   font-size: 0.65rem;
-  color: var(--ords-text-muted);
+  color: #666666;
 }
 
 .ords-card-date svg {
@@ -554,7 +585,7 @@
 }
 
 .ords-card-payment {
-  font-family: var(--ords-sans);
+  font-family: "Josefin Sans", Arial, sans-serif;
   font-size: 0.6rem;
   padding: 0.2rem 0.5rem;
   border-radius: 20px;
@@ -564,7 +595,6 @@
   background: rgba(16, 185, 129, 0.1);
   color: #059669;
 }
-
 .ords-card-payment.pending {
   background: rgba(245, 158, 11, 0.1);
   color: #d97706;
@@ -572,44 +602,47 @@
 
 .ords-card-actions {
   padding: 0.75rem 1rem 1rem;
-  border-top: 1px solid var(--ords-border);
+  border-top: 1px solid rgba(218, 165, 32, 0.15);
 }
 
 .ords-action-btn {
   width: 100%;
   padding: 0.6rem;
   background: transparent;
-  border: 1px solid var(--ords-border);
+  border: 1px solid rgba(218, 165, 32, 0.15);
   border-radius: 40px;
-  font-family: var(--ords-sans);
+  font-family: "Josefin Sans", Arial, sans-serif;
   font-size: 0.7rem;
   font-weight: 600;
-  color: var(--ords-text-secondary);
+  color: #444444;
   cursor: pointer;
-  transition: all var(--ords-ease);
+  transition: all 0.3s ease;
 }
 
 .ords-action-btn:hover {
-  background: var(--ords-gold);
-  border-color: var(--ords-gold);
+  background: #daa520;
+  border-color: #daa520;
   color: #fff;
 }
 
-/* Modal - FULLY RESPONSIVE */
+/* ── Modal ── */
 .ords-modal-overlay {
   position: fixed;
   inset: 0;
   background: rgba(0, 0, 0, 0.7);
   backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 10000;
-  animation: fadeIn 0.25s ease;
+  animation: ordsfadeIn 0.25s ease;
   padding: 1rem;
+  box-sizing: border-box;
+  overflow-y: auto;
 }
 
-@keyframes fadeIn {
+@keyframes ordsfadeIn {
   from {
     opacity: 0;
   }
@@ -619,17 +652,19 @@
 }
 
 .ords-modal {
-  background: var(--ords-card-bg);
+  background: #ffffff;
   border-radius: 24px;
   width: 100%;
   max-width: 900px;
   max-height: 90vh;
   overflow-y: auto;
   position: relative;
-  animation: slideUp 0.3s ease;
+  animation: ordsSlideUp 0.3s ease;
+  box-sizing: border-box;
+  margin: auto;
 }
 
-@keyframes slideUp {
+@keyframes ordsSlideUp {
   from {
     transform: translateY(30px);
     opacity: 0;
@@ -647,22 +682,23 @@
   float: right;
   width: 32px;
   height: 32px;
-  background: var(--ords-card-bg);
-  border: 1px solid var(--ords-border);
+  background: #ffffff;
+  border: 1px solid rgba(218, 165, 32, 0.15);
   border-radius: 50%;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--ords-text-muted);
-  transition: all var(--ords-ease);
+  color: #666666;
+  transition: all 0.3s ease;
   z-index: 10;
   margin: 0.75rem 0.75rem 0 0;
+  flex-shrink: 0;
 }
 
 .ords-modal-close:hover {
-  border-color: var(--ords-gold);
-  color: var(--ords-gold-deep);
+  border-color: #daa520;
+  color: #8b6914;
   transform: rotate(90deg);
 }
 
@@ -679,34 +715,34 @@
 
 .ords-modal-badge {
   display: inline-block;
-  background: var(--ords-gold-dim);
+  background: rgba(218, 165, 32, 0.1);
   padding: 0.25rem 0.75rem;
   border-radius: 40px;
-  font-family: var(--ords-sans);
+  font-family: "Josefin Sans", Arial, sans-serif;
   font-size: 0.6rem;
   font-weight: 600;
-  color: var(--ords-gold-deep);
+  color: #8b6914;
   margin-bottom: 1rem;
 }
 
 .ords-modal-title {
-  font-family: var(--ords-serif);
+  font-family: "Cormorant Garamond", Georgia, serif;
   font-size: clamp(1.2rem, 5vw, 1.6rem);
   font-weight: 500;
-  color: var(--ords-text-primary);
+  color: #1a1a1a;
   margin: 0 0 0.5rem;
   word-break: break-word;
 }
 
 .ords-modal-date {
-  font-family: var(--ords-sans);
+  font-family: "Josefin Sans", Arial, sans-serif;
   font-size: 0.7rem;
-  color: var(--ords-text-muted);
+  color: #666666;
 }
 
 .ords-modal-status-section {
   padding: 1rem 1.5rem;
-  border-bottom: 1px solid var(--ords-border);
+  border-bottom: 1px solid rgba(218, 165, 32, 0.15);
 }
 
 .ords-status-buttons {
@@ -719,27 +755,27 @@
 .ords-status-btn {
   padding: 0.4rem 0.8rem;
   background: transparent;
-  border: 1px solid var(--ords-border);
+  border: 1px solid rgba(218, 165, 32, 0.15);
   border-radius: 40px;
-  font-family: var(--ords-sans);
+  font-family: "Josefin Sans", Arial, sans-serif;
   font-size: 0.7rem;
   font-weight: 600;
   cursor: pointer;
-  transition: all var(--ords-ease);
+  transition: all 0.3s ease;
   white-space: nowrap;
+  color: #444444;
 }
 
 .ords-status-btn:hover {
-  border-color: var(--ords-gold);
-  color: var(--ords-gold-deep);
+  border-color: #daa520;
+  color: #8b6914;
 }
 
 .ords-status-btn.active {
-  background: var(--ords-gold);
-  border-color: var(--ords-gold);
+  background: #daa520;
+  border-color: #daa520;
   color: #fff;
 }
-
 .ords-status-btn.active.pending {
   background: #d97706;
   border-color: #d97706;
@@ -760,46 +796,52 @@
   background: #dc2626;
   border-color: #dc2626;
 }
+.ords-status-btn.active.shipped {
+  background: #1d4ed8;
+  border-color: #1d4ed8;
+}
 
 .ords-modal-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
   gap: 1rem;
   padding: 1.5rem;
+  box-sizing: border-box;
 }
 
 .ords-modal-card {
-  background: var(--ords-gold-dim);
+  background: rgba(218, 165, 32, 0.1);
   border-radius: 16px;
   padding: 1rem;
+  box-sizing: border-box;
 }
 
 .ords-modal-card h3 {
-  font-family: var(--ords-serif);
+  font-family: "Cormorant Garamond", Georgia, serif;
   font-size: 0.9rem;
   font-weight: 600;
-  color: var(--ords-text-primary);
+  color: #1a1a1a;
   margin: 0 0 0.8rem;
   padding-bottom: 0.5rem;
-  border-bottom: 1px solid var(--ords-border);
+  border-bottom: 1px solid rgba(218, 165, 32, 0.15);
 }
 
 .ords-modal-info-row {
   display: flex;
   justify-content: space-between;
   margin-bottom: 0.5rem;
-  font-family: var(--ords-sans);
+  font-family: "Josefin Sans", Arial, sans-serif;
   font-size: 0.75rem;
   gap: 0.5rem;
   flex-wrap: wrap;
 }
 
 .ords-modal-info-row .label {
-  color: var(--ords-text-muted);
+  color: #666666;
 }
 
 .ords-modal-info-row .value {
-  color: var(--ords-text-primary);
+  color: #1a1a1a;
   font-weight: 500;
   text-align: right;
   word-break: break-word;
@@ -813,15 +855,16 @@
 }
 
 .ords-modal-address {
-  font-family: var(--ords-sans);
+  font-family: "Josefin Sans", Arial, sans-serif;
   font-size: 0.75rem;
-  color: var(--ords-text-secondary);
+  color: #444444;
   line-height: 1.5;
   word-break: break-word;
 }
 
 .ords-modal-items {
   padding: 0 1.5rem 1rem;
+  box-sizing: border-box;
 }
 
 .ords-modal-table {
@@ -831,22 +874,23 @@
 
 .ords-modal-table th {
   text-align: left;
-  font-family: var(--ords-sans);
+  font-family: "Josefin Sans", Arial, sans-serif;
   font-size: 0.65rem;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  color: var(--ords-text-muted);
+  color: #666666;
   padding-bottom: 0.5rem;
-  border-bottom: 1px solid var(--ords-border);
+  border-bottom: 1px solid rgba(218, 165, 32, 0.15);
 }
 
 .ords-modal-table td {
   padding: 0.8rem 0;
-  border-bottom: 1px solid var(--ords-border);
-  font-family: var(--ords-sans);
+  border-bottom: 1px solid rgba(218, 165, 32, 0.15);
+  font-family: "Josefin Sans", Arial, sans-serif;
   font-size: 0.75rem;
   vertical-align: middle;
+  color: #444444;
 }
 
 .ords-product-cell {
@@ -866,65 +910,66 @@
 
 .ords-product-name {
   font-weight: 600;
-  color: var(--ords-text-primary);
+  color: #1a1a1a;
 }
-
 .ords-product-variant,
 .ords-product-pieces {
   font-size: 0.65rem;
-  color: var(--ords-text-muted);
+  color: #666666;
 }
 
 .ords-modal-summary {
-  background: var(--ords-gold-dim);
+  background: rgba(218, 165, 32, 0.1);
   border-radius: 16px;
   padding: 1rem;
   margin: 0 1.5rem 1.5rem;
+  box-sizing: border-box;
 }
 
 .ords-summary-row {
   display: flex;
   justify-content: space-between;
-  font-family: var(--ords-sans);
+  font-family: "Josefin Sans", Arial, sans-serif;
   font-size: 0.8rem;
   margin-bottom: 0.5rem;
   gap: 1rem;
   flex-wrap: wrap;
+  color: #444444;
 }
 
 .ords-summary-divider {
   height: 1px;
-  background: var(--ords-border);
+  background: rgba(218, 165, 32, 0.15);
   margin: 0.5rem 0;
 }
 
 .ords-summary-total {
   font-weight: 700;
   font-size: 1rem;
-  color: var(--ords-gold-deep);
+  color: #8b6914;
 }
 
-/* Loading & Empty States */
+/* ── Loading & Empty States ── */
 .ords-loading,
 .ords-empty {
   text-align: center;
   padding: 2rem;
-  background: var(--ords-card-bg);
+  background: #ffffff;
   border-radius: 24px;
-  border: 1px solid var(--ords-border);
+  border: 1px solid rgba(218, 165, 32, 0.15);
 }
 
 .ords-spinner {
   width: 40px;
   height: 40px;
-  border: 2px solid var(--ords-border);
-  border-top-color: var(--ords-gold);
+  border: 2px solid rgba(218, 165, 32, 0.15);
+  border-top-color: #daa520;
   border-radius: 50%;
-  animation: spin 1s linear infinite;
+  animation: ordsSpin 1s linear infinite;
   margin: 0 auto 1rem;
 }
 
-@keyframes spin {
+@keyframes ordsSpin {
   to {
     transform: rotate(360deg);
   }
@@ -933,23 +978,25 @@
 .ords-empty svg {
   width: 50px;
   height: 50px;
-  color: var(--ords-text-muted);
+  color: #666666;
   margin-bottom: 1rem;
 }
 
 .ords-empty h3 {
-  font-family: var(--ords-serif);
+  font-family: "Cormorant Garamond", Georgia, serif;
   font-size: 1.1rem;
   margin: 0 0 0.5rem;
+  color: #1a1a1a;
 }
 
 .ords-empty p {
-  font-family: var(--ords-sans);
+  font-family: "Josefin Sans", Arial, sans-serif;
   font-size: 0.75rem;
-  color: var(--ords-text-muted);
+  color: #666666;
+  margin: 0;
 }
 
-/* Toast Notifications */
+/* ── Toast Notifications ── */
 .ords-toast-wrap {
   position: fixed;
   bottom: 20px;
@@ -958,9 +1005,11 @@
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
+  max-width: calc(100vw - 40px);
 }
+
 .ords-toast {
-  background: var(--ords-card-bg);
+  background: #ffffff;
   border-radius: 12px;
   padding: 0.75rem 1rem;
   display: flex;
@@ -969,15 +1018,16 @@
   min-width: 260px;
   max-width: 90vw;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-  border-left: 3px solid;
-  animation: slideIn 0.3s ease;
+  border-left: 3px solid transparent;
+  animation: ordsSlideIn 0.3s ease;
+  box-sizing: border-box;
 }
 
 .ords-toast.exiting {
-  animation: slideOut 0.3s ease forwards;
+  animation: ordsSlideOut 0.3s ease forwards;
 }
 
-@keyframes slideIn {
+@keyframes ordsSlideIn {
   from {
     transform: translateX(100%);
     opacity: 0;
@@ -988,7 +1038,7 @@
   }
 }
 
-@keyframes slideOut {
+@keyframes ordsSlideOut {
   to {
     transform: translateX(100%);
     opacity: 0;
@@ -1002,7 +1052,7 @@
   border-left-color: #ef4444;
 }
 .ords-toast--info {
-  border-left-color: var(--ords-gold);
+  border-left-color: #daa520;
 }
 
 .ords-toast-icon svg {
@@ -1010,7 +1060,6 @@
   height: 18px;
   flex-shrink: 0;
 }
-
 .ords-toast--success .ords-toast-icon {
   color: #10b981;
 }
@@ -1018,24 +1067,26 @@
   color: #ef4444;
 }
 .ords-toast--info .ords-toast-icon {
-  color: var(--ords-gold);
+  color: #daa520;
 }
 
 .ords-toast-body {
   flex: 1;
+  min-width: 0;
 }
 
 .ords-toast-title {
-  font-family: var(--ords-sans);
+  font-family: "Josefin Sans", Arial, sans-serif;
   font-size: 0.75rem;
   font-weight: 600;
   margin: 0 0 0.2rem;
+  color: #1a1a1a;
 }
 
 .ords-toast-msg {
-  font-family: var(--ords-sans);
+  font-family: "Josefin Sans", Arial, sans-serif;
   font-size: 0.65rem;
-  color: var(--ords-text-muted);
+  color: #666666;
   margin: 0;
   word-break: break-word;
 }
@@ -1044,9 +1095,11 @@
   background: transparent;
   border: none;
   cursor: pointer;
-  color: var(--ords-text-muted);
+  color: #666666;
   padding: 0;
   flex-shrink: 0;
+  display: flex;
+  align-items: center;
 }
 
 .ords-toast-close svg {
@@ -1054,7 +1107,7 @@
   height: 14px;
 }
 
-/* Error Banner */
+/* ── Error Banner ── */
 .ords-error-banner {
   background: rgba(220, 38, 38, 0.1);
   border: 1px solid rgba(220, 38, 38, 0.4);
@@ -1062,7 +1115,7 @@
   padding: 1rem;
   margin-bottom: 1.5rem;
   color: #ef4444;
-  font-family: var(--ords-sans);
+  font-family: "Josefin Sans", Arial, sans-serif;
   font-size: 0.85rem;
 }
 
@@ -1073,130 +1126,120 @@
   font-size: 0.75rem;
 }
 
-/* Responsive Breakpoints */
+/* ════════════════════════════════════════════════
+   RESPONSIVE BREAKPOINTS
+   ════════════════════════════════════════════════ */
+
+/* ── 1280px — 6 cols stays but tighter ── */
+@media (max-width: 1280px) {
+  .ords-stats-grid {
+    grid-template-columns: repeat(6, 1fr);
+    gap: 0.75rem;
+  }
+}
+
+/* ── 1024px — 3 cols × 2 rows ── */
 @media (max-width: 1024px) {
   .ords-content {
     padding: 1.5rem 1.5rem 3rem;
   }
-
   .ords-stats-grid {
     grid-template-columns: repeat(3, 1fr);
     gap: 0.875rem;
   }
 }
 
+/* ── 768px — tablet ── */
 @media (max-width: 768px) {
   .ords-root {
     padding-top: 70px;
   }
-
   .ords-content {
     padding: 1rem 1rem 2rem;
   }
-
   .ords-page-header {
     margin-bottom: 2rem;
   }
-
   .ords-eyebrow {
     font-size: 0.5rem;
     gap: 0.75rem;
   }
-
   .ords-ey-line {
     width: 30px;
   }
-
   .ords-stats-grid {
     grid-template-columns: repeat(3, 1fr);
     gap: 0.75rem;
     margin-bottom: 1.5rem;
   }
-
   .ords-filters-section {
     flex-direction: column;
     gap: 0.75rem;
   }
-
   .ords-search-bar {
     width: 100%;
+    min-width: unset;
   }
-
   .ords-filter-buttons {
     justify-content: center;
   }
-
   .ords-date-filter {
     width: 100%;
+    box-sizing: border-box;
     justify-content: space-between;
   }
-
   .ords-date-filter input {
     flex: 1;
   }
-
   .ords-grid {
     grid-template-columns: 1fr;
     gap: 1rem;
   }
-
   .ords-section-header {
     margin-bottom: 1rem;
   }
-
   .ords-modal {
-    width: 95%;
-    max-height: 85vh;
+    width: 100%;
+    max-height: 88vh;
   }
-
   .ords-modal-header {
     padding: 1rem 1rem 0.75rem;
   }
-
   .ords-modal-grid,
   .ords-modal-items {
     padding: 1rem;
   }
-
   .ords-modal-grid {
     gap: 0.75rem;
   }
-
   .ords-modal-status-section {
     padding: 0.75rem 1rem;
   }
-
   .ords-status-buttons {
     gap: 0.4rem;
   }
-
   .ords-status-btn {
     font-size: 0.6rem;
     padding: 0.35rem 0.7rem;
   }
-
   .ords-modal-summary {
     margin: 0 1rem 1rem;
   }
-
-  /* Table responsive for mobile */
+  /* Table → block on mobile */
   .ords-modal-table,
   .ords-modal-table tbody,
   .ords-modal-table tr,
   .ords-modal-table td {
     display: block;
   }
-
   .ords-modal-table thead {
     display: none;
   }
-
   .ords-modal-table tr {
     margin-bottom: 1rem;
-    border-bottom: 1px solid var(--ords-border);
+    border-bottom: 1px solid rgba(218, 165, 32, 0.15);
     padding-bottom: 0.5rem;
   }
-
   .ords-modal-table td {
     display: flex;
     justify-content: space-between;
@@ -1205,45 +1248,34 @@
     padding: 0.5rem 0;
     border-bottom: none;
   }
-
   .ords-modal-table td::before {
     content: attr(data-label);
     font-weight: 600;
     font-size: 0.65rem;
     text-transform: uppercase;
-    color: var(--ords-text-muted);
-    font-family: var(--ords-sans);
+    color: #666666;
+    font-family: "Josefin Sans", Arial, sans-serif;
+    white-space: nowrap;
   }
-
-  .ords-modal-table td:first-child {
-    padding-top: 0.5rem;
-  }
-
-  .ords-modal-table td:last-child {
-    padding-bottom: 0.5rem;
-  }
-
   .ords-product-cell {
     justify-content: space-between;
     width: 100%;
   }
 }
 
+/* ── 640px ── */
 @media (max-width: 640px) {
   .ords-stats-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 0.6rem;
   }
-
   .ords-modal-info-row {
     flex-direction: column;
     align-items: flex-start;
   }
-
   .ords-modal-info-row .value {
     text-align: left;
   }
-
   .ords-summary-row {
     flex-direction: column;
     align-items: flex-start;
@@ -1251,60 +1283,74 @@
   }
 }
 
+/* ── 480px — small mobile ── */
 @media (max-width: 480px) {
   .ords-stats-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 0.5rem;
   }
-
   .ords-stat-card {
     padding: 0.75rem 0.5rem;
   }
-
   .ords-stat-value {
-    font-size: clamp(1rem, 4vw, 1.4rem);
+    font-size: clamp(0.95rem, 4vw, 1.4rem);
   }
-
   .ords-stat-label {
-    font-size: 0.5rem;
+    font-size: 0.45rem;
   }
-
   .ords-filter-buttons {
     flex-wrap: nowrap;
     overflow-x: auto;
     justify-content: flex-start;
     padding-bottom: 0.25rem;
     -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
   }
-
+  .ords-filter-buttons::-webkit-scrollbar {
+    display: none;
+  }
   .ords-filter-btn {
     white-space: nowrap;
     font-size: 0.65rem;
     padding: 0.4rem 0.8rem;
+    flex-shrink: 0;
   }
-
   .ords-card-header {
     flex-direction: column;
     align-items: flex-start;
   }
-
   .ords-card-status {
     align-self: flex-start;
   }
-
   .ords-customer-name,
   .ords-customer-email,
   .ords-customer-phone {
     font-size: 0.7rem;
   }
-
   .ords-card-footer {
     flex-direction: column;
     align-items: flex-start;
   }
-
+  .ords-toast-wrap {
+    bottom: 12px;
+    right: 12px;
+    left: 12px;
+    max-width: unset;
+  }
   .ords-toast {
-    min-width: 200px;
-    max-width: calc(100vw - 40px);
+    min-width: unset;
+    max-width: 100%;
+    width: 100%;
+  }
+}
+
+/* ── 360px — very small ── */
+@media (max-width: 360px) {
+  .ords-content {
+    padding: 0.75rem 0.75rem 2rem;
+  }
+  .ords-stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.4rem;
   }
 }

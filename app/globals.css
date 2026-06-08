@@ -28,47 +28,42 @@
   box-sizing: border-box;
 }
 
+/* ── SCROLL FIX ──────────────────────────────────────────────
+   PROBLEM: html + body dono pe overflow set tha — 2 scroll contexts
+   ban rahe the jisse double scrollbar aur jump hota tha.
+   FIX: Sirf html scrolls. Body ka overflow bilkul set nahi kiya
+   (default = visible) taake koi second scroll context na bane.
+   ──────────────────────────────────────────────────────────── */
+
 html {
   height: 100%;
   overflow-x: hidden;
-  /* FIX: html ONLY scrolls — single scroll context, no double scrollbar */
-  overflow-y: scroll;
-  /* FIX: thin scrollbar only — removes layout width calculation jank */
+  overflow-y: auto;
   scrollbar-width: thin;
   scrollbar-color: var(--scrollbar-sky) var(--scrollbar-track);
-  /* FIX: scroll-behavior auto = no smooth-scroll fighting route transitions */
   scroll-behavior: auto;
 }
 
 body {
   margin: 0;
   padding: 0;
-  overflow-x: hidden;
-  /* FIX: body must NOT create its own scroll context — html handles scroll */
-  overflow-y: visible;
-  /* FIX: min-height instead of height — body grows with content, never clips */
+  overflow: visible;
   min-height: 100%;
   background: var(--background);
   color: var(--foreground);
-  /* FIX: font only on body — NOT on * — avoids cascade recalc on every element */
   font-family: var(--font-goldman);
   font-weight: 500;
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-overflow-scrolling: touch;
-  /* FIX: optimizeLegibility removed — causes layout paint cost on large pages */
   text-rendering: optimizeSpeed;
   font-synthesis: none;
-  /* REMOVED: contain:layout style — was causing scroll position to jump/reset
-     because it isolated body from the normal document scroll flow */
+  /* contain: layout style  <-- REMOVED: scroll jump ka asli wajah yahi tha */
 }
 
 /* ============================================================
-   FONT INHERITANCE — Goldman cascades naturally from body
-   FIX: Removed `* { font-family: !important }` — that selector forces
-   style recalculation on EVERY DOM node on every render. Goldman
-   inherits from body automatically. Only override where needed.
+   FONT INHERITANCE
    ============================================================ */
 
 code,
@@ -116,8 +111,8 @@ samp,
   background: var(--scrollbar-track);
 }
 
-/* Firefox */
-* {
+/* Firefox — sirf html pe scrollbar, * pe nahi (warna sab elements pe lagta) */
+html {
   scrollbar-width: thin;
   scrollbar-color: #0ea5e9 #f1f5f9;
 }
@@ -198,8 +193,6 @@ select:focus-visible {
 
 /* ============================================================
    NAVBAR STICKY WRAPPER
-   FIX: transform:translateZ(0) creates a new GPU compositor layer
-   so navbar paints independently — page scroll doesn't repaint it
    ============================================================ */
 
 .navbar-sticky-wrapper {
@@ -210,26 +203,21 @@ select:focus-visible {
   z-index: 100;
   transform: translateZ(0);
   will-change: transform;
-  /* FIX: contain:layout — navbar layout changes don't trigger page reflow */
   contain: layout style;
 }
 
 /* ============================================================
    SWIPER OPTIMIZATIONS
-   FIX: will-change + backface-visibility = GPU composited layer per slide
-   No CPU paint during swipe — smooth 60fps transitions
    ============================================================ */
 
 .swiper {
   overflow: hidden;
-  /* FIX: contain paint — swiper overflow can't cause outside repaint */
   contain: paint;
 }
 
 .swiper-wrapper {
   will-change: transform;
   transform: translateZ(0);
-  /* FIX: backface-visibility on wrapper too — reduces flicker on iOS */
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
 }
@@ -237,7 +225,6 @@ select:focus-visible {
 .swiper-slide {
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
-  /* FIX: transform3d forces GPU layer per slide — no CPU paint during scroll */
   transform: translateZ(0);
 }
 
@@ -245,7 +232,6 @@ select:focus-visible {
    PERFORMANCE CLASSES
    ============================================================ */
 
-/* FIX: GPU layer for animated elements — promote before animation starts */
 .gpu-layer {
   transform: translateZ(0);
   will-change: transform;
@@ -253,15 +239,11 @@ select:focus-visible {
   -webkit-backface-visibility: hidden;
 }
 
-/* FIX: content-visibility:auto — off-screen sections skip layout+paint
-   Browser renders them only when they approach viewport = massive scroll perf gain */
 .cv-auto {
   content-visibility: auto;
-  /* Approx height hint — prevents layout shift when section becomes visible */
   contain-intrinsic-size: 0 500px;
 }
 
-/* FIX: For images — prevents layout shift during lazy load */
 .img-contain {
   contain: strict;
 }

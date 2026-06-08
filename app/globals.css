@@ -201,9 +201,12 @@ select:focus-visible {
   left: 0;
   right: 0;
   z-index: 100;
-  transform: translateZ(0);
-  will-change: transform;
-  contain: layout style;
+  /* GPU-promoted layer — avoids main thread repaints on scroll */
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  /* contain:style only — layout/size contain on fixed elements causes reflow bugs */
+  contain: style;
 }
 
 /* ============================================================
@@ -212,12 +215,13 @@ select:focus-visible {
 
 .swiper {
   overflow: hidden;
-  contain: paint;
+  /* contain:paint clips children without creating new stacking context issues */
+  contain: paint layout;
 }
 
 .swiper-wrapper {
-  will-change: transform;
-  transform: translateZ(0);
+  /* will-change only when actually animating — set via JS, not always-on */
+  transform: translate3d(0, 0, 0);
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
 }
@@ -225,7 +229,7 @@ select:focus-visible {
 .swiper-slide {
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
-  transform: translateZ(0);
+  transform: translate3d(0, 0, 0);
 }
 
 /* ============================================================
@@ -233,19 +237,26 @@ select:focus-visible {
    ============================================================ */
 
 .gpu-layer {
-  transform: translateZ(0);
-  will-change: transform;
+  transform: translate3d(0, 0, 0);
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
 }
 
+/* content-visibility:auto — browser skips layout+paint for off-screen sections
+   contain-intrinsic-size: auto preserves scroll height from previous renders
+   so scrollbar doesn't jump when section enters viewport */
 .cv-auto {
   content-visibility: auto;
-  contain-intrinsic-size: 0 500px;
+  contain-intrinsic-size: auto 1px auto 600px;
 }
 
 .img-contain {
   contain: strict;
+}
+
+/* Swiper active animation hint — add/remove via JS only during drag/transition */
+.swiper-animating .swiper-wrapper {
+  will-change: transform;
 }
 
 /* ============================================================

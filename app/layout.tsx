@@ -48,25 +48,16 @@ export default async function RootLayout({
       suppressHydrationWarning
     >
       <head>
-        {/*
-          FIX: Preconnect FIRST (highest priority), then dns-prefetch as fallback.
-          Preconnect = full TCP+TLS handshake ahead of time.
-          dns-prefetch = DNS only (weaker, but works in older browsers).
-          Order matters — browser processes head top-to-bottom.
-        */}
-
-        {/* Cloudinary — where product images come from */}
+        {/* Cloudinary — product images */}
         <link
           rel="preconnect"
           href="https://res.cloudinary.com"
           crossOrigin="anonymous"
         />
         <link rel="dns-prefetch" href="//res.cloudinary.com" />
-
-        {/* Unsplash — where some images come from */}
         <link rel="dns-prefetch" href="//images.unsplash.com" />
 
-        {/* Google Fonts — Goldman font served from here */}
+        {/* Google Fonts — Goldman */}
         <link
           rel="preconnect"
           href="https://fonts.gstatic.com"
@@ -74,15 +65,21 @@ export default async function RootLayout({
         />
         <link rel="dns-prefetch" href="//fonts.gstatic.com" />
 
+        {/* Facebook — preconnect BEFORE pixel script fires */}
+        <link
+          rel="preconnect"
+          href="https://connect.facebook.net"
+          crossOrigin="anonymous"
+        />
+
         {/*
-          FIX: Meta Pixel on lazyOnload — fires AFTER page is fully interactive.
-          Does NOT block main thread during hydration.
-          PageView still tracked correctly — pixel fires within 1-2s of load.
-          Facebook doesn't penalize slight delay for PageView.
+          Meta Pixel: afterInteractive = fires after hydration complete.
+          lazyOnload was too late sometimes — missed PageView on fast navigations.
+          afterInteractive is the sweet spot: no hydration blocking, reliable PageView.
         */}
         <Script
           id="meta-pixel"
-          strategy="lazyOnload"
+          strategy="afterInteractive"
           dangerouslySetInnerHTML={{
             __html: `
               !function(f,b,e,v,n,t,s)
@@ -97,14 +94,6 @@ export default async function RootLayout({
               fbq('track', 'PageView');
             `,
           }}
-        />
-
-        {/* FIX: Facebook connect preconnect here (not in next.config headers)
-            — more reliable because it's in actual HTML, not HTTP header */}
-        <link
-          rel="preconnect"
-          href="https://connect.facebook.net"
-          crossOrigin="anonymous"
         />
       </head>
       <body className="flex flex-col" suppressHydrationWarning>

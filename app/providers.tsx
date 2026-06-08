@@ -101,16 +101,27 @@ function AppShell({ children }: { children: React.ReactNode }) {
 
   // ── Navbar height observer ──────────────────────────────────────────────────
   // rAF debounce — fires max once per frame, not per pixel of resize
+  // CSS var --navbar-height used as fallback (set in globals.css) so
+  // initial render never needs a JS measurement
   useEffect(() => {
     if (!isClient || !wrapperRef.current) return;
     let rafId: number;
+    let lastH = 0;
 
     const updateHeight = () => {
       cancelAnimationFrame(rafId);
       rafId = requestAnimationFrame(() => {
-        if (wrapperRef.current) {
-          const h = wrapperRef.current.offsetHeight;
-          if (h > 0) setNavbarHeight((prev) => (prev === h ? prev : h));
+        if (!wrapperRef.current) return;
+        const h = wrapperRef.current.offsetHeight;
+        // Only update state if height ACTUALLY changed — prevents cascade re-renders
+        if (h > 0 && h !== lastH) {
+          lastH = h;
+          setNavbarHeight(h);
+          // Also update CSS var so child components can read it without JS
+          document.documentElement.style.setProperty(
+            "--navbar-height",
+            `${h}px`,
+          );
         }
       });
     };
@@ -126,18 +137,21 @@ function AppShell({ children }: { children: React.ReactNode }) {
   }, [isClient]);
 
   // ── Scroll-to-top & panel close on route change ────────────────────────────
-  // 'instant' avoids scroll animation competing with React route transition
   useEffect(() => {
+    // Batch all state updates in one tick — React 18 auto-batches these
     setSidebarOpen(false);
     setSearchOpen(false);
     setCartOpen(false);
 
-    const supportsScrollBehavior =
-      "scrollBehavior" in document.documentElement.style;
-    if (supportsScrollBehavior) {
-      window.scrollTo({ top: 0, behavior: "instant" as ScrollBehavior });
+    // Use native scroll — fastest path, no React involvement
+    if ("scrollBehavior" in document.documentElement.style) {
+      window.scrollTo({
+        top: 0,
+        left: 0,
+        behavior: "instant" as ScrollBehavior,
+      });
     } else {
-      requestAnimationFrame(() => window.scrollTo(0, 0));
+      window.scrollTo(0, 0);
     }
   }, [pathname]);
 

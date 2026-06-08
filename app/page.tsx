@@ -1,10 +1,9 @@
 "use client";
 
 import dynamic from "next/dynamic";
+import { Suspense } from "react";
 
-// ── Tier 1: Hero — above fold, loads immediately ─────────────────────────────
-// FIX: HeroExplore ab bhi eagerly imported hai — ye LCP element hai.
-// Lekin loading fallback add kiya taake layout shift na ho during hydration.
+// ── Tier 1: Hero — above fold, SSR + eager load ──────────────────────────────
 const HeroExplore = dynamic(() => import("./components/HeroExplore"), {
   ssr: true,
   loading: () => (
@@ -15,13 +14,13 @@ const HeroExplore = dynamic(() => import("./components/HeroExplore"), {
   ),
 });
 
-// ── Tier 1b: ExploreAurexia — just below hero, preload aggressively ──────────
+// ── Tier 1b: ExploreAurexia — just below hero ────────────────────────────────
 const ExploreAurexia = dynamic(() => import("./components/ExploreAurexia"), {
   ssr: true,
   loading: () => <div style={{ minHeight: "500px" }} aria-hidden="true" />,
 });
 
-// ── Tier 2: SSR dynamic imports — below fold, SEO important ──────────────────
+// ── Tier 2: SSR dynamic — below fold, SEO important ──────────────────────────
 const TrustBadgesSection = dynamic(
   () => import("./components/TrustBadgesSection"),
   {
@@ -38,9 +37,8 @@ const FeaturedProducts = dynamic(
   },
 );
 
-// ── Tier 3: Client-only, load after hydration ─────────────────────────────────
-// FIX: ssr:false sections use cv-auto class (content-visibility:auto) so
-// browser skips layout+paint until they approach viewport.
+// ── Tier 3: Client-only — lazily loaded, never blocks hydration ───────────────
+// ssr:false + Suspense = these never block main thread during initial load
 const WhyChooseUs = dynamic(() => import("./components/WhyChooseUs"), {
   ssr: false,
   loading: () => <div style={{ minHeight: "300px" }} aria-hidden="true" />,
@@ -62,22 +60,28 @@ const GlobalFAQSection = dynamic(
 export default function Home() {
   return (
     <main className="flex flex-col flex-1">
-      {/* Above fold — render immediately */}
+      {/* Above fold — render immediately, no Suspense overhead */}
       <HeroExplore />
       <ExploreAurexia />
       <TrustBadgesSection />
       <FeaturedProducts />
 
-      {/* Below fold — content-visibility:auto skips paint until near viewport */}
-      {/* FIX: cv-auto class defined in globals.css — massive scroll perf gain */}
+      {/* Below fold — cv-auto skips browser layout+paint until near viewport
+          Suspense wraps each so they stream independently without blocking siblings */}
       <div className="cv-auto">
-        <WhyChooseUs />
+        <Suspense fallback={<div style={{ minHeight: "300px" }} />}>
+          <WhyChooseUs />
+        </Suspense>
       </div>
       <div className="cv-auto">
-        <HomeReviews />
+        <Suspense fallback={<div style={{ minHeight: "300px" }} />}>
+          <HomeReviews />
+        </Suspense>
       </div>
       <div className="cv-auto">
-        <GlobalFAQSection />
+        <Suspense fallback={<div style={{ minHeight: "200px" }} />}>
+          <GlobalFAQSection />
+        </Suspense>
       </div>
     </main>
   );

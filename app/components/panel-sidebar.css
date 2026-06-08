@@ -1,16 +1,22 @@
 /* ============================================================
    PANEL SIDEBAR · panel-sidebar.css
-   Premium luxury admin sidebar
+   Premium admin sidebar — Sky Blue + Dark theme
    ============================================================ */
 
+@import url("https://fonts.googleapis.com/css2?family=Goldman:wght@400;700&display=swap");
+
 :root {
+  --ps-sky: #0ea5e9;
+  --ps-sky-light: #38bdf8;
+  --ps-sky-deep: #0284c7;
+  --ps-sky-dim: rgba(14, 165, 233, 0.08);
   --ps-gold: #daa520;
   --ps-gold-light: #f0c040;
   --ps-gold-deep: #8b6914;
   --ps-gold-dim: rgba(218, 165, 32, 0.08);
   --ps-bg: #1a1a1a;
   --ps-card-bg: #252525;
-  --ps-border: rgba(218, 165, 32, 0.15);
+  --ps-border: rgba(14, 165, 233, 0.12);
   --ps-text-primary: #ffffff;
   --ps-text-secondary: #b0b0b0;
   --ps-text-muted: #777777;
@@ -69,7 +75,7 @@
   align-items: center;
   justify-content: space-between;
   padding: 1.25rem 1.5rem;
-  border-bottom: 1px solid var(--ps-border);
+  border-bottom: 1px solid rgba(14, 165, 233, 0.12);
 }
 
 .ps-logo {
@@ -81,8 +87,8 @@
 .ps-logo-badge {
   width: 38px;
   height: 38px;
-  background: rgba(218, 165, 32, 0.1);
-  border: 1px solid var(--ps-gold);
+  background: rgba(14, 165, 233, 0.12);
+  border: 1px solid #0ea5e9;
   border-radius: 10px;
   display: flex;
   align-items: center;
@@ -92,7 +98,7 @@
 .ps-logo-badge svg {
   width: 18px;
   height: 18px;
-  color: var(--ps-gold);
+  color: #0ea5e9;
 }
 
 .ps-logo-text {
@@ -102,7 +108,7 @@
 }
 
 .ps-logo-title {
-  font-family: "Cormorant Garamond", Georgia, serif;
+  font-family: "Goldman", system-ui, sans-serif;
   font-size: 1.1rem;
   font-weight: 600;
   color: var(--ps-text-primary);
@@ -110,12 +116,12 @@
 }
 
 .ps-logo-sub {
-  font-family: "Josefin Sans", sans-serif;
+  font-family: "Goldman", system-ui, sans-serif;
   font-size: 0.5rem;
   font-weight: 600;
   letter-spacing: 0.3em;
   text-transform: uppercase;
-  color: var(--ps-gold);
+  color: #0ea5e9;
 }
 
 .ps-close-btn {
@@ -138,12 +144,12 @@
 }
 
 .ps-close-btn:hover {
-  background: rgba(218, 165, 32, 0.15);
-  border-color: var(--ps-gold);
+  background: rgba(14, 165, 233, 0.15);
+  border-color: #0ea5e9;
 }
 
 .ps-close-btn:hover svg {
-  color: var(--ps-gold);
+  color: #0ea5e9;
 }
 
 /* Navigation */
@@ -153,7 +159,7 @@
 }
 
 .ps-nav-label {
-  font-family: "Josefin Sans", sans-serif;
+  font-family: "Goldman", system-ui, sans-serif;
   font-size: 0.55rem;
   font-weight: 600;
   letter-spacing: 0.2em;
@@ -181,9 +187,10 @@
   background: transparent;
   border: none;
   border-radius: 12px;
-  font-family: "Josefin Sans", sans-serif;
-  font-size: 0.75rem;
+  font-family: "Goldman", system-ui, sans-serif;
+  font-size: 0.65rem;
   font-weight: 500;
+  letter-spacing: 0.08em;
   color: var(--ps-text-secondary);
   cursor: pointer;
   transition: all 0.25s ease;
@@ -213,12 +220,13 @@
 }
 
 .ps-nav-link.active {
-  background: rgba(218, 165, 32, 0.12);
-  color: var(--ps-gold);
+  background: linear-gradient(135deg, #0f172a 0%, #0ea5e9 100%);
+  color: #ffffff;
+  font-weight: 600;
 }
 
 .ps-nav-link.active .ps-nav-icon svg {
-  color: var(--ps-gold);
+  color: #ffffff;
 }
 
 /* Footer */
@@ -228,7 +236,7 @@
 }
 
 .ps-footer-text {
-  font-family: "Josefin Sans", sans-serif;
+  font-family: "Goldman", system-ui, sans-serif;
   font-size: 0.55rem;
   font-weight: 400;
   color: var(--ps-text-muted);

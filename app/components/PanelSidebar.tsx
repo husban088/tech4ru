@@ -45,22 +45,6 @@ const panelLinks = [
     ),
   },
   {
-    href: "/panel/products",
-    label: "All Products",
-    exact: false,
-    icon: (
-      <svg
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="1.5"
-      >
-        <path d="M20 7H4a2 2 0 00-2 2v10a2 2 0 002 2h16a2 2 0 002-2V9a2 2 0 00-2-2z" />
-        <path d="M16 3H8l-2 4h12l-2-4z" />
-      </svg>
-    ),
-  },
-  {
     href: "/panel/orders",
     label: "Orders",
     exact: false,
@@ -92,23 +76,6 @@ const panelLinks = [
       </svg>
     ),
   },
-  {
-    href: "/panel/contact-queries",
-    label: "Contact Queries",
-    exact: false,
-    icon: (
-      <svg
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="1.5"
-      >
-        <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z" />
-      </svg>
-    ),
-  },
-  // In PanelSidebar.tsx, add this to the panelLinks array
-
   {
     href: "/panel/coupons",
     label: "Coupons",

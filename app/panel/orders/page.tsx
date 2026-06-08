@@ -2189,6 +2189,8 @@ export default function OrdersPage() {
   const totalRevenue = orders.reduce((s, o) => s + Number(o.total_amount), 0);
   const pendingCount = orders.filter((o) => o.status === "pending").length;
   const deliveredCount = orders.filter((o) => o.status === "delivered").length;
+  const cancelledCount = orders.filter((o) => o.status === "cancelled").length;
+  const shippedCount = orders.filter((o) => o.status === "shipped").length;
 
   return (
     <div className="ords-root">
@@ -2283,6 +2285,45 @@ export default function OrdersPage() {
             </div>
             <div className="ords-stat-value">{deliveredCount}</div>
             <div className="ords-stat-label">Delivered</div>
+          </div>
+          <div className="ords-stat-card">
+            <div
+              className="ords-stat-icon"
+              style={{ background: "rgba(59,130,246,0.1)", color: "#2563eb" }}
+            >
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.5"
+              >
+                <rect x="1" y="3" width="15" height="13" rx="2" />
+                <path d="M16 8h4l3 5v3h-7V8z" />
+                <circle cx="5.5" cy="18.5" r="2.5" />
+                <circle cx="18.5" cy="18.5" r="2.5" />
+              </svg>
+            </div>
+            <div className="ords-stat-value">{shippedCount}</div>
+            <div className="ords-stat-label">Shipped</div>
+          </div>
+          <div className="ords-stat-card">
+            <div
+              className="ords-stat-icon"
+              style={{ background: "rgba(239,68,68,0.1)", color: "#dc2626" }}
+            >
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.5"
+              >
+                <circle cx="12" cy="12" r="10" />
+                <line x1="15" y1="9" x2="9" y2="15" />
+                <line x1="9" y1="9" x2="15" y2="15" />
+              </svg>
+            </div>
+            <div className="ords-stat-value">{cancelledCount}</div>
+            <div className="ords-stat-label">Cancelled</div>
           </div>
         </div>
 

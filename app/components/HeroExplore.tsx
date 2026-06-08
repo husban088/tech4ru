@@ -1,6 +1,5 @@
 "use client";
 
-import { useEffect, useRef } from "react";
 import Link from "next/link";
 import "./hero-explore.css";
 
@@ -83,48 +82,8 @@ const images = [
 ];
 
 export default function HeroExplore() {
-  const sectionRef = useRef<HTMLElement>(null);
-
-  useEffect(() => {
-    const section = sectionRef.current;
-    if (!section) return;
-
-    const rect = section.getBoundingClientRect();
-    if (rect.top < window.innerHeight) {
-      section.classList.add("he-visible");
-      return;
-    }
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            section.classList.add("he-visible");
-            observer.disconnect();
-          }
-        });
-      },
-      { threshold: 0.1 },
-    );
-
-    observer.observe(section);
-
-    const fallback = setTimeout(() => {
-      section.classList.add("he-visible");
-    }, 800);
-
-    return () => {
-      observer.disconnect();
-      clearTimeout(fallback);
-    };
-  }, []);
-
   return (
-    <section
-      ref={sectionRef}
-      className="he-section"
-      aria-label="Explore Aurexia"
-    >
+    <section className="he-section" aria-label="Explore Aurexia">
       {/* WATERMARK */}
       <div className="he-watermark" aria-hidden="true">
         TECH4U
@@ -226,11 +185,7 @@ export default function HeroExplore() {
 
           <div className="he-grid">
             {images.map((img, i) => (
-              <div
-                key={i}
-                className="he-img-card"
-                style={{ "--delay": `${i * 0.12}s` } as React.CSSProperties}
-              >
+              <div key={i} className="he-img-card">
                 <div className="he-img-shimmer" aria-hidden="true" />
                 <div className="he-img-wrap">
                   <img

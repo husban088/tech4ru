@@ -15,7 +15,7 @@ import SaleBannerPopup from "./components/SaleBannerPopup";
 import { initSaleStore } from "@/lib/saleStore";
 
 // ─── NavbarWrapper ────────────────────────────────────────────────────────────
-// memo() prevents re-render when sidebar/cart state changes — Navbar is expensive
+// memo() prevents re-render when sidebar/cart state changes
 // ─────────────────────────────────────────────────────────────────────────────
 const NavbarWrapper = memo(function NavbarWrapper({
   wrapperRef,
@@ -41,8 +41,6 @@ const NavbarWrapper = memo(function NavbarWrapper({
 });
 
 // ─── Sidebars ─────────────────────────────────────────────────────────────────
-// memo() prevents re-render when navbar height or unrelated state changes
-// ─────────────────────────────────────────────────────────────────────────────
 const Sidebars = memo(function Sidebars({
   sidebarOpen,
   searchOpen,
@@ -81,7 +79,7 @@ function AppShell({ children }: { children: React.ReactNode }) {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const cartInitialized = useRef(false);
 
-  // ── Stable callbacks — required for memo() to work on children ────────────
+  // ── Stable callbacks ────────────────────────────────────────────────────────
   const { fetchCart, setOnCartOpen } = useCartStore();
   const openSidebar = useCallback(() => setSidebarOpen(true), []);
   const openSearch = useCallback(() => setSearchOpen(true), []);
@@ -95,16 +93,14 @@ function AppShell({ children }: { children: React.ReactNode }) {
     setIsClient(true);
   }, []);
 
-  // ── One-time store initialisations ────────────────────────────────────────
+  // ── One-time store initialisations ─────────────────────────────────────────
   useEffect(() => {
     initSaleStore();
     useCouponStore.getState().fetchCouponSettings();
   }, []);
 
-  // ── Navbar height observer ─────────────────────────────────────────────────
-  // FIX: rAF debounce — ResizeObserver fires many times per second during resize.
-  // Without debounce, every pixel of resize causes a setState + re-render,
-  // which causes scroll jank because the main thread is busy.
+  // ── Navbar height observer ──────────────────────────────────────────────────
+  // rAF debounce — fires max once per frame, not per pixel of resize
   useEffect(() => {
     if (!isClient || !wrapperRef.current) return;
     let rafId: number;
@@ -114,7 +110,6 @@ function AppShell({ children }: { children: React.ReactNode }) {
       rafId = requestAnimationFrame(() => {
         if (wrapperRef.current) {
           const h = wrapperRef.current.offsetHeight;
-          // FIX: Only setState if height actually changed — avoids pointless renders
           if (h > 0) setNavbarHeight((prev) => (prev === h ? prev : h));
         }
       });
@@ -130,9 +125,8 @@ function AppShell({ children }: { children: React.ReactNode }) {
     };
   }, [isClient]);
 
-  // ── Scroll-to-top & panel close on route change ───────────────────────────
-  // FIX: 'instant' scroll behavior avoids scroll animation competing with
-  // React's route transition render — was a major source of jank on navigation
+  // ── Scroll-to-top & panel close on route change ────────────────────────────
+  // 'instant' avoids scroll animation competing with React route transition
   useEffect(() => {
     setSidebarOpen(false);
     setSearchOpen(false);
@@ -174,9 +168,7 @@ function AppShell({ children }: { children: React.ReactNode }) {
         />
       )}
 
-      {/* FIX: Always mounted (isOpen=false) so CSS transitions work correctly.
-          Conditional mounting causes first-open flash because transition
-          starts from unmounted (display:none) state. */}
+      {/* Always mounted (isOpen=false) so CSS transitions work — no flash */}
       {isClient && (
         <Sidebars
           sidebarOpen={sidebarOpen}
@@ -204,21 +196,29 @@ function AppShell({ children }: { children: React.ReactNode }) {
 
 // ─── Providers ────────────────────────────────────────────────────────────────
 export default function Providers({ children }: { children: React.ReactNode }) {
-  // FIX: BFCache handler at top level — registered once, not per shell render
+  // FIX: BFCache handler — only refresh cart/coupon state, NOT full page reload.
+  // window.location.reload() was killing performance — browser has to re-fetch
+  // everything, re-run all JS, re-paint. Instead we just re-sync the stores
+  // that actually need fresh data (cart count, coupon validity).
+  // This gives the "fresh state" you need without the reload jank.
   useEffect(() => {
-    let lastReloadTime = 0;
-    const RELOAD_COOLDOWN = 3000;
-
     function handlePageShow(e: PageTransitionEvent) {
       if (!e.persisted) return;
-      const now = Date.now();
-      if (now - lastReloadTime < RELOAD_COOLDOWN) return;
-      lastReloadTime = now;
-      // 200ms gives browser time to finish restoring BFCache state
-      setTimeout(() => window.location.reload(), 200);
+      // Page was restored from BFCache — just re-sync stores, don't reload
+      const { initialized, fetchCart } = useCartStore.getState();
+      if (initialized) {
+        // Re-fetch cart silently in background — no reload, no jank
+        fetchCart().catch(() => {
+          // If fetch fails (offline etc.) — silently ignore, stale cart is fine
+        });
+      }
+      useCouponStore
+        .getState()
+        .fetchCouponSettings()
+        .catch(() => {});
     }
 
-    window.addEventListener("pageshow", handlePageShow);
+    window.addEventListener("pageshow", handlePageShow, { passive: true });
     return () => window.removeEventListener("pageshow", handlePageShow);
   }, []);
 

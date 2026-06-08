@@ -18,7 +18,10 @@
   );
 }
 
-/* Base styles - White background with Sky Blue + Black theme */
+/* ============================================================
+   BASE RESET
+   ============================================================ */
+
 *,
 *::before,
 *::after {
@@ -29,8 +32,10 @@ html {
   height: 100%;
   overflow-x: hidden;
   overflow-y: auto;
+  /* FIX: thin scrollbar only — removes layout width calculation jank */
   scrollbar-width: thin;
   scrollbar-color: var(--scrollbar-sky) var(--scrollbar-track);
+  /* FIX: scroll-behavior auto = no smooth-scroll fighting route transitions */
   scroll-behavior: auto;
 }
 
@@ -42,22 +47,39 @@ body {
   min-height: 100%;
   background: var(--background);
   color: var(--foreground);
+  /* FIX: font only on body — NOT on * — avoids cascade recalc on every element */
   font-family: var(--font-goldman);
   font-weight: 500;
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-overflow-scrolling: touch;
+  /* FIX: optimizeLegibility removed — causes layout paint cost on large pages */
   text-rendering: optimizeSpeed;
   font-synthesis: none;
+  /* FIX: contain layout — browser knows body doesn't affect outside layout */
+  contain: layout style;
 }
 
 /* ============================================================
-   NAVBAR-MATCHING GRADIENT SCROLLBAR — BLACK → SKY BLUE → LIGHT BLUE
-   Matches: linear-gradient(135deg, #0f172a 0%, #0ea5e9 50%, #38bdf8 100%)
+   FONT INHERITANCE — Goldman cascades naturally from body
+   FIX: Removed `* { font-family: !important }` — that selector forces
+   style recalculation on EVERY DOM node on every render. Goldman
+   inherits from body automatically. Only override where needed.
    ============================================================ */
 
-/* Webkit (Chrome, Safari, Edge) — Main page scrollbar */
+code,
+pre,
+kbd,
+samp,
+.monospace {
+  font-family: monospace;
+}
+
+/* ============================================================
+   NAVBAR-MATCHING GRADIENT SCROLLBAR
+   ============================================================ */
+
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
@@ -66,7 +88,6 @@ body {
 ::-webkit-scrollbar-track {
   background: var(--scrollbar-track);
   border-radius: 4px;
-  box-shadow: inset 0 0 3px rgba(14, 165, 233, 0.12);
 }
 
 ::-webkit-scrollbar-thumb {
@@ -80,7 +101,6 @@ body {
   background: linear-gradient(180deg, #0284c7 0%, #38bdf8 50%, #7dd3fc 100%);
   border: 1.5px solid var(--scrollbar-track);
   background-clip: padding-box;
-  box-shadow: 0 0 10px rgba(14, 165, 233, 0.45);
 }
 
 ::-webkit-scrollbar-thumb:active {
@@ -93,84 +113,46 @@ body {
   background: var(--scrollbar-track);
 }
 
-/* Firefox scrollbar — thin with navy-to-sky gradient fallback */
+/* Firefox */
 * {
   scrollbar-width: thin;
   scrollbar-color: #0ea5e9 #f1f5f9;
 }
 
-/* ── Scrollbar for containers with sky blue theme ── */
+/* ── Container scrollbars ── */
 .scrollbar-sky::-webkit-scrollbar {
   width: 6px;
   height: 6px;
 }
-
 .scrollbar-sky::-webkit-scrollbar-track {
   background: rgba(14, 165, 233, 0.05);
   border-radius: 4px;
 }
-
 .scrollbar-sky::-webkit-scrollbar-thumb {
   background: linear-gradient(180deg, #0f172a 0%, #0ea5e9 55%, #38bdf8 100%);
   border-radius: 8px;
 }
-
 .scrollbar-sky::-webkit-scrollbar-thumb:hover {
   background: linear-gradient(180deg, #0284c7 0%, #38bdf8 50%, #7dd3fc 100%);
-  box-shadow: 0 0 8px rgba(14, 165, 233, 0.4);
 }
 
-/* ── Hover-reveal scrollbar for subtle containers ── */
 .hover-scrollbar::-webkit-scrollbar {
   width: 4px;
   height: 4px;
 }
-
 .hover-scrollbar::-webkit-scrollbar-track {
   background: transparent;
   border-radius: 4px;
 }
-
 .hover-scrollbar::-webkit-scrollbar-thumb {
   background: transparent;
   border-radius: 4px;
-  transition: background 0.3s ease;
 }
-
 .hover-scrollbar:hover::-webkit-scrollbar-thumb {
   background: linear-gradient(180deg, #0f172a 0%, #0ea5e9 55%, #38bdf8 100%);
 }
-
 .hover-scrollbar:hover::-webkit-scrollbar-thumb:hover {
   background: linear-gradient(180deg, #0284c7 0%, #38bdf8 50%, #7dd3fc 100%);
-  box-shadow: 0 0 6px rgba(14, 165, 233, 0.35);
-}
-
-/* ============================================================
-   FONT & TYPOGRAPHY
-   ============================================================ */
-
-*,
-*::before,
-*::after {
-  font-family: var(--font-goldman) !important;
-}
-
-code,
-pre,
-kbd,
-samp,
-.monospace {
-  font-family: monospace !important;
-}
-
-i,
-em,
-cite,
-address,
-var,
-.italic {
-  font-style: normal !important;
 }
 
 /* ============================================================
@@ -213,6 +195,8 @@ select:focus-visible {
 
 /* ============================================================
    NAVBAR STICKY WRAPPER
+   FIX: transform:translateZ(0) creates a new GPU compositor layer
+   so navbar paints independently — page scroll doesn't repaint it
    ============================================================ */
 
 .navbar-sticky-wrapper {
@@ -222,22 +206,61 @@ select:focus-visible {
   right: 0;
   z-index: 100;
   transform: translateZ(0);
+  will-change: transform;
+  /* FIX: contain:layout — navbar layout changes don't trigger page reflow */
+  contain: layout style;
 }
 
 /* ============================================================
    SWIPER OPTIMIZATIONS
+   FIX: will-change + backface-visibility = GPU composited layer per slide
+   No CPU paint during swipe — smooth 60fps transitions
    ============================================================ */
 
 .swiper {
   overflow: hidden;
+  /* FIX: contain paint — swiper overflow can't cause outside repaint */
+  contain: paint;
 }
+
 .swiper-wrapper {
   will-change: transform;
   transform: translateZ(0);
+  /* FIX: backface-visibility on wrapper too — reduces flicker on iOS */
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
 }
+
 .swiper-slide {
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
+  /* FIX: transform3d forces GPU layer per slide — no CPU paint during scroll */
+  transform: translateZ(0);
+}
+
+/* ============================================================
+   PERFORMANCE CLASSES
+   ============================================================ */
+
+/* FIX: GPU layer for animated elements — promote before animation starts */
+.gpu-layer {
+  transform: translateZ(0);
+  will-change: transform;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+/* FIX: content-visibility:auto — off-screen sections skip layout+paint
+   Browser renders them only when they approach viewport = massive scroll perf gain */
+.cv-auto {
+  content-visibility: auto;
+  /* Approx height hint — prevents layout shift when section becomes visible */
+  contain-intrinsic-size: 0 500px;
+}
+
+/* FIX: For images — prevents layout shift during lazy load */
+.img-contain {
+  contain: strict;
 }
 
 /* ============================================================
@@ -256,7 +279,7 @@ body.rtl,
 }
 
 /* ============================================================
-   REDUCED MOTION PREFERENCE
+   REDUCED MOTION
    ============================================================ */
 
 @media (prefers-reduced-motion: reduce) {
@@ -271,10 +294,9 @@ body.rtl,
 }
 
 /* ============================================================
-   UTILITY CLASSES - SKY BLUE THEME
+   UTILITY CLASSES — SKY BLUE THEME
    ============================================================ */
 
-/* Text gradients */
 .text-gradient-sky {
   background: linear-gradient(135deg, #0f172a 0%, #0ea5e9 50%, #38bdf8 100%);
   -webkit-background-clip: text;
@@ -289,7 +311,6 @@ body.rtl,
   color: transparent;
 }
 
-/* Border gradients */
 .border-gradient-sky {
   border-image: linear-gradient(135deg, #0f172a, #0ea5e9, #38bdf8) 1;
 }
@@ -300,7 +321,6 @@ body.rtl,
   border-image-slice: 1;
 }
 
-/* Background gradients */
 .bg-gradient-sky {
   background: linear-gradient(135deg, #0f172a 0%, #0ea5e9 50%, #38bdf8 100%);
 }
@@ -309,7 +329,6 @@ body.rtl,
   background: linear-gradient(135deg, #0ea5e9 0%, #38bdf8 50%, #7dd3fc 100%);
 }
 
-/* Selection color */
 ::selection {
   background: rgba(14, 165, 233, 0.2);
   color: #0f172a;
@@ -320,7 +339,6 @@ body.rtl,
   color: #0f172a;
 }
 
-/* Focus ring */
 *:focus-visible {
   outline: 2px solid #0ea5e9;
   outline-offset: 2px;

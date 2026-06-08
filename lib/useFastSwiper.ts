@@ -8,36 +8,47 @@
  * <Swiper {...swiperPerfProps} ...yourOtherProps>
  */
 export const swiperPerfProps = {
-  // ✅ Smooth GPU transition — JS animation nahi, CSS transform use hoti hai
-  // cssMode: true, // Mobile pe enable karo agar touch scroll laggy lage
-
-  // ✅ Watch slides visibility — only visible slides are rendered
-  watchSlidesProgress: true,
+  // ✅ FIX: watchSlidesProgress REMOVED — ye har scroll frame pe
+  // sabhi slides ka progress calculate karta tha = expensive JS work on every frame.
+  // Sirf tab use karo jab tujhe literally slide progress values chahiye ho (parallax etc).
 
   // ✅ Resistance on drag edges
   resistanceRatio: 0.85,
 
-  // ✅ Animation speed in ms
+  // ✅ Animation speed — 300ms = fast enough, smooth enough
   speed: 300,
 
   // ✅ Grab cursor on desktop
   grabCursor: true,
 
-  // ✅ FIX: Prevent swiper from blocking page scroll on touch
-  // passiveListeners aur touchStartPreventDefault combined se scroll jank fix hoti hai
+  // ✅ FIX: touchStartPreventDefault:false — page scroll block nahi hoga
+  // Swiper pehle check karta hai swipe direction, tab decide karta hai
   touchStartPreventDefault: false,
 
-  // ✅ FIX: Reduce mouse/touch event computation
+  // ✅ FIX: threshold:5 — 5px move ke baad hi swipe register hota hai
+  // Accidental swipes reduce, scroll jank bhi kam
   threshold: 5,
 
-  // ✅ FIX: longSwipesMs — short swipe is registered faster = feels snappier
+  // ✅ FIX: longSwipesMs:200 — short swipe jaldi register = snappy feel
   longSwipesMs: 200,
 
-  // ✅ FIX: Disable unnecessary event listeners when not sliding
+  // ✅ FIX: simulateTouch:true — mouse drag works like touch
   simulateTouch: true,
 
-  // ✅ FIX: preventInteractionOnTransition — prevents click events during animation
+  // ✅ FIX: preventInteractionOnTransition — animation ke doran click block
   preventInteractionOnTransition: true,
+
+  // ✅ FIX: observer + observeParents — Swiper auto-resize karta hai
+  // agar parent container resize ho (prevents broken layouts)
+  observer: true,
+  observeParents: true,
+
+  // ✅ FIX: updateOnWindowResize — viewport change pe Swiper recalculates
+  updateOnWindowResize: true,
+
+  // ✅ FIX: lazyPreloadPrevNext:1 — sirf 1 slide aage peeche preload
+  // Heavy images wale swipers ke liye — memory aur bandwidth dono save
+  lazyPreloadPrevNext: 1,
 } as const;
 
 /**

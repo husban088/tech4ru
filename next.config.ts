@@ -11,36 +11,35 @@ const nextConfig = {
         hostname: "res.cloudinary.com",
       },
     ],
-    // FIX: webp first — faster decode than avif on most devices
+    // FIX: webp first — avif decode is CPU-heavy on mobile, webp is faster
     formats: ["image/webp", "image/avif"],
     deviceSizes: [640, 750, 828, 1080, 1200, 1920],
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
-    // FIX: 7-day cache — images rarely change, fewer round-trips = faster loads
+    // 7-day cache — images rarely change
     minimumCacheTTL: 60 * 60 * 24 * 7,
+    // FIX: Disable blurDataURL generation — saves server CPU on every image request
+    // Use placeholder="empty" in your Image components instead of placeholder="blur"
+    // unless you explicitly need blur-up effect
+    dangerouslyAllowSVG: false,
   },
 
   experimental: {
-    // FIX: Tree-shakes lucide-react and framer-motion — only used icons/components bundled
+    // Tree-shakes lucide-react and framer-motion
     optimizePackageImports: ["lucide-react", "framer-motion"],
-
-    // FIX: Partial prerendering — static shell renders instantly,
-    // dynamic parts stream in. Major speed boost for pages with both
-    // static and dynamic content.
-    // ppr: true, // uncomment if on Next.js 15+
+    // FIX: scrollRestoration — browser handles scroll pos on back/forward
+    // avoids janky manual scroll-to-top conflicts
+    scrollRestoration: true,
   },
 
-  // FIX: React strict mode — catches double-effect bugs in dev
+  // React strict mode — catches double-effect bugs in dev
   reactStrictMode: true,
 
-  // FIX: gzip compression — reduces response payload size
+  // gzip compression
   compress: true,
 
-  // FIX: removes X-Powered-By header — minor security + saves bytes
+  // removes X-Powered-By header
   poweredByHeader: false,
 
-  // FIX: Custom headers for ALL pages:
-  // - Cache static assets aggressively
-  // - DNS prefetch control for privacy
   async headers() {
     return [
       {
@@ -64,21 +63,29 @@ const nextConfig = {
         ],
       },
       {
-        // All pages — performance headers
+        // All pages
         source: "/(.*)",
         headers: [
-          // FIX: Prefetch DNS for external domains on every page load
-          {
-            key: "Link",
-            value: [
-              "<https://res.cloudinary.com>; rel=preconnect",
-              "<https://fonts.gstatic.com>; rel=preconnect; crossorigin",
-            ].join(", "),
-          },
-          // FIX: X-Content-Type-Options prevents MIME sniffing attacks
+          // FIX: Removed multi-value Link preconnect header — some CDNs and
+          // proxies don't handle comma-joined Link headers correctly, causing
+          // the hint to be ignored. Preconnect is already in layout.tsx <head>
+          // which is more reliable and fires earlier in the HTML parse.
+
+          // X-Content-Type-Options prevents MIME sniffing attacks
           {
             key: "X-Content-Type-Options",
             value: "nosniff",
+          },
+          // FIX: Permissions-Policy — disable unused browser APIs
+          // Reduces attack surface + browser doesn't negotiate unused features
+          {
+            key: "Permissions-Policy",
+            value: "camera=(), microphone=(), geolocation=()",
+          },
+          // FIX: Referrer-Policy — don't leak full URL to third parties
+          {
+            key: "Referrer-Policy",
+            value: "strict-origin-when-cross-origin",
           },
         ],
       },

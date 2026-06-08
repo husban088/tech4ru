@@ -386,7 +386,6 @@ function ExploreInner() {
             loop={true}
             grabCursor={true}
             speed={300}
-            watchSlidesProgress={true}
             resistanceRatio={0.85}
             touchRatio={1}
             touchAngle={45}

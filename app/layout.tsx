@@ -8,10 +8,8 @@ import { LanguageProvider } from "./context/LanguageContext";
 import { getInitialCurrency } from "@/lib/get-initial-currency";
 
 // ─── Font ─────────────────────────────────────────────────────────────────────
-// FIX: Added adjustFontFallback:false — Next.js by default injects a fallback
-// font with size-adjust that causes a brief layout shift (CLS) while the real
-// font loads. Since Goldman is loaded with display:'swap' and preload:true it
-// loads fast; the fallback adjustment is more harm than help here.
+// FIX: adjustFontFallback:false — removes CLS-causing fallback size-adjust
+// Goldman with display:'swap' + preload:true loads fast enough without it
 const goldman = Goldman({
   variable: "--font-goldman",
   subsets: ["latin"],
@@ -51,18 +49,24 @@ export default async function RootLayout({
     >
       <head>
         {/*
-          FIX: Added dns-prefetch for Cloudinary since images come from there.
-          Also added preconnect for connect.facebook.net so the Meta Pixel
-          script loads faster (was previously only dns-prefetch).
+          FIX: Preconnect FIRST (highest priority), then dns-prefetch as fallback.
+          Preconnect = full TCP+TLS handshake ahead of time.
+          dns-prefetch = DNS only (weaker, but works in older browsers).
+          Order matters — browser processes head top-to-bottom.
         */}
-        <link rel="dns-prefetch" href="//res.cloudinary.com" />
-        <link rel="dns-prefetch" href="//images.unsplash.com" />
+
+        {/* Cloudinary — where product images come from */}
         <link
           rel="preconnect"
-          href="https://connect.facebook.net"
+          href="https://res.cloudinary.com"
           crossOrigin="anonymous"
         />
-        <link rel="dns-prefetch" href="//connect.facebook.net" />
+        <link rel="dns-prefetch" href="//res.cloudinary.com" />
+
+        {/* Unsplash — where some images come from */}
+        <link rel="dns-prefetch" href="//images.unsplash.com" />
+
+        {/* Google Fonts — Goldman font served from here */}
         <link
           rel="preconnect"
           href="https://fonts.gstatic.com"
@@ -71,11 +75,10 @@ export default async function RootLayout({
         <link rel="dns-prefetch" href="//fonts.gstatic.com" />
 
         {/*
-          FIX: Meta Pixel moved to strategy="lazyOnload" so it does NOT block
-          the main thread during page load. The pixel fires after the page is
-          fully interactive — PageView is still tracked correctly.
-          Previously strategy:"afterInteractive" ran it during hydration,
-          competing with React for the main thread and causing visible lag.
+          FIX: Meta Pixel on lazyOnload — fires AFTER page is fully interactive.
+          Does NOT block main thread during hydration.
+          PageView still tracked correctly — pixel fires within 1-2s of load.
+          Facebook doesn't penalize slight delay for PageView.
         */}
         <Script
           id="meta-pixel"
@@ -94,6 +97,14 @@ export default async function RootLayout({
               fbq('track', 'PageView');
             `,
           }}
+        />
+
+        {/* FIX: Facebook connect preconnect here (not in next.config headers)
+            — more reliable because it's in actual HTML, not HTTP header */}
+        <link
+          rel="preconnect"
+          href="https://connect.facebook.net"
+          crossOrigin="anonymous"
         />
       </head>
       <body className="flex flex-col" suppressHydrationWarning>

@@ -271,6 +271,7 @@ const tabCache: Record<string, CachedData> = {};
 // sessionStorage survives reload, so we seed tabCache from it on startup.
 // This means products show INSTANTLY even after a hard refresh.
 function persistCacheToSession(tab: string, data: CachedData) {
+  if (typeof window === "undefined" || !window.sessionStorage) return;
   try {
     const stored = JSON.parse(sessionStorage.getItem(SESSION_KEY) || "{}");
     stored[tab] = { ...data, fetchedAt: Date.now() };
@@ -281,6 +282,7 @@ function persistCacheToSession(tab: string, data: CachedData) {
 }
 
 function seedCacheFromSession() {
+  if (typeof window === "undefined" || !window.sessionStorage) return;
   try {
     const stored = JSON.parse(sessionStorage.getItem(SESSION_KEY) || "{}");
     const now = Date.now();
@@ -972,31 +974,40 @@ export default function FeaturedProducts() {
     [],
   );
 
+  // FIX: Single, simple mount effect. This is the ONLY effect that can set
+  // isLoading=true on initial mount, and it ALWAYS resolves (finally block),
+  // so the skeleton can never get permanently stuck here.
   useEffect(() => {
+    let cancelled = false;
     const tab = "Accessories";
     activeTabRef.current = tab;
-    const alreadyCached = (tabCache[tab]?.products?.length ?? 0) > 0;
+    const cached = tabCache[tab];
+    const hasCached = (cached?.products?.length ?? 0) > 0;
 
-    if (alreadyCached) {
-      // Immediately set products from cache so they show right away
-      setProducts(tabCache[tab].products);
-      setVariantsMap(tabCache[tab].variantsMap);
-      setVariantImagesMap(tabCache[tab].variantImagesMap);
+    if (hasCached) {
+      setProducts(cached!.products);
+      setVariantsMap(cached!.variantsMap);
+      setVariantImagesMap(cached!.variantImagesMap);
       setIsLoading(false);
       setSwiperKey((prev) => prev + 1);
-      // Background refresh — silently update if newer data comes in
-      fetchFeaturedTabData(tab)
-        .then((data) => {
-          if (activeTabRef.current === tab && data.products.length > 0) {
-            setProducts(data.products);
-            setVariantsMap(data.variantsMap);
-            setVariantImagesMap(data.variantImagesMap);
-          }
-        })
-        .catch(() => {});
-    } else {
-      loadProductsForTab(tab);
     }
+
+    (async () => {
+      try {
+        const data = await fetchFeaturedTabData(tab);
+        if (cancelled || activeTabRef.current !== tab) return;
+        if (data.products.length > 0) {
+          setProducts(data.products);
+          setVariantsMap(data.variantsMap);
+          setVariantImagesMap(data.variantImagesMap);
+          setSwiperKey((prev) => prev + 1);
+        }
+      } catch {
+        // keep whatever was already showing
+      } finally {
+        if (!cancelled) setIsLoading(false);
+      }
+    })();
 
     // Preload other tabs in background (no loading state change)
     ALL_TABS.filter((t) => t !== tab).forEach((otherTab) => {
@@ -1004,7 +1015,11 @@ export default function FeaturedProducts() {
         fetchFeaturedTabData(otherTab).catch(() => {});
       }
     });
-  }, [loadProductsForTab]);
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   const handleTabChange = useCallback(
     async (tab: string) => {
@@ -1042,112 +1057,30 @@ export default function FeaturedProducts() {
     };
   }, [loadProductsForTab]);
 
-  useEffect(() => {
-    const handleVisibilityChange = () => {
-      if (document.visibilityState !== "visible") return;
-      const tab = activeTabRef.current;
-      const hasCached = (tabCache[tab]?.products?.length ?? 0) > 0;
+  // FIX: visibilitychange / pageshow / bfcache handlers removed.
+  // These previously could re-trigger setIsLoading(true) in edge cases
+  // (e.g. seedCacheFromSession failing to repopulate tabCache), leaving
+  // the skeleton stuck forever with no fetch to resolve it. The realtime
+  // subscription above + the safety-net timer below are sufficient to
+  // keep data fresh without risking a stuck loading state.
 
-      if (hasCached) {
-        // Show cached immediately, no loading flash
-        setProducts(tabCache[tab].products);
-        setVariantsMap(tabCache[tab].variantsMap);
-        setVariantImagesMap(tabCache[tab].variantImagesMap);
-        setIsLoading(false);
-        setSwiperKey((prev) => prev + 1);
-        // Background silent refresh
-        fetchFeaturedTabData(tab)
-          .then((data) => {
-            if (activeTabRef.current === tab && data.products.length > 0) {
-              setProducts(data.products);
-              setVariantsMap(data.variantsMap);
-              setVariantImagesMap(data.variantImagesMap);
-              setSwiperKey((prev) => prev + 1);
-            }
-          })
-          .catch(() => {});
-      } else {
-        // No cache — must fetch fresh (e.g. came back from another page)
-        loadProductsForTab(tab, true);
-      }
-    };
-
-    document.addEventListener("visibilitychange", handleVisibilityChange);
-    return () =>
-      document.removeEventListener("visibilitychange", handleVisibilityChange);
-  }, [loadProductsForTab]);
-
-  useEffect(() => {
-    const handlePageShow = (e: PageTransitionEvent) => {
-      const tab = activeTabRef.current;
-      const hasCached = (tabCache[tab]?.products?.length ?? 0) > 0;
-
-      if (e.persisted) {
-        // bfcache restore — clear module cache but keep session cache
-        // FIX: Do NOT call setIsLoading(true) here — it blanks the screen.
-        // Instead show existing products while silently refetching.
-        ALL_TABS.forEach((t) => delete tabCache[t]);
-        // Re-seed from sessionStorage so we still have something to show
-        seedCacheFromSession();
-        const reseeded = (tabCache[tab]?.products?.length ?? 0) > 0;
-        if (reseeded) {
-          setProducts(tabCache[tab].products);
-          setVariantsMap(tabCache[tab].variantsMap);
-          setVariantImagesMap(tabCache[tab].variantImagesMap);
-          setIsLoading(false);
-          setSwiperKey((prev) => prev + 1);
-          // Silent background refetch
-          fetchFeaturedTabData(tab)
-            .then((data) => {
-              if (activeTabRef.current === tab && data.products.length > 0) {
-                setProducts(data.products);
-                setVariantsMap(data.variantsMap);
-                setVariantImagesMap(data.variantImagesMap);
-                setSwiperKey((prev) => prev + 1);
-              }
-            })
-            .catch(() => {});
-        } else {
-          // Truly nothing — show skeleton and fetch
-          setIsLoading(true);
-          loadProductsForTab(tab, true);
-        }
-      } else if (hasCached) {
-        setProducts(tabCache[tab].products);
-        setVariantsMap(tabCache[tab].variantsMap);
-        setVariantImagesMap(tabCache[tab].variantImagesMap);
-        setIsLoading(false);
-        setSwiperKey((prev) => prev + 1);
-      } else {
-        // No cache on pageshow — fetch fresh (handles browser forward/back)
-        loadProductsForTab(tab, true);
-      }
-    };
-    window.addEventListener("pageshow", handlePageShow);
-    return () => window.removeEventListener("pageshow", handlePageShow);
-  }, [loadProductsForTab]);
-
-  // Safety net: if loading is somehow stuck for >3 seconds, show cached or force fetch
+  // Safety net: if loading is somehow stuck, force-resolve it.
   useEffect(() => {
     if (!isLoading) return;
-    // FIX: Reduced from 5s to 3s — 5s is too long for a user to stare at skeleton
     const timer = setTimeout(() => {
-      // First try sessionStorage — maybe products are there but tabCache was cleared
       seedCacheFromSession();
       const tab = activeTabRef.current;
-      const nowCached = (tabCache[tab]?.products?.length ?? 0) > 0;
-      if (nowCached) {
-        setProducts(tabCache[tab].products);
-        setVariantsMap(tabCache[tab].variantsMap);
-        setVariantImagesMap(tabCache[tab].variantImagesMap);
+      const cached = tabCache[tab];
+      if ((cached?.products?.length ?? 0) > 0) {
+        setProducts(cached!.products);
+        setVariantsMap(cached!.variantsMap);
+        setVariantImagesMap(cached!.variantImagesMap);
         setIsLoading(false);
         setSwiperKey((prev) => prev + 1);
         return;
       }
-      // No session data — force a fresh fetch
       fetchFeaturedTabData(tab, 0)
         .then((data) => {
-          setIsLoading(false);
           if (data.products.length > 0) {
             setProducts(data.products);
             setVariantsMap(data.variantsMap);
@@ -1155,10 +1088,8 @@ export default function FeaturedProducts() {
             setSwiperKey((prev) => prev + 1);
           }
         })
-        .catch(() => {
-          setIsLoading(false);
-        });
-    }, 3000);
+        .finally(() => setIsLoading(false));
+    }, 4000);
     return () => clearTimeout(timer);
   }, [isLoading]);
 
@@ -1331,6 +1262,12 @@ export default function FeaturedProducts() {
               spaceBetween={1}
               slidesPerView={1}
               speed={300}
+              // FIX: force these AFTER swiperPerfProps spread so a misconfigured
+              // perf preset (e.g. loop:true with too few slides) can never
+              // crash Swiper's init and freeze the component mid-render.
+              loop={false}
+              observer={true}
+              observeParents={true}
               breakpoints={{
                 480: { slidesPerView: 2, spaceBetween: 1 },
                 768: { slidesPerView: 3, spaceBetween: 1 },

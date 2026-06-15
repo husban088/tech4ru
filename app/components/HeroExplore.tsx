@@ -83,13 +83,16 @@ const images = [
 
 export default function HeroExplore() {
   return (
-    <section className="he-section" aria-label="Explore Aurexia">
-      {/* WATERMARK */}
+    <section className="he-section" aria-label="Explore Tech4U">
+      {/* Static watermark — no animation */}
       <div className="he-watermark" aria-hidden="true">
         TECH4U
       </div>
 
+      {/* Static grain texture — SVG data-URI, zero CPU */}
       <div className="he-grain" aria-hidden="true" />
+
+      {/* Static bg lines — no keyframe */}
       <div className="he-bg-lines" aria-hidden="true">
         <span />
         <span />
@@ -97,11 +100,12 @@ export default function HeroExplore() {
         <span />
         <span />
       </div>
+
       <div className="he-top-accent" aria-hidden="true" />
       <div className="he-bottom-accent" aria-hidden="true" />
 
       <div className="he-container">
-        {/* LEFT SIDE */}
+        {/* LEFT */}
         <div className="he-left">
           <div className="he-eyebrow-row">
             <span className="he-eyebrow-dot" aria-hidden="true" />
@@ -172,7 +176,7 @@ export default function HeroExplore() {
           </div>
         </div>
 
-        {/* RIGHT SIDE — 4 Images Grid */}
+        {/* RIGHT — 4 Image Grid */}
         <div className="he-right">
           <div
             className="he-grid-corner he-grid-corner--tl"
@@ -186,7 +190,9 @@ export default function HeroExplore() {
           <div className="he-grid">
             {images.map((img, i) => (
               <div key={i} className="he-img-card">
+                {/* One-time shimmer on load — not infinite */}
                 <div className="he-img-shimmer" aria-hidden="true" />
+
                 <div className="he-img-wrap">
                   <img
                     src={img.src}
@@ -194,15 +200,17 @@ export default function HeroExplore() {
                     className="he-img"
                     loading={i < 2 ? "eager" : "lazy"}
                     fetchPriority={i === 0 ? "high" : "auto"}
-                    decoding="auto"
+                    decoding={i === 0 ? "sync" : "async"}
                     onError={(e) => {
                       (e.currentTarget as HTMLImageElement).style.opacity = "0";
                     }}
                   />
                 </div>
+
+                {/* Static overlay — no animation */}
                 <div className="he-img-overlay" aria-hidden="true" />
 
-                {/* NAME BOX at bottom */}
+                {/* Name box — NO backdrop-filter */}
                 <div className="he-img-namebox">
                   <span className="he-img-namebox-icon">{img.icon}</span>
                   <span className="he-img-namebox-text">{img.label}</span>

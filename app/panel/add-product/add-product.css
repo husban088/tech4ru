@@ -2027,449 +2027,282 @@
 
 /* ============================================================
             BULK PRICING SECTION STYLES
+            SKY BLUE + BLACK GRADIENT — Matches PanelNavbar
             ============================================================ */
 
+/* ── Bulk Pricing CSS Variables (sky blue theme) ── */
+:root {
+  --bp-sky: #0ea5e9;
+  --bp-sky-light: #38bdf8;
+  --bp-sky-deep: #0284c7;
+  --bp-sky-dim: rgba(14, 165, 233, 0.08);
+  --bp-sky-border: rgba(14, 165, 233, 0.2);
+  --bp-dark: #0f172a;
+  --bp-gradient: linear-gradient(135deg, #0f172a 0%, #0ea5e9 100%);
+  --bp-gradient-hover: linear-gradient(135deg, #0ea5e9 0%, #38bdf8 100%);
+}
+
+/* ── Main Section Container ── */
 .ap-bulk-pricing-section {
   margin-top: 1rem;
   background: #ffffff;
-  border: 1px solid rgba(218, 165, 32, 0.12);
-  border-radius: 12px;
-  overflow: hidden;
-}
-
-.ap-bulk-pricing-desc {
-  font-family: var(--ap-sans);
-  font-size: 0.55rem;
-  color: #666666;
-  margin: 0 0 0.75rem 0;
-  padding-bottom: 0.75rem;
-  border-bottom: 1px solid rgba(218, 165, 32, 0.1);
-}
-
-.ap-bulk-tiers-list {
-  margin-bottom: 1rem;
-  max-height: 300px;
-  overflow-y: auto;
-}
-
-.ap-bulk-tiers-header {
-  display: grid;
-  grid-template-columns: 1fr 0.8fr 1fr 0.5fr;
-  padding: 0.5rem 0;
-  font-family: var(--ap-sans);
-  font-size: 0.5rem;
-  font-weight: 600;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: #8b6914;
-  border-bottom: 1px solid rgba(218, 165, 32, 0.15);
-}
-
-.ap-bulk-tier-item {
-  display: grid;
-  grid-template-columns: 1fr 0.8fr 1fr 0.5fr;
-  padding: 0.6rem 0;
-  border-bottom: 1px solid rgba(218, 165, 32, 0.08);
-  align-items: center;
-}
-
-.ap-bulk-tier-range {
-  font-family: var(--ap-sans);
-  font-size: 0.65rem;
-  font-weight: 600;
-  color: #1a1a1a;
-}
-
-.ap-bulk-tier-per-piece {
-  font-size: 0.5rem;
-  font-weight: 400;
-  color: #666666;
-  margin-left: 0.3rem;
-}
-
-.ap-bulk-tier-price {
-  font-family: var(--ap-serif);
-  font-size: 0.75rem;
-  font-weight: 600;
-  color: #8b6914;
-}
-
-.ap-bulk-tier-discount {
-  display: flex;
-  flex-direction: column;
-  gap: 0.15rem;
-}
-
-.ap-bulk-tier-badge {
-  font-size: 0.5rem;
-  font-weight: 600;
-  color: #22c55e;
-}
-
-.ap-bulk-tier-percent {
-  font-size: 0.45rem;
-  font-weight: 600;
-  color: #f59e0b;
-}
-
-.ap-bulk-tier-actions {
-  display: flex;
-  gap: 0.4rem;
-}
-
-.ap-bulk-tier-edit,
-.ap-bulk-tier-remove {
-  width: 26px;
-  height: 26px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: transparent;
-  border: 1px solid rgba(218, 165, 32, 0.15);
-  border-radius: 6px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.ap-bulk-tier-edit svg,
-.ap-bulk-tier-remove svg {
-  width: 11px;
-  height: 11px;
-}
-
-.ap-bulk-tier-edit:hover {
-  border-color: #daa520;
-  color: #daa520;
-  background: rgba(218, 165, 32, 0.08);
-}
-
-.ap-bulk-tier-remove:hover {
-  border-color: #ef4444;
-  color: #ef4444;
-  background: rgba(239, 68, 68, 0.08);
-}
-
-.ap-bulk-tier-form {
-  padding: 0.85rem;
-  background: rgba(218, 165, 32, 0.04);
-  border-radius: 10px;
-  margin-top: 0.75rem;
-}
-
-.ap-bulk-tier-form h4 {
-  font-family: var(--ap-serif);
-  font-size: 0.8rem;
-  margin: 0 0 0.75rem 0;
-  color: #1a1a1a;
-}
-
-.ap-bulk-tier-form small {
-  display: block;
-  margin-top: 0.25rem;
-  font-family: var(--ap-sans);
-  font-size: 0.5rem;
-  color: #22c55e;
-}
-
-.ap-bulk-tier-form-actions {
-  display: flex;
-  gap: 0.5rem;
-  margin-top: 0.75rem;
-}
-
-.ap-bulk-tier-save,
-.ap-bulk-tier-cancel {
-  padding: 0.5rem 1.25rem;
-  border-radius: 40px;
-  font-family: var(--ap-sans);
-  font-size: 0.5rem;
-  font-weight: 600;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.ap-bulk-tier-save {
-  background: #daa520;
-  border: none;
-  color: #1a1a1a;
-}
-
-.ap-bulk-tier-save:hover {
-  background: #f0c040;
-  transform: translateY(-1px);
-}
-
-.ap-bulk-tier-cancel {
-  background: transparent;
-  border: 1px solid rgba(218, 165, 32, 0.3);
-  color: #666666;
-}
-
-.ap-bulk-tier-cancel:hover {
-  border-color: #daa520;
-  color: #8b6914;
-}
-
-.ap-add-bulk-tier-btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.4rem;
-  width: 100%;
-  padding: 0.6rem;
-  background: transparent;
-  border: 1px dashed rgba(218, 165, 32, 0.4);
-  border-radius: 8px;
-  cursor: pointer;
-  color: #8b6914;
-  font-family: var(--ap-sans);
-  font-size: 0.55rem;
-  font-weight: 600;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  transition: all 0.3s ease;
-}
-
-.ap-add-bulk-tier-btn:hover:not(:disabled) {
-  border-color: #daa520;
-  background: rgba(218, 165, 32, 0.08);
-}
-
-.ap-add-bulk-tier-btn:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
-.ap-bulk-presets {
-  margin-top: 0.75rem;
-  padding-top: 0.75rem;
-  border-top: 1px solid rgba(218, 165, 32, 0.1);
-}
-
-.ap-bulk-presets-title {
-  font-family: var(--ap-sans);
-  font-size: 0.5rem;
-  font-weight: 600;
-  color: #999999;
-  margin: 0 0 0.5rem 0;
-}
-
-.ap-bulk-presets-buttons {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.4rem;
-}
-
-.ap-bulk-preset-btn {
-  padding: 0.3rem 0.7rem;
-  background: rgba(218, 165, 32, 0.06);
-  border: 1px solid rgba(218, 165, 32, 0.15);
+  border: 1px solid var(--bp-sky-border);
   border-radius: 16px;
-  font-family: var(--ap-sans);
-  font-size: 0.5rem;
-  font-weight: 600;
-  color: #8b6914;
-  cursor: pointer;
-  transition: all 0.2s;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.ap-bulk-preset-btn span {
-  font-size: 0.4rem;
-  font-weight: 400;
-  color: #22c55e;
-}
-
-.ap-bulk-preset-btn:hover {
-  background: rgba(218, 165, 32, 0.15);
-  border-color: #daa520;
-}
-
-/* ============================================================
-            UPDATED BULK PRICING SECTION STYLES
-            ============================================================ */
-
-.ap-bulk-pricing-section {
-  margin-top: 1rem;
-  background: #ffffff;
-  border: 1px solid rgba(218, 165, 32, 0.12);
-  border-radius: 12px;
   overflow: hidden;
+  box-shadow: 0 2px 16px rgba(14, 165, 233, 0.06);
 }
 
+/* ── Section Header ── */
 .ap-bulk-pricing-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0.85rem 1rem;
-  background: rgba(218, 165, 32, 0.04);
-  border-bottom: 1px solid rgba(218, 165, 32, 0.1);
+  padding: 1rem 1.25rem;
+  background: linear-gradient(
+    135deg,
+    rgba(15, 23, 42, 0.04) 0%,
+    rgba(14, 165, 233, 0.06) 100%
+  );
+  border-bottom: 1px solid var(--bp-sky-border);
+  flex-wrap: wrap;
+  gap: 0.75rem;
 }
 
 .ap-bulk-pricing-header-left {
   display: flex;
   align-items: center;
   gap: 0.75rem;
+  flex-wrap: wrap;
 }
 
 .ap-bulk-pricing-icon {
-  width: 32px;
-  height: 32px;
-  border: 1px solid rgba(218, 165, 32, 0.15);
+  width: 36px;
+  height: 36px;
+  border: 1px solid var(--bp-sky-border);
   border-radius: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #8b6914;
-  background: rgba(218, 165, 32, 0.06);
+  color: var(--bp-sky-deep);
+  background: var(--bp-sky-dim);
+  flex-shrink: 0;
 }
 
 .ap-bulk-pricing-icon svg {
-  width: 14px;
-  height: 14px;
+  width: 16px;
+  height: 16px;
 }
 
 .ap-bulk-pricing-title {
-  font-family: var(--ap-serif);
-  font-size: 0.85rem;
-  font-weight: 600;
-  color: #1a1a1a;
+  font-family: var(--ap-sans);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--bp-dark);
   margin: 0;
+  letter-spacing: 0.04em;
 }
 
 .ap-bulk-pricing-desc {
   font-family: var(--ap-sans);
-  font-size: 0.5rem;
-  color: #666666;
+  font-size: 0.75rem;
+  color: #475569;
   margin: 0;
+  letter-spacing: 0.03em;
 }
 
+/* "Add All Tiers" quick button */
 .ap-bulk-add-all-btn {
-  padding: 0.4rem 0.8rem;
-  background: rgba(218, 165, 32, 0.1);
-  border: 1px solid rgba(218, 165, 32, 0.2);
-  border-radius: 20px;
+  padding: 0.5rem 1rem;
+  background: var(--bp-gradient);
+  border: none;
+  border-radius: 40px;
   font-family: var(--ap-sans);
-  font-size: 0.5rem;
-  font-weight: 600;
-  color: #8b6914;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #ffffff;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: all 0.3s ease;
+  white-space: nowrap;
 }
 
 .ap-bulk-add-all-btn:hover {
-  background: rgba(218, 165, 32, 0.2);
-  border-color: #daa520;
+  background: var(--bp-gradient-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 15px rgba(14, 165, 233, 0.3);
 }
 
+/* ── Body Padding ── */
 .ap-bulk-pricing-body {
-  padding: 1rem;
+  padding: 1.25rem;
 }
 
+/* ── Description text (inside body) ── */
+.ap-bulk-pricing-desc-body {
+  font-family: var(--ap-sans);
+  font-size: 0.78rem;
+  color: #475569;
+  margin: 0 0 1rem 0;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--bp-sky-border);
+  line-height: 1.5;
+}
+
+/* ── Tiers Table ── */
 .ap-bulk-tiers-table-wrap {
   overflow-x: auto;
   margin-bottom: 1rem;
+  border-radius: 10px;
+  border: 1px solid var(--bp-sky-border);
 }
 
 .ap-bulk-tiers-table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 0.6rem;
+  min-width: 480px;
 }
 
 .ap-bulk-tiers-table th {
   text-align: left;
-  padding: 0.5rem 0.25rem;
+  padding: 0.75rem 1rem;
   font-family: var(--ap-sans);
-  font-size: 0.5rem;
-  font-weight: 600;
-  letter-spacing: 0.1em;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: #8b6914;
-  border-bottom: 1px solid rgba(218, 165, 32, 0.15);
+  color: var(--bp-sky-deep);
+  background: linear-gradient(
+    135deg,
+    rgba(15, 23, 42, 0.04) 0%,
+    rgba(14, 165, 233, 0.06) 100%
+  );
+  border-bottom: 1px solid var(--bp-sky-border);
+  white-space: nowrap;
 }
 
 .ap-bulk-tiers-table td {
-  padding: 0.6rem 0.25rem;
+  padding: 0.85rem 1rem;
   font-family: var(--ap-sans);
-  border-bottom: 1px solid rgba(218, 165, 32, 0.08);
+  font-size: 0.85rem;
+  border-bottom: 1px solid rgba(14, 165, 233, 0.07);
   vertical-align: middle;
 }
 
-.ap-bulk-tier-qty {
-  font-weight: 600;
-  color: #1a1a1a;
+.ap-bulk-tiers-table tr:last-child td {
+  border-bottom: none;
 }
 
+.ap-bulk-tiers-table tr:hover td {
+  background: var(--bp-sky-dim);
+}
+
+/* Qty range cell — big & bold */
+.ap-bulk-tier-qty {
+  font-family: var(--ap-sans);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--bp-dark);
+  white-space: nowrap;
+}
+
+.ap-bulk-tier-per-piece {
+  font-size: 0.65rem;
+  font-weight: 500;
+  color: #64748b;
+  margin-left: 0.3rem;
+}
+
+/* Total price cell */
 .ap-bulk-tier-total-price {
   display: flex;
   flex-direction: column;
-  gap: 0.15rem;
+  gap: 0.2rem;
 }
 
 .ap-bulk-cut-price {
-  font-size: 0.5rem;
-  color: #999999;
+  font-size: 0.72rem;
+  color: #94a3b8;
   text-decoration: line-through;
 }
 
 .ap-bulk-sale-price {
-  font-size: 0.7rem;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--bp-sky-deep);
+}
+
+/* Per-piece price */
+.ap-bulk-tier-per-piece-price {
+  font-size: 0.85rem;
   font-weight: 600;
-  color: #8b6914;
+  color: #334155;
 }
 
-.ap-bulk-tier-per-piece {
-  color: #444444;
-}
-
+/* Saving cell */
 .ap-bulk-tier-saving {
-  color: #22c55e;
-  font-weight: 600;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #16a34a;
+  white-space: nowrap;
 }
 
+/* Discount badge + input */
 .ap-bulk-tier-discount {
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  flex-wrap: wrap;
 }
 
 .ap-bulk-discount-badge {
-  background: rgba(245, 158, 11, 0.1);
-  color: #f59e0b;
-  padding: 0.2rem 0.4rem;
-  border-radius: 12px;
-  font-size: 0.5rem;
-  font-weight: 600;
+  background: linear-gradient(
+    135deg,
+    rgba(15, 23, 42, 0.08) 0%,
+    rgba(14, 165, 233, 0.12) 100%
+  );
+  color: var(--bp-sky-deep);
+  padding: 0.3rem 0.65rem;
+  border-radius: 20px;
+  font-family: var(--ap-sans);
+  font-size: 0.72rem;
+  font-weight: 700;
   white-space: nowrap;
+  border: 1px solid var(--bp-sky-border);
 }
 
 .ap-bulk-discount-input {
-  width: 50px;
-  padding: 0.2rem 0.3rem;
-  background: #f9f5f0;
-  border: 1px solid rgba(218, 165, 32, 0.2);
-  border-radius: 6px;
+  width: 60px;
+  padding: 0.35rem 0.5rem;
+  background: #f8fafc;
+  border: 1px solid var(--bp-sky-border);
+  border-radius: 8px;
   font-family: var(--ap-sans);
-  font-size: 0.5rem;
+  font-size: 0.8rem;
+  font-weight: 600;
   text-align: center;
+  color: var(--bp-dark);
+  outline: none;
+  transition: border-color 0.2s;
 }
 
+.ap-bulk-discount-input:focus {
+  border-color: var(--bp-sky);
+  box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.1);
+}
+
+/* Remove button */
 .ap-bulk-tier-remove {
-  width: 26px;
-  height: 26px;
+  width: 32px;
+  height: 32px;
   display: flex;
   align-items: center;
   justify-content: center;
   background: transparent;
-  border: 1px solid rgba(239, 68, 68, 0.2);
-  border-radius: 6px;
+  border: 1px solid rgba(239, 68, 68, 0.25);
+  border-radius: 8px;
   cursor: pointer;
-  color: rgba(239, 68, 68, 0.5);
+  color: rgba(239, 68, 68, 0.6);
   transition: all 0.2s;
 }
 
@@ -2480,173 +2313,545 @@
 }
 
 .ap-bulk-tier-remove svg {
-  width: 10px;
-  height: 10px;
-}
-
-.ap-bulk-add-tier-btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.3rem;
-  width: 100%;
-  padding: 0.5rem;
-  background: transparent;
-  border: 1px dashed rgba(218, 165, 32, 0.4);
-  border-radius: 8px;
-  cursor: pointer;
-  color: #8b6914;
-  font-family: var(--ap-sans);
-  font-size: 0.55rem;
-  font-weight: 600;
-  transition: all 0.2s;
-}
-
-.ap-bulk-add-tier-btn svg {
   width: 12px;
   height: 12px;
 }
 
-.ap-bulk-add-tier-btn:hover {
-  border-color: #daa520;
-  background: rgba(218, 165, 32, 0.08);
+/* Edit button */
+.ap-bulk-tier-edit {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: 1px solid var(--bp-sky-border);
+  border-radius: 8px;
+  cursor: pointer;
+  color: var(--bp-sky-deep);
+  transition: all 0.2s;
 }
 
-.ap-bulk-add-tier-form {
+.ap-bulk-tier-edit:hover {
+  background: var(--bp-sky-dim);
+  border-color: var(--bp-sky);
+}
+
+.ap-bulk-tier-edit svg,
+.ap-bulk-tier-remove svg {
+  width: 12px;
+  height: 12px;
+}
+
+/* Tier actions cell */
+.ap-bulk-tier-actions {
+  display: flex;
+  gap: 0.4rem;
+  align-items: center;
+}
+
+/* ── Add Tier Button ── */
+.ap-bulk-add-tier-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  width: 100%;
   padding: 0.75rem;
-  background: rgba(218, 165, 32, 0.04);
+  background: transparent;
+  border: 2px dashed var(--bp-sky-border);
   border-radius: 10px;
-  margin-bottom: 0.75rem;
+  cursor: pointer;
+  color: var(--bp-sky-deep);
+  font-family: var(--ap-sans);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition: all 0.3s ease;
+}
+
+.ap-bulk-add-tier-btn svg {
+  width: 14px;
+  height: 14px;
+}
+
+.ap-bulk-add-tier-btn:hover {
+  border-color: var(--bp-sky);
+  background: var(--bp-sky-dim);
+  color: var(--bp-sky-deep);
+}
+
+/* ── Add Tier Form ── */
+.ap-bulk-add-tier-form {
+  padding: 1rem;
+  background: linear-gradient(
+    135deg,
+    rgba(15, 23, 42, 0.03) 0%,
+    rgba(14, 165, 233, 0.05) 100%
+  );
+  border-radius: 12px;
+  margin-bottom: 1rem;
+  border: 1px solid var(--bp-sky-border);
 }
 
 .ap-bulk-form-row {
   display: flex;
   flex-wrap: wrap;
   align-items: flex-end;
-  gap: 0.5rem;
+  gap: 0.75rem;
 }
 
 .ap-bulk-form-field {
   display: flex;
   flex-direction: column;
-  gap: 0.2rem;
+  gap: 0.35rem;
 }
 
 .ap-bulk-form-field label {
   font-family: var(--ap-sans);
-  font-size: 0.45rem;
-  font-weight: 600;
-  color: #8b6914;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--bp-sky-deep);
 }
 
 .ap-bulk-form-field input {
-  width: 70px;
-  padding: 0.35rem;
+  width: 80px;
+  padding: 0.5rem 0.6rem;
   background: #ffffff;
-  border: 1px solid rgba(218, 165, 32, 0.2);
-  border-radius: 6px;
+  border: 1px solid var(--bp-sky-border);
+  border-radius: 8px;
   font-family: var(--ap-sans);
-  font-size: 0.55rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--bp-dark);
+  outline: none;
+  text-align: center;
+  transition: border-color 0.2s;
+}
+
+.ap-bulk-form-field input:focus {
+  border-color: var(--bp-sky);
+  box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.1);
 }
 
 .ap-bulk-add-confirm,
 .ap-bulk-add-cancel {
-  padding: 0.35rem 0.7rem;
-  border-radius: 20px;
+  padding: 0.55rem 1.1rem;
+  border-radius: 40px;
   font-family: var(--ap-sans);
-  font-size: 0.5rem;
-  font-weight: 600;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: all 0.3s ease;
 }
 
 .ap-bulk-add-confirm {
-  background: #daa520;
+  background: var(--bp-gradient);
   border: none;
-  color: #1a1a1a;
+  color: #ffffff;
 }
 
 .ap-bulk-add-confirm:hover {
-  background: #f0c040;
+  background: var(--bp-gradient-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 15px rgba(14, 165, 233, 0.3);
 }
 
 .ap-bulk-add-cancel {
   background: transparent;
-  border: 1px solid rgba(218, 165, 32, 0.3);
-  color: #666666;
+  border: 1px solid var(--bp-sky-border);
+  color: #64748b;
 }
 
 .ap-bulk-add-cancel:hover {
-  border-color: #daa520;
-  color: #8b6914;
+  border-color: var(--bp-sky);
+  color: var(--bp-sky-deep);
 }
 
+/* ── Form Preview Row ── */
 .ap-bulk-form-preview {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  margin-top: 0.6rem;
-  padding-top: 0.6rem;
-  border-top: 1px solid rgba(218, 165, 32, 0.1);
+  gap: 0.75rem;
+  margin-top: 0.75rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--bp-sky-border);
   font-family: var(--ap-sans);
-  font-size: 0.5rem;
-  color: #666666;
+  font-size: 0.75rem;
+  color: #64748b;
   flex-wrap: wrap;
 }
 
 .ap-bulk-preview-price {
-  color: #8b6914;
-  font-weight: 600;
+  color: var(--bp-sky-deep);
+  font-weight: 700;
+  font-size: 0.85rem;
 }
 
 .ap-bulk-preview-saving {
-  color: #22c55e;
-  font-weight: 600;
+  color: #16a34a;
+  font-weight: 700;
+  font-size: 0.8rem;
 }
 
+/* ── Tier Form Save/Cancel row ── */
+.ap-bulk-tier-form {
+  padding: 1rem;
+  background: linear-gradient(
+    135deg,
+    rgba(15, 23, 42, 0.03) 0%,
+    rgba(14, 165, 233, 0.05) 100%
+  );
+  border-radius: 12px;
+  margin-top: 0.75rem;
+  border: 1px solid var(--bp-sky-border);
+}
+
+.ap-bulk-tier-form h4 {
+  font-family: var(--ap-sans);
+  font-size: 0.85rem;
+  font-weight: 700;
+  margin: 0 0 0.75rem 0;
+  color: var(--bp-dark);
+}
+
+.ap-bulk-tier-form small {
+  display: block;
+  margin-top: 0.3rem;
+  font-family: var(--ap-sans);
+  font-size: 0.65rem;
+  color: #16a34a;
+  font-weight: 500;
+}
+
+.ap-bulk-tier-form-actions {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.ap-bulk-tier-save,
+.ap-bulk-tier-cancel {
+  padding: 0.55rem 1.25rem;
+  border-radius: 40px;
+  font-family: var(--ap-sans);
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.ap-bulk-tier-save {
+  background: var(--bp-gradient);
+  border: none;
+  color: #ffffff;
+}
+
+.ap-bulk-tier-save:hover {
+  background: var(--bp-gradient-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 15px rgba(14, 165, 233, 0.3);
+}
+
+.ap-bulk-tier-cancel {
+  background: transparent;
+  border: 1px solid var(--bp-sky-border);
+  color: #64748b;
+}
+
+.ap-bulk-tier-cancel:hover {
+  border-color: var(--bp-sky);
+  color: var(--bp-sky-deep);
+}
+
+/* ── Presets (small chips) ── */
 .ap-bulk-presets-small {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 0.4rem;
-  margin-top: 0.75rem;
-  padding-top: 0.75rem;
-  border-top: 1px solid rgba(218, 165, 32, 0.1);
+  gap: 0.5rem;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--bp-sky-border);
 }
 
 .ap-bulk-presets-label {
   font-family: var(--ap-sans);
-  font-size: 0.5rem;
-  color: #999999;
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #64748b;
 }
 
 .ap-bulk-preset-chip {
-  padding: 0.25rem 0.6rem;
-  background: rgba(218, 165, 32, 0.06);
-  border: 1px solid rgba(218, 165, 32, 0.15);
-  border-radius: 16px;
+  padding: 0.35rem 0.8rem;
+  background: var(--bp-sky-dim);
+  border: 1px solid var(--bp-sky-border);
+  border-radius: 20px;
   font-family: var(--ap-sans);
-  font-size: 0.5rem;
+  font-size: 0.7rem;
   font-weight: 600;
-  color: #8b6914;
+  color: var(--bp-sky-deep);
   cursor: pointer;
   transition: all 0.2s;
   display: flex;
   align-items: center;
-  gap: 0.25rem;
+  gap: 0.35rem;
 }
 
 .ap-bulk-preset-chip span {
-  font-size: 0.4rem;
-  background: #22c55e;
+  font-size: 0.6rem;
+  background: #16a34a;
   color: white;
-  padding: 0.1rem 0.25rem;
+  padding: 0.1rem 0.3rem;
   border-radius: 10px;
+  font-weight: 700;
 }
 
 .ap-bulk-preset-chip:hover {
-  background: rgba(218, 165, 32, 0.15);
-  border-color: #daa520;
+  background: linear-gradient(
+    135deg,
+    rgba(15, 23, 42, 0.08) 0%,
+    rgba(14, 165, 233, 0.15) 100%
+  );
+  border-color: var(--bp-sky);
+}
+
+/* ── Big bulk tier header (old list style) ── */
+.ap-bulk-tiers-header {
+  display: grid;
+  grid-template-columns: 1fr 0.8fr 1fr 0.5fr;
+  padding: 0.75rem 1rem;
+  font-family: var(--ap-sans);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--bp-sky-deep);
+  border-bottom: 1px solid var(--bp-sky-border);
+  background: var(--bp-sky-dim);
+}
+
+.ap-bulk-tier-item {
+  display: grid;
+  grid-template-columns: 1fr 0.8fr 1fr 0.5fr;
+  padding: 0.85rem 1rem;
+  border-bottom: 1px solid rgba(14, 165, 233, 0.07);
+  align-items: center;
+}
+
+.ap-bulk-tier-item:last-child {
+  border-bottom: none;
+}
+
+.ap-bulk-tier-range {
+  font-family: var(--ap-sans);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--bp-dark);
+}
+
+.ap-bulk-tier-price {
+  font-family: var(--ap-sans);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--bp-sky-deep);
+}
+
+.ap-bulk-tier-badge {
+  font-family: var(--ap-sans);
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: #16a34a;
+}
+
+.ap-bulk-tier-percent {
+  font-family: var(--ap-sans);
+  font-size: 0.6rem;
+  font-weight: 700;
+  color: #f59e0b;
+}
+
+/* ── Old Preset Buttons (larger section) ── */
+.ap-bulk-presets {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--bp-sky-border);
+}
+
+.ap-bulk-presets-title {
+  font-family: var(--ap-sans);
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #64748b;
+  margin: 0 0 0.6rem 0;
+}
+
+.ap-bulk-presets-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.ap-bulk-preset-btn {
+  padding: 0.4rem 0.9rem;
+  background: var(--bp-sky-dim);
+  border: 1px solid var(--bp-sky-border);
+  border-radius: 20px;
+  font-family: var(--ap-sans);
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--bp-sky-deep);
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.1rem;
+}
+
+.ap-bulk-preset-btn span {
+  font-size: 0.55rem;
+  font-weight: 500;
+  color: #16a34a;
+}
+
+.ap-bulk-preset-btn:hover {
+  background: linear-gradient(
+    135deg,
+    rgba(15, 23, 42, 0.08) 0%,
+    rgba(14, 165, 233, 0.15) 100%
+  );
+  border-color: var(--bp-sky);
+}
+
+.ap-add-bulk-tier-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  width: 100%;
+  padding: 0.75rem;
+  background: transparent;
+  border: 2px dashed var(--bp-sky-border);
+  border-radius: 10px;
+  cursor: pointer;
+  color: var(--bp-sky-deep);
+  font-family: var(--ap-sans);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition: all 0.3s ease;
+}
+
+.ap-add-bulk-tier-btn:hover:not(:disabled) {
+  border-color: var(--bp-sky);
+  background: var(--bp-sky-dim);
+}
+
+.ap-add-bulk-tier-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* ── Tiers list (old style) ── */
+.ap-bulk-tiers-list {
+  margin-bottom: 1rem;
+  max-height: 400px;
+  overflow-y: auto;
+  border-radius: 10px;
+  border: 1px solid var(--bp-sky-border);
+}
+
+/* ── Responsive: Bulk Pricing ── */
+@media (max-width: 768px) {
+  .ap-bulk-pricing-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+
+  .ap-bulk-add-all-btn {
+    width: 100%;
+    text-align: center;
+    justify-content: center;
+  }
+
+  .ap-bulk-tiers-table-wrap {
+    border-radius: 8px;
+  }
+
+  .ap-bulk-tiers-table {
+    min-width: 360px;
+  }
+
+  .ap-bulk-tiers-table th,
+  .ap-bulk-tiers-table td {
+    padding: 0.65rem 0.75rem;
+    font-size: 0.8rem;
+  }
+
+  .ap-bulk-tier-qty {
+    font-size: 0.9rem;
+  }
+
+  .ap-bulk-sale-price {
+    font-size: 0.9rem;
+  }
+
+  .ap-bulk-form-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .ap-bulk-form-field {
+    flex: 1;
+  }
+
+  .ap-bulk-form-field input {
+    width: 100%;
+  }
+
+  .ap-bulk-tier-form-actions {
+    flex-direction: column;
+  }
+
+  .ap-bulk-tier-save,
+  .ap-bulk-tier-cancel,
+  .ap-bulk-add-confirm,
+  .ap-bulk-add-cancel {
+    width: 100%;
+    text-align: center;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .ap-bulk-pricing-body {
+    padding: 0.85rem;
+  }
+
+  .ap-bulk-pricing-title {
+    font-size: 0.88rem;
+  }
+
+  .ap-bulk-preset-chip,
+  .ap-bulk-preset-btn {
+    font-size: 0.65rem;
+    padding: 0.3rem 0.6rem;
+  }
 }
 
 /* Enhanced Stock Status Radio Styles - Single Click Fix */

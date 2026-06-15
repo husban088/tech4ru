@@ -38,7 +38,6 @@ const FeaturedProducts = dynamic(
 );
 
 // ── Tier 3: Client-only — lazily loaded, never blocks hydration ───────────────
-// ssr:false + Suspense = these never block main thread during initial load
 const WhyChooseUs = dynamic(() => import("./components/WhyChooseUs"), {
   ssr: false,
   loading: () => <div style={{ minHeight: "300px" }} aria-hidden="true" />,
@@ -60,14 +59,16 @@ const GlobalFAQSection = dynamic(
 export default function Home() {
   return (
     <main className="flex flex-col flex-1">
-      {/* Above fold — render immediately, no Suspense overhead */}
+      {/* Above fold — no cv-auto, render immediately */}
       <HeroExplore />
       <ExploreAurexia />
       <TrustBadgesSection />
       <FeaturedProducts />
 
-      {/* Below fold — cv-auto skips browser layout+paint until near viewport
-          Suspense wraps each so they stream independently without blocking siblings */}
+      {/* FIX: cv-auto sections — contain-intrinsic-size:auto 0px in globals.css
+          means no layout jump when section enters viewport.
+          Each section MUST have its own cv-auto wrapper so browser can
+          skip them independently. Suspense wraps for streaming. */}
       <div className="cv-auto">
         <Suspense fallback={<div style={{ minHeight: "300px" }} />}>
           <WhyChooseUs />

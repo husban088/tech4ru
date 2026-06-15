@@ -3,15 +3,15 @@
 import Link from "next/link";
 import { useRef, useState, useEffect } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, Pagination, Autoplay, A11y } from "swiper/modules";
+import { Navigation, Pagination, A11y } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
 import { useLanguage } from "@/app/context/LanguageContext";
 import "./explore-aurexia.css";
 
-/* ──────────────────────────────────────────
-   COMPLETE TRANSLATIONS FOR ALL CATEGORIES
-────────────────────────────────────────── */
+// FIX: Autoplay module REMOVED — running a JS timer every 3.8s
+// + constantly calling swiper.slideNext() blocks the main thread
+// and interferes with native scroll momentum. Users can slide manually.
 
 const categoryTranslations = {
   labelMen: { en: "Men's", ar: "رجالي", de: "Herren" },
@@ -112,7 +112,6 @@ const categories = [
     imageSrc: "/menwatch.jpg",
     placeholderClass: "ea-ph-men",
     tagKey: "tagWatches",
-    accentColor: "#dc2626",
   },
   {
     id: 2,
@@ -126,7 +125,6 @@ const categories = [
     imageSrc: "/womenwatch.jpg",
     placeholderClass: "ea-ph-women",
     tagKey: "tagWatches",
-    accentColor: "#dc2626",
   },
   {
     id: 3,
@@ -140,7 +138,6 @@ const categories = [
     imageSrc: "/mobacc.webp",
     placeholderClass: "ea-ph-mobile",
     tagKey: "tagAccessories",
-    accentColor: "#dc2626",
   },
   {
     id: 4,
@@ -154,7 +151,6 @@ const categories = [
     imageSrc: "/homedecor.jpg",
     placeholderClass: "ea-ph-decor",
     tagKey: "tagDecor",
-    accentColor: "#dc2626",
   },
 ];
 
@@ -167,17 +163,16 @@ function getTranslation(
   );
 }
 
-/* ──────────────────────────────────────────
-   CARD COMPONENT — Black + Red Mixed Gradients
-────────────────────────────────────────── */
 function CategoryCard({
   cat,
   language,
   isRTL,
+  index,
 }: {
   cat: (typeof categories)[0];
   language: "en" | "ar" | "de";
   isRTL: boolean;
+  index: number;
 }) {
   const label = getTranslation(cat.labelKey as any, language);
   const title = getTranslation(cat.titleKey as any, language);
@@ -188,14 +183,8 @@ function CategoryCard({
   const tag = getTranslation(cat.tagKey as any, language);
 
   return (
-    <article
-      className="ea-card"
-      style={{ "--accent": cat.accentColor } as React.CSSProperties}
-      dir={isRTL ? "rtl" : "ltr"}
-    >
-      {/* Shimmer Effect */}
+    <article className="ea-card" dir={isRTL ? "rtl" : "ltr"}>
       <div className="ea-card-shimmer" aria-hidden="true" />
-      {/* Bottom Bar - Black + Red Mixed Gradient */}
       <div className="ea-card-bar" aria-hidden="true" />
 
       <div className="ea-card-img-wrap">
@@ -204,15 +193,15 @@ function CategoryCard({
             src={cat.imageSrc}
             alt={`${title}${italic}`}
             className="ea-card-img"
-            loading="eager"
-            fetchPriority="high"
-            decoding="auto"
-            style={{
-              width: "100%",
-              height: "100%",
-              objectFit: "cover",
-              display: "block",
-            }}
+            // FIX: Only first card eager — rest lazy.
+            // Old code: ALL 4 cards loading="eager" fetchPriority="high"
+            // = browser trying to download 4 images simultaneously
+            // = bandwidth saturated = page feels stuck/heavy on load.
+            loading={index === 0 ? "eager" : "lazy"}
+            fetchPriority={index === 0 ? "high" : "auto"}
+            decoding={index === 0 ? "sync" : "async"}
+            width={400}
+            height={300}
             onError={(e) => {
               (e.currentTarget as HTMLImageElement).style.display = "none";
             }}
@@ -221,7 +210,6 @@ function CategoryCard({
           <div className={`ea-card-placeholder ${cat.placeholderClass}`} />
         )}
         <div className="ea-card-overlay-base" />
-        <div className="ea-card-overlay-hover" />
       </div>
 
       <span className="ea-card-tag">{tag}</span>
@@ -259,36 +247,31 @@ function CategoryCard({
   );
 }
 
-/* ──────────────────────────────────────────
-   INNER COMPONENT
-────────────────────────────────────────── */
 function ExploreInner() {
   const { language, isRTLMode } = useLanguage();
   const prevRef = useRef<HTMLButtonElement>(null);
   const nextRef = useRef<HTMLButtonElement>(null);
-  // Prevent hydration mismatch — RTL/Swiper only render after client mount
   const [mounted, setMounted] = useState(false);
+
   useEffect(() => {
     setMounted(true);
   }, []);
 
-  // SSR-safe arrow direction — always LTR on server, correct on client
   const prevArrow = mounted && isRTLMode ? "M9 18l6-6-6-6" : "M15 18l-6-6 6-6";
   const nextArrow = mounted && isRTLMode ? "M15 18l-6-6 6-6" : "M9 18l6-6-6-6";
 
   return (
     <section
       className="ea-section"
-      aria-label="Explore Aurexia Categories"
+      aria-label="Explore Tech4U Categories"
       dir={mounted && isRTLMode ? "rtl" : "ltr"}
       suppressHydrationWarning
     >
-      {/* Decorative elements */}
+      {/* Static decorative elements — no animation */}
       <div className="ea-grain" aria-hidden="true" />
       <div className="ea-ambient" aria-hidden="true" />
       <div className="ea-red-orb" aria-hidden="true" />
       <div className="ea-red-orb-right" aria-hidden="true" />
-
       <div className="ea-bg-lines" aria-hidden="true">
         <span />
         <span />
@@ -311,7 +294,7 @@ function ExploreInner() {
         <p className="ea-header-sub">{getTranslation("headerSub", language)}</p>
       </div>
 
-      {/* Mobile / Tablet nav row — visible only on ≤900px */}
+      {/* Mobile nav */}
       <div className="ea-mobile-nav-row">
         <button
           ref={prevRef}
@@ -346,7 +329,7 @@ function ExploreInner() {
       </div>
 
       <div className="ea-slider-wrap">
-        {/* Desktop nav buttons — visible only on >900px */}
+        {/* Desktop nav */}
         <button
           className="ea-nav-btn ea-nav-prev"
           aria-label="Previous category"
@@ -361,7 +344,6 @@ function ExploreInner() {
             <path d={prevArrow} strokeLinecap="round" strokeLinejoin="round" />
           </svg>
         </button>
-
         <button
           className="ea-nav-btn ea-nav-next"
           aria-label="Next category"
@@ -379,26 +361,21 @@ function ExploreInner() {
 
         {mounted && (
           <Swiper
-            modules={[Navigation, Pagination, Autoplay, A11y]}
+            // FIX: Autoplay REMOVED — was blocking main thread every 3.8s.
+            // FIX: observer/observeParents/resizeObserver — all removed.
+            //      3 observers running simultaneously = unnecessary overhead.
+            //      Swiper handles resize natively without these flags.
+            modules={[Navigation, Pagination, A11y]}
             slidesPerView={1}
             spaceBetween={20}
-            centeredSlides={false}
             loop={true}
             grabCursor={true}
-            speed={300}
+            speed={280}
             resistanceRatio={0.85}
             touchRatio={1}
             touchAngle={45}
             simulateTouch={true}
-            observer={true}
-            observeParents={true}
-            resizeObserver={true}
             dir={isRTLMode ? "rtl" : "ltr"}
-            autoplay={{
-              delay: 3800,
-              disableOnInteraction: false,
-              pauseOnMouseEnter: true,
-            }}
             navigation={{
               prevEl: ".ea-nav-prev",
               nextEl: ".ea-nav-next",
@@ -423,9 +400,14 @@ function ExploreInner() {
             }}
             className="ea-swiper"
           >
-            {categories.map((cat) => (
+            {categories.map((cat, i) => (
               <SwiperSlide key={cat.id} className="ea-slide">
-                <CategoryCard cat={cat} language={language} isRTL={isRTLMode} />
+                <CategoryCard
+                  cat={cat}
+                  language={language}
+                  isRTL={isRTLMode}
+                  index={i}
+                />
               </SwiperSlide>
             ))}
           </Swiper>

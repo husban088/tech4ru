@@ -1,21 +1,27 @@
 /* app/panel/orders/orders.css */
 
-@import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300&family=Josefin+Sans:wght@200;300;400;500;600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Goldman:wght@400;700&display=swap");
 
 :root {
-  --ords-gold: #daa520;
-  --ords-gold-light: #f0c040;
-  --ords-gold-deep: #8b6914;
-  --ords-gold-dim: rgba(218, 165, 32, 0.1);
-  --ords-bg: #f9f5f0;
+  /* ── Sky Blue theme — same as PanelNavbar ── */
+  --ords-sky: #0ea5e9;
+  --ords-sky-light: #38bdf8;
+  --ords-sky-deep: #0284c7;
+  --ords-sky-dim: rgba(14, 165, 233, 0.08);
+  --ords-bg: #f8fafc;
   --ords-card-bg: #ffffff;
-  --ords-border: rgba(218, 165, 32, 0.15);
-  --ords-text-primary: #1a1a1a;
-  --ords-text-secondary: #444444;
-  --ords-text-muted: #666666;
-  --ords-serif: "Cormorant Garamond", Georgia, serif;
-  --ords-sans: "Josefin Sans", sans-serif;
+  --ords-border: rgba(14, 165, 233, 0.15);
+  --ords-text-primary: #0f172a;
+  --ords-text-secondary: #475569;
+  --ords-text-muted: #64748b;
+  --ords-serif: "Goldman", system-ui, sans-serif;
+  --ords-sans: "Goldman", system-ui, sans-serif;
   --ords-ease: 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+  /* Legacy aliases so nothing breaks */
+  --ords-gold: #0ea5e9;
+  --ords-gold-light: #38bdf8;
+  --ords-gold-deep: #0284c7;
+  --ords-gold-dim: rgba(14, 165, 233, 0.08);
 }
 
 /* Base */
@@ -34,7 +40,7 @@
   bottom: 0;
   background: radial-gradient(
     circle at 20% 30%,
-    rgba(218, 165, 32, 0.02) 0%,
+    rgba(14, 165, 233, 0.03) 0%,
     transparent 60%
   );
   pointer-events: none;
@@ -70,7 +76,7 @@
   font-size: 0.55rem;
   letter-spacing: 0.3em;
   text-transform: uppercase;
-  color: var(--ords-gold-deep);
+  color: var(--ords-sky-deep);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -81,7 +87,7 @@
 .ords-ey-line {
   width: 40px;
   height: 1px;
-  background: var(--ords-gold);
+  background: var(--ords-sky);
   opacity: 0.4;
 }
 
@@ -95,7 +101,7 @@
 
 .ords-page-title em {
   font-style: italic;
-  color: var(--ords-gold-deep);
+  color: var(--ords-sky-deep);
 }
 
 .ords-page-sub {
@@ -105,7 +111,7 @@
   letter-spacing: 0.05em;
 }
 
-/* Stats Grid - FULLY RESPONSIVE */
+/* Stats Grid */
 .ords-stats-grid {
   display: grid;
   grid-template-columns: repeat(6, 1fr);
@@ -146,20 +152,20 @@
 
 .ords-stat-card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 20px 35px rgba(218, 165, 32, 0.08);
-  border-color: var(--ords-gold);
+  box-shadow: 0 20px 35px rgba(14, 165, 233, 0.1);
+  border-color: var(--ords-sky);
 }
 
 .ords-stat-icon {
   width: clamp(40px, 8vw, 50px);
   height: clamp(40px, 8vw, 50px);
-  background: var(--ords-gold-dim);
+  background: var(--ords-sky-dim);
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   margin: 0 auto 0.75rem;
-  color: var(--ords-gold-deep);
+  color: var(--ords-sky-deep);
 }
 
 .ords-stat-icon svg {
@@ -184,18 +190,20 @@
   color: var(--ords-text-muted);
 }
 
-/* Filters Section - FULLY RESPONSIVE */
+/* ══════════════════════════════════════════
+   FILTERS SECTION — FULLY RESPONSIVE FIX
+   ══════════════════════════════════════════ */
 .ords-filters-section {
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
   gap: 0.75rem;
   margin-bottom: 2rem;
-  align-items: stretch;
+  width: 100%;
 }
 
+/* Row 1: search bar */
 .ords-search-bar {
-  flex: 1;
-  min-width: 200px;
+  width: 100%;
   display: flex;
   align-items: center;
   background: var(--ords-card-bg);
@@ -203,11 +211,12 @@
   border-radius: 60px;
   padding: 0.5rem 1rem;
   transition: all var(--ords-ease);
+  box-sizing: border-box;
 }
 
 .ords-search-bar:focus-within {
-  border-color: var(--ords-gold);
-  box-shadow: 0 0 0 3px var(--ords-gold-dim);
+  border-color: var(--ords-sky);
+  box-shadow: 0 0 0 3px var(--ords-sky-dim);
 }
 
 .ords-search-bar svg {
@@ -247,7 +256,7 @@
 }
 
 .ords-clear-search:hover {
-  color: var(--ords-gold-deep);
+  color: var(--ords-sky-deep);
 }
 
 .ords-clear-search svg {
@@ -256,11 +265,13 @@
   margin: 0;
 }
 
+/* Row 2: filter buttons — wrap nicely, never overflow */
 .ords-filter-buttons {
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem;
   align-items: center;
+  width: 100%;
 }
 
 .ords-filter-btn {
@@ -276,19 +287,24 @@
   cursor: pointer;
   transition: all var(--ords-ease);
   white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .ords-filter-btn:hover {
-  border-color: var(--ords-gold);
-  color: var(--ords-gold-deep);
+  border-color: var(--ords-sky);
+  color: var(--ords-sky-deep);
+  background: var(--ords-sky-dim);
 }
 
+/* Active filter — same gradient as PanelNavbar active link */
 .ords-filter-btn.active {
-  background: var(--ords-gold);
-  border-color: var(--ords-gold);
-  color: #fff;
+  background: linear-gradient(135deg, #0f172a 0%, #0ea5e9 100%);
+  border-color: transparent;
+  color: #ffffff;
+  font-weight: 700;
 }
 
+/* Row 3: date filter */
 .ords-date-filter {
   display: flex;
   align-items: center;
@@ -297,7 +313,8 @@
   border: 1px solid var(--ords-border);
   border-radius: 40px;
   padding: 0.5rem 1rem;
-  flex-wrap: wrap;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .ords-date-filter svg {
@@ -314,7 +331,8 @@
   font-size: 0.75rem;
   outline: none;
   color: var(--ords-text-primary);
-  min-width: 120px;
+  flex: 1;
+  min-width: 0;
 }
 
 .ords-clear-date {
@@ -327,13 +345,14 @@
   padding: 0 0.25rem;
   transition: color var(--ords-ease);
   white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .ords-clear-date:hover {
-  color: var(--ords-gold-deep);
+  color: var(--ords-sky-deep);
 }
 
-/* Orders Grid - FULLY RESPONSIVE */
+/* Orders Grid */
 .ords-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(min(100%, 380px), 1fr));
@@ -361,16 +380,16 @@
 }
 
 .ords-section-count {
-  background: var(--ords-gold-dim);
+  background: var(--ords-sky-dim);
   padding: 0.2rem 0.6rem;
   border-radius: 20px;
   font-family: var(--ords-sans);
   font-size: 0.7rem;
   font-weight: 600;
-  color: var(--ords-gold-deep);
+  color: var(--ords-sky-deep);
 }
 
-/* Order Card - FULLY RESPONSIVE */
+/* Order Card */
 .ords-card {
   background: var(--ords-card-bg);
   border-radius: 20px;
@@ -385,8 +404,8 @@
 
 .ords-card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 25px 40px rgba(0, 0, 0, 0.1);
-  border-color: var(--ords-gold);
+  box-shadow: 0 25px 40px rgba(14, 165, 233, 0.1);
+  border-color: var(--ords-sky);
 }
 
 .ords-card-header {
@@ -484,12 +503,12 @@
 .ords-customer-phone svg {
   width: 14px;
   height: 14px;
-  color: var(--ords-gold-deep);
+  color: var(--ords-sky-deep);
   flex-shrink: 0;
 }
 
 .ords-card-items {
-  background: var(--ords-gold-dim);
+  background: var(--ords-sky-dim);
   border-radius: 12px;
   padding: 0.75rem;
   margin-bottom: 1rem;
@@ -499,7 +518,7 @@
   font-family: var(--ords-sans);
   font-size: 0.6rem;
   font-weight: 600;
-  color: var(--ords-gold-deep);
+  color: var(--ords-sky-deep);
   margin-bottom: 0.4rem;
 }
 
@@ -513,7 +532,7 @@
   font-family: var(--ords-sans);
   font-size: 0.7rem;
   color: var(--ords-text-secondary);
-  background: rgba(255, 255, 255, 0.5);
+  background: rgba(255, 255, 255, 0.6);
   padding: 0.2rem 0.5rem;
   border-radius: 12px;
   word-break: break-word;
@@ -546,7 +565,7 @@
   font-family: var(--ords-serif);
   font-size: clamp(1rem, 4vw, 1.2rem);
   font-weight: 600;
-  color: var(--ords-gold-deep);
+  color: var(--ords-sky-deep);
 }
 
 .ords-card-footer {
@@ -609,12 +628,12 @@
 }
 
 .ords-action-btn:hover {
-  background: var(--ords-gold);
-  border-color: var(--ords-gold);
+  background: linear-gradient(135deg, #0f172a 0%, #0ea5e9 100%);
+  border-color: transparent;
   color: #fff;
 }
 
-/* Modal - FULLY RESPONSIVE */
+/* Modal */
 .ords-modal-overlay {
   position: fixed;
   inset: 0;
@@ -680,8 +699,8 @@
 }
 
 .ords-modal-close:hover {
-  border-color: var(--ords-gold);
-  color: var(--ords-gold-deep);
+  border-color: var(--ords-sky);
+  color: var(--ords-sky-deep);
   transform: rotate(90deg);
 }
 
@@ -698,13 +717,13 @@
 
 .ords-modal-badge {
   display: inline-block;
-  background: var(--ords-gold-dim);
+  background: var(--ords-sky-dim);
   padding: 0.25rem 0.75rem;
   border-radius: 40px;
   font-family: var(--ords-sans);
   font-size: 0.6rem;
   font-weight: 600;
-  color: var(--ords-gold-deep);
+  color: var(--ords-sky-deep);
   margin-bottom: 1rem;
 }
 
@@ -746,19 +765,23 @@
   cursor: pointer;
   transition: all var(--ords-ease);
   white-space: nowrap;
+  color: var(--ords-text-secondary);
 }
 
 .ords-status-btn:hover {
-  border-color: var(--ords-gold);
-  color: var(--ords-gold-deep);
+  border-color: var(--ords-sky);
+  color: var(--ords-sky-deep);
+  background: var(--ords-sky-dim);
 }
 
+/* Active status — gradient same as navbar */
 .ords-status-btn.active {
-  background: var(--ords-gold);
-  border-color: var(--ords-gold);
+  background: linear-gradient(135deg, #0f172a 0%, #0ea5e9 100%);
+  border-color: transparent;
   color: #fff;
 }
 
+/* Keep semantic status colours for specific active states */
 .ords-status-btn.active.pending {
   background: #d97706;
   border-color: #d97706;
@@ -788,7 +811,7 @@
 }
 
 .ords-modal-card {
-  background: var(--ords-gold-dim);
+  background: var(--ords-sky-dim);
   border-radius: 16px;
   padding: 1rem;
 }
@@ -895,7 +918,7 @@
 }
 
 .ords-modal-summary {
-  background: var(--ords-gold-dim);
+  background: var(--ords-sky-dim);
   border-radius: 16px;
   padding: 1rem;
   margin: 0 1.5rem 1.5rem;
@@ -920,7 +943,7 @@
 .ords-summary-total {
   font-weight: 700;
   font-size: 1rem;
-  color: var(--ords-gold-deep);
+  color: var(--ords-sky-deep);
 }
 
 /* Loading & Empty States */
@@ -937,7 +960,7 @@
   width: 40px;
   height: 40px;
   border: 2px solid var(--ords-border);
-  border-top-color: var(--ords-gold);
+  border-top-color: var(--ords-sky);
   border-radius: 50%;
   animation: spin 1s linear infinite;
   margin: 0 auto 1rem;
@@ -978,6 +1001,7 @@
   flex-direction: column;
   gap: 0.75rem;
 }
+
 .ords-toast {
   background: var(--ords-card-bg);
   border-radius: 12px;
@@ -1021,7 +1045,7 @@
   border-left-color: #ef4444;
 }
 .ords-toast--info {
-  border-left-color: var(--ords-gold);
+  border-left-color: var(--ords-sky);
 }
 
 .ords-toast-icon svg {
@@ -1037,7 +1061,7 @@
   color: #ef4444;
 }
 .ords-toast--info .ords-toast-icon {
-  color: var(--ords-gold);
+  color: var(--ords-sky);
 }
 
 .ords-toast-body {
@@ -1092,12 +1116,14 @@
   font-size: 0.75rem;
 }
 
-/* Responsive Breakpoints */
+/* ══════════════════════════════════════════
+   RESPONSIVE BREAKPOINTS
+   ══════════════════════════════════════════ */
+
 @media (max-width: 1024px) {
   .ords-content {
     padding: 1.5rem 1.5rem 3rem;
   }
-
   .ords-stats-grid {
     gap: 0.875rem;
   }
@@ -1107,96 +1133,61 @@
   .ords-root {
     padding-top: 70px;
   }
-
   .ords-content {
     padding: 1rem 1rem 2rem;
   }
-
   .ords-page-header {
     margin-bottom: 2rem;
   }
-
   .ords-eyebrow {
     font-size: 0.5rem;
     gap: 0.75rem;
   }
-
   .ords-ey-line {
     width: 30px;
   }
-
   .ords-stats-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 0.75rem;
     margin-bottom: 1.5rem;
   }
-
-  .ords-filters-section {
-    flex-direction: column;
-    gap: 0.75rem;
-  }
-
-  .ords-search-bar {
-    width: 100%;
-  }
-
   .ords-filter-buttons {
-    justify-content: center;
+    justify-content: flex-start;
   }
-
-  .ords-date-filter {
-    width: 100%;
-    justify-content: space-between;
-  }
-
-  .ords-date-filter input {
-    flex: 1;
-  }
-
   .ords-grid {
     grid-template-columns: 1fr;
     gap: 1rem;
   }
-
   .ords-section-header {
     margin-bottom: 1rem;
   }
-
   .ords-modal {
     width: 95%;
     max-height: 85vh;
   }
-
   .ords-modal-header {
     padding: 1rem 1rem 0.75rem;
   }
-
   .ords-modal-grid,
   .ords-modal-items {
     padding: 1rem;
   }
-
   .ords-modal-grid {
     gap: 0.75rem;
   }
-
   .ords-modal-status-section {
     padding: 0.75rem 1rem;
   }
-
   .ords-status-buttons {
     gap: 0.4rem;
   }
-
   .ords-status-btn {
     font-size: 0.6rem;
     padding: 0.35rem 0.7rem;
   }
-
   .ords-modal-summary {
     margin: 0 1rem 1rem;
   }
-
   /* Table responsive for mobile */
   .ords-modal-table,
   .ords-modal-table tbody,
@@ -1204,17 +1195,14 @@
   .ords-modal-table td {
     display: block;
   }
-
   .ords-modal-table thead {
     display: none;
   }
-
   .ords-modal-table tr {
     margin-bottom: 1rem;
     border-bottom: 1px solid var(--ords-border);
     padding-bottom: 0.5rem;
   }
-
   .ords-modal-table td {
     display: flex;
     justify-content: space-between;
@@ -1223,7 +1211,6 @@
     padding: 0.5rem 0;
     border-bottom: none;
   }
-
   .ords-modal-table td::before {
     content: attr(data-label);
     font-weight: 600;
@@ -1232,15 +1219,6 @@
     color: var(--ords-text-muted);
     font-family: var(--ords-sans);
   }
-
-  .ords-modal-table td:first-child {
-    padding-top: 0.5rem;
-  }
-
-  .ords-modal-table td:last-child {
-    padding-bottom: 0.5rem;
-  }
-
   .ords-product-cell {
     justify-content: space-between;
     width: 100%;
@@ -1251,16 +1229,13 @@
   .ords-stats-grid {
     grid-template-columns: repeat(2, 1fr);
   }
-
   .ords-modal-info-row {
     flex-direction: column;
     align-items: flex-start;
   }
-
   .ords-modal-info-row .value {
     text-align: left;
   }
-
   .ords-summary-row {
     flex-direction: column;
     align-items: flex-start;
@@ -1272,45 +1247,40 @@
   .ords-stats-grid {
     grid-template-columns: 1fr;
   }
-
   .ords-stat-card {
     padding: 0.875rem;
   }
-
+  /* Buttons scrollable on very small screens */
   .ords-filter-buttons {
     flex-wrap: nowrap;
     overflow-x: auto;
-    justify-content: flex-start;
-    padding-bottom: 0.25rem;
     -webkit-overflow-scrolling: touch;
+    padding-bottom: 4px;
+    scrollbar-width: none;
   }
-
+  .ords-filter-buttons::-webkit-scrollbar {
+    display: none;
+  }
   .ords-filter-btn {
-    white-space: nowrap;
     font-size: 0.65rem;
     padding: 0.4rem 0.8rem;
   }
-
   .ords-card-header {
     flex-direction: column;
     align-items: flex-start;
   }
-
   .ords-card-status {
     align-self: flex-start;
   }
-
   .ords-customer-name,
   .ords-customer-email,
   .ords-customer-phone {
     font-size: 0.7rem;
   }
-
   .ords-card-footer {
     flex-direction: column;
     align-items: flex-start;
   }
-
   .ords-toast {
     min-width: 200px;
     max-width: calc(100vw - 40px);

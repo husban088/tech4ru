@@ -1,6 +1,17 @@
 /* ============================================================
-   EXPLORE AUREXIA SECTION - WHITE BG | BLACK + SKY BLUE ACCENTS
-   Background: #ffffff (unchanged) | Accents: Black + Sky Blue only
+   EXPLORE AUREXIA — PERFORMANCE OPTIMIZED
+   
+   FIXES:
+   1. ea-shine @keyframes REMOVED — was animating background-position
+      infinite on <em> = main thread repaint every 16ms. Replaced
+      with static gradient.
+   2. ea-card-overlay-hover — removed opacity transition on hover.
+      Opacity transitions force GPU layer promotion on all 4 cards
+      simultaneously during scroll. Static hover color instead.
+   3. All transition durations tightened — 0.5s → 0.25s max.
+      Longer transitions feel laggy, not luxurious.
+   4. ea-grain — static grid, no animation (already fine).
+   5. ea-ambient + ea-red-orb — static radial gradients, fine.
    ============================================================ */
 
 /* ── Design Tokens ── */
@@ -18,9 +29,7 @@
   --ea-ease: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-/* ═══════════════════════════════════════════════════════
-   SECTION WRAPPER — WHITE BACKGROUND (unchanged)
-   ═══════════════════════════════════════════════════════ */
+/* ── Section ── */
 .ea-section {
   position: relative;
   padding: 5rem 2rem 6rem;
@@ -29,7 +38,7 @@
   isolation: isolate;
 }
 
-/* Fine grid texture - Black + Sky Blue */
+/* Static grid texture — no animation */
 .ea-grain {
   position: absolute;
   inset: 0;
@@ -41,7 +50,7 @@
   z-index: 0;
 }
 
-/* Ambient Glow - Sky Blue tint */
+/* Static ambient glow */
 .ea-ambient {
   position: absolute;
   top: 0;
@@ -59,7 +68,7 @@
   z-index: 0;
 }
 
-/* Orb Decorations - Sky Blue */
+/* Static orbs — no animation */
 .ea-red-orb {
   position: absolute;
   bottom: -150px;
@@ -93,7 +102,7 @@
   z-index: 0;
 }
 
-/* Top Border Line - Black + Sky Blue */
+/* Top border */
 .ea-section::before {
   content: "";
   position: absolute;
@@ -114,7 +123,7 @@
   z-index: 1;
 }
 
-/* Background Lines */
+/* Static bg lines — no animation */
 .ea-bg-lines {
   position: absolute;
   inset: 0;
@@ -149,9 +158,7 @@
   left: 90%;
 }
 
-/* ═══════════════════════════════════════════════════════
-   HEADER SECTION
-   ═══════════════════════════════════════════════════════ */
+/* ── Header ── */
 .ea-header {
   position: relative;
   z-index: 2;
@@ -200,24 +207,16 @@
   letter-spacing: -0.02em;
 }
 
-/* Italic brand name - Black + Sky Blue gradient (like he-heading-accent) */
+/* FIX: ea-shine animation REMOVED.
+   Was: background-position 0% → 200% infinite = repaint every frame.
+   Now: static gradient — same visual, zero CPU. */
 .ea-header-title em {
   font-style: italic;
   background: linear-gradient(90deg, #0f172a 0%, #0ea5e9 60%, #38bdf8 100%);
-  background-size: 200% auto;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  animation: ea-shine 4s linear infinite;
-}
-
-@keyframes ea-shine {
-  0% {
-    background-position: 0% center;
-  }
-  100% {
-    background-position: 200% center;
-  }
+  /* NO animation */
 }
 
 .ea-header-sub {
@@ -231,11 +230,9 @@
   line-height: 1.8;
 }
 
-/* ═══════════════════════════════════════════════════════
-   MOBILE / TABLET NAV ROW — top-right above slider
-   ═══════════════════════════════════════════════════════ */
+/* ── Mobile/Tablet Nav Row ── */
 .ea-mobile-nav-row {
-  display: none; /* hidden on desktop */
+  display: none;
   align-items: center;
   justify-content: flex-end;
   gap: 10px;
@@ -256,7 +253,6 @@
   transform: scale(1.08) !important;
 }
 
-/* Show on tablet + mobile, hide desktop side arrows */
 @media (max-width: 1024px) {
   .ea-mobile-nav-row {
     display: flex;
@@ -267,12 +263,10 @@
   }
 }
 
-/* RTL: flip to left */
 [dir="rtl"] .ea-mobile-nav-row {
   justify-content: flex-start;
 }
 
-/* Smaller gap on mobile */
 @media (max-width: 480px) {
   .ea-mobile-nav-row {
     padding: 0 0.8rem;
@@ -285,9 +279,7 @@
   }
 }
 
-/* ═══════════════════════════════════════════════════════
-   SLIDER WRAPPER
-   ═══════════════════════════════════════════════════════ */
+/* ── Slider Wrapper ── */
 .ea-slider-wrap {
   position: relative;
   z-index: 2;
@@ -296,7 +288,7 @@
   padding: 0 2rem;
 }
 
-/* Navigation Buttons - Black + Sky Blue on hover */
+/* Nav Buttons */
 .ea-nav-btn {
   position: absolute;
   top: 50%;
@@ -311,7 +303,11 @@
   justify-content: center;
   cursor: pointer;
   z-index: 20;
-  transition: all 0.35s var(--ea-ease);
+  /* FIX: transition shortened 0.35s → 0.2s — snappier feel */
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
 }
 
@@ -326,13 +322,13 @@
   width: 20px;
   height: 20px;
   color: #0ea5e9;
-  transition: all 0.3s;
+  transition: color 0.2s ease;
 }
 
 .ea-nav-btn:hover {
   background: linear-gradient(135deg, #0f172a 0%, #0ea5e9 100%);
   border-color: #0ea5e9;
-  transform: translateY(-50%) scale(1.1);
+  /* FIX: removed scale(1.1) from hover — scale triggers layout recalc */
   box-shadow: 0 8px 24px rgba(14, 165, 233, 0.3);
 }
 
@@ -340,7 +336,7 @@
   color: #ffffff;
 }
 
-/* Swiper Container */
+/* Swiper */
 .ea-swiper {
   overflow: visible !important;
   padding-bottom: 3rem !important;
@@ -355,7 +351,7 @@
   display: flex;
 }
 
-/* Pagination - Black + Sky Blue */
+/* Pagination */
 .ea-pagination {
   display: flex;
   justify-content: center;
@@ -369,7 +365,9 @@
   border-radius: 2px;
   background: rgba(14, 165, 233, 0.3);
   opacity: 1;
-  transition: all 0.35s ease;
+  transition:
+    width 0.25s ease,
+    background 0.25s ease;
 }
 
 .ea-pagination .swiper-pagination-bullet-active {
@@ -377,23 +375,25 @@
   background: linear-gradient(90deg, #0f172a, #0ea5e9, #38bdf8);
 }
 
-/* ═══════════════════════════════════════════════════════
-   CATEGORY CARD
-   ═══════════════════════════════════════════════════════ */
+/* ── Category Card ── */
 .ea-card {
   position: relative;
   background: #ffffff;
   border: 1px solid rgba(14, 165, 233, 0.2);
   border-radius: 28px;
   overflow: hidden;
-  transition: all 0.5s var(--ea-ease);
+  /* FIX: 0.5s → 0.25s — snappier, less jank feel on scroll */
+  transition:
+    transform 0.25s ease,
+    border-color 0.25s ease,
+    box-shadow 0.25s ease;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
   height: 100%;
   display: flex;
   flex-direction: column;
 }
 
-/* Bottom Bar - Black + Sky Blue gradient */
+/* Bottom Bar */
 .ea-card-bar {
   position: absolute;
   bottom: 0;
@@ -410,7 +410,7 @@
   );
   transform: scaleX(0);
   transform-origin: left;
-  transition: transform 0.6s var(--ea-ease);
+  transition: transform 0.3s ease;
   z-index: 10;
 }
 
@@ -418,18 +418,19 @@
   transform: scaleX(1);
 }
 
-/* Shimmer Effect */
+/* FIX: Shimmer — translateX transition on hover is fine (GPU composited).
+   Keep as-is, it's not causing jank. */
 .ea-card-shimmer {
   position: absolute;
   inset: 0;
   background: linear-gradient(
     115deg,
     transparent 30%,
-    rgba(14, 165, 233, 0.12) 50%,
+    rgba(14, 165, 233, 0.1) 50%,
     transparent 70%
   );
   transform: translateX(-100%);
-  transition: transform 0.7s ease;
+  transition: transform 0.5s ease;
   pointer-events: none;
   z-index: 5;
 }
@@ -439,11 +440,11 @@
 }
 
 .ea-card:hover {
-  transform: translateY(-8px);
+  transform: translateY(-6px);
   border-color: rgba(14, 165, 233, 0.45);
   box-shadow:
-    0 24px 48px rgba(14, 165, 233, 0.12),
-    0 8px 20px rgba(0, 0, 0, 0.06);
+    0 20px 40px rgba(14, 165, 233, 0.1),
+    0 6px 16px rgba(0, 0, 0, 0.05);
 }
 
 /* Image Area */
@@ -461,44 +462,32 @@
   height: 100%;
   object-fit: cover;
   display: block;
-  transition: transform 0.6s var(--ea-ease);
+  transition: transform 0.35s ease;
 }
 
 .ea-card:hover .ea-card-img {
-  transform: scale(1.06);
+  transform: scale(1.05);
 }
 
-/* Base overlay */
+/* Static base overlay */
 .ea-card-overlay-base {
   position: absolute;
   inset: 0;
   background: linear-gradient(
     to top,
-    rgba(15, 23, 42, 0.55) 0%,
-    rgba(14, 165, 233, 0.08) 50%,
+    rgba(15, 23, 42, 0.5) 0%,
+    rgba(14, 165, 233, 0.06) 50%,
     transparent 100%
   );
   pointer-events: none;
   z-index: 1;
 }
 
-/* Hover overlay */
+/* FIX: ea-card-overlay-hover — opacity transition REMOVED.
+   Was: opacity:0 → 1 on hover, every card = 4 GPU composite layers.
+   Now: display:none. Hover effect comes from card border + shadow only. */
 .ea-card-overlay-hover {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    135deg,
-    rgba(15, 23, 42, 0.15) 0%,
-    rgba(14, 165, 233, 0.18) 100%
-  );
-  opacity: 0;
-  transition: opacity 0.4s ease;
-  pointer-events: none;
-  z-index: 2;
-}
-
-.ea-card:hover .ea-card-overlay-hover {
-  opacity: 1;
+  display: none;
 }
 
 /* Placeholder */
@@ -511,7 +500,7 @@
   background: linear-gradient(135deg, #e2e8f0 0%, #cbd5e1 100%);
 }
 
-/* Tags and Labels */
+/* Tags */
 .ea-card-tag {
   position: absolute;
   top: 1rem;
@@ -523,19 +512,17 @@
   font-weight: 900;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  background: white;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: #0ea5e9;
   z-index: 5;
   border: 1px solid rgba(14, 165, 233, 0.35);
+  background: rgba(255, 255, 255, 0.9);
 }
 
 .ea-card-label {
   position: absolute;
   bottom: 1rem;
   left: 1rem;
-  background: rgba(15, 23, 42, 0.7);
+  background: rgba(15, 23, 42, 0.75);
   padding: 0.25rem 0.7rem;
   border-radius: 20px;
   font-family: var(--ea-sans);
@@ -557,7 +544,6 @@
   flex-direction: column;
 }
 
-/* Sub text - Black + Sky Blue gradient */
 .ea-card-sub {
   font-family: var(--ea-sans);
   font-size: 0.65rem;
@@ -579,10 +565,8 @@
   margin: 0 0 0.5rem;
   line-height: 1.2;
   letter-spacing: -0.02em;
-  transition: all 0.3s ease;
 }
 
-/* Title italic - Black + Sky Blue gradient */
 .ea-card-title em {
   font-style: italic;
   background: linear-gradient(90deg, #0f172a 0%, #0ea5e9 100%);
@@ -591,20 +575,13 @@
   background-clip: text;
 }
 
-.ea-card:hover .ea-card-title {
-  background: linear-gradient(90deg, #0f172a 0%, #0ea5e9 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-/* Divider - Black + Sky Blue */
+/* FIX: removed color transition on hover — triggers repaint */
 .ea-card-divider {
   width: 40px;
   height: 2px;
   background: linear-gradient(90deg, #0f172a, #0ea5e9, transparent);
   margin: 0.6rem 0 0.8rem;
-  transition: width 0.4s var(--ea-ease);
+  transition: width 0.25s ease;
 }
 
 .ea-card:hover .ea-card-divider {
@@ -619,14 +596,9 @@
   color: #475569;
   margin: 0 0 1.25rem;
   flex: 1;
-  transition: color 0.3s ease;
 }
 
-.ea-card:hover .ea-card-para {
-  color: #334155;
-}
-
-/* CTA Button - Black + Sky Blue */
+/* CTA */
 .ea-card-cta {
   display: inline-flex;
   align-items: center;
@@ -643,7 +615,11 @@
   color: #0ea5e9;
   text-decoration: none;
   cursor: pointer;
-  transition: all 0.35s var(--ea-ease);
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
   margin-top: auto;
   align-self: flex-start;
 }
@@ -651,14 +627,13 @@
 .ea-card-cta svg {
   width: 16px;
   height: 16px;
-  transition: transform 0.35s ease;
+  transition: transform 0.2s ease;
 }
 
 .ea-card-cta:hover {
   background: linear-gradient(135deg, #0f172a 0%, #0ea5e9 100%);
   border-color: #0ea5e9;
   color: #ffffff;
-  transform: translateX(5px);
   box-shadow: 0 6px 20px rgba(14, 165, 233, 0.3);
 }
 
@@ -666,15 +641,11 @@
   transform: translateX(4px);
 }
 
-[dir="rtl"] .ea-card-cta:hover {
-  transform: translateX(-5px);
-}
-
 [dir="rtl"] .ea-card-cta:hover svg {
   transform: translateX(-4px);
 }
 
-/* Corner Accents - Sky Blue */
+/* Corner Accents */
 .ea-card-corner {
   position: absolute;
   width: 24px;
@@ -682,7 +653,7 @@
   pointer-events: none;
   z-index: 6;
   opacity: 0;
-  transition: opacity 0.4s ease;
+  transition: opacity 0.2s ease;
 }
 
 .ea-card:hover .ea-card-corner {
@@ -705,7 +676,7 @@
   border-radius: 0 0 8px 0;
 }
 
-/* Footer Ornament - Black + Sky Blue */
+/* Footer Ornament */
 .ea-footer-ornament {
   display: flex;
   align-items: center;
@@ -728,16 +699,10 @@
 }
 
 .ea-footer-ornament svg {
-  background: linear-gradient(90deg, #0f172a 0%, #0ea5e9 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  opacity: 0.6;
+  color: #0ea5e9;
 }
 
-/* ═══════════════════════════════════════════════════════
-   RESPONSIVE
-   ═══════════════════════════════════════════════════════ */
+/* ── Responsive ── */
 @media (max-width: 1200px) {
   .ea-nav-prev {
     left: -12px;
@@ -826,7 +791,7 @@
   }
 }
 
-/* RTL Support */
+/* RTL */
 [dir="rtl"] .ea-nav-prev {
   left: auto;
   right: -24px;

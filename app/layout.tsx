@@ -8,8 +8,6 @@ import { LanguageProvider } from "./context/LanguageContext";
 import { getInitialCurrency } from "@/lib/get-initial-currency";
 
 // ─── Font ─────────────────────────────────────────────────────────────────────
-// FIX: adjustFontFallback:false — removes CLS-causing fallback size-adjust
-// Goldman with display:'swap' + preload:true loads fast enough without it
 const goldman = Goldman({
   variable: "--font-goldman",
   subsets: ["latin"],
@@ -65,18 +63,13 @@ export default async function RootLayout({
         />
         <link rel="dns-prefetch" href="//fonts.gstatic.com" />
 
-        {/* Facebook — preconnect BEFORE pixel script fires */}
+        {/* Facebook */}
         <link
           rel="preconnect"
           href="https://connect.facebook.net"
           crossOrigin="anonymous"
         />
 
-        {/*
-          Meta Pixel: afterInteractive = fires after hydration complete.
-          lazyOnload was too late sometimes — missed PageView on fast navigations.
-          afterInteractive is the sweet spot: no hydration blocking, reliable PageView.
-        */}
         <Script
           id="meta-pixel"
           strategy="afterInteractive"

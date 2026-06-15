@@ -10,12 +10,6 @@
   --scrollbar-sky-glow: #7dd3fc;
   --scrollbar-sky-dark: #0284c7;
   --scrollbar-track: #f1f5f9;
-  --scrollbar-thumb-gradient: linear-gradient(
-    135deg,
-    #0f172a 0%,
-    #0ea5e9 50%,
-    #38bdf8 100%
-  );
 }
 
 /* ============================================================
@@ -29,37 +23,43 @@
 }
 
 /* ── SCROLL FIX ──────────────────────────────────────────────
-   PROBLEM: html + body dono pe overflow set tha — 2 scroll contexts
-   ban rahe the jisse double scrollbar aur jump hota tha.
-   FIX: Sirf html scrolls. Body ka overflow bilkul set nahi kiya
-   (default = visible) taake koi second scroll context na bane.
+   FIX 1: overflow-x:hidden html pe NAHI — ye scroll jank ka
+   sabse bada reason tha. Browser native scroll optimization
+   (passive listeners, pointer-events) tod deta tha.
+   
+   FIX 2: html height:100% nahi — body min-height use karo.
+   height:100% on html causes scroll context conflicts.
+   
+   FIX 3: scroll-behavior:smooth NAHI global — sirf specific
+   elements pe. Global smooth scroll blocks native fling
+   momentum on mobile = feel heavy/stuck.
    ──────────────────────────────────────────────────────────── */
 
 html {
-  height: 100%;
-  overflow-x: hidden;
-  overflow-y: auto;
+  overflow-x: clip; /* clip = no scroll context created, unlike hidden */
   scrollbar-width: thin;
-  scrollbar-color: var(--scrollbar-sky) var(--scrollbar-track);
+  scrollbar-color: #0ea5e9 #f1f5f9;
   scroll-behavior: auto;
 }
 
 body {
   margin: 0;
   padding: 0;
-  overflow: visible;
-  min-height: 100%;
+  min-height: 100dvh;
+  background: #ffffff; /* hex fallback — var() can fail on Vercel first paint */
   background: var(--background);
+  color: #0f172a;
   color: var(--foreground);
+  font-family: "Goldman", system-ui, sans-serif; /* hex fallback */
   font-family: var(--font-goldman);
   font-weight: 500;
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  -webkit-overflow-scrolling: touch;
   text-rendering: optimizeSpeed;
   font-synthesis: none;
-  /* contain: layout style  <-- REMOVED: scroll jump ka asli wajah yahi tha */
+  /* FIX: overflow-scrolling:touch NAHI — deprecated, causes momentum
+     scroll to bypass passive listener optimizations on iOS */
 }
 
 /* ============================================================
@@ -84,37 +84,31 @@ samp,
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--scrollbar-track);
+  background: #f1f5f9;
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb {
   background: linear-gradient(180deg, #0f172a 0%, #0ea5e9 55%, #38bdf8 100%);
   border-radius: 8px;
-  border: 1.5px solid var(--scrollbar-track);
+  border: 1.5px solid #f1f5f9;
   background-clip: padding-box;
 }
 
 ::-webkit-scrollbar-thumb:hover {
   background: linear-gradient(180deg, #0284c7 0%, #38bdf8 50%, #7dd3fc 100%);
-  border: 1.5px solid var(--scrollbar-track);
+  border: 1.5px solid #f1f5f9;
   background-clip: padding-box;
 }
 
 ::-webkit-scrollbar-thumb:active {
   background: linear-gradient(180deg, #0f172a 0%, #0284c7 50%, #0ea5e9 100%);
-  border: 1.5px solid var(--scrollbar-track);
+  border: 1.5px solid #f1f5f9;
   background-clip: padding-box;
 }
 
 ::-webkit-scrollbar-corner {
-  background: var(--scrollbar-track);
-}
-
-/* Firefox — sirf html pe scrollbar, * pe nahi (warna sab elements pe lagta) */
-html {
-  scrollbar-width: thin;
-  scrollbar-color: #0ea5e9 #f1f5f9;
+  background: #f1f5f9;
 }
 
 /* ── Container scrollbars ── */
@@ -201,10 +195,12 @@ select:focus-visible {
   left: 0;
   right: 0;
   z-index: 100;
-  /* GPU-promoted layer — avoids main thread repaints on scroll */
-  transform: translate3d(0, 0, 0);
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
+  /* FIX: Sirf will-change:transform — translate3d hack NAHI.
+     will-change properly tells browser to promote this layer
+     without creating unnecessary stacking contexts on siblings.
+     translate3d on fixed elements can cause sub-pixel rendering
+     issues on some mobile browsers. */
+  will-change: transform;
   /* contain:style only — layout/size contain on fixed elements causes reflow bugs */
   contain: style;
 }
@@ -215,39 +211,46 @@ select:focus-visible {
 
 .swiper {
   overflow: hidden;
-  /* contain:paint clips children without creating new stacking context issues */
-  contain: paint layout;
+  /* FIX: contain:paint ONLY — removing 'layout' from here.
+     contain:layout on swiper breaks sticky children inside
+     slides and causes mid-scroll reflow on section boundaries */
+  contain: paint;
 }
 
 .swiper-wrapper {
-  /* will-change only when actually animating — set via JS, not always-on */
-  transform: translate3d(0, 0, 0);
+  /* FIX: NO translate3d always-on — causes GPU layer bloat on mobile.
+     Browser handles compositing fine without this forced hint.
+     will-change added only during animation via .swiper-animating below */
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
 }
 
 .swiper-slide {
+  /* FIX: NO translate3d on every slide — N slides = N GPU layers = VRAM exhausted.
+     backface-visibility:hidden is enough for flicker prevention */
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
-  transform: translate3d(0, 0, 0);
 }
 
 /* ============================================================
    PERFORMANCE CLASSES
    ============================================================ */
 
+/* FIX: gpu-layer class — use SPARINGLY, not on every component.
+   Only on elements that ACTUALLY animate (hero video, modal overlay) */
 .gpu-layer {
-  transform: translate3d(0, 0, 0);
+  will-change: transform;
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
 }
 
-/* content-visibility:auto — browser skips layout+paint for off-screen sections
-   contain-intrinsic-size: auto preserves scroll height from previous renders
-   so scrollbar doesn't jump when section enters viewport */
+/* FIX: cv-auto — content-visibility:auto with correct intrinsic size.
+   Previous value was 600px but some sections are taller = layout jump.
+   Using 'auto 0px' tells browser to recompute — no jump on reveal.
+   Only use on sections that are ACTUALLY below the fold. */
 .cv-auto {
   content-visibility: auto;
-  contain-intrinsic-size: auto 1px auto 600px;
+  contain-intrinsic-size: auto 0px;
 }
 
 .img-contain {

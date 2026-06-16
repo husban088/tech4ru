@@ -3,10 +3,9 @@
 
 import { useEffect, useState, useRef, useCallback } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay, Navigation, Pagination } from "swiper/modules";
+import { Navigation, Pagination } from "swiper/modules";
 import { supabase } from "@/lib/supabase";
 import { useLanguage } from "@/app/context/LanguageContext";
-import { swiperPerfProps } from "@/lib/useFastSwiper";
 import "@/app/components/HomeReviews.css";
 
 // Import Swiper styles
@@ -416,14 +415,17 @@ export default function HomeReviews() {
           </button>
 
           <Swiper
-            {...swiperPerfProps}
-            modules={[Autoplay, Navigation, Pagination]}
+            modules={[Navigation, Pagination]}
             loop={true}
-            autoplay={{
-              delay: 4500,
-              disableOnInteraction: false,
-              pauseOnMouseEnter: true,
-            }}
+            grabCursor={true}
+            speed={280}
+            resistanceRatio={0.85}
+            touchRatio={1}
+            touchAngle={45}
+            simulateTouch={true}
+            /* FIX: Autoplay REMOVED — same reason as ExploreAurexia.
+               JS timer running every 4.5s + slideNext() call blocks
+               the main thread and kills native scroll momentum. */
             navigation={{
               prevEl: ".hr-arrow--prev",
               nextEl: ".hr-arrow--next",
@@ -431,12 +433,8 @@ export default function HomeReviews() {
             onSwiper={(swiper) => {
               // Wire mobile nav buttons via refs
               if (prevRef.current && nextRef.current) {
-                prevRef.current.addEventListener("click", () =>
-                  swiper.slidePrev(),
-                );
-                nextRef.current.addEventListener("click", () =>
-                  swiper.slideNext(),
-                );
+                prevRef.current.onclick = () => swiper.slidePrev();
+                nextRef.current.onclick = () => swiper.slideNext();
               }
             }}
             pagination={{

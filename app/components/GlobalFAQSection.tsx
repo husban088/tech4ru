@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import { useLanguage } from "@/app/context/LanguageContext";
 import "./GlobalFAQSection.css";
@@ -158,13 +158,38 @@ function FAQAccordionItem({
   item,
   isOpen,
   onToggle,
+  index,
 }: {
   item: FAQItem;
   isOpen: boolean;
   onToggle: () => void;
+  index: number;
 }) {
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          // Stagger delay based on index — only triggers once when scrolled into view
+          setTimeout(() => {
+            el.classList.add("gfaq-visible");
+          }, index * 60);
+          observer.unobserve(el);
+        }
+      },
+      { threshold: 0.1, rootMargin: "0px 0px -40px 0px" },
+    );
+
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [index]);
+
   return (
-    <div className={`gfaq-item${isOpen ? " open" : ""}`}>
+    <div ref={ref} className={`gfaq-item${isOpen ? " open" : ""}`}>
       <button
         className="gfaq-question-btn"
         onClick={onToggle}
@@ -252,10 +277,11 @@ export default function GlobalFAQSection() {
 
       <div className="gfaq-accordion-wrapper">
         <div className="gfaq-accordion-container" role="list">
-          {faqsData.map((faq) => (
+          {faqsData.map((faq, i) => (
             <FAQAccordionItem
               key={faq.id}
               item={faq}
+              index={i}
               isOpen={openId === faq.id}
               onToggle={() => toggleFAQ(faq.id)}
             />

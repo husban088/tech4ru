@@ -33,30 +33,6 @@ import {
 import { GiCarKey, GiWatch, GiLaurelCrown } from "react-icons/gi";
 import "./footer.css";
 
-// ─── Pre-computed static particle positions ───────────────────────────────────
-const PARTICLES = [
-  { left: "5%", delay: "0s", duration: "8s" },
-  { left: "12%", delay: "1.2s", duration: "12s" },
-  { left: "20%", delay: "0.4s", duration: "6s" },
-  { left: "27%", delay: "3.1s", duration: "9s" },
-  { left: "34%", delay: "1.7s", duration: "7s" },
-  { left: "41%", delay: "0.9s", duration: "11s" },
-  { left: "48%", delay: "2.3s", duration: "8s" },
-  { left: "55%", delay: "4.0s", duration: "10s" },
-  { left: "62%", delay: "0.5s", duration: "6s" },
-  { left: "69%", delay: "1.8s", duration: "13s" },
-  { left: "74%", delay: "3.6s", duration: "7s" },
-  { left: "79%", delay: "0.2s", duration: "9s" },
-  { left: "83%", delay: "2.9s", duration: "11s" },
-  { left: "87%", delay: "1.1s", duration: "8s" },
-  { left: "90%", delay: "0.7s", duration: "6s" },
-  { left: "93%", delay: "4.4s", duration: "14s" },
-  { left: "7%", delay: "3.3s", duration: "10s" },
-  { left: "15%", delay: "2.0s", duration: "7s" },
-  { left: "58%", delay: "1.5s", duration: "9s" },
-  { left: "96%", delay: "0.3s", duration: "12s" },
-];
-
 export default function Footer() {
   const [email, setEmail] = useState("");
   const [subscribed, setSubscribed] = useState(false);
@@ -287,19 +263,7 @@ export default function Footer() {
       </div>
 
       <div className="footer-glass-overlay" />
-      <div className="footer-particles">
-        {PARTICLES.map((p, i) => (
-          <div
-            key={i}
-            className="footer-particle"
-            style={{
-              left: p.left,
-              animationDelay: p.delay,
-              animationDuration: p.duration,
-            }}
-          />
-        ))}
-      </div>
+      {/* Particles removed — were display:none, no need to render 20 divs */}
 
       <div className="footer-gold-line">
         <div className="footer-gold-shine" />
@@ -330,7 +294,7 @@ export default function Footer() {
             <span className="footer-description-glow">EST. 2026</span>
           </p>
           <div className="footer-social">
-            {socialLinks.map((social, index) => (
+            {socialLinks.map((social) => (
               <a
                 key={social.name}
                 href={social.href}
@@ -338,10 +302,7 @@ export default function Footer() {
                 rel="noopener noreferrer"
                 className="footer-social-link"
                 aria-label={social.name}
-                style={{
-                  animationDelay: `${index * 0.05}s`,
-                  background: social.gradient,
-                }}
+                style={{ background: social.gradient }}
               >
                 <span className="footer-social-icon">{social.icon}</span>
                 <div className="footer-social-ripple" />
@@ -413,12 +374,8 @@ export default function Footer() {
                   className={`footer-links-list ${activeCategory === category.id ? "active" : ""}`}
                 >
                   {footerLinks[category.id as keyof typeof footerLinks].map(
-                    (link, idx) => (
-                      <li
-                        key={link.name}
-                        className="footer-link-item"
-                        style={{ animationDelay: `${idx * 0.03}s` }}
-                      >
+                    (link) => (
+                      <li key={link.name} className="footer-link-item">
                         <Link href={link.href} className="footer-link">
                           <span className="footer-link-icon-wrapper">
                             <span className="footer-link-icon">

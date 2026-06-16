@@ -39,7 +39,11 @@
   font-family: "Goldman", system-ui, sans-serif;
 }
 
-/* ── Fine grid texture - Sky Blue tint ── */
+/* ── Fine grid texture - Sky Blue tint ──
+   JANK FIX: Removed infinite gfaqGridShift animation.
+   Animating transform on a full-viewport background element
+   forces GPU composite layer repaint every frame during scroll.
+   Static grid = zero CPU cost. ── */
 .gfaq-grid {
   position: absolute;
   inset: 0;
@@ -47,18 +51,9 @@
     linear-gradient(rgba(14, 165, 233, 0.04) 1px, transparent 1px),
     linear-gradient(90deg, rgba(14, 165, 233, 0.04) 1px, transparent 1px);
   background-size: 48px 48px;
-  animation: gfaqGridShift 20s linear infinite;
+  /* NO animation — static grid, zero repaint cost */
   pointer-events: none;
   z-index: 0;
-}
-
-@keyframes gfaqGridShift {
-  0% {
-    transform: translate(0, 0);
-  }
-  100% {
-    transform: translate(48px, 48px);
-  }
 }
 
 /* ── Ambient glow - Sky Blue ── */
@@ -209,21 +204,13 @@
 .gfaq-title em {
   font-style: normal;
   background: linear-gradient(90deg, #0f172a 0%, #0ea5e9 60%, #38bdf8 100%);
-  background-size: 200% auto;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
   position: relative;
-  animation: gfaq-shine 4s linear infinite;
-}
-
-@keyframes gfaq-shine {
-  0% {
-    background-position: 0% center;
-  }
-  100% {
-    background-position: 200% center;
-  }
+  /* JANK FIX: Removed infinite background-position animation.
+     Animating background-position on text with background-clip
+     triggers repaint on every frame. Static gradient = zero cost. */
 }
 
 .gfaq-title em::after {
@@ -268,10 +255,29 @@
   border: 1px solid #e8edf5;
   border-radius: 16px;
   overflow: visible;
-  transition: all 0.35s cubic-bezier(0.23, 1, 0.32, 1);
+  transition:
+    transform 0.3s cubic-bezier(0.23, 1, 0.32, 1),
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
   cursor: pointer;
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
-  animation: gfaqFadeUp 0.5s ease both;
+  /* JANK FIX: Removed always-on gfaqFadeUp animation.
+     Unconditional CSS animations on 8+ items fire every
+     page visit regardless of viewport visibility, wasting
+     frames. IntersectionObserver in TSX handles this instead. */
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+/* Visible state — toggled by IntersectionObserver in TSX */
+.gfaq-item.gfaq-visible {
+  opacity: 1;
+  transform: translateY(0);
+  transition:
+    opacity 0.4s ease,
+    transform 0.4s ease,
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
 }
 
 /* ── Left accent bar - Black + Sky Blue ── */
@@ -318,6 +324,8 @@
     0 0 0 1px rgba(14, 165, 233, 0.08),
     0 8px 30px rgba(14, 165, 233, 0.1);
   transform: translateY(-2px);
+  /* will-change only on hover — not always-on */
+  will-change: transform;
 }
 
 .gfaq-item:hover::before,
@@ -333,48 +341,7 @@
     0 12px 40px rgba(14, 165, 233, 0.12);
 }
 
-/* ── Entrance animations ── */
-@keyframes gfaqFadeUp {
-  from {
-    opacity: 0;
-    transform: translateY(24px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.gfaq-item:nth-child(1) {
-  animation-delay: 0.05s;
-}
-.gfaq-item:nth-child(2) {
-  animation-delay: 0.1s;
-}
-.gfaq-item:nth-child(3) {
-  animation-delay: 0.15s;
-}
-.gfaq-item:nth-child(4) {
-  animation-delay: 0.2s;
-}
-.gfaq-item:nth-child(5) {
-  animation-delay: 0.25s;
-}
-.gfaq-item:nth-child(6) {
-  animation-delay: 0.3s;
-}
-.gfaq-item:nth-child(7) {
-  animation-delay: 0.35s;
-}
-.gfaq-item:nth-child(8) {
-  animation-delay: 0.4s;
-}
-.gfaq-item:nth-child(9) {
-  animation-delay: 0.45s;
-}
-.gfaq-item:nth-child(10) {
-  animation-delay: 0.5s;
-}
+/* ── Entrance animation — triggered by IntersectionObserver in TSX ── */
 
 /* ═══════════════════════════════════════════════════════
    QUESTION BUTTON — Icon always on the RIGHT
@@ -962,15 +929,15 @@
 /* ── Reduced motion ── */
 @media (prefers-reduced-motion: reduce) {
   .gfaq-item,
+  .gfaq-item.gfaq-visible,
   .gfaq-cta-btn,
   .gfaq-icon-wrap,
   .gfaq-item::before,
   .gfaq-item::after {
     transition: none;
     animation: none;
-  }
-  .gfaq-grid {
-    animation: none;
+    opacity: 1;
+    transform: none;
   }
   .gfaq-item:hover {
     transform: none;

@@ -511,7 +511,7 @@ export default function PaymentSection({
 
                   {m.key === "bank" && isOpen && (
                     <ReceiptPaymentMethod
-                      method={"bank" as ManualMethod}
+                      method="bank"
                       orderNumber={orderNumber}
                       displayTotal={displayTotalPKR}
                       onPlaceOrder={handleManualPlaceOrder}
@@ -521,7 +521,7 @@ export default function PaymentSection({
 
                   {m.key === "jazzcash" && isOpen && (
                     <ReceiptPaymentMethod
-                      method={"jazzcash" as ManualMethod}
+                      method="jazzcash"
                       orderNumber={orderNumber}
                       displayTotal={displayTotalPKR}
                       onPlaceOrder={handleManualPlaceOrder}

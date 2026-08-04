@@ -196,7 +196,7 @@ export default function Checkout() {
     "shipping",
   );
   const [paymentMethod, setPaymentMethod] = useState<
-    "card" | "paypal" | "cod" | "bank"
+    "card" | "paypal" | "cod" | "bank" | "jazzcash"
   >("card");
 
   // ✅ Double-fire guard ref
@@ -531,7 +531,9 @@ export default function Checkout() {
               ? "PayPal"
               : paymentMethod === "bank"
                 ? "Bank Transfer (UBL)"
-                : "Cash on Delivery",
+                : paymentMethod === "jazzcash"
+                  ? "JazzCash"
+                  : "Cash on Delivery",
         currency: currency.code,
         amountsPreConverted: true,
         customerCountry:

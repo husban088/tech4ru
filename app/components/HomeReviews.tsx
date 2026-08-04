@@ -39,22 +39,46 @@ function isCacheValid(): boolean {
 }
 
 // ── Fetch function ──
+// FIX: hard 8s AbortController timeout on both Supabase calls, and every
+// failure path now console.error's the REAL reason instead of silently
+// returning [] — previously a hung request or RLS/network error was
+// completely invisible, which is why the skeleton looked "stuck" (it
+// wasn't actually stuck, it was just waiting forever with zero feedback).
 async function fetchReviewsFromDB(): Promise<HomeReview[]> {
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), 8000);
+
   try {
     const { data: reviewData, error } = await supabase
       .from("product_reviews")
       .select("*")
       .gte("rating", 4)
       .order("created_at", { ascending: false })
-      .limit(20);
+      .limit(20)
+      .abortSignal(controller.signal);
 
-    if (error || !reviewData || reviewData.length === 0) return [];
+    if (error) {
+      console.error("[HomeReviews] Supabase error fetching reviews:", error);
+      return [];
+    }
+    if (!reviewData || reviewData.length === 0) {
+      return [];
+    }
 
     const productIds = [...new Set(reviewData.map((r: any) => r.product_id))];
-    const { data: products } = await supabase
+    const { data: products, error: productsError } = await supabase
       .from("products")
       .select("id, name")
-      .in("id", productIds);
+      .in("id", productIds)
+      .abortSignal(controller.signal);
+
+    if (productsError) {
+      // Non-fatal — we can still show reviews with a fallback product name
+      console.error(
+        "[HomeReviews] Supabase error fetching product names:",
+        productsError,
+      );
+    }
 
     const productMap: Record<string, string> = {};
     (products || []).forEach((p: { id: string; name: string }) => {
@@ -69,8 +93,11 @@ async function fetchReviewsFromDB(): Promise<HomeReview[]> {
     cachedReviews = formatted;
     cacheTimestamp = Date.now();
     return formatted;
-  } catch {
+  } catch (err) {
+    console.error("[HomeReviews] fetch threw:", err);
     return [];
+  } finally {
+    clearTimeout(timeoutId);
   }
 }
 
@@ -198,7 +225,16 @@ export default function HomeReviews() {
       setLoading(true);
     }
 
-    const data = await fetchReviewsFromDB();
+    // FIX: outer 7s race — fetchReviewsFromDB already has its own 8s abort
+    // timeout, but this is a second, independent guarantee so a stuck
+    // skeleton is structurally impossible even if that internal timeout
+    // fails for any reason.
+    const data = await Promise.race([
+      fetchReviewsFromDB(),
+      new Promise<HomeReview[]>((resolve) =>
+        setTimeout(() => resolve([]), 7000),
+      ),
+    ]);
     if (mountedRef.current) {
       setReviews(data);
       setLoading(false);

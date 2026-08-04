@@ -34,6 +34,11 @@ interface CartItem {
   } | null;
 }
 
+// ✅ All checkout payment methods — card/paypal are auto-verified by the
+// gateway, cod is pay-on-delivery, bank/jazzcash are manual transfers that
+// come with a customer-uploaded receipt image.
+type PaymentMethod = "card" | "paypal" | "cod" | "bank" | "jazzcash";
+
 interface OrderData {
   orderNumber: string;
   form: {
@@ -47,7 +52,10 @@ interface OrderData {
     zip: string;
     state?: string;
   };
-  paymentMethod: "card" | "paypal";
+  paymentMethod: PaymentMethod;
+  // ✅ Present only for "bank" / "jazzcash" — the Cloudinary URL of the
+  // receipt screenshot the customer uploaded during checkout.
+  receiptUrl?: string;
   snapItems: CartItem[];
   snapSubtotal: number;
   snapCount: number;
@@ -61,6 +69,125 @@ interface OrderData {
 
 // ─── Owner Email Constant ───────────────────────────────────────────────────
 const OWNER_EMAIL = "info@tech4ru.com";
+
+// ─── Payment Method Display Info ──────────────────────────────────────────
+// ✅ Single source of truth for label / icon / short name across the toast,
+// the payment badge, and the summary footer — so every method (card, paypal,
+// cod, bank, jazzcash) renders consistently everywhere on this page.
+function getPaymentMethodInfo(method: PaymentMethod): {
+  label: string;
+  shortLabel: string;
+  icon: React.ReactNode;
+} {
+  switch (method) {
+    case "card":
+      return {
+        label: "Credit / Debit Card via Stripe",
+        shortLabel: "Stripe",
+        icon: (
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.5"
+            width="18"
+            height="18"
+          >
+            <rect x="2" y="4" width="20" height="16" rx="2" />
+            <path d="M2 8h20M7 16h2M13 16h4" />
+          </svg>
+        ),
+      };
+    case "paypal":
+      return {
+        label: "PayPal",
+        shortLabel: "PayPal",
+        icon: (
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.5"
+            width="18"
+            height="18"
+          >
+            <path d="M7 8h10M7 12h6M7 16h4" />
+            <rect x="3" y="4" width="18" height="16" rx="2" />
+          </svg>
+        ),
+      };
+    case "cod":
+      return {
+        label: "Cash on Delivery",
+        shortLabel: "Cash on Delivery",
+        icon: (
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.5"
+            width="18"
+            height="18"
+          >
+            <rect x="2" y="6" width="20" height="12" rx="2" />
+            <circle cx="12" cy="12" r="3" />
+          </svg>
+        ),
+      };
+    case "bank":
+      return {
+        label: "Bank Transfer",
+        shortLabel: "Bank Transfer",
+        icon: (
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.5"
+            width="18"
+            height="18"
+          >
+            <path d="M3 10l9-6 9 6" />
+            <path d="M4 10v9h16v-9" />
+            <path d="M9 21v-6h6v6" />
+            <path d="M2 21h20" />
+          </svg>
+        ),
+      };
+    case "jazzcash":
+      return {
+        label: "JazzCash",
+        shortLabel: "JazzCash",
+        icon: (
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.5"
+            width="18"
+            height="18"
+          >
+            <rect x="3" y="5" width="18" height="14" rx="3" />
+            <path d="M3 10h18" />
+            <circle cx="7.5" cy="15" r="1" />
+          </svg>
+        ),
+      };
+  }
+}
+
+// ✅ Methods that are auto-confirmed by a gateway (show green "Payment
+// Confirmed" badge). COD is confirmed-on-order, bank/jazzcash are
+// "Awaiting Verification" until the team checks the uploaded receipt.
+function getPaymentStatusInfo(method: PaymentMethod): {
+  label: string;
+  tone: "confirmed" | "pending";
+} {
+  if (method === "bank" || method === "jazzcash") {
+    return { label: "Awaiting Verification", tone: "pending" };
+  }
+  return { label: "Payment Confirmed", tone: "confirmed" };
+}
 
 // ─── Notification Badge ───────────────────────────────────────────────────────
 
@@ -147,7 +274,8 @@ interface OrderSuccessUIProps {
   stateName?: string;
   currencyCode?: string;
   orderNumber: string;
-  paymentMethod: "card" | "paypal";
+  paymentMethod: PaymentMethod;
+  receiptUrl?: string;
   items: CartItem[];
   subtotal: number;
   shipping: number;
@@ -169,7 +297,7 @@ function PaymentSuccessToast({
   paymentMethod,
   onDismiss,
 }: {
-  paymentMethod: "card" | "paypal";
+  paymentMethod: PaymentMethod;
   onDismiss: () => void;
 }) {
   const [visible, setVisible] = useState(false);
@@ -256,7 +384,11 @@ function PaymentSuccessToast({
             lineHeight: 1.2,
           }}
         >
-          Payment Successful! 🎉
+          {paymentMethod === "bank" || paymentMethod === "jazzcash"
+            ? "Order Placed! 🎉"
+            : paymentMethod === "cod"
+              ? "Order Confirmed! 🎉"
+              : "Payment Successful! 🎉"}
         </p>
         <p
           style={{
@@ -266,8 +398,11 @@ function PaymentSuccessToast({
             fontWeight: 400,
           }}
         >
-          Paid via {paymentMethod === "card" ? "Stripe" : "PayPal"} • Order
-          confirmed
+          {paymentMethod === "bank" || paymentMethod === "jazzcash"
+            ? `${getPaymentMethodInfo(paymentMethod).shortLabel} receipt received • Verifying`
+            : paymentMethod === "cod"
+              ? "Pay on delivery • Order confirmed"
+              : `Paid via ${getPaymentMethodInfo(paymentMethod).shortLabel} • Order confirmed`}
         </p>
       </div>
 
@@ -315,6 +450,7 @@ function OrderSuccessUI({
   currencyCode,
   orderNumber,
   paymentMethod,
+  receiptUrl,
   items,
   subtotal,
   shipping,
@@ -764,52 +900,128 @@ function OrderSuccessUI({
             </div>
             <div className="os-payment-badge-row">
               <div className="os-payment-badge">
-                {paymentMethod === "card" ? (
-                  <>
-                    <svg
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="1.5"
-                      width="18"
-                      height="18"
-                    >
-                      <rect x="2" y="4" width="20" height="16" rx="2" />
-                      <path d="M2 8h20M7 16h2M13 16h4" />
-                    </svg>
-                    Credit / Debit Card via Stripe
-                  </>
-                ) : (
-                  <>
-                    <svg
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="1.5"
-                      width="18"
-                      height="18"
-                    >
-                      <path d="M7 8h10M7 12h6M7 16h4" />
-                      <rect x="3" y="4" width="18" height="16" rx="2" />
-                    </svg>
-                    PayPal
-                  </>
-                )}
+                {getPaymentMethodInfo(paymentMethod).icon}
+                {getPaymentMethodInfo(paymentMethod).label}
               </div>
-              <div className="os-payment-confirmed">
+              {(() => {
+                const status = getPaymentStatusInfo(paymentMethod);
+                return (
+                  <div
+                    className={`os-payment-confirmed ${
+                      status.tone === "pending"
+                        ? "os-payment-confirmed--pending"
+                        : ""
+                    }`}
+                  >
+                    <svg
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      width="13"
+                      height="13"
+                    >
+                      {status.tone === "pending" ? (
+                        <>
+                          <circle cx="12" cy="12" r="10" />
+                          <path d="M12 7v5l3 3" />
+                        </>
+                      ) : (
+                        <polyline points="20 6 9 17 4 12" />
+                      )}
+                    </svg>
+                    {status.label}
+                  </div>
+                );
+              })()}
+            </div>
+
+            {/* ✅ COD note — no receipt, just a reminder */}
+            {paymentMethod === "cod" && (
+              <div className="os-cod-inline-note">
                 <svg
                   viewBox="0 0 24 24"
                   fill="none"
                   stroke="currentColor"
-                  strokeWidth="2"
-                  width="13"
-                  height="13"
+                  strokeWidth="1.5"
+                  width="15"
+                  height="15"
                 >
-                  <polyline points="20 6 9 17 4 12" />
+                  <circle cx="12" cy="12" r="10" />
+                  <path d="M12 8v4M12 16h.01" />
                 </svg>
-                Payment Confirmed
+                Please keep exact change ready for the delivery rider.
               </div>
-            </div>
+            )}
+
+            {/* ✅ Bank Transfer / JazzCash — show the receipt the customer
+                uploaded during checkout, plus a verification note */}
+            {(paymentMethod === "bank" || paymentMethod === "jazzcash") && (
+              <div className="os-receipt-block">
+                <div className="os-receipt-note">
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.5"
+                    width="15"
+                    height="15"
+                  >
+                    <circle cx="12" cy="12" r="10" />
+                    <path d="M12 8v4M12 16h.01" />
+                  </svg>
+                  Our team will verify your payment shortly. You'll get a
+                  confirmation via WhatsApp / email once approved.
+                </div>
+
+                {receiptUrl ? (
+                  <a
+                    href={receiptUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="os-receipt-thumb-link"
+                  >
+                    <img
+                      src={receiptUrl}
+                      alt="Uploaded payment receipt"
+                      className="os-receipt-thumb"
+                    />
+                    <span className="os-receipt-thumb-caption">
+                      <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="1.5"
+                        width="13"
+                        height="13"
+                      >
+                        <circle cx="11" cy="11" r="8" />
+                        <path d="M21 21l-4.35-4.35" />
+                      </svg>
+                      Uploaded Receipt — tap to view full size
+                    </span>
+                  </a>
+                ) : (
+                  <div className="os-receipt-missing">
+                    <svg
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="1.5"
+                      width="15"
+                      height="15"
+                    >
+                      <path d="M3 3l18 18" />
+                      <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" />
+                      <polyline points="17 8 12 3 7 8" />
+                      <line x1="12" y1="3" x2="12" y2="15" />
+                    </svg>
+                    Receipt not found — please send it on WhatsApp if you
+                    haven't already.
+                  </div>
+                )}
+              </div>
+            )}
           </div>
 
           {/* Timeline */}
@@ -996,8 +1208,12 @@ function OrderSuccessUI({
                 <rect x="3" y="11" width="18" height="11" rx="2" />
                 <path d="M7 11V7a5 5 0 0110 0v4" />
               </svg>
-              SSL secured • Paid via{" "}
-              {paymentMethod === "card" ? "Stripe" : "PayPal"}
+              SSL secured •{" "}
+              {paymentMethod === "cod"
+                ? "Cash on Delivery"
+                : paymentMethod === "bank" || paymentMethod === "jazzcash"
+                  ? `Paid via ${getPaymentMethodInfo(paymentMethod).shortLabel}`
+                  : `Paid via ${getPaymentMethodInfo(paymentMethod).shortLabel}`}
             </div>
           </div>
 
@@ -1233,6 +1449,7 @@ export default function OrderSuccessPage() {
       currencyCode={orderData.currencyCode}
       orderNumber={orderData.orderNumber}
       paymentMethod={orderData.paymentMethod}
+      receiptUrl={orderData.receiptUrl}
       items={orderData.snapItems}
       subtotal={orderData.snapSubtotal}
       shipping={0}

@@ -172,6 +172,13 @@ async function fetchFeaturedTabData(
     }
 
     if (error) {
+      // FIX: log the real Supabase error (RLS denial, bad table/column name,
+      // network block, etc.) — previously this was swallowed completely,
+      // which is why the actual root cause was invisible in console.
+      console.error(
+        `[FeaturedProducts] Supabase error (tab="${tab}", attempt=${attempt}):`,
+        error,
+      );
       // FIX: On error, check if abort (timeout) or real error
       const isAbort =
         error?.message?.includes("abort") || error?.name === "AbortError";
@@ -247,6 +254,12 @@ async function fetchFeaturedTabData(
     persistCacheToSession(tab, result);
     return result;
   } catch (err: any) {
+    // FIX: log unexpected/thrown errors too (e.g. supabase client
+    // misconfigured because env vars are undefined) — was silently caught.
+    console.error(
+      `[FeaturedProducts] fetch threw (tab="${tab}", attempt=${attempt}):`,
+      err,
+    );
     const isAbort =
       err?.name === "AbortError" || err?.message?.includes("abort");
     if (!isAbort && attempt < MAX_RETRIES) {
@@ -954,7 +967,22 @@ export default function FeaturedProducts() {
       }
 
       try {
-        const data = await fetchFeaturedTabData(tab);
+        // FIX: same hard 6s outer race as the mount effect, so switching
+        // tabs can never leave the skeleton spinning forever either.
+        const data = await Promise.race([
+          fetchFeaturedTabData(tab),
+          new Promise<CachedData>((resolve) =>
+            setTimeout(
+              () =>
+                resolve({
+                  products: [],
+                  variantsMap: {},
+                  variantImagesMap: {},
+                }),
+              6000,
+            ),
+          ),
+        ]);
         // ALWAYS update if we're still on this tab — even empty state
         if (activeTabRef.current === tab) {
           setProducts(data.products);
@@ -964,8 +992,12 @@ export default function FeaturedProducts() {
             setSwiperKey((prev) => prev + 1);
           }
         }
-      } catch {
-        // On error, do NOT clear products — keep whatever was showing
+      } catch (err) {
+        // FIX: log instead of silently swallowing
+        console.error(
+          `[FeaturedProducts] loadProductsForTab(${tab}) failed:`,
+          err,
+        );
       } finally {
         // ALWAYS clear loading so UI never hangs
         setIsLoading(false);
@@ -994,7 +1026,24 @@ export default function FeaturedProducts() {
 
     (async () => {
       try {
-        const data = await fetchFeaturedTabData(tab);
+        // FIX: hard 6s outer race so a hung/never-settling fetch (e.g. bad
+        // env vars, blocked network, CORS) can NEVER keep the skeleton up
+        // forever — this always wins even if fetchFeaturedTabData's own
+        // internal timeout logic fails for any reason.
+        const data = await Promise.race([
+          fetchFeaturedTabData(tab),
+          new Promise<CachedData>((resolve) =>
+            setTimeout(
+              () =>
+                resolve({
+                  products: [],
+                  variantsMap: {},
+                  variantImagesMap: {},
+                }),
+              6000,
+            ),
+          ),
+        ]);
         if (cancelled || activeTabRef.current !== tab) return;
         if (data.products.length > 0) {
           setProducts(data.products);
@@ -1002,8 +1051,10 @@ export default function FeaturedProducts() {
           setVariantImagesMap(data.variantImagesMap);
           setSwiperKey((prev) => prev + 1);
         }
-      } catch {
-        // keep whatever was already showing
+      } catch (err) {
+        // FIX: log so we can actually see WHY it failed instead of silently
+        // eating the error (this was the biggest blind spot before).
+        console.error("[FeaturedProducts] fetch failed:", err);
       } finally {
         if (!cancelled) setIsLoading(false);
       }

@@ -442,7 +442,7 @@ export async function sendOrderConfirmationEmail(
       </div>
       <div class="order-info-row">
         <span class="order-info-label">PAYMENT METHOD</span>
-        <span class="order-info-value">${paymentMethod === "card" ? "Credit/Debit Card" : paymentMethod === "paypal" ? "PayPal" : paymentMethod}</span>
+        <span class="order-info-value">${paymentMethod}</span>
       </div>
       <div class="order-info-row">
         <span class="order-info-label">SHIPPING ADDRESS</span>

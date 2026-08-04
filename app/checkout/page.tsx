@@ -187,13 +187,17 @@ export default function Checkout() {
   const [errors, setErrors] = useState<FormErrors>({});
   const [touched, setTouched] = useState<Record<string, boolean>>({});
 
-  // ✅ Toast aur redirecting state checkout page pe nahi chahiye
-  // Toast order-success page pe show hoga directly
+  // ✅ isRedirecting — order place hote hi TRUE ho jata hai, cart clear hone
+  // se pehle. Isse checkout page turant spinner dikhata hai instead of
+  // "cart empty" state jab tak /order-success pe navigate nahi ho jata.
+  const [isRedirecting, setIsRedirecting] = useState(false);
 
   const [checkoutStep, setCheckoutStep] = useState<"shipping" | "payment">(
     "shipping",
   );
-  const [paymentMethod, setPaymentMethod] = useState<"card" | "paypal">("card");
+  const [paymentMethod, setPaymentMethod] = useState<
+    "card" | "paypal" | "cod" | "bank"
+  >("card");
 
   // ✅ Double-fire guard ref
   const successCalledRef = useRef(false);
@@ -399,6 +403,10 @@ export default function Checkout() {
     if (successCalledRef.current) return;
     successCalledRef.current = true;
 
+    // ✅ STEP 0: Turant spinner dikhao — cart clear/navigate hone se pehle
+    // hi, taake "cart empty" wala UI kabhi ek pal ke liye bhi na dikhe.
+    setIsRedirecting(true);
+
     // ✅ STEP 1: Snapshot lo (cart clear hone se pehle)
     const snapItems = [...items];
     const snapSubtotal = getSubtotal();
@@ -517,7 +525,13 @@ export default function Checkout() {
         total: convertedTotal,
         shippingAddress,
         paymentMethod:
-          paymentMethod === "card" ? "Credit/Debit Card (Stripe)" : "PayPal",
+          paymentMethod === "card"
+            ? "Credit/Debit Card (Stripe)"
+            : paymentMethod === "paypal"
+              ? "PayPal"
+              : paymentMethod === "bank"
+                ? "Bank Transfer (UBL)"
+                : "Cash on Delivery",
         currency: currency.code,
         amountsPreConverted: true,
         customerCountry:
@@ -555,7 +569,40 @@ export default function Checkout() {
     console.error("Payment error:", error);
   };
 
-  // isRedirecting block removed — router.push handles redirect cleanly
+  // ✅ ORDER PLACING OVERLAY — order place hote hi turant yeh full-screen
+  // luxury loader dikhta hai jab tak router.push("/order-success") complete
+  // na ho jaye. Isse customer ko clear confirmation milta hai ke order
+  // process ho raha hai, koi blank/empty-cart flash nahi dikhta.
+  if (isRedirecting) {
+    return (
+      <div className="co-placing-overlay">
+        <div className="co-placing-card">
+          <p className="co-placing-eyebrow">
+            <span className="co-ey-line" />
+            Order #{orderNumber}
+            <span className="co-ey-line" />
+          </p>
+
+          <div className="co-placing-loader" aria-hidden="true">
+            <span className="co-placing-ring co-placing-ring--1" />
+            <span className="co-placing-ring co-placing-ring--2" />
+            <span className="co-placing-ring co-placing-ring--3" />
+            <span className="co-placing-dot" />
+          </div>
+
+          <h2 className="co-placing-title">Please Wait</h2>
+          <p className="co-placing-sub">
+            Your <em>order is being placed</em> — hang tight, this only takes a
+            moment.
+          </p>
+
+          <div className="co-placing-bar" aria-hidden="true">
+            <span className="co-placing-bar-fill" />
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   if (
     !isMounted ||
@@ -576,6 +623,9 @@ export default function Checkout() {
   // ============================================
   // EMPTY CART STATE
   // ============================================
+  // ✅ isRedirecting already caught above — this only renders for a
+  // genuinely empty cart (not mid-checkout-success), so it never
+  // flashes right after an order is placed.
   if (!loading && items.length === 0) {
     return (
       <div className="co-root">

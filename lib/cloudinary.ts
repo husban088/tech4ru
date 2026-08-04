@@ -2,19 +2,29 @@
 const CLOUD_NAME = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME!;
 const UPLOAD_PRESET = process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET!;
 const REVIEW_PRESET = process.env.NEXT_PUBLIC_CLOUDINARY_REVIEW_PRESET!;
+// ✅ Optional dedicated preset for payment receipts (Bank Transfer / JazzCash).
+// If you don't create a separate preset in Cloudinary, this safely falls back
+// to the review preset so uploads keep working either way.
+const RECEIPT_PRESET =
+  process.env.NEXT_PUBLIC_CLOUDINARY_RECEIPT_PRESET || REVIEW_PRESET;
 
 // ─────────────────────────────────────────────────────────────────
 // IMAGE UPLOAD (Existing)
 // ─────────────────────────────────────────────────────────────────
 export async function uploadToCloudinary(
   file: File,
-  type: "product" | "review" = "product",
+  type: "product" | "review" | "receipt" = "product",
 ): Promise<string> {
   const formData = new FormData();
   formData.append("file", file);
 
   // Use different preset based on type
-  const preset = type === "review" ? REVIEW_PRESET : UPLOAD_PRESET;
+  const preset =
+    type === "review"
+      ? REVIEW_PRESET
+      : type === "receipt"
+        ? RECEIPT_PRESET
+        : UPLOAD_PRESET;
   formData.append("upload_preset", preset);
 
   const res = await fetch(
@@ -47,6 +57,13 @@ export async function uploadToCloudinary(
 // ─────────────────────────────────────────────────────────────────
 export async function uploadReviewImage(file: File): Promise<string> {
   return uploadToCloudinary(file, "review");
+}
+
+// ─────────────────────────────────────────────────────────────────
+// PAYMENT RECEIPT UPLOAD (NEW - for Bank Transfer / JazzCash checkout)
+// ─────────────────────────────────────────────────────────────────
+export async function uploadReceiptImage(file: File): Promise<string> {
+  return uploadToCloudinary(file, "receipt");
 }
 
 // ─────────────────────────────────────────────────────────────────

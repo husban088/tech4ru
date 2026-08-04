@@ -59,6 +59,30 @@ const COUNTRY_NAME_TO_CODE: Record<string, string> = {
   PT: "PT",
 };
 
+// ── Raw payment-method key → human-readable label ─────────────────────────────
+// ✅ NEW: Central mapping so email + WhatsApp always show the correct label —
+// regardless of whether the frontend sends a raw key ("jazzcash") or an
+// already-formatted string ("Bank Transfer (UBL Bank)"). Previously the
+// checkout page's own ternary didn't know about "jazzcash" at all, so those
+// orders silently showed "Cash on Delivery". Resolving it here, once, fixes
+// email AND WhatsApp at the same time and can't drift out of sync again.
+const PAYMENT_METHOD_LABELS: Record<string, string> = {
+  card: "Credit/Debit Card (Stripe)",
+  paypal: "PayPal",
+  cod: "Cash on Delivery",
+  bank: "Bank Transfer (UBL Bank)",
+  jazzcash: "JazzCash",
+};
+
+function resolvePaymentMethodLabel(raw?: string): string {
+  if (!raw || !raw.trim()) return "N/A";
+  const key = raw.toLowerCase().trim();
+  // Known raw key (card/paypal/cod/bank/jazzcash) → proper label.
+  // Anything else (already a formatted string, or a future method we
+  // haven't mapped yet) is passed through as-is instead of being lost.
+  return PAYMENT_METHOD_LABELS[key] || raw;
+}
+
 // ── Server-side live rate cache ───────────────────────────────────────────────
 let _ratesCache: Record<string, number> | null = null;
 let _cacheTime = 0;
@@ -170,6 +194,10 @@ export async function POST(req: NextRequest) {
     const country = customerCountry || "Pakistan";
     const alreadyConverted = amountsPreConverted === true;
 
+    // ✅ NEW: Resolve payment method to a proper label ONCE — used
+    // consistently below for both emails AND the WhatsApp message.
+    const paymentMethodLabel = resolvePaymentMethodLabel(paymentMethod);
+
     // ✅ Live rates fetched here — one call for the whole request
     const currencyCfg = await getCurrencyConfig(currency, country);
 
@@ -182,7 +210,7 @@ export async function POST(req: NextRequest) {
     const customerPhone = phone || "";
 
     console.log(
-      `[${orderNumber}] Country: "${country}" | Currency: ${currencyCfg.code} (live rate: ${currencyCfg.rate}) | PreConverted: ${alreadyConverted}`,
+      `[${orderNumber}] Country: "${country}" | Currency: ${currencyCfg.code} (live rate: ${currencyCfg.rate}) | PreConverted: ${alreadyConverted} | Payment: ${paymentMethodLabel}`,
     );
     console.log(`Total: ${totalAmountNum} → ${formattedTotal}`);
 
@@ -237,6 +265,7 @@ export async function POST(req: NextRequest) {
           waItems,
           country,
           formattedItems, // ✅ pre-formatted item prices — no double conversion
+          paymentMethodLabel, // ✅ NEW — payment method now shown in WhatsApp message
         );
         console.log(
           whatsappSent
@@ -259,7 +288,7 @@ export async function POST(req: NextRequest) {
         items,
         totalAmountNum,
         shippingAddress || "",
-        paymentMethod || "N/A",
+        paymentMethodLabel, // ✅ resolved label, not raw value
         currencyCfg.code,
         formattedTotal,
         formattedItems,
@@ -284,7 +313,7 @@ export async function POST(req: NextRequest) {
         items,
         totalAmountNum,
         shippingAddress || "",
-        paymentMethod || "N/A",
+        paymentMethodLabel, // ✅ resolved label, not raw value
         currencyCfg.code,
         formattedTotal,
         formattedItems,
@@ -299,6 +328,7 @@ export async function POST(req: NextRequest) {
       currency: currencyCfg.code,
       liveRate: currencyCfg.rate,
       formattedTotal,
+      paymentMethod: paymentMethodLabel,
       whatsapp: whatsappSent ? "sent" : "failed",
       customerEmail: customerEmailSent ? "sent" : "failed",
       ownerEmail: ownerEmailSent ? "sent" : "failed",

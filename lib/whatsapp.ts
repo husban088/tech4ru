@@ -838,6 +838,9 @@ export function buildConfirmedWhatsApp(
     quantity: number;
     formattedPrice: string;
   }>,
+  // ✅ NEW: Payment method (e.g. "Cash on Delivery", "JazzCash", "Bank
+  // Transfer (UBL Bank)") — shown in the ORDER DETAILS block below.
+  paymentMethod?: string,
 ): string {
   const c = country || "Pakistan";
 
@@ -884,6 +887,7 @@ Thank you for choosing Tech4U. Your order has been confirmed.
 ━━━━━━━━━━━━━━━━━━━━━━
 🔢 Order Number: *${orderNumber}*
 📊 Status:       *CONFIRMED* ✅
+💳 Payment:      *${paymentMethod || "N/A"}*
 💰 Total Amount: *${displayTotal}*
 ━━━━━━━━━━━━━━━━━━━━━━
 ${itemLines}We'll notify you here on WhatsApp when your order is shipped.
@@ -921,6 +925,8 @@ export async function sendConfirmedWhatsApp(
     quantity: number;
     formattedPrice: string;
   }>,
+  // ✅ NEW: Payment method — shown in the WhatsApp message now
+  paymentMethod?: string,
 ): Promise<boolean> {
   // ✅ Fetch live rates before building message
   await warmUpRates();
@@ -931,6 +937,7 @@ export async function sendConfirmedWhatsApp(
     items,
     country,
     formattedItems, // ✅ pass through
+    paymentMethod, // ✅ pass through
   );
   return sendImageThenText(
     phoneNumber,

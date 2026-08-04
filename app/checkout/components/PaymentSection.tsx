@@ -5,6 +5,7 @@ import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import StripePayment from "./StripePayment";
 import PayPalPayment from "./PayPalPayment";
+import ReceiptPaymentMethod from "@/app/components/ReceiptPaymentMethod";
 import "./PaymentSection.css";
 import { useCurrency } from "@/app/context/CurrencyContext";
 
@@ -27,6 +28,8 @@ interface FormData {
   expiry: string;
   cvv: string;
 }
+
+export type PaymentMethodKey = "card" | "paypal" | "cod" | "bank" | "jazzcash";
 
 interface PaymentSectionProps {
   form?: {
@@ -57,9 +60,9 @@ interface PaymentSectionProps {
   subtotal: number;
   shipping: number;
   total: number;
-  onPaymentSuccess: () => void;
+  onPaymentSuccess: (meta?: { receiptUrl?: string }) => void;
   onPaymentError: (error: string) => void;
-  onPaymentMethodChange?: (method: "card" | "paypal") => void;
+  onPaymentMethodChange?: (method: PaymentMethodKey) => void;
 }
 
 // ── Currencies Stripe supports (lowercase) ────────────────────────────────────
@@ -78,30 +81,17 @@ const STRIPE_SUPPORTED = new Set([
   "chf",
 ]);
 
-// ─────────────────────────────────────────────────────────────────────────────
-// getStripeReady — uses LIVE rate from CurrencyContext (no hardcoded rates!)
-// CurrencyContext fetches live rates and updates currency.rate automatically.
-// Input:  detectedCurrencyCode e.g. "USD", "PKR", "GBP" + live rate from context
-// Output: { stripeCurrency: "usd", pkrRate: <live rate> }
-// PKR → always USD (Stripe nahi karta PKR)
-// Unknown → USD fallback
-// ─────────────────────────────────────────────────────────────────────────────
 function getStripeReady(
   detectedCode: string,
-  liveRate: number, // ✅ comes from currency.rate (already live from CurrencyContext)
+  liveRate: number,
 ): {
   stripeCurrency: string;
   pkrRate: number;
 } {
   const upper = (detectedCode || "USD").toUpperCase();
-
-  // PKR → USD (Stripe doesn't support PKR)
-  // For PKR users: CurrencyContext sets rate=1 (base), so we need USD rate
-  // But CurrencyContext also has all currencies — if user is PKR, we rely on fallback
   const targetUpper = upper === "PKR" ? "USD" : upper;
   const stripeCurrency = targetUpper.toLowerCase();
 
-  // If Stripe doesn't support this currency → fallback to USD
   if (!STRIPE_SUPPORTED.has(stripeCurrency)) {
     return {
       stripeCurrency: "usd",
@@ -109,22 +99,106 @@ function getStripeReady(
     };
   }
 
-  // ✅ For non-PKR currencies: liveRate IS the correct PKR→X rate from CurrencyContext
-  // For PKR users: currency.rate=1 (base), liveRate=1 → use safe USD fallback
-  // This fallback only fires for PKR users; all other users get live rate
   const pkrRate =
-    upper === "PKR" || liveRate <= 0 || liveRate === 1
-      ? 0.003584 // PKR user pays in USD — safe fallback (CurrencyContext doesn't give us USD rate for PKR users here)
-      : liveRate; // ✅ Live rate for all other currencies
+    upper === "PKR" || liveRate <= 0 || liveRate === 1 ? 0.003584 : liveRate;
 
   return { stripeCurrency, pkrRate };
 }
 
-// ── Convert PKR to Stripe amount (already in float, e.g. 13.55) ──────────────
 function convertPKRtoFloat(pkrAmount: number, pkrRate: number): number {
   const raw = pkrAmount * pkrRate;
-  return Math.max(0.5, parseFloat(raw.toFixed(2))); // minimum $0.50 safety
+  return Math.max(0.5, parseFloat(raw.toFixed(2)));
 }
+
+// ── Icons for the accordion headers ───────────────────────────────────────────
+const CardIcon = () => (
+  <svg
+    width="19"
+    height="19"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="1.5"
+  >
+    <rect x="2" y="4" width="20" height="16" rx="2" />
+    <path d="M2 8h20" />
+    <circle cx="7" cy="16" r="1" />
+    <circle cx="17" cy="16" r="1" />
+  </svg>
+);
+
+const PayPalIcon = () => (
+  <svg
+    width="19"
+    height="19"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="1.5"
+  >
+    <path d="M7 8h10M7 12h6M7 16h4" />
+    <rect x="3" y="4" width="18" height="16" rx="2" />
+  </svg>
+);
+
+const CashIcon = () => (
+  <svg
+    width="19"
+    height="19"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="1.5"
+  >
+    <rect x="2" y="6" width="20" height="12" rx="2" />
+    <circle cx="12" cy="12" r="3" />
+    <path d="M6 6v0M18 18v0" />
+  </svg>
+);
+
+const BankIcon = () => (
+  <svg
+    width="19"
+    height="19"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="1.5"
+  >
+    <path d="M3 10l9-6 9 6" />
+    <path d="M4 10v9h16v-9" />
+    <path d="M9 21v-6h6v6" />
+    <path d="M2 21h20" />
+  </svg>
+);
+
+const JazzCashIcon = () => (
+  <svg
+    width="19"
+    height="19"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="1.5"
+  >
+    <rect x="3" y="5" width="18" height="14" rx="3" />
+    <path d="M3 10h18" />
+    <circle cx="7.5" cy="15" r="1" />
+  </svg>
+);
+
+const ChevronIcon = () => (
+  <svg
+    width="15"
+    height="15"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2.2"
+  >
+    <polyline points="6 9 12 15 18 9" />
+  </svg>
+);
 
 export default function PaymentSection({
   totalAmount,
@@ -143,58 +217,46 @@ export default function PaymentSection({
   focused = null,
   setFocused = () => {},
 }: PaymentSectionProps) {
-  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<
-    "card" | "paypal"
-  >("card");
+  const [activeMethod, setActiveMethod] = useState<PaymentMethodKey>("card");
   const [clientSecret, setClientSecret] = useState<string | null>(null);
   const [isLoadingStripe, setIsLoadingStripe] = useState(false);
+  const [isPlacingManualOrder, setIsPlacingManualOrder] = useState(false);
 
   const successCalledRef = useRef(false);
 
   const { formatPrice, currency: detectedCurrency } = useCurrency();
 
-  // ✅ LIVE RATE from CurrencyContext — automatically updated every 6h
-  // currency.rate = 1 PKR → X foreign (e.g. 0.003584 for USD)
+  // ✅ Manual-payment methods (COD / Bank Transfer / JazzCash) only make sense
+  // for local Pakistani orders, so they only appear when the storefront has
+  // detected the visitor is browsing in PKR.
+  const isPakistan = (detectedCurrency?.code || "").toUpperCase() === "PKR";
+
   const liveRate = detectedCurrency?.rate ?? 0.003584;
 
-  // ✅ SINGLE SOURCE OF TRUTH — ek jagah se currency + rate dono niklo
   const { stripeCurrency, pkrRate } = getStripeReady(
     detectedCurrency?.code || "USD",
-    liveRate, // ✅ live rate passed in — no hardcoded rates
+    liveRate,
   );
 
-  // ✅ convertedTotal — PKR amount → foreign currency float (e.g. 3820 PKR → 13.75 USD)
   const convertedTotal = convertPKRtoFloat(totalAmount, pkrRate);
 
-  console.log(
-    `💱 Currency: ${detectedCurrency?.code || "USD"} → Stripe: ${stripeCurrency.toUpperCase()} | PKR ${totalAmount} → ${convertedTotal} ${stripeCurrency.toUpperCase()}`,
-  );
-
-  const handleMethodChange = (method: "card" | "paypal") => {
-    setSelectedPaymentMethod(method);
+  const handleMethodChange = (method: PaymentMethodKey) => {
+    setActiveMethod((prev) => (prev === method ? prev : method));
     if (onPaymentMethodChange) onPaymentMethodChange(method);
   };
 
   // ✅ Create Stripe PaymentIntent when card selected
   useEffect(() => {
-    if (
-      selectedPaymentMethod === "card" &&
-      convertedTotal > 0 &&
-      !clientSecret
-    ) {
+    if (activeMethod === "card" && convertedTotal > 0 && !clientSecret) {
       const createPaymentIntent = async () => {
         setIsLoadingStripe(true);
         try {
-          console.log(
-            `📤 Sending to Stripe: amount=${convertedTotal} currency=${stripeCurrency} order=${orderNumber}`,
-          );
-
           const response = await fetch("/api/create-payment-intent", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
-              amount: convertedTotal, // ✅ correct float amount
-              currency: stripeCurrency, // ✅ correct stripe currency code
+              amount: convertedTotal,
+              currency: stripeCurrency,
               metadata: {
                 orderNumber,
                 customerEmail: formData?.email || "",
@@ -210,7 +272,6 @@ export default function PaymentSection({
           const data = await response.json();
 
           if (data.clientSecret) {
-            console.log(`✅ PaymentIntent ready: ${data.paymentIntentId}`);
             setClientSecret(data.clientSecret);
           } else {
             console.error("❌ PaymentIntent failed:", data.error);
@@ -229,7 +290,7 @@ export default function PaymentSection({
       createPaymentIntent();
     }
   }, [
-    selectedPaymentMethod,
+    activeMethod,
     convertedTotal,
     stripeCurrency,
     orderNumber,
@@ -240,11 +301,20 @@ export default function PaymentSection({
     onPaymentError,
   ]);
 
-  // ✅ Payment success — foran parent call, koi delay nahi
-  const handlePaymentSuccess = () => {
+  const handlePaymentSuccess = (meta?: { receiptUrl?: string }) => {
     if (successCalledRef.current) return;
     successCalledRef.current = true;
-    onPaymentSuccess();
+    onPaymentSuccess(meta);
+  };
+
+  const handleCodPlaceOrder = () => {
+    setIsPlacingManualOrder(true);
+    handlePaymentSuccess();
+  };
+
+  const handleManualPlaceOrder = (receiptUrl: string) => {
+    setIsPlacingManualOrder(true);
+    handlePaymentSuccess({ receiptUrl });
   };
 
   const appearance = {
@@ -257,109 +327,213 @@ export default function PaymentSection({
     },
   };
 
+  const methods: {
+    key: PaymentMethodKey;
+    label: string;
+    sublabel: string;
+    icon: React.ReactNode;
+  }[] = [
+    {
+      key: "card",
+      label: "Credit / Debit Card",
+      sublabel: "Visa, Mastercard & more",
+      icon: <CardIcon />,
+    },
+    {
+      key: "paypal",
+      label: "PayPal",
+      sublabel: "Pay securely with PayPal",
+      icon: <PayPalIcon />,
+    },
+    ...(isPakistan
+      ? ([
+          {
+            key: "cod",
+            label: "Cash on Delivery",
+            sublabel: "Pay when your order arrives",
+            icon: <CashIcon />,
+          },
+          {
+            key: "bank",
+            label: "Bank Transfer",
+            sublabel: "UBL Bank direct transfer",
+            icon: <BankIcon />,
+          },
+          {
+            key: "jazzcash",
+            label: "JazzCash",
+            sublabel: "Pay via JazzCash account",
+            icon: <JazzCashIcon />,
+          },
+        ] as const)
+      : []),
+  ];
+
+  const displayTotalPKR = `Rs ${totalAmount.toLocaleString("en-PK")}`;
+
   return (
     <div className="ps-payment-section">
       <h2 className="ps-section-title">
         <em>02.</em> Payment Details
       </h2>
 
-      {/* Payment method selector */}
-      <div className="ps-payment-method-selector">
-        <button
-          className={`ps-method-btn ${
-            selectedPaymentMethod === "card" ? "ps-method-btn--active" : ""
-          }`}
-          onClick={() => handleMethodChange("card")}
-          type="button"
-        >
-          <svg
-            width="20"
-            height="20"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="1.5"
-          >
-            <rect x="2" y="4" width="20" height="16" rx="2" />
-            <path d="M2 8h20" />
-            <circle cx="7" cy="16" r="1" />
-            <circle cx="17" cy="16" r="1" />
-          </svg>
-          Credit / Debit Card
-        </button>
-        <button
-          className={`ps-method-btn ${
-            selectedPaymentMethod === "paypal" ? "ps-method-btn--active" : ""
-          }`}
-          onClick={() => handleMethodChange("paypal")}
-          type="button"
-        >
-          <svg
-            width="20"
-            height="20"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="1.5"
-          >
-            <path d="M7 8h10M7 12h6M7 16h4" />
-            <rect x="3" y="4" width="18" height="16" rx="2" />
-          </svg>
-          PayPal
-        </button>
-      </div>
-
-      {selectedPaymentMethod === "card" && (
-        <div className="ps-stripe-container">
-          {clientSecret ? (
-            <Elements
-              stripe={stripePromise}
-              options={{ clientSecret, appearance }}
+      {/* Accordion method selector */}
+      <div className="ps-accordion">
+        {methods.map((m) => {
+          const isOpen = activeMethod === m.key;
+          return (
+            <div
+              key={m.key}
+              className={`ps-accordion-item ${isOpen ? "ps-accordion-item--open" : ""}`}
             >
-              <StripePayment
-                amount={convertedTotal}
-                currency={stripeCurrency}
-                orderNumber={orderNumber}
-                onSuccess={handlePaymentSuccess}
-                onError={onPaymentError}
-                formatPrice={formatPrice}
-                totalAmountPKR={totalAmount}
-                customerName={
-                  formData
-                    ? `${formData.firstName} ${formData.lastName}`.trim()
-                    : ""
-                }
-                customerEmail={formData?.email || ""}
-              />
-            </Elements>
-          ) : isLoadingStripe ? (
-            <div className="ps-loading">
-              <div className="co-spinner" />
-              <span>Initializing secure payment...</span>
-            </div>
-          ) : (
-            <div className="ps-loading">
-              <div className="co-spinner" />
-              <span>Loading payment form...</span>
-            </div>
-          )}
-        </div>
-      )}
+              <button
+                type="button"
+                className="ps-accordion-header"
+                onClick={() => handleMethodChange(m.key)}
+                aria-expanded={isOpen}
+              >
+                <span className="ps-accordion-header-left">
+                  <span className="ps-accordion-icon">{m.icon}</span>
+                  <span className="ps-accordion-text">
+                    <span className="ps-accordion-label">{m.label}</span>
+                    <span className="ps-accordion-sublabel">{m.sublabel}</span>
+                  </span>
+                </span>
+                <span className="ps-accordion-chevron">
+                  <ChevronIcon />
+                </span>
+              </button>
 
-      {selectedPaymentMethod === "paypal" && (
-        <div className="ps-paypal-container">
-          <PayPalPayment
-            amount={totalAmount}
-            orderNumber={orderNumber}
-            formData={formData}
-            subtotal={subtotal}
-            shipping={shipping}
-            total={total}
-            onSuccess={handlePaymentSuccess}
-            onError={onPaymentError}
-          />
-        </div>
-      )}
+              <div className="ps-accordion-panel">
+                <div className="ps-accordion-panel-inner">
+                  {m.key === "card" && isOpen && (
+                    <div className="ps-stripe-container">
+                      {clientSecret ? (
+                        <Elements
+                          stripe={stripePromise}
+                          options={{ clientSecret, appearance }}
+                        >
+                          <StripePayment
+                            amount={convertedTotal}
+                            currency={stripeCurrency}
+                            orderNumber={orderNumber}
+                            onSuccess={() => handlePaymentSuccess()}
+                            onError={onPaymentError}
+                            formatPrice={formatPrice}
+                            totalAmountPKR={totalAmount}
+                            customerName={
+                              formData
+                                ? `${formData.firstName} ${formData.lastName}`.trim()
+                                : ""
+                            }
+                            customerEmail={formData?.email || ""}
+                          />
+                        </Elements>
+                      ) : (
+                        <div className="ps-loading">
+                          <div className="co-spinner" />
+                          <span>
+                            {isLoadingStripe
+                              ? "Initializing secure payment..."
+                              : "Loading payment form..."}
+                          </span>
+                        </div>
+                      )}
+                    </div>
+                  )}
+
+                  {m.key === "paypal" && isOpen && (
+                    <div className="ps-paypal-container">
+                      <PayPalPayment
+                        amount={totalAmount}
+                        orderNumber={orderNumber}
+                        formData={formData}
+                        subtotal={subtotal}
+                        shipping={shipping}
+                        total={total}
+                        onSuccess={() => handlePaymentSuccess()}
+                        onError={onPaymentError}
+                      />
+                    </div>
+                  )}
+
+                  {m.key === "cod" && isOpen && (
+                    <div className="ps-cod-container">
+                      <div className="ps-manual-card">
+                        <div className="ps-manual-card-header">
+                          <span className="ps-manual-badge">
+                            Cash on Delivery
+                          </span>
+                          <span className="ps-manual-amount">
+                            {displayTotalPKR}
+                          </span>
+                        </div>
+                        <p className="ps-manual-instructions">
+                          Order deliver hone par cash mein payment karein.
+                          Hamari delivery team aapke diye gaye address par order
+                          pohcha degi — us waqt cash payment kar dein.
+                        </p>
+                        <div className="ps-cod-note">
+                          <svg
+                            width="16"
+                            height="16"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="1.5"
+                          >
+                            <circle cx="12" cy="12" r="10" />
+                            <path d="M12 8v4M12 16h.01" />
+                          </svg>
+                          <span>
+                            Please keep exact change ready if possible.
+                          </span>
+                        </div>
+                      </div>
+
+                      <button
+                        type="button"
+                        className="ps-manual-place-btn"
+                        onClick={handleCodPlaceOrder}
+                        disabled={isPlacingManualOrder}
+                      >
+                        {isPlacingManualOrder ? (
+                          <span
+                            className="co-spinner"
+                            style={{ width: 16, height: 16 }}
+                          />
+                        ) : (
+                          "Place Order — Cash on Delivery"
+                        )}
+                      </button>
+                    </div>
+                  )}
+
+                  {m.key === "bank" && isOpen && (
+                    <ReceiptPaymentMethod
+                      method={"bank" as ManualMethod}
+                      orderNumber={orderNumber}
+                      displayTotal={displayTotalPKR}
+                      onPlaceOrder={handleManualPlaceOrder}
+                      onError={onPaymentError}
+                    />
+                  )}
+
+                  {m.key === "jazzcash" && isOpen && (
+                    <ReceiptPaymentMethod
+                      method={"jazzcash" as ManualMethod}
+                      orderNumber={orderNumber}
+                      displayTotal={displayTotalPKR}
+                      onPlaceOrder={handleManualPlaceOrder}
+                      onError={onPaymentError}
+                    />
+                  )}
+                </div>
+              </div>
+            </div>
+          );
+        })}
+      </div>
 
       <div className="ps-secure-note">
         <svg
@@ -373,10 +547,7 @@ export default function PaymentSection({
           <rect x="3" y="11" width="18" height="11" rx="2" />
           <path d="M7 11V7a5 5 0 0110 0v4" />
         </svg>
-        <span>
-          SSL secured checkout • Your payment info is encrypted
-          {selectedPaymentMethod === "card" ? " by Stripe" : " by PayPal"}
-        </span>
+        <span>SSL secured checkout • Your information is always encrypted</span>
       </div>
     </div>
   );

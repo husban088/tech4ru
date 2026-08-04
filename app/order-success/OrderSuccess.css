@@ -534,6 +534,103 @@
   border-radius: 20px;
   padding: 4px 12px;
 }
+/* ✅ Bank Transfer / JazzCash — "Awaiting Verification" state (amber, not green) */
+.os-payment-confirmed--pending {
+  color: #b45309;
+  background: rgba(245, 158, 11, 0.1);
+  border: 1px solid rgba(245, 158, 11, 0.25);
+}
+
+/* ✅ COD inline reminder note */
+.os-cod-inline-note {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 12px;
+  padding: 10px 14px;
+  font-size: 0.82rem;
+  color: var(--os-ink-muted);
+  background: var(--os-cream);
+  border: 1px solid var(--os-border);
+  border-radius: 10px;
+}
+.os-cod-inline-note svg {
+  flex-shrink: 0;
+  color: var(--os-sky);
+}
+
+/* ✅ Bank Transfer / JazzCash — receipt block (note + uploaded image) */
+.os-receipt-block {
+  margin-top: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.os-receipt-note {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 0.82rem;
+  line-height: 1.5;
+  color: var(--os-ink-muted);
+  background: var(--os-cream);
+  border: 1px solid var(--os-border);
+  border-radius: 10px;
+  padding: 10px 14px;
+}
+.os-receipt-note svg {
+  flex-shrink: 0;
+  margin-top: 1px;
+  color: var(--os-sky);
+}
+.os-receipt-thumb-link {
+  display: inline-flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+  max-width: 220px;
+  text-decoration: none;
+  cursor: zoom-in;
+}
+.os-receipt-thumb {
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  border-radius: 12px;
+  border: 1px solid var(--os-border);
+  box-shadow: 0 4px 16px rgba(14, 165, 233, 0.12);
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+  background: var(--os-cream-2);
+}
+.os-receipt-thumb-link:hover .os-receipt-thumb {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(14, 165, 233, 0.22);
+}
+.os-receipt-thumb-caption {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--os-sky-dark);
+  letter-spacing: 0.02em;
+}
+.os-receipt-missing {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.82rem;
+  color: #b45309;
+  background: rgba(245, 158, 11, 0.08);
+  border: 1px solid rgba(245, 158, 11, 0.2);
+  border-radius: 10px;
+  padding: 10px 14px;
+}
+.os-receipt-missing svg {
+  flex-shrink: 0;
+}
 
 /* ── Timeline ── */
 .os-timeline {
@@ -999,6 +1096,35 @@
   .os-corner {
     width: 35px;
     height: 35px;
+  }
+  /* ✅ Payment badge + status wrap cleanly on narrow phones */
+  .os-payment-badge-row {
+    gap: 8px;
+  }
+  .os-payment-badge {
+    font-size: 0.82rem;
+  }
+  .os-payment-confirmed {
+    font-size: 0.7rem;
+    padding: 4px 10px;
+  }
+  /* ✅ Receipt thumbnail fills the card width on phones instead of a fixed
+     max-width, so it never looks cramped or overflows */
+  .os-receipt-thumb-link {
+    max-width: 100%;
+  }
+  .os-receipt-note,
+  .os-cod-inline-note,
+  .os-receipt-missing {
+    font-size: 0.78rem;
+    padding: 9px 12px;
+  }
+}
+
+@media (max-width: 400px) {
+  /* ✅ Very small phones — keep the receipt image from getting too tall */
+  .os-receipt-thumb {
+    aspect-ratio: 4 / 3;
   }
 }
 

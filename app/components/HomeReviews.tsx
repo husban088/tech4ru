@@ -225,20 +225,22 @@ export default function HomeReviews() {
       setLoading(true);
     }
 
-    // FIX: outer 7s race — fetchReviewsFromDB already has its own 8s abort
-    // timeout, but this is a second, independent guarantee so a stuck
-    // skeleton is structurally impossible even if that internal timeout
-    // fails for any reason.
-    const data = await Promise.race([
-      fetchReviewsFromDB(),
-      new Promise<HomeReview[]>((resolve) =>
-        setTimeout(() => resolve([]), 7000),
-      ),
-    ]);
-    if (mountedRef.current) {
-      setReviews(data);
-      setLoading(false);
-    }
+    // FIX: the real fetch is the single source of truth. Previously this
+    // raced against a 7s timer whose "[]" result won on slow first loads
+    // (cold connection, first visit, etc.) and permanently overwrote real
+    // reviews with an empty list — that's why the section only ever showed
+    // up after a manual reload. Now the fetch always applies its result
+    // whenever it resolves, and the watchdog below only hides the skeleton
+    // early without ever discarding real data.
+    const fetchPromise = fetchReviewsFromDB().then((data) => {
+      if (mountedRef.current) {
+        setReviews(data);
+        setLoading(false);
+      }
+    });
+    const watchdog = new Promise<void>((resolve) => setTimeout(resolve, 10000));
+    await Promise.race([fetchPromise, watchdog]);
+    if (mountedRef.current) setLoading(false);
   }, []);
 
   // ── Initial fetch ──

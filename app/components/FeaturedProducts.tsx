@@ -947,37 +947,38 @@ export default function FeaturedProducts() {
         setIsLoading(true);
       }
 
-      try {
-        const data = await Promise.race([
-          fetchFeaturedTabData(tab),
-          new Promise<CachedData>((resolve) =>
-            setTimeout(
-              () =>
-                resolve({
-                  products: [],
-                  variantsMap: {},
-                  variantImagesMap: {},
-                }),
-              6000,
-            ),
-          ),
-        ]);
-        if (activeTabRef.current === tab) {
-          setProducts(data.products);
-          setVariantsMap(data.variantsMap);
-          setVariantImagesMap(data.variantImagesMap);
+      // The real fetch is the single source of truth. It always applies its
+      // result whenever it resolves — even if it's slow (cold connection,
+      // first visit, etc.) — instead of being raced against a timer whose
+      // "empty" result used to win and permanently overwrite real data.
+      const fetchPromise = fetchFeaturedTabData(tab)
+        .then((data) => {
+          if (activeTabRef.current !== tab) return;
           if (data.products.length > 0) {
+            setProducts(data.products);
+            setVariantsMap(data.variantsMap);
+            setVariantImagesMap(data.variantImagesMap);
             setSwiperKey((prev) => prev + 1);
           }
-        }
-      } catch (err) {
-        console.error(
-          `[FeaturedProducts] loadProductsForTab(${tab}) failed:`,
-          err,
-        );
-      } finally {
-        setIsLoading(false);
-      }
+          setIsLoading(false);
+        })
+        .catch((err) => {
+          console.error(
+            `[FeaturedProducts] loadProductsForTab(${tab}) failed:`,
+            err,
+          );
+          if (activeTabRef.current === tab) setIsLoading(false);
+        });
+
+      // Safety net only: stops the skeleton from spinning forever if the
+      // fetch is taking unusually long. It never overwrites state with an
+      // empty result — fetchPromise above keeps running and will still
+      // apply the real data the moment it arrives, no reload needed.
+      const watchdog = new Promise<void>((resolve) =>
+        setTimeout(resolve, 10000),
+      );
+      await Promise.race([fetchPromise, watchdog]);
+      if (activeTabRef.current === tab) setIsLoading(false);
     },
     [],
   );
@@ -998,33 +999,30 @@ export default function FeaturedProducts() {
     }
 
     (async () => {
-      try {
-        const data = await Promise.race([
-          fetchFeaturedTabData(tab),
-          new Promise<CachedData>((resolve) =>
-            setTimeout(
-              () =>
-                resolve({
-                  products: [],
-                  variantsMap: {},
-                  variantImagesMap: {},
-                }),
-              6000,
-            ),
-          ),
-        ]);
-        if (cancelled || activeTabRef.current !== tab) return;
-        if (data.products.length > 0) {
-          setProducts(data.products);
-          setVariantsMap(data.variantsMap);
-          setVariantImagesMap(data.variantImagesMap);
-          setSwiperKey((prev) => prev + 1);
-        }
-      } catch (err) {
-        console.error("[FeaturedProducts] fetch failed:", err);
-      } finally {
-        if (!cancelled) setIsLoading(false);
-      }
+      // Same fix as loadProductsForTab: the real fetch always gets to apply
+      // its result whenever it finishes. A watchdog only hides the skeleton
+      // early on a slow connection — it never overwrites data with "empty".
+      const fetchPromise = fetchFeaturedTabData(tab)
+        .then((data) => {
+          if (cancelled || activeTabRef.current !== tab) return;
+          if (data.products.length > 0) {
+            setProducts(data.products);
+            setVariantsMap(data.variantsMap);
+            setVariantImagesMap(data.variantImagesMap);
+            setSwiperKey((prev) => prev + 1);
+          }
+          if (!cancelled) setIsLoading(false);
+        })
+        .catch((err) => {
+          console.error("[FeaturedProducts] fetch failed:", err);
+          if (!cancelled) setIsLoading(false);
+        });
+
+      const watchdog = new Promise<void>((resolve) =>
+        setTimeout(resolve, 10000),
+      );
+      await Promise.race([fetchPromise, watchdog]);
+      if (!cancelled && activeTabRef.current === tab) setIsLoading(false);
     })();
 
     ALL_TABS.filter((t) => t !== tab).forEach((otherTab) => {

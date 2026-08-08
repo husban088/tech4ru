@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Navigation, Pagination } from "swiper/modules";
 import { useLanguage } from "@/app/context/LanguageContext";
@@ -207,6 +207,26 @@ export default function TrustBadgesSection() {
   const mobileNextRef = useRef<HTMLButtonElement>(null);
   const isRTL = isRTLMode;
 
+  const badges = useMemo(
+    () =>
+      t.badges.map((badge) => ({
+        ...badge,
+        title:
+          lang === "en"
+            ? badge.titleEn
+            : lang === "ar"
+              ? badge.titleAr
+              : badge.titleDe,
+        desc:
+          lang === "en"
+            ? badge.descEn
+            : lang === "ar"
+              ? badge.descAr
+              : badge.descDe,
+      })),
+    [lang],
+  );
+
   // Scroll reveal animation
   useEffect(() => {
     const section = sectionRef.current;
@@ -223,11 +243,11 @@ export default function TrustBadgesSection() {
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
           const cards =
             entry.target.querySelectorAll<HTMLElement>(".tbs-card-inner");
-          cards.forEach((card) => {
-            if (entry.isIntersecting) card.classList.add("tbs-visible");
-          });
+          cards.forEach((card) => card.classList.add("tbs-visible"));
+          observer.unobserve(entry.target); // done — no need to keep watching
         });
       },
       { threshold: 0.1 },
@@ -272,6 +292,7 @@ export default function TrustBadgesSection() {
             ref={mobilePrevRef}
             className="tbs-nav-prev"
             aria-label="Previous"
+            onClick={() => swiperRef.current?.slidePrev()}
           >
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
               <polyline points={isRTL ? "9 18 15 12 9 6" : "15 18 9 12 15 6"} />
@@ -281,6 +302,7 @@ export default function TrustBadgesSection() {
             ref={mobileNextRef}
             className="tbs-nav-next"
             aria-label="Next"
+            onClick={() => swiperRef.current?.slideNext()}
           >
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
               <polyline points={isRTL ? "15 18 9 12 15 6" : "9 18 15 12 9 6"} />
@@ -330,6 +352,7 @@ export default function TrustBadgesSection() {
               nextEl: nextRef.current,
             }}
             onSwiper={(swiper) => {
+              swiperRef.current = swiper;
               if (
                 swiper.params.navigation &&
                 typeof swiper.params.navigation !== "boolean"
@@ -338,15 +361,6 @@ export default function TrustBadgesSection() {
                 swiper.params.navigation.nextEl = nextRef.current;
                 swiper.navigation.init();
                 swiper.navigation.update();
-              }
-              // Wire mobile nav buttons via refs
-              if (mobilePrevRef.current && mobileNextRef.current) {
-                mobilePrevRef.current.addEventListener("click", () =>
-                  swiper.slidePrev(),
-                );
-                mobileNextRef.current.addEventListener("click", () =>
-                  swiper.slideNext(),
-                );
               }
             }}
             pagination={{
@@ -374,9 +388,9 @@ export default function TrustBadgesSection() {
               },
             }}
           >
-            {t.badges.map((badge, idx) => {
+            {badges.map((badge, idx) => {
               return (
-                <SwiperSlide key={idx}>
+                <SwiperSlide key={badge.num}>
                   <div className="tbs-card">
                     <div
                       className="tbs-card-inner"
@@ -394,22 +408,10 @@ export default function TrustBadgesSection() {
                       </div>
 
                       {/* Title - Black with Red hover */}
-                      <h3 className="tbs-card-title">
-                        {lang === "en"
-                          ? badge.titleEn
-                          : lang === "ar"
-                            ? badge.titleAr
-                            : badge.titleDe}
-                      </h3>
+                      <h3 className="tbs-card-title">{badge.title}</h3>
 
                       {/* Description */}
-                      <p className="tbs-card-desc">
-                        {lang === "en"
-                          ? badge.descEn
-                          : lang === "ar"
-                            ? badge.descAr
-                            : badge.descDe}
-                      </p>
+                      <p className="tbs-card-desc">{badge.desc}</p>
 
                       {/* Decorative line - Red gradient */}
                       <div className="tbs-line tbs-line-gradient" />

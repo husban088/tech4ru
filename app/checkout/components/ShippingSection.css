@@ -85,9 +85,9 @@
 
 .ss-label {
   font-family: "Goldman", system-ui, sans-serif;
-  font-size: 0.58rem;
+  font-size: clamp(0.78rem, 1.6vw, 0.85rem);
   font-weight: 600;
-  letter-spacing: 0.25em;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
   color: #64748b;
   transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
@@ -98,7 +98,7 @@
 
 .ss-label-star {
   color: #0ea5e9;
-  font-size: 0.7rem;
+  font-size: 0.9rem;
 }
 
 .ss-field--focused .ss-label,
@@ -133,7 +133,7 @@
   color: #0f172a;
   padding: 12px;
   font-family: "Goldman", system-ui, sans-serif;
-  font-size: 0.8rem;
+  font-size: 0.95rem;
 }
 
 .ss-select option:checked {
@@ -191,11 +191,11 @@
   border: none !important;
   outline: none !important;
   box-shadow: none !important;
-  padding: 0.6rem 0;
+  padding: 0.65rem 0;
   font-family: "Goldman", system-ui, sans-serif;
-  font-size: clamp(0.75rem, 3vw, 0.8rem);
+  font-size: clamp(1rem, 2vw, 1.05rem);
   font-weight: 400;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.03em;
   color: #0f172a;
   caret-color: #0ea5e9;
 }
@@ -264,9 +264,9 @@
   align-items: center;
   gap: 6px;
   background: rgba(14, 165, 233, 0.08);
-  padding: 4px 10px;
+  padding: 5px 12px;
   border-radius: 8px;
-  font-size: 0.7rem;
+  font-size: 0.85rem;
   pointer-events: none;
   z-index: 1;
   transition: all 0.3s ease;
@@ -279,36 +279,37 @@
 
 @media (max-width: 480px) {
   .ss-phone-prefix {
-    padding: 3px 8px;
+    padding: 4px 10px;
     gap: 4px;
-    font-size: 0.6rem;
+    font-size: 0.75rem;
   }
 }
 
 .ss-phone-flag {
-  font-size: clamp(0.8rem, 3vw, 1rem);
+  font-size: clamp(0.95rem, 3vw, 1.1rem);
 }
 
 .ss-phone-code {
   color: #0ea5e9;
   font-family: monospace;
   font-weight: 600;
+  font-size: 0.9rem;
 }
 
 .ss-input-with-prefix {
-  padding-left: 100px !important;
+  padding-left: 110px !important;
 }
 
 @media (max-width: 480px) {
   .ss-input-with-prefix {
-    padding-left: 85px !important;
+    padding-left: 92px !important;
   }
 }
 
 /* Error & hint */
 .ss-error-text {
   font-family: "Goldman", system-ui, sans-serif;
-  font-size: 0.55rem;
+  font-size: 0.75rem;
   color: #ff8080;
   margin-top: 0.25rem;
   display: block;
@@ -330,7 +331,7 @@
 
 .ss-hint-text {
   font-family: "Goldman", system-ui, sans-serif;
-  font-size: 0.5rem;
+  font-size: 0.7rem;
   color: #64748b;
   margin-top: 0.25rem;
   display: block;
@@ -356,15 +357,15 @@
     gap: 0.3rem;
   }
   .ss-label {
-    font-size: 0.52rem;
+    font-size: 0.75rem;
   }
   .ss-input,
   .ss-select {
-    padding: 0.5rem 0;
-    font-size: 0.75rem;
+    padding: 0.55rem 0;
+    font-size: 1rem;
   }
   .ss-error-text {
-    font-size: 0.5rem;
+    font-size: 0.7rem;
   }
 }
 

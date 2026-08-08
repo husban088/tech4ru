@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Navigation, Pagination } from "swiper/modules";
 import {
@@ -127,6 +127,26 @@ export default function WhyChooseUs() {
   const swiperRef = useRef<any>(null);
   const isRTL = isRTLMode;
 
+  const cards = useMemo(
+    () =>
+      t.cards.map((card) => ({
+        ...card,
+        title:
+          lang === "en"
+            ? card.titleEn
+            : lang === "ar"
+              ? card.titleAr
+              : card.titleDe,
+        desc:
+          lang === "en"
+            ? card.descEn
+            : lang === "ar"
+              ? card.descAr
+              : card.descDe,
+      })),
+    [lang],
+  );
+
   // Scroll reveal animation for section
   useEffect(() => {
     const section = sectionRef.current;
@@ -137,10 +157,11 @@ export default function WhyChooseUs() {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             section.classList.add("wcu-visible");
+            observer.unobserve(entry.target); // stop watching once revealed — no need to keep computing on every scroll frame
           }
         });
       },
-      { threshold: 0.15 },
+      { threshold: 0.15, rootMargin: "0px 0px -40px 0px" },
     );
 
     observer.observe(section);
@@ -223,10 +244,10 @@ export default function WhyChooseUs() {
             },
           }}
         >
-          {t.cards.map((card, i) => {
+          {cards.map((card) => {
             const Icon = card.icon;
             return (
-              <SwiperSlide key={i}>
+              <SwiperSlide key={card.id}>
                 <div className="wcu-card">
                   {/* Top accent bar */}
                   <div className="wcu-card-bar" />
@@ -241,20 +262,8 @@ export default function WhyChooseUs() {
 
                   {/* Content */}
                   <div className="wcu-card-content">
-                    <h3 className="wcu-card-title">
-                      {lang === "en"
-                        ? card.titleEn
-                        : lang === "ar"
-                          ? card.titleAr
-                          : card.titleDe}
-                    </h3>
-                    <p className="wcu-card-desc">
-                      {lang === "en"
-                        ? card.descEn
-                        : lang === "ar"
-                          ? card.descAr
-                          : card.descDe}
-                    </p>
+                    <h3 className="wcu-card-title">{card.title}</h3>
+                    <p className="wcu-card-desc">{card.desc}</p>
                   </div>
 
                   {/* Hover shine */}

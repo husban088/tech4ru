@@ -145,8 +145,6 @@ async function fetchFeaturedTabData(
 ): Promise<CachedData> {
   const MAX_RETRIES = 3;
   const RETRY_DELAY = 600;
-  // FIX: 8s timeout per attempt — without this, slow wifi causes fetch to hang
-  // forever and the skeleton never resolves. On timeout we fall to cached data.
   const FETCH_TIMEOUT_MS = 8000;
 
   try {
@@ -172,22 +170,16 @@ async function fetchFeaturedTabData(
     }
 
     if (error) {
-      // FIX: log the real Supabase error (RLS denial, bad table/column name,
-      // network block, etc.) — previously this was swallowed completely,
-      // which is why the actual root cause was invisible in console.
       console.error(
         `[FeaturedProducts] Supabase error (tab="${tab}", attempt=${attempt}):`,
         error,
       );
-      // FIX: On error, check if abort (timeout) or real error
       const isAbort =
         error?.message?.includes("abort") || error?.name === "AbortError";
       if (!isAbort && attempt < MAX_RETRIES) {
         await new Promise((r) => setTimeout(r, RETRY_DELAY * (attempt + 1)));
         return fetchFeaturedTabData(tab, attempt + 1);
       }
-      // FIX: Return whatever we have in tabCache rather than empty array
-      // This means slow wifi shows stale data instead of blank
       if (tabCache[tab]?.products?.length) return tabCache[tab];
       return { products: [], variantsMap: {}, variantImagesMap: {} };
     }
@@ -254,8 +246,6 @@ async function fetchFeaturedTabData(
     persistCacheToSession(tab, result);
     return result;
   } catch (err: any) {
-    // FIX: log unexpected/thrown errors too (e.g. supabase client
-    // misconfigured because env vars are undefined) — was silently caught.
     console.error(
       `[FeaturedProducts] fetch threw (tab="${tab}", attempt=${attempt}):`,
       err,
@@ -266,7 +256,6 @@ async function fetchFeaturedTabData(
       await new Promise((r) => setTimeout(r, RETRY_DELAY * (attempt + 1)));
       return fetchFeaturedTabData(tab, attempt + 1);
     }
-    // FIX: On any failure (including wifi off), return cached data if available
     if (tabCache[tab]?.products?.length) return tabCache[tab];
     return { products: [], variantsMap: {}, variantImagesMap: {} };
   }
@@ -276,13 +265,8 @@ const ALL_TABS = ["Accessories", "Watches", "Automotive", "Home Decor"];
 const CACHE_TTL_MS = 5 * 60 * 1000; // 5 minutes
 const SESSION_KEY = "fp_cache_v2";
 
-// Module-level cache — persists across re-renders and tab changes
 const tabCache: Record<string, CachedData> = {};
 
-// ── sessionStorage helpers ──────────────────────────────────────────────────
-// FIX: Module-level cache clears on page reload (it's just JS memory).
-// sessionStorage survives reload, so we seed tabCache from it on startup.
-// This means products show INSTANTLY even after a hard refresh.
 function persistCacheToSession(tab: string, data: CachedData) {
   if (typeof window === "undefined" || !window.sessionStorage) return;
   try {
@@ -315,7 +299,6 @@ function seedCacheFromSession() {
   }
 }
 
-// Seed immediately when module loads (runs once per page)
 seedCacheFromSession();
 
 /* ─────────────────────────────────────────────────────────────
@@ -473,6 +456,8 @@ function VariantThumbnails({
                   <img
                     src={variantImage}
                     alt={variant.attribute_value}
+                    loading="lazy"
+                    decoding="async"
                     suppressHydrationWarning
                   />
                 </div>
@@ -504,10 +489,12 @@ function ProductCard({
   variantImagesMap,
   onQuickView,
   isRTL,
+  index,
 }: {
   product: FeaturedProduct;
   variants: ProductVariant[];
   variantImagesMap: VariantImagesMap;
+  index: number;
   onQuickView: (
     product: FeaturedProduct,
     variants: ProductVariant[],
@@ -714,9 +701,9 @@ function ProductCard({
           <img
             src={displayImage}
             alt={product.name}
-            loading="eager"
-            fetchPriority="high"
-            decoding="auto"
+            loading={index < 4 ? "eager" : "lazy"}
+            fetchPriority={index < 4 ? "high" : "auto"}
+            decoding={index < 4 ? "sync" : "async"}
             suppressHydrationWarning
           />
         ) : (
@@ -890,8 +877,6 @@ export default function FeaturedProducts() {
   const { language, isRTLMode } = useLanguage();
 
   const [products, setProducts] = useState<FeaturedProduct[]>(
-    // FIX: tabCache is already seeded from sessionStorage at module load,
-    // so this will have data on page reload, not just SPA navigation
     () => tabCache["Accessories"]?.products || [],
   );
   const [variantsMap, setVariantsMap] = useState<
@@ -900,7 +885,6 @@ export default function FeaturedProducts() {
   const [variantImagesMap, setVariantImagesMap] = useState<
     Record<string, string[]>
   >(() => tabCache["Accessories"]?.variantImagesMap || {});
-  // FIX: isLoading starts false if we already have data from sessionStorage cache
   const [isLoading, setIsLoading] = useState(
     () => (tabCache["Accessories"]?.products?.length ?? 0) === 0,
   );
@@ -939,7 +923,6 @@ export default function FeaturedProducts() {
         setVariantImagesMap(cached.variantImagesMap);
         setIsLoading(false);
         setSwiperKey((prev) => prev + 1);
-        // Background silent refresh to get latest data
         fetchFeaturedTabData(tab)
           .then((data) => {
             if (activeTabRef.current === tab && data.products.length > 0) {
@@ -952,7 +935,6 @@ export default function FeaturedProducts() {
         return;
       }
 
-      // Show stale data instantly while refreshing (no blank screen)
       if (cachedHasProducts && !forceRefresh) {
         setProducts(cached!.products);
         setVariantsMap(cached!.variantsMap);
@@ -961,14 +943,11 @@ export default function FeaturedProducts() {
         setSwiperKey((prev) => prev + 1);
       }
 
-      // Only show loading spinner if there's truly nothing to show
       if (!cachedHasProducts) {
         setIsLoading(true);
       }
 
       try {
-        // FIX: same hard 6s outer race as the mount effect, so switching
-        // tabs can never leave the skeleton spinning forever either.
         const data = await Promise.race([
           fetchFeaturedTabData(tab),
           new Promise<CachedData>((resolve) =>
@@ -983,7 +962,6 @@ export default function FeaturedProducts() {
             ),
           ),
         ]);
-        // ALWAYS update if we're still on this tab — even empty state
         if (activeTabRef.current === tab) {
           setProducts(data.products);
           setVariantsMap(data.variantsMap);
@@ -993,22 +971,17 @@ export default function FeaturedProducts() {
           }
         }
       } catch (err) {
-        // FIX: log instead of silently swallowing
         console.error(
           `[FeaturedProducts] loadProductsForTab(${tab}) failed:`,
           err,
         );
       } finally {
-        // ALWAYS clear loading so UI never hangs
         setIsLoading(false);
       }
     },
     [],
   );
 
-  // FIX: Single, simple mount effect. This is the ONLY effect that can set
-  // isLoading=true on initial mount, and it ALWAYS resolves (finally block),
-  // so the skeleton can never get permanently stuck here.
   useEffect(() => {
     let cancelled = false;
     const tab = "Accessories";
@@ -1026,10 +999,6 @@ export default function FeaturedProducts() {
 
     (async () => {
       try {
-        // FIX: hard 6s outer race so a hung/never-settling fetch (e.g. bad
-        // env vars, blocked network, CORS) can NEVER keep the skeleton up
-        // forever — this always wins even if fetchFeaturedTabData's own
-        // internal timeout logic fails for any reason.
         const data = await Promise.race([
           fetchFeaturedTabData(tab),
           new Promise<CachedData>((resolve) =>
@@ -1052,15 +1021,12 @@ export default function FeaturedProducts() {
           setSwiperKey((prev) => prev + 1);
         }
       } catch (err) {
-        // FIX: log so we can actually see WHY it failed instead of silently
-        // eating the error (this was the biggest blind spot before).
         console.error("[FeaturedProducts] fetch failed:", err);
       } finally {
         if (!cancelled) setIsLoading(false);
       }
     })();
 
-    // Preload other tabs in background (no loading state change)
     ALL_TABS.filter((t) => t !== tab).forEach((otherTab) => {
       if ((tabCache[otherTab]?.products?.length ?? 0) === 0) {
         fetchFeaturedTabData(otherTab).catch(() => {});
@@ -1108,14 +1074,6 @@ export default function FeaturedProducts() {
     };
   }, [loadProductsForTab]);
 
-  // FIX: visibilitychange / pageshow / bfcache handlers removed.
-  // These previously could re-trigger setIsLoading(true) in edge cases
-  // (e.g. seedCacheFromSession failing to repopulate tabCache), leaving
-  // the skeleton stuck forever with no fetch to resolve it. The realtime
-  // subscription above + the safety-net timer below are sufficient to
-  // keep data fresh without risking a stuck loading state.
-
-  // Safety net: if loading is somehow stuck, force-resolve it.
   useEffect(() => {
     if (!isLoading) return;
     const timer = setTimeout(() => {
@@ -1204,7 +1162,6 @@ export default function FeaturedProducts() {
   return (
     <>
       <section className="fp-section" dir={isRTLMode ? "rtl" : "ltr"}>
-        {/* Subtle grid texture */}
         <div className="fp-grid-texture" aria-hidden="true" />
 
         <div className="fp-container">
@@ -1313,9 +1270,6 @@ export default function FeaturedProducts() {
               spaceBetween={1}
               slidesPerView={1}
               speed={300}
-              // FIX: force these AFTER swiperPerfProps spread so a misconfigured
-              // perf preset (e.g. loop:true with too few slides) can never
-              // crash Swiper's init and freeze the component mid-render.
               loop={false}
               observer={true}
               observeParents={true}
@@ -1327,7 +1281,7 @@ export default function FeaturedProducts() {
               className="fp-swiper"
               dir={isRTLMode ? "rtl" : "ltr"}
             >
-              {products.map((product) => (
+              {products.map((product, index) => (
                 <SwiperSlide key={product.id}>
                   <ProductCard
                     product={product}
@@ -1335,6 +1289,7 @@ export default function FeaturedProducts() {
                     variantImagesMap={variantImagesMap}
                     onQuickView={handleQuickView}
                     isRTL={isRTLMode}
+                    index={index}
                   />
                 </SwiperSlide>
               ))}

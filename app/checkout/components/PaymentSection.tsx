@@ -5,7 +5,6 @@ import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import StripePayment from "./StripePayment";
 import PayPalPayment from "./PayPalPayment";
-import ReceiptPaymentMethod from "@/app/components/ReceiptPaymentMethod";
 import "./PaymentSection.css";
 import { useCurrency } from "@/app/context/CurrencyContext";
 
@@ -29,7 +28,7 @@ interface FormData {
   cvv: string;
 }
 
-export type PaymentMethodKey = "card" | "paypal" | "cod" | "bank" | "jazzcash";
+export type PaymentMethodKey = "card" | "paypal" | "cod";
 
 interface PaymentSectionProps {
   form?: {
@@ -156,37 +155,6 @@ const CashIcon = () => (
   </svg>
 );
 
-const BankIcon = () => (
-  <svg
-    width="19"
-    height="19"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="1.5"
-  >
-    <path d="M3 10l9-6 9 6" />
-    <path d="M4 10v9h16v-9" />
-    <path d="M9 21v-6h6v6" />
-    <path d="M2 21h20" />
-  </svg>
-);
-
-const JazzCashIcon = () => (
-  <svg
-    width="19"
-    height="19"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="1.5"
-  >
-    <rect x="3" y="5" width="18" height="14" rx="3" />
-    <path d="M3 10h18" />
-    <circle cx="7.5" cy="15" r="1" />
-  </svg>
-);
-
 const ChevronIcon = () => (
   <svg
     width="15"
@@ -217,18 +185,21 @@ export default function PaymentSection({
   focused = null,
   setFocused = () => {},
 }: PaymentSectionProps) {
-  const [activeMethod, setActiveMethod] = useState<PaymentMethodKey>("card");
+  const [activeMethod, setActiveMethod] = useState<PaymentMethodKey | null>(
+    null, // ✅ nothing open by default — user has to click to open a method
+  );
   const [clientSecret, setClientSecret] = useState<string | null>(null);
   const [isLoadingStripe, setIsLoadingStripe] = useState(false);
   const [isPlacingManualOrder, setIsPlacingManualOrder] = useState(false);
 
   const successCalledRef = useRef(false);
+  const accordionRef = useRef<HTMLDivElement>(null);
 
   const { formatPrice, currency: detectedCurrency } = useCurrency();
 
-  // ✅ Manual-payment methods (COD / Bank Transfer / JazzCash) only make sense
-  // for local Pakistani orders, so they only appear when the storefront has
-  // detected the visitor is browsing in PKR.
+  // ✅ Cash on Delivery only makes sense for local Pakistani orders, so it
+  // only appears when the storefront has detected the visitor is browsing
+  // in PKR.
   const isPakistan = (detectedCurrency?.code || "").toUpperCase() === "PKR";
 
   const liveRate = detectedCurrency?.rate ?? 0.003584;
@@ -241,9 +212,27 @@ export default function PaymentSection({
   const convertedTotal = convertPKRtoFloat(totalAmount, pkrRate);
 
   const handleMethodChange = (method: PaymentMethodKey) => {
-    setActiveMethod((prev) => (prev === method ? prev : method));
-    if (onPaymentMethodChange) onPaymentMethodChange(method);
+    setActiveMethod((prev) => {
+      const next = prev === method ? null : method; // ✅ clicking the open one again closes it
+      if (next && onPaymentMethodChange) onPaymentMethodChange(next);
+      return next;
+    });
   };
+
+  // ✅ Click anywhere outside the accordion closes whichever method is open
+  useEffect(() => {
+    if (!activeMethod) return;
+    const handleOutsideClick = (e: MouseEvent) => {
+      if (
+        accordionRef.current &&
+        !accordionRef.current.contains(e.target as Node)
+      ) {
+        setActiveMethod(null);
+      }
+    };
+    document.addEventListener("mousedown", handleOutsideClick);
+    return () => document.removeEventListener("mousedown", handleOutsideClick);
+  }, [activeMethod]);
 
   // ✅ Create Stripe PaymentIntent when card selected
   useEffect(() => {
@@ -312,11 +301,6 @@ export default function PaymentSection({
     handlePaymentSuccess();
   };
 
-  const handleManualPlaceOrder = (receiptUrl: string) => {
-    setIsPlacingManualOrder(true);
-    handlePaymentSuccess({ receiptUrl });
-  };
-
   const appearance = {
     theme: "flat" as const,
     variables: {
@@ -353,18 +337,6 @@ export default function PaymentSection({
             sublabel: "Pay when your order arrives",
             icon: <CashIcon />,
           },
-          {
-            key: "bank",
-            label: "Bank Transfer",
-            sublabel: "UBL Bank direct transfer",
-            icon: <BankIcon />,
-          },
-          {
-            key: "jazzcash",
-            label: "JazzCash",
-            sublabel: "Pay via JazzCash account",
-            icon: <JazzCashIcon />,
-          },
         ] as const)
       : []),
   ];
@@ -378,7 +350,7 @@ export default function PaymentSection({
       </h2>
 
       {/* Accordion method selector */}
-      <div className="ps-accordion">
+      <div className="ps-accordion" ref={accordionRef}>
         {methods.map((m) => {
           const isOpen = activeMethod === m.key;
           return (
@@ -469,9 +441,9 @@ export default function PaymentSection({
                           </span>
                         </div>
                         <p className="ps-manual-instructions">
-                          Order deliver hone par cash mein payment karein.
-                          Hamari delivery team aapke diye gaye address par order
-                          pohcha degi — us waqt cash payment kar dein.
+                          No payment needed right now — simply pay in cash when
+                          your order arrives at your doorstep. Our delivery team
+                          will hand it over and collect payment on the spot.
                         </p>
                         <div className="ps-cod-note">
                           <svg
@@ -486,7 +458,8 @@ export default function PaymentSection({
                             <path d="M12 8v4M12 16h.01" />
                           </svg>
                           <span>
-                            Please keep exact change ready if possible.
+                            A little tip: having exact change ready keeps your
+                            delivery quick and effortless.
                           </span>
                         </div>
                       </div>
@@ -507,26 +480,6 @@ export default function PaymentSection({
                         )}
                       </button>
                     </div>
-                  )}
-
-                  {m.key === "bank" && isOpen && (
-                    <ReceiptPaymentMethod
-                      method="bank"
-                      orderNumber={orderNumber}
-                      displayTotal={displayTotalPKR}
-                      onPlaceOrder={handleManualPlaceOrder}
-                      onError={onPaymentError}
-                    />
-                  )}
-
-                  {m.key === "jazzcash" && isOpen && (
-                    <ReceiptPaymentMethod
-                      method="jazzcash"
-                      orderNumber={orderNumber}
-                      displayTotal={displayTotalPKR}
-                      onPlaceOrder={handleManualPlaceOrder}
-                      onError={onPaymentError}
-                    />
                   )}
                 </div>
               </div>

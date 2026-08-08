@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useRef, useState, useEffect } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, A11y } from "swiper/modules";
@@ -189,19 +190,22 @@ function CategoryCard({
 
       <div className="ea-card-img-wrap">
         {cat.imageSrc ? (
-          <img
+          // FIX: next/image with fill — automatic responsive srcset,
+          // AVIF/WebP conversion, and lazy loading built in. Browser
+          // ab sirf jitni size actually dikhegi utni hi download karega,
+          // chahe original file kitni bhi badi ho.
+          // NOTE: ea-card-img-wrap ko position:relative chahiye for
+          // fill to work — agar pehle se width/height se sized hai
+          // (jaisa ki plain <img> ke object-fit pattern se lagta hai)
+          // to yeh already true hoga. CSS check kar lena.
+          <Image
             src={cat.imageSrc}
             alt={`${title}${italic}`}
+            fill
             className="ea-card-img"
-            // FIX: Only first card eager — rest lazy.
-            // Old code: ALL 4 cards loading="eager" fetchPriority="high"
-            // = browser trying to download 4 images simultaneously
-            // = bandwidth saturated = page feels stuck/heavy on load.
+            sizes="(max-width: 767px) 100vw, (max-width: 1023px) 50vw, 33vw"
+            priority={index === 0}
             loading={index === 0 ? "eager" : "lazy"}
-            fetchPriority={index === 0 ? "high" : "auto"}
-            decoding={index === 0 ? "sync" : "async"}
-            width={400}
-            height={300}
             onError={(e) => {
               (e.currentTarget as HTMLImageElement).style.display = "none";
             }}
@@ -359,59 +363,56 @@ function ExploreInner() {
           </svg>
         </button>
 
-        {mounted && (
-          <Swiper
-            // FIX: Autoplay REMOVED — was blocking main thread every 3.8s.
-            // FIX: observer/observeParents/resizeObserver — all removed.
-            //      3 observers running simultaneously = unnecessary overhead.
-            //      Swiper handles resize natively without these flags.
-            modules={[Navigation, Pagination, A11y]}
-            slidesPerView={1}
-            spaceBetween={20}
-            loop={true}
-            grabCursor={true}
-            speed={280}
-            resistanceRatio={0.85}
-            touchRatio={1}
-            touchAngle={45}
-            simulateTouch={true}
-            dir={isRTLMode ? "rtl" : "ltr"}
-            navigation={{
-              prevEl: ".ea-nav-prev",
-              nextEl: ".ea-nav-next",
-            }}
-            onSwiper={(swiper) => {
-              if (prevRef.current && nextRef.current) {
-                prevRef.current.addEventListener("click", () =>
-                  swiper.slidePrev(),
-                );
-                nextRef.current.addEventListener("click", () =>
-                  swiper.slideNext(),
-                );
-              }
-            }}
-            pagination={{
-              clickable: true,
-              dynamicBullets: true,
-            }}
-            breakpoints={{
-              768: { slidesPerView: 2, spaceBetween: 24 },
-              1024: { slidesPerView: 3, spaceBetween: 32 },
-            }}
-            className="ea-swiper"
-          >
-            {categories.map((cat, i) => (
-              <SwiperSlide key={cat.id} className="ea-slide">
-                <CategoryCard
-                  cat={cat}
-                  language={language}
-                  isRTL={isRTLMode}
-                  index={i}
-                />
-              </SwiperSlide>
-            ))}
-          </Swiper>
-        )}
+        {/* FIX: Swiper ab SSR pe bhi render hoga (mounted-gate hataya) —
+            slides turant paint ke saath dikhte hain, JS hydration
+            ka wait nahi karna padta. swiper/react SSR-safe hai. */}
+        <Swiper
+          modules={[Navigation, Pagination, A11y]}
+          slidesPerView={1}
+          spaceBetween={20}
+          loop={true}
+          grabCursor={true}
+          speed={280}
+          resistanceRatio={0.85}
+          touchRatio={1}
+          touchAngle={45}
+          simulateTouch={true}
+          dir={mounted && isRTLMode ? "rtl" : "ltr"}
+          navigation={{
+            prevEl: ".ea-nav-prev",
+            nextEl: ".ea-nav-next",
+          }}
+          onSwiper={(swiper) => {
+            if (prevRef.current && nextRef.current) {
+              prevRef.current.addEventListener("click", () =>
+                swiper.slidePrev(),
+              );
+              nextRef.current.addEventListener("click", () =>
+                swiper.slideNext(),
+              );
+            }
+          }}
+          pagination={{
+            clickable: true,
+            dynamicBullets: true,
+          }}
+          breakpoints={{
+            768: { slidesPerView: 2, spaceBetween: 24 },
+            1024: { slidesPerView: 3, spaceBetween: 32 },
+          }}
+          className="ea-swiper"
+        >
+          {categories.map((cat, i) => (
+            <SwiperSlide key={cat.id} className="ea-slide">
+              <CategoryCard
+                cat={cat}
+                language={language}
+                isRTL={isRTLMode}
+                index={i}
+              />
+            </SwiperSlide>
+          ))}
+        </Swiper>
       </div>
 
       <div className="ea-footer-ornament" aria-hidden="true">

@@ -210,7 +210,7 @@
   padding: clamp(0.75rem, 3vw, 0.85rem);
   border: 1px solid rgba(14, 165, 233, 0.15);
   border-radius: 12px;
-  background: rgba(14, 165, 233, 0.02);
+  background: rgba(14, 165, 233, 0.03);
   transition: all 0.3s ease;
 }
 
@@ -246,8 +246,8 @@
 
 .cs-coupon-input {
   flex: 1;
-  background: #f8fafc;
-  border: 1px solid rgba(14, 165, 233, 0.2);
+  background: #f5f0e8;
+  border: 1px solid rgba(14, 165, 233, 0.3);
   border-radius: 8px;
   padding: 0.5rem 0.75rem;
   color: #0f172a;
@@ -265,8 +265,8 @@
 
 .cs-coupon-btn {
   padding: 0.5rem 1rem;
-  background: rgba(14, 165, 233, 0.1);
-  border: 1px solid rgba(14, 165, 233, 0.3);
+  background: rgba(14, 165, 233, 0.12);
+  border: 1px solid rgba(14, 165, 233, 0.4);
   border-radius: 8px;
   color: #0ea5e9;
   font-size: clamp(0.65rem, 2.5vw, 0.72rem);
@@ -278,10 +278,10 @@
 }
 
 .cs-coupon-btn:hover:not(:disabled) {
-  background: rgba(14, 165, 233, 0.2);
+  background: rgba(14, 165, 233, 0.22);
   border-color: #0ea5e9;
   transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(14, 165, 233, 0.1);
+  box-shadow: 0 4px 12px rgba(14, 165, 233, 0.15);
 }
 
 .cs-coupon-btn:disabled {

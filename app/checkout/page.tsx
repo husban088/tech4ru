@@ -153,6 +153,7 @@ const AUSTRALIAN_STATE_NAMES: Record<string, string> = {
 };
 
 const STORAGE_KEY = "checkout_form_data";
+const STEP_STORAGE_KEY = "checkout_step"; // ✅ persists which step (shipping/payment) so a reload doesn't kick the user back to shipping
 
 function generateOrderNumber(): string {
   const timestamp = Date.now().toString(36).toUpperCase();
@@ -195,9 +196,9 @@ export default function Checkout() {
   const [checkoutStep, setCheckoutStep] = useState<"shipping" | "payment">(
     "shipping",
   );
-  const [paymentMethod, setPaymentMethod] = useState<
-    "card" | "paypal" | "cod" | "bank" | "jazzcash"
-  >("card");
+  const [paymentMethod, setPaymentMethod] = useState<"card" | "paypal" | "cod">(
+    "card",
+  );
 
   // ✅ Double-fire guard ref
   const successCalledRef = useRef(false);
@@ -255,6 +256,19 @@ export default function Checkout() {
         setForm((prev) => ({ ...prev, ...JSON.parse(savedForm) }));
       } catch {}
     }
+
+    // ✅ Restore checkout step too — only jump straight to "payment" if the
+    // shipping form was actually filled (firstName present), so a stray/old
+    // localStorage value never strands someone on payment with an empty form.
+    const savedStep = localStorage.getItem(STEP_STORAGE_KEY);
+    if (savedStep === "payment") {
+      try {
+        const parsedForm = savedForm ? JSON.parse(savedForm) : null;
+        if (parsedForm?.firstName) {
+          setCheckoutStep("payment");
+        }
+      } catch {}
+    }
   }, [isMounted]);
 
   useEffect(() => {
@@ -263,6 +277,15 @@ export default function Checkout() {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(form));
     }
   }, [form, isMounted]);
+
+  // ✅ Persist checkoutStep on every change — reload/hard-refresh on the
+  // payment step will now restore back to payment instead of shipping.
+  useEffect(() => {
+    if (!isMounted) return;
+    try {
+      localStorage.setItem(STEP_STORAGE_KEY, checkoutStep);
+    } catch {}
+  }, [checkoutStep, isMounted]);
 
   const setFormField =
     (key: keyof FormData) =>
@@ -529,11 +552,7 @@ export default function Checkout() {
             ? "Credit/Debit Card (Stripe)"
             : paymentMethod === "paypal"
               ? "PayPal"
-              : paymentMethod === "bank"
-                ? "Bank Transfer (UBL)"
-                : paymentMethod === "jazzcash"
-                  ? "JazzCash"
-                  : "Cash on Delivery",
+              : "Cash on Delivery",
         currency: currency.code,
         amountsPreConverted: true,
         customerCountry:
@@ -545,6 +564,7 @@ export default function Checkout() {
     clearCart().catch(() => {});
     try {
       localStorage.removeItem(STORAGE_KEY);
+      localStorage.removeItem(STEP_STORAGE_KEY);
     } catch {}
   }, [
     items,

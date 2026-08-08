@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useCallback, useMemo, memo } from "react";
 import Link from "next/link";
 import { useLanguage } from "@/app/context/LanguageContext";
 import "./GlobalFAQSection.css";
@@ -154,7 +154,7 @@ interface FAQItem {
   answer: string;
 }
 
-function FAQAccordionItem({
+const FAQAccordionItem = memo(function FAQAccordionItem({
   item,
   isOpen,
   onToggle,
@@ -162,7 +162,7 @@ function FAQAccordionItem({
 }: {
   item: FAQItem;
   isOpen: boolean;
-  onToggle: () => void;
+  onToggle: (id: string) => void;
   index: number;
 }) {
   const ref = useRef<HTMLDivElement>(null);
@@ -192,7 +192,7 @@ function FAQAccordionItem({
     <div ref={ref} className={`gfaq-item${isOpen ? " open" : ""}`}>
       <button
         className="gfaq-question-btn"
-        onClick={onToggle}
+        onClick={() => onToggle(item.id)}
         aria-expanded={isOpen}
         aria-controls={`gfaq-answer-${item.id}`}
         id={`gfaq-question-${item.id}`}
@@ -217,7 +217,7 @@ function FAQAccordionItem({
       </div>
     </div>
   );
-}
+});
 
 /* ═══════════════════════════════════════════
    MAIN COMPONENT
@@ -227,30 +227,34 @@ export default function GlobalFAQSection() {
   const lang = language as "en" | "ar" | "de";
   const [openId, setOpenId] = useState<string | null>(null);
 
-  const faqsData = t.faqs.map((faq) => ({
-    id: faq.id,
-    question:
-      lang === "en"
-        ? faq.questionEn
-        : lang === "ar"
-          ? faq.questionAr
-          : faq.questionDe,
-    answer:
-      lang === "en"
-        ? faq.answerEn
-        : lang === "ar"
-          ? faq.answerAr
-          : faq.answerDe,
-  }));
+  const faqsData = useMemo(
+    () =>
+      t.faqs.map((faq) => ({
+        id: faq.id,
+        question:
+          lang === "en"
+            ? faq.questionEn
+            : lang === "ar"
+              ? faq.questionAr
+              : faq.questionDe,
+        answer:
+          lang === "en"
+            ? faq.answerEn
+            : lang === "ar"
+              ? faq.answerAr
+              : faq.answerDe,
+      })),
+    [lang],
+  );
 
-  const toggleFAQ = (id: string) => {
-    setOpenId(openId === id ? null : id);
-  };
+  const toggleFAQ = useCallback((id: string) => {
+    setOpenId((prev) => (prev === id ? null : id));
+  }, []);
 
-  const openWhatsApp = () => {
+  const openWhatsApp = useCallback(() => {
     const number = t.whatsappNumber.replace(/\s/g, "");
     window.open(`https://wa.me/${number}`, "_blank");
-  };
+  }, []);
 
   return (
     <section
@@ -283,7 +287,7 @@ export default function GlobalFAQSection() {
               item={faq}
               index={i}
               isOpen={openId === faq.id}
-              onToggle={() => toggleFAQ(faq.id)}
+              onToggle={toggleFAQ}
             />
           ))}
         </div>

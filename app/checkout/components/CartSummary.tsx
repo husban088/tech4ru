@@ -150,8 +150,8 @@ export default function CartSummary({
               margin: "0 auto 1rem",
               width: "30px",
               height: "30px",
-              border: "2px solid rgba(218,165,32,0.2)",
-              borderTopColor: "#daa520",
+              border: "2px solid rgba(14,165,233,0.2)",
+              borderTopColor: "#0ea5e9",
               borderRadius: "50%",
               animation: "spin 0.6s linear infinite",
             }}
@@ -413,9 +413,9 @@ export default function CartSummary({
         .cs-coupon-section {
           margin: 1rem 0 1.25rem;
           padding: 0.85rem 1rem;
-          border: 1px solid rgba(218, 165, 32, 0.15);
+          border: 1px solid rgba(14, 165, 233, 0.15);
           border-radius: 12px;
-          background: rgba(218, 165, 32, 0.03);
+          background: rgba(14, 165, 233, 0.03);
         }
 
         .cs-coupon-label {
@@ -434,11 +434,11 @@ export default function CartSummary({
 
         .cs-coupon-input {
           flex: 1;
-          background: #f5f0e8;
-          border: 1px solid rgba(218, 165, 32, 0.3);
+          background: #f8fafc;
+          border: 1px solid rgba(14, 165, 233, 0.3);
           border-radius: 8px;
           padding: 0.5rem 0.75rem;
-          color: #1a1a1a;
+          color: #0f172a;
           font-size: 0.78rem;
           font-family: monospace;
           letter-spacing: 0.05em;
@@ -447,7 +447,7 @@ export default function CartSummary({
         }
 
         .cs-coupon-input:focus {
-          border-color: rgba(218, 165, 32, 0.7);
+          border-color: rgba(14, 165, 233, 0.7);
         }
 
         .cs-coupon-input::placeholder {
@@ -458,10 +458,10 @@ export default function CartSummary({
 
         .cs-coupon-btn {
           padding: 0.5rem 1rem;
-          background: rgba(218, 165, 32, 0.15);
-          border: 1px solid rgba(218, 165, 32, 0.4);
+          background: rgba(14, 165, 233, 0.15);
+          border: 1px solid rgba(14, 165, 233, 0.4);
           border-radius: 8px;
-          color: #b8860b;
+          color: #0ea5e9;
           font-size: 0.72rem;
           font-weight: 600;
           letter-spacing: 0.05em;
@@ -471,8 +471,8 @@ export default function CartSummary({
         }
 
         .cs-coupon-btn:hover:not(:disabled) {
-          background: rgba(218, 165, 32, 0.25);
-          border-color: var(--cart-gold, #daa520);
+          background: rgba(14, 165, 233, 0.25);
+          border-color: #0ea5e9;
         }
 
         .cs-coupon-btn:disabled {
@@ -554,8 +554,8 @@ export default function CartSummary({
         .loader-spinner {
           width: 30px;
           height: 30px;
-          border: 2px solid rgba(218, 165, 32, 0.2);
-          border-top-color: #daa520;
+          border: 2px solid rgba(14, 165, 233, 0.2);
+          border-top-color: #0ea5e9;
           border-radius: 50%;
           animation: spin 0.6s linear infinite;
         }

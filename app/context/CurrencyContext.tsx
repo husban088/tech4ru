@@ -37,21 +37,6 @@ const CurrencyContext = createContext<CurrencyContextType | undefined>(
 const PKR =
   staticCurrencies.find((c) => c.code === "PKR") ?? staticCurrencies[0];
 
-// ─── Read the cookie middleware.ts sets (geo-detected OR previously
-// auto-detected) — synchronous, zero network cost. Set-Cookie from
-// middleware is applied by the browser BEFORE client JS runs, so this
-// is available immediately on first paint, even on the very first visit.
-function getCookieCurrency(): Currency | null {
-  try {
-    if (typeof document === "undefined") return null;
-    const match = document.cookie.match(/(?:^|;\s*)preferredCurrency=([^;]+)/);
-    if (!match) return null;
-    return staticCurrencies.find((c) => c.code === match[1]) ?? null;
-  } catch {
-    return null;
-  }
-}
-
 // ─── Read user's manual preference from localStorage ─────────────────
 function getUserPref(): Currency | null {
   try {
@@ -153,9 +138,8 @@ export function CurrencyProvider({
     const userPref = getUserPref();
     if (userPref) return userPref;
 
-    // Priority 2: Server-detected via CDN headers, passed as a prop
-    // (kept for backward compatibility — currently unused since layout.tsx
-    // no longer passes this, middleware.ts + cookie below replaces it)
+    // Priority 2: Server-detected via CDN headers (Cloudflare/Vercel)
+    // initialCurrencyCode is undefined when no CDN header was found
     if (initialCurrencyCode) {
       const found = staticCurrencies.find(
         (c) => c.code === initialCurrencyCode,
@@ -163,14 +147,7 @@ export function CurrencyProvider({
       if (found) return found;
     }
 
-    // Priority 3: middleware.ts already set this cookie via geo-header
-    // BEFORE this component even mounts — read it synchronously, no
-    // network call needed, no flash, no waiting for IP-detection APIs.
-    const cookiePref = getCookieCurrency();
-    if (cookiePref) return cookiePref;
-
-    // Priority 4: Absolute last resort — PKR while client detection runs
-    // (only hit if middleware somehow didn't run, e.g. static export)
+    // Priority 3: Show PKR while client detection runs
     return PKR;
   };
 
@@ -240,18 +217,6 @@ export function CurrencyProvider({
           return;
         }
       } catch {}
-    }
-
-    // ✅ middleware.ts already set the currency cookie via geo-header on
-    // this very request — no need to hit 4 external IP-geolocation APIs
-    // AND our own /api/detect-country on every single page load. This was
-    // the real cause of the "settles after a moment" feel: every page open
-    // used to fire that whole race even when we already had a good answer.
-    if (getCookieCurrency()) {
-      console.log(
-        "✅ Using middleware-set cookie currency, skipping detection",
-      );
-      return;
     }
 
     // ✅ No server detection, no user preference → run client-side detection

@@ -5,6 +5,7 @@ import "./globals.css";
 import Providers from "./providers";
 import { CurrencyProvider } from "./context/CurrencyContext";
 import { LanguageProvider } from "./context/LanguageContext";
+import { getInitialCurrency } from "@/lib/get-initial-currency";
 
 // ─── Font ─────────────────────────────────────────────────────────────────────
 const goldman = Goldman({
@@ -29,16 +30,14 @@ export const viewport: Viewport = {
   viewportFit: "cover",
 };
 
-// FIX: ab yeh function async nahi hai, aur koi cookies()/headers() call
-// nahi ho rahi. Isse RootLayout wapas static/cacheable ban jata hai —
-// Vercel/Next full route caching kaam karegi, aur pages CDN edge se
-// instant serve honge (Shopify jaisi speed). Currency ab CurrencyProvider
-// khud client-side pe (middleware-set cookie se) detect karega.
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const initialResult = await getInitialCurrency();
+  const initialCurrencyCode = initialResult?.currency.code ?? undefined;
+
   return (
     <html
       lang="en"
@@ -92,7 +91,7 @@ export default function RootLayout({
       </head>
       <body className="flex flex-col" suppressHydrationWarning>
         <LanguageProvider>
-          <CurrencyProvider>
+          <CurrencyProvider initialCurrencyCode={initialCurrencyCode}>
             <Providers>{children}</Providers>
           </CurrencyProvider>
         </LanguageProvider>

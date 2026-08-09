@@ -1,46 +1,57 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
-import { getCurrencyByCountry } from "@/lib/currency";
+
+// ─── Country → Currency map ───────────────────────────────────────────────
+// NOTE: Keep this in sync with lib/currency.ts's getCurrencyByCountry logic.
+// Agar wahan zyada countries handle hote hain, unko yahan bhi copy kar lo.
+const COUNTRY_CURRENCY_MAP: Record<string, string> = {
+  PK: "PKR",
+  AE: "AED",
+  US: "USD",
+  GB: "GBP",
+  // ...baaki countries currency.ts se copy kar lo
+};
+const DEFAULT_CURRENCY = "USD";
 
 export function middleware(req: NextRequest) {
   const res = NextResponse.next();
 
-  // User ne khud currency choose ki hai — kabhi override mat karo
-  if (req.cookies.get("currencyUserSelected")?.value === "true") {
+  // Agar user ne already manually currency select ki hui hai, kuch mat karo
+  const userSelected = req.cookies.get("currencyUserSelected")?.value;
+  if (userSelected === "true") {
     return res;
   }
 
-  // Pehle se detect ho chuki hai — dobara kaam mat karo
+  // Agar geo-detect cookie already set hai (pichli request se), skip karo
   if (req.cookies.get("preferredCurrency")?.value) {
     return res;
   }
 
-  const countryHeaders = [
-    "cf-ipcountry", // Cloudflare — VPN-aware
-    "x-vercel-ip-country", // Vercel
-    "cloudfront-viewer-country", // AWS CloudFront
-    "x-country",
-    "x-geo-country",
-  ];
+  // Geo headers se country detect karo (Vercel edge pe yeh already available hain,
+  // koi extra network call nahi lagti — bilkul fast)
+  const country =
+    req.headers.get("x-vercel-ip-country") ||
+    req.headers.get("cf-ipcountry") ||
+    req.headers.get("cloudfront-viewer-country") ||
+    "";
 
-  for (const header of countryHeaders) {
-    const val = req.headers.get(header);
-    if (val && val.length === 2 && val !== "XX" && val !== "T1") {
-      const currency = getCurrencyByCountry(val.toUpperCase());
-      res.cookies.set("preferredCurrency", currency.code, {
-        path: "/",
-        maxAge: 60 * 60 * 24 * 30, // 30 din
-        sameSite: "lax",
-      });
-      break;
-    }
-  }
+  const code =
+    (country && COUNTRY_CURRENCY_MAP[country.toUpperCase()]) ||
+    DEFAULT_CURRENCY;
+
+  // Cookie set karo — client-side CurrencyContext isko read kar lega,
+  // koi server-side blocking call nahi, koi dynamic rendering force nahi hogi
+  res.cookies.set("preferredCurrency", code, {
+    path: "/",
+    maxAge: 60 * 60 * 24 * 30, // 30 din
+    sameSite: "lax",
+  });
 
   return res;
 }
 
 export const config = {
   matcher: [
-    "/((?!api|_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp|ico|css|js)$).*)",
+    "/((?!_next/static|_next/image|favicon\\.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp|ico|woff|woff2|ttf|eot|css|js)$).*)",
   ],
 };

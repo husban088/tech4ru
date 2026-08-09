@@ -44,7 +44,9 @@ function isCacheValid(): boolean {
 // returning [] — previously a hung request or RLS/network error was
 // completely invisible, which is why the skeleton looked "stuck" (it
 // wasn't actually stuck, it was just waiting forever with zero feedback).
-async function fetchReviewsFromDB(): Promise<HomeReview[]> {
+async function fetchReviewsFromDB(attempt = 0): Promise<HomeReview[]> {
+  const MAX_RETRIES = 2;
+  const RETRY_DELAY = 600;
   const controller = new AbortController();
   const timeoutId = setTimeout(() => controller.abort(), 8000);
 
@@ -59,7 +61,11 @@ async function fetchReviewsFromDB(): Promise<HomeReview[]> {
 
     if (error) {
       console.error("[HomeReviews] Supabase error fetching reviews:", error);
-      return [];
+      if (attempt < MAX_RETRIES) {
+        await new Promise((r) => setTimeout(r, RETRY_DELAY * (attempt + 1)));
+        return fetchReviewsFromDB(attempt + 1);
+      }
+      return cachedReviews && cachedReviews.length > 0 ? cachedReviews : [];
     }
     if (!reviewData || reviewData.length === 0) {
       return [];
@@ -95,7 +101,11 @@ async function fetchReviewsFromDB(): Promise<HomeReview[]> {
     return formatted;
   } catch (err) {
     console.error("[HomeReviews] fetch threw:", err);
-    return [];
+    if (attempt < MAX_RETRIES) {
+      await new Promise((r) => setTimeout(r, RETRY_DELAY * (attempt + 1)));
+      return fetchReviewsFromDB(attempt + 1);
+    }
+    return cachedReviews && cachedReviews.length > 0 ? cachedReviews : [];
   } finally {
     clearTimeout(timeoutId);
   }
@@ -249,21 +259,20 @@ export default function HomeReviews() {
     loadReviews();
   }, [loadReviews]);
 
-  // ── Safety net: clear loading after 6s ──
+  // FIX: Yeh pehle 6s baad ek DOOSRA poora fetchReviewsFromDB() chala deta
+  // tha — jo pehle wale (loadReviews) fetch ke sath PARALLEL race karta tha.
+  // fetchReviewsFromDB() kisi bhi error/timeout pe seedha [] return karta hai
+  // (koi retry nahi) — to agar yeh duplicate fetch pehle wale ke baad resolve
+  // hota tha aur khud fail/timeout ho jata tha, uska [] result acche data ko
+  // OVERWRITE kar deta tha. Yehi wajah thi reviews first-load pe ghayab ho
+  // jaate the (reload pe warm connection ki wajah se race trigger nahi hoti
+  // thi). Ab yeh sirf loading ko clear karta hai — na koi duplicate fetch,
+  // na koi overwrite risk.
   useEffect(() => {
     if (!loading) return;
     const timer = setTimeout(() => {
-      fetchReviewsFromDB()
-        .then((data) => {
-          if (mountedRef.current) {
-            setReviews(data);
-            setLoading(false);
-          }
-        })
-        .catch(() => {
-          if (mountedRef.current) setLoading(false);
-        });
-    }, 6000);
+      if (mountedRef.current) setLoading(false);
+    }, 12000);
     return () => clearTimeout(timer);
   }, [loading]);
 

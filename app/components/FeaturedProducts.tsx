@@ -1018,16 +1018,42 @@ export default function FeaturedProducts() {
           if (!cancelled) setIsLoading(false);
         });
 
+      // FIX: watchdog ab sirf isLoading false karta hai jab fetch abhi
+      // bhi products.length===0 chhod gaya ho — agar real data already
+      // aa chuka hai (upar wale .then mein setIsLoading(false) ho chuka),
+      // yeh dobara "empty" state force nahi karega. Timeout bhi 10s se
+      // badhakar 16s kiya — cold Supabase connection + retries (3 attempts
+      // x 8s + delays) ko genuinely 20s+ lag sakte hain, 10s bahut jaldi
+      // "no products" dikha deta tha jabke fetch abhi bhi chal raha hota tha.
       const watchdog = new Promise<void>((resolve) =>
-        setTimeout(resolve, 10000),
+        setTimeout(resolve, 16000),
       );
       await Promise.race([fetchPromise, watchdog]);
+      // Sirf tab isLoading false karo jab fetchPromise khud abhi tak
+      // resolve nahi hua — is se skeleton thoda zyada der dikhega
+      // instead of premature "No featured products found".
       if (!cancelled && activeTabRef.current === tab) setIsLoading(false);
     })();
 
-    ALL_TABS.filter((t) => t !== tab).forEach((otherTab) => {
+    // FIX: pehle background tabs sab ek saath fire hote the (up to 3 extra
+    // parallel Supabase queries) EXACTLY jab active tab bhi fetch ho raha
+    // hota tha — cold connection pe congestion + timeouts. Ab har tab ko
+    // thoda gap (staggered) de rahe hain, aur idle time pe fire kar rahe
+    // hain taake active tab ka fetch pehle priority se complete ho.
+    const idleFetch =
+      typeof window !== "undefined" && "requestIdleCallback" in window
+        ? (window as any).requestIdleCallback
+        : (cb: () => void) => setTimeout(cb, 300);
+
+    ALL_TABS.filter((t) => t !== tab).forEach((otherTab, i) => {
       if ((tabCache[otherTab]?.products?.length ?? 0) === 0) {
-        fetchFeaturedTabData(otherTab).catch(() => {});
+        const timer = setTimeout(() => {
+          idleFetch(() => {
+            if (!cancelled) fetchFeaturedTabData(otherTab).catch(() => {});
+          });
+        }, 800 * (i + 1)); // staggered: 800ms, 1600ms, 2400ms
+        // best-effort cleanup, harmless if it fires after unmount check above
+        void timer;
       }
     });
 

@@ -4,7 +4,7 @@
 import { useEffect, useState, useRef, useCallback } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination } from "swiper/modules";
-import { supabase } from "@/lib/supabase";
+import { supabasePublic } from "@/lib/supabase";
 import { useLanguage } from "@/app/context/LanguageContext";
 import "@/app/components/HomeReviews.css";
 
@@ -51,7 +51,7 @@ async function fetchReviewsFromDB(attempt = 0): Promise<HomeReview[]> {
   const timeoutId = setTimeout(() => controller.abort(), 8000);
 
   try {
-    const { data: reviewData, error } = await supabase
+    const { data: reviewData, error } = await supabasePublic
       .from("product_reviews")
       .select("*")
       .gte("rating", 4)
@@ -72,7 +72,7 @@ async function fetchReviewsFromDB(attempt = 0): Promise<HomeReview[]> {
     }
 
     const productIds = [...new Set(reviewData.map((r: any) => r.product_id))];
-    const { data: products, error: productsError } = await supabase
+    const { data: products, error: productsError } = await supabasePublic
       .from("products")
       .select("id, name")
       .in("id", productIds)

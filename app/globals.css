@@ -52,7 +52,7 @@ body {
   color: var(--foreground);
   font-family: "Goldman", system-ui, sans-serif; /* hex fallback */
   font-family: var(--font-goldman);
-  font-weight: 500;
+  font-weight: 400;
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -248,10 +248,10 @@ select:focus-visible {
    Previous value was 600px but some sections are taller = layout jump.
    Using 'auto 0px' tells browser to recompute — no jump on reveal.
    Only use on sections that are ACTUALLY below the fold. */
-.cv-auto {
+/* .cv-auto {
   content-visibility: auto;
-  contain-intrinsic-size: auto 0px;
-}
+  contain-intrinsic-size: auto 600px;
+} */
 
 .img-contain {
   contain: strict;

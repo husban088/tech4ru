@@ -9,7 +9,7 @@ import type { Swiper as SwiperType } from "swiper";
 import "swiper/css";
 import "swiper/css/pagination";
 import "@/app/styles/featured-products.css";
-import { supabase } from "@/lib/supabase";
+import { supabase, supabasePublic } from "@/lib/supabase";
 import { useCartStore } from "@/lib/cartStore";
 import { useCurrency } from "../context/CurrencyContext";
 import { useLanguage } from "../context/LanguageContext";
@@ -155,7 +155,7 @@ async function fetchFeaturedTabData(
     let error: any = null;
 
     try {
-      const result = await supabase
+      const result = await supabasePublic
         .from("products")
         .select("*, product_variants(*, variant_images(*))")
         .eq("is_active", true)
@@ -1047,11 +1047,14 @@ export default function FeaturedProducts() {
 
     ALL_TABS.filter((t) => t !== tab).forEach((otherTab, i) => {
       if ((tabCache[otherTab]?.products?.length ?? 0) === 0) {
-        const timer = setTimeout(() => {
-          idleFetch(() => {
-            if (!cancelled) fetchFeaturedTabData(otherTab).catch(() => {});
-          });
-        }, 800 * (i + 1)); // staggered: 800ms, 1600ms, 2400ms
+        const timer = setTimeout(
+          () => {
+            idleFetch(() => {
+              if (!cancelled) fetchFeaturedTabData(otherTab).catch(() => {});
+            });
+          },
+          800 * (i + 1),
+        ); // staggered: 800ms, 1600ms, 2400ms
         // best-effort cleanup, harmless if it fires after unmount check above
         void timer;
       }

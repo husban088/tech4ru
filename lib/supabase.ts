@@ -19,6 +19,33 @@ export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
   },
 });
 
+// ─── Public read-only client (products, reviews, etc.) ──────────────────────
+// FIX: root cause of "featured products / reviews empty on first load, only
+// show after manual reload". The main `supabase` client above has
+// persistSession + autoRefreshToken + detectSessionInUrl ON (needed for
+// cart/login/orders). Because of that, EVERY query on that client — even a
+// fully public, anonymous "select * from products" — first internally awaits
+// auth.getSession(), which reads localStorage and may try to refresh a stale
+// token over the network before the actual data request even goes out.
+// On first page load, that auth check is competing with currency detection,
+// language detection, cart/coupon fetch, and hero animations all firing at
+// once — so it sometimes doesn't resolve before the query's own timeout.
+// On reload, currency/language are already cached (no extra API calls), the
+// main thread is much less busy, so the same auth check resolves fast.
+// This second client has ALL session/auth behaviour switched off, so its
+// queries skip that check entirely and hit PostgREST directly with just the
+// anon key — nothing here changes currency/country/language/cart/login.
+export const supabasePublic = createClient(supabaseUrl, supabaseAnonKey, {
+  auth: {
+    persistSession: false,
+    autoRefreshToken: false,
+    detectSessionInUrl: false,
+  },
+  db: {
+    schema: "public",
+  },
+});
+
 // Types (unchanged)
 export type BulkPricingTier = {
   id?: string;

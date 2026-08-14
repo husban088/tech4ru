@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef, useCallback } from "react";
 import Link from "next/link";
-import { supabase } from "@/lib/supabase";
+import { supabase, supabasePublic } from "@/lib/supabase";
 import { useCartStore } from "@/lib/cartStore";
 import { useCurrency } from "@/app/context/CurrencyContext";
 import { useLanguage } from "@/app/context/LanguageContext";
@@ -307,7 +307,7 @@ async function fetchRelatedProducts(
   limit = 4,
 ): Promise<ExtendedProduct[]> {
   try {
-    const { data, error } = await supabase
+    const { data, error } = await supabasePublic
       .from("products")
       .select("*, product_variants(*, variant_images(*))")
       .eq("is_active", true)
@@ -464,7 +464,7 @@ function RelatedProductCard({
           filter: `product_id=eq.${product.id}`,
         },
         async () => {
-          const { data } = await supabase
+          const { data } = await supabasePublic
             .from("products")
             .select("rating, reviews_count")
             .eq("id", product.id)

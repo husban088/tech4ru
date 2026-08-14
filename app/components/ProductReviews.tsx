@@ -4,7 +4,7 @@
 import { useEffect, useState, useCallback, useRef } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Navigation, Pagination } from "swiper/modules";
-import { supabase } from "@/lib/supabase";
+import { supabase, supabasePublic } from "@/lib/supabase";
 import { useLanguage } from "@/app/context/LanguageContext";
 import { swiperPerfProps } from "@/lib/useFastSwiper";
 import "./ProductReviews.css";
@@ -482,7 +482,7 @@ export default function ProductReviews({ productId }: ProductReviewsProps) {
 
       const promise = (async () => {
         try {
-          const { data, error } = await supabase
+          const { data, error } = await supabasePublic
             .from("product_reviews")
             .select("*")
             .eq("product_id", productId)
@@ -624,7 +624,7 @@ export default function ProductReviews({ productId }: ProductReviewsProps) {
         if (mountedRef.current) setUploadStatus("Saving review…");
       }
 
-      const { error: insertError } = await supabase
+      const { error: insertError } = await supabasePublic
         .from("product_reviews")
         .insert({
           product_id: cleanProductId,

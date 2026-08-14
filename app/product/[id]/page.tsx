@@ -3,7 +3,12 @@
 import { useEffect, useState, useRef, useCallback } from "react";
 import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
-import { supabase, Product, ProductVariant } from "@/lib/supabase";
+import {
+  supabase,
+  supabasePublic,
+  Product,
+  ProductVariant,
+} from "@/lib/supabase";
 import "@/app/styles/product-detail.css";
 import { useCartStore } from "@/lib/cartStore";
 import { useCurrency } from "@/app/context/CurrencyContext";
@@ -117,7 +122,7 @@ async function fetchById(id: string): Promise<any | null> {
   for (let attempt = 0; attempt < 3; attempt++) {
     try {
       const fetchResult = await Promise.race([
-        supabase
+        supabasePublic
           .from("products")
           .select(
             "*, description, description_images, product_variants(*, description_rich, description_images, description, variant_images(*))",
@@ -163,7 +168,7 @@ async function fetchBySlugSearch(slug: string): Promise<any | null> {
 
   for (let attempt = 0; attempt < 3; attempt++) {
     try {
-      const { data, error } = await supabase
+      const { data, error } = await supabasePublic
         .from("products")
         .select(
           "*, description, description_images, product_variants(*, description_rich, description_images, description, variant_images(*))",
@@ -1000,7 +1005,7 @@ export default function ProductDetail() {
     const variantId = selectedVariant.id;
     (async () => {
       try {
-        const { data, error } = await supabase
+        const { data, error } = await supabasePublic
           .from("bulk_pricing_tiers")
           .select("*")
           .eq("variant_id", variantId)
@@ -1029,7 +1034,7 @@ export default function ProductDetail() {
           filter: `product_id=eq.${productId}`,
         },
         async () => {
-          const { data } = await supabase
+          const { data } = await supabasePublic
             .from("products")
             .select("rating, reviews_count")
             .eq("id", productId)
@@ -1056,7 +1061,7 @@ export default function ProductDetail() {
     const id = productId;
     (async () => {
       try {
-        const { data, error } = await supabase
+        const { data, error } = await supabasePublic
           .from("product_faqs")
           .select("id, question, answer, display_order")
           .eq("product_id", id)
